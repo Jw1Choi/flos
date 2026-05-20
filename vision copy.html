@@ -1,0 +1,1798 @@
+<!doctype html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+
+
+  <!-- 소유권 인증(각 도메인별 값으로 교체) -->
+  <meta name="naver-site-verification" content="네이버_인증코드_여기에" />
+  <meta name="google-site-verification" content="구글_인증코드_여기에" />
+
+  <!-- Canonical (대표 URL로 고정) -->
+  <link rel="canonical" href="https://htuglobal.com/" />
+  <meta name="robots" content="index,follow" />
+  <meta name="subject" content="HTU GLOBAL" />
+  <meta name="title" content="HTU GLOBAL" />
+  <meta name="author" content="HTU GLOBAL">
+  <meta name="description" content="HTU GLOBAL — 건강한 아름다움을 만들어가는 뷰티,헬스 비즈니스 파트너" />
+  <meta name="keywords"
+    content="HTU GLOBAL, HTU GLOBAL HOLDINGS, Healthy Beauty, Well-aging, Beauty Health Industry, 글로벌 뷰티 헬스 기업, 건강한 아름다움, 뷰티 산업, 헬스 산업, 웰에이징 산업, 뷰티 헬스 비즈니스, 글로벌 네트워크, 뷰티 교육, 헬스 교육, 뷰티 전문가, 건강 산업, 라이프스타일 산업, 글로벌 비즈니스 플랫폼, HTU 브랜드" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:rich_attachment" content="true" />
+  <meta property="og:site_name" content="HTU GLOBAL" />
+  <meta property="og:title" content="HTU GLOBAL" />
+  <meta property="og:description" content="HTU GLOBAL — 건강한 아름다움을 만들어가는 뷰티,헬스 비즈니스 파트너" />
+  <meta property="og:image" content="https://htuglobal.com/img/og-biznovlab.jpg" />
+  <meta property="og:url" content="https://htuglobal.com/" />
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="HTU GLOBAL" />
+  <meta name="twitter:description" content="HTU GLOBAL — 건강한 아름다움을 만들어가는 뷰티,헬스 비즈니스 파트너" />
+  <meta name="twitter:image" content="https://htuglobal.com/img/og-biznovlab.jpg" />
+
+  <meta itemprop="name" content="HTU GLOBAL" />
+  <meta itemprop="description" content="HTU GLOBAL — 건강한 아름다움을 만들어가는 뷰티,헬스 비즈니스 파트너" />
+  <meta itemprop="image" content="https://htuglobal.com/img/og-biznovlab.jpg" />
+  <title>HTU GLOBAL</title>
+
+  <link href="./css/reset.css" rel="stylesheet" type="text/css" />
+  <link href="./css/style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+      <div id="menu_navi"></div>
+
+<script src="./js/menu3.js"></script>
+
+
+
+  </head>
+
+  <body style="margin:0;padding:0;">
+
+    <!-- 메뉴(외부 로드) -->
+    <div id="menu"></div>
+
+<section id="premiumStoryScrollSection" aria-label="프리미엄 기업 소개 스크롤 스토리텔링 섹션">
+  <style>
+    /* =========================================================
+       PREMIUM CORPORATE SCROLL STORYTELLING SECTION
+       Scope: #premiumStoryScrollSection ONLY
+       - 전역 선택자(html, body, *) 사용 금지
+       - 다른 코드와 충돌 방지용 고유 접두사 pcs-
+       ========================================================= */
+
+    #premiumStoryScrollSection {
+      --pcs-bg: #ffffff;
+      --pcs-ink: #111111;
+      --pcs-sub: rgba(17, 17, 17, 0.64);
+      --pcs-white: #ffffff;
+      --pcs-line: rgba(17, 17, 17, 0.08);
+
+      --pcs-card-radius-start: 30px;
+      --pcs-card-radius-end: 4px;
+
+      --pcs-overlay-max: 0.56;
+
+      --pcs-text-reveal-start: 0.44;
+      --pcs-text-reveal-end: 0.78;
+
+      position: relative;
+      background: var(--pcs-bg);
+      color: var(--pcs-ink);
+      overflow: clip;
+      isolation: isolate;
+    }
+
+    #premiumStoryScrollSection .pcs-stage {
+      position: relative;
+      min-height: 320vh;
+      background: var(--pcs-bg);
+    }
+
+    #premiumStoryScrollSection .pcs-sticky {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: hidden;
+      background: var(--pcs-bg);
+    }
+
+    #premiumStoryScrollSection .pcs-scene {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    #premiumStoryScrollSection .pcs-intro {
+      position: absolute;
+      z-index: 4;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(28px, 4vw, 56px);
+      pointer-events: none;
+      transition: opacity 0.28s linear;
+    }
+
+    #premiumStoryScrollSection .pcs-intro-shell {
+      width: min(100%, 1120px);
+      display: grid;
+      justify-items: center;
+      gap: clamp(14px, 1.6vw, 20px);
+      text-align: center;
+      transform: translate3d(0, 0, 0);
+      will-change: transform, opacity;
+    }
+
+    #premiumStoryScrollSection .pcs-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 16px;
+      border: 1px solid var(--pcs-line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.84);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      font-size: 12px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(17, 17, 17, 0.72);
+      white-space: nowrap;
+    }
+
+    #premiumStoryScrollSection .pcs-kicker-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #111111;
+      opacity: 0.92;
+      flex: 0 0 auto;
+    }
+
+    #premiumStoryScrollSection .pcs-headline {
+      margin: 0;
+      font-size: clamp(29px, 4.4vw, 48px);
+      line-height: 1.4;
+      letter-spacing: -0.045em;
+      font-weight: 700;
+      color: #fff;
+      max-width: 12.5em;
+    }
+
+    #premiumStoryScrollSection .pcs-subcopy {
+      margin: 0;
+      max-width: min(92vw, 760px);
+      font-size: clamp(15px, 1.35vw, 20px);
+      line-height: 1.8;
+      letter-spacing: -0.012em;
+      color: #fff;
+      word-break: keep-all;
+    }
+
+    #premiumStoryScrollSection .pcs-card-wrap {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: min(86vw, 1180px);
+      aspect-ratio: 16 / 9;
+      transform: translate3d(-50%, -50%, 0);
+      z-index: 2;
+      pointer-events: none;
+      will-change: transform;
+      filter: brightness(0.7);
+    }
+
+    #premiumStoryScrollSection .pcs-card {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      border-radius: var(--pcs-card-radius-start);
+      overflow: hidden;
+      box-shadow:
+        0 24px 70px rgba(17, 17, 17, 0.12),
+        0 6px 22px rgba(17, 17, 17, 0.08);
+      transform-origin: center center;
+      transform: scale(1) translate3d(0, 0, 0);
+      will-change: transform, border-radius;
+      background: #dcdcdc;
+      contain: layout paint style;
+    }
+
+    #premiumStoryScrollSection .pcs-media {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+      display: block;
+      transform: scale(1.02);
+      will-change: transform;
+      user-select: none;
+      -webkit-user-drag: none;
+      pointer-events: none;
+    }
+
+    #premiumStoryScrollSection .pcs-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(0, 0, 0, 0.10) 0%, rgba(0, 0, 0, 0.08) 28%, rgba(0, 0, 0, 0.18) 100%),
+        rgba(0, 0, 0, 0);
+      opacity: 0;
+      will-change: opacity;
+      pointer-events: none;
+    }
+
+    #premiumStoryScrollSection .pcs-overlay-copy {
+      position: absolute;
+      z-index: 5;
+      left: 50%;
+      top: 50%;
+      width: min(92vw, 860px);
+      color: rgba(255, 255, 255, 0.98);
+      opacity: 0;
+      transform: translate3d(-50%, calc(-50% + 34px), 0);
+      will-change: transform, opacity;
+      pointer-events: none;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.16);
+      text-align: center;
+    }
+
+    #premiumStoryScrollSection .pcs-overlay-copy-kicker {
+      margin: 0 0 14px;
+      font-size: 12px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.78);
+    }
+
+    #premiumStoryScrollSection .pcs-overlay-copy-title {
+      margin: 0;
+      font-size: clamp(28px, 4.2vw, 58px);
+      line-height: 1.12;
+      letter-spacing: -0.045em;
+      font-weight: 700;
+      word-break: keep-all;
+    }
+
+    #premiumStoryScrollSection .pcs-overlay-copy-body {
+      margin: 18px 0 0;
+      font-size: clamp(14px, 1.15vw, 18px);
+      line-height: 1.85;
+      letter-spacing: -0.012em;
+      color: rgba(255, 255, 255, 0.82);
+      word-break: keep-all;
+    }
+
+    #premiumStoryScrollSection .pcs-overlay-copy-line {
+      width: clamp(48px, 6vw, 82px);
+      height: 1px;
+      margin: 18px auto 0;
+      background: rgba(255, 255, 255, 0.38);
+    }
+
+    #premiumStoryScrollSection .pcs-next-content {
+      position: relative;
+      z-index: 1;
+      background: #ffffff;
+      padding: clamp(56px, 8vw, 120px) clamp(20px, 4vw, 48px) clamp(70px, 10vw, 140px);
+    }
+
+    #premiumStoryScrollSection .pcs-next-shell {
+      width: min(100%, 1240px);
+      margin: 0 auto;
+      display: grid;
+      gap: clamp(20px, 2.6vw, 36px);
+    }
+
+    #premiumStoryScrollSection .pcs-next-heading {
+      margin: 0;
+      font-size: clamp(28px, 3vw, 46px);
+      line-height: 1.18;
+      letter-spacing: -0.038em;
+      color: #111111;
+      font-weight: 700;
+      word-break: keep-all;
+    }
+
+    #premiumStoryScrollSection .pcs-next-desc {
+      margin: 0;
+      max-width: 900px;
+      font-size: clamp(15px, 1.1vw, 18px);
+      line-height: 1.9;
+      color: rgba(17, 17, 17, 0.68);
+      word-break: keep-all;
+    }
+
+    #premiumStoryScrollSection .pcs-next-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: clamp(14px, 1.8vw, 20px);
+      margin-top: 8px;
+    }
+
+    #premiumStoryScrollSection .pcs-next-card {
+      padding: clamp(22px, 2vw, 28px);
+      border-radius: 24px;
+      border: 1px solid rgba(17, 17, 17, 0.08);
+      background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(248,248,248,1) 100%);
+      box-shadow: 0 10px 24px rgba(17, 17, 17, 0.04);
+    }
+
+    #premiumStoryScrollSection .pcs-next-card-num {
+      display: inline-block;
+      margin-bottom: 18px;
+      font-size: 12px;
+      letter-spacing: 0.16em;
+      color: rgba(17, 17, 17, 0.42);
+    }
+
+    #premiumStoryScrollSection .pcs-next-card-title {
+      margin: 0 0 12px;
+      font-size: clamp(18px, 1.5vw, 24px);
+      line-height: 1.35;
+      letter-spacing: -0.025em;
+      color: #111111;
+      font-weight: 700;
+      word-break: keep-all;
+    }
+
+    #premiumStoryScrollSection .pcs-next-card-body {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.85;
+      color: rgba(17, 17, 17, 0.66);
+      word-break: keep-all;
+    }
+
+    /* ==============================
+       pcs-next-content 등장 효과
+       ============================== */
+    #premiumStoryScrollSection .pcs-reveal {
+      opacity: 0;
+      transform: translate3d(0, 48px, 0);
+      transition:
+        opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: opacity, transform;
+    }
+
+    #premiumStoryScrollSection .pcs-reveal.is-visible {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+
+    #premiumStoryScrollSection .pcs-reveal-delay-1 {
+      transition-delay: 0.08s;
+    }
+
+    #premiumStoryScrollSection .pcs-reveal-delay-2 {
+      transition-delay: 0.16s;
+    }
+
+    #premiumStoryScrollSection .pcs-reveal-delay-3 {
+      transition-delay: 0.24s;
+    }
+
+    #premiumStoryScrollSection .pcs-reveal-delay-4 {
+      transition-delay: 0.32s;
+    }
+
+    @media (max-width: 1024px) {
+      #premiumStoryScrollSection .pcs-stage {
+        min-height: 300vh;
+      }
+
+      #premiumStoryScrollSection .pcs-card-wrap {
+        width: min(90vw, 980px);
+      }
+
+      #premiumStoryScrollSection .pcs-overlay-copy {
+        width: min(88vw, 700px);
+      }
+
+      #premiumStoryScrollSection .pcs-next-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 767px) {
+      #premiumStoryScrollSection {
+        --pcs-card-radius-start: 22px;
+        --pcs-card-radius-end: 2px;
+      }
+
+      #premiumStoryScrollSection .pcs-stage {
+        min-height: 260vh;
+      }
+
+      #premiumStoryScrollSection .pcs-intro {
+        padding: 22px 16px;
+      }
+
+      #premiumStoryScrollSection .pcs-intro-shell {
+        gap: 12px;
+      }
+
+      #premiumStoryScrollSection .pcs-kicker {
+        padding: 8px 12px;
+        font-size: 11px;
+        letter-spacing: 0.13em;
+      }
+
+      #premiumStoryScrollSection .pcs-headline {
+        font-size: clamp(18px, 8.5vw, 25px);
+        line-height: 1.4;
+      }
+
+      #premiumStoryScrollSection .pcs-subcopy {
+        max-width: 94vw;
+        font-size: 14px;
+        line-height: 1.72;
+      }
+
+      #premiumStoryScrollSection .pcs-card-wrap {
+        width: min(92vw, 720px);
+        top: 54%;
+        aspect-ratio: 1.1 / 1.28;
+      }
+
+      #premiumStoryScrollSection .pcs-card {
+        box-shadow:
+          0 18px 42px rgba(17, 17, 17, 0.13),
+          0 4px 14px rgba(17, 17, 17, 0.08);
+      }
+
+      #premiumStoryScrollSection .pcs-overlay-copy {
+        left: 16px;
+        right: 16px;
+        top: 50%;
+        bottom: auto;
+        width: auto;
+        text-align: center;
+        transform: translate3d(0, calc(-50% + 26px), 0);
+      }
+
+      #premiumStoryScrollSection .pcs-overlay-copy-kicker {
+        margin-bottom: 10px;
+        font-size: 11px;
+      }
+
+      #premiumStoryScrollSection .pcs-overlay-copy-title {
+        font-size: clamp(18px, 6vw, 30px);
+        line-height: 1.14;
+      }
+
+      #premiumStoryScrollSection .pcs-overlay-copy-body {
+        margin-top: 12px;
+        font-size: 14px;
+        line-height: 1.72;
+      }
+
+      #premiumStoryScrollSection .pcs-overlay-copy-line {
+        margin: 18px auto 0;
+      }
+
+      #premiumStoryScrollSection .pcs-next-content {
+        padding: 48px 16px 84px;
+      }
+
+      #premiumStoryScrollSection .pcs-next-card {
+        border-radius: 18px;
+        padding: 20px 18px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #premiumStoryScrollSection .pcs-intro,
+      #premiumStoryScrollSection .pcs-card,
+      #premiumStoryScrollSection .pcs-overlay,
+      #premiumStoryScrollSection .pcs-overlay-copy,
+      #premiumStoryScrollSection .pcs-intro-shell,
+      #premiumStoryScrollSection .pcs-reveal,
+      #premiumStoryScrollSection .pcs-reveal.is-visible {
+        transition: none !important;
+        animation: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+      }
+
+      #premiumStoryScrollSection .pcs-overlay-copy {
+        left: 50%;
+        top: 50%;
+        transform: translate3d(-50%, -50%, 0) !important;
+      }
+
+      @media (max-width: 767px) {
+        #premiumStoryScrollSection .pcs-overlay-copy {
+          left: 16px;
+          right: 16px;
+          top: 50%;
+          width: auto;
+          transform: translate3d(0, -50%, 0) !important;
+        }
+      }
+    }
+  </style>
+
+  <div class="pcs-stage" data-pcs-stage>
+    <div class="pcs-sticky">
+      <div class="pcs-scene">
+        <div class="pcs-intro" data-pcs-intro>
+          <div class="pcs-intro-shell" data-pcs-intro-shell>
+            <!-- <div class="pcs-kicker">
+              <span class="pcs-kicker-dot" aria-hidden="true"></span>
+              Brand Vision
+            </div> -->
+            <h2 class="pcs-headline">현재 상품의 90%는<br>고객과 만나기도 전에 사라집니다.</h2>
+            <p class="pcs-subcopy">
+              FLOS는 '고객을 어떻게 연결하지?' 라는<br>막막한 질문을 
+              해결하는 온라인 솔루션을 제공합니다.
+            </p>
+          </div>
+        </div>
+
+        <div class="pcs-card-wrap" aria-hidden="true">
+          <div class="pcs-card" data-pcs-card>
+            <img
+              class="pcs-media"
+              src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1800&q=80"
+              alt=""
+            >
+            <div class="pcs-overlay" data-pcs-overlay></div>
+          </div>
+        </div>
+
+        <div class="pcs-overlay-copy" data-pcs-copy>
+          <p class="pcs-overlay-copy-kicker">이런 악순환을 해결하여</p>
+          <h3 class="pcs-overlay-copy-title">사업의 품격과 신뢰를 제공하면서<br>고객을 확보하는 흐름을 만들어갑니다.</h3>
+          <div class="pcs-overlay-copy-line" aria-hidden="true"></div>
+          <p class="pcs-overlay-copy-body">
+            FLOS가 설계하는 것은 단순한 홈페이지가 아닙니다.<br>방문하는 순간부터 브랜드의 품격이 전달되도록<br>
+            디자인, 영상, 스토리 흐름을 정교하게 설계하고 <br>마케팅적으로 고객의 시선을 사로잡고 신뢰를 축적합니다.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pcs-next-content" aria-label="회사 소개 후속 콘텐츠">
+    <div class="pcs-next-shell">
+      <h3 class="pcs-next-heading pcs-reveal">브랜딩 가능한 품격과 신뢰를 제공하고<br>비즈니스와 마케팅에 활용되는 공간</h3>
+      <p class="pcs-next-desc pcs-reveal pcs-reveal-delay-1">
+        FLOS는 감각적인 디자인을 넘어 고객의 심리와 행동 흐름까지 고려한 구조를 설계합니다.<br>
+        브랜드 이미지 상승은 물론, 상담·문의·전환으로 자연스럽게 이어지는 흐름을 만드는데 집중합니다.
+      </p>
+
+    <div class="pcs-next-grid">
+  <article class="pcs-next-card pcs-reveal pcs-reveal-delay-2">
+    <span class="pcs-next-card-num">01</span>
+    <h4 class="pcs-next-card-title">비즈니스의 전체 흐름 파악</h4>
+    <p class="pcs-next-card-body">
+      활용도 높은 홈페이지는 깊은 비즈니스 구조의 이해에서 부터 시작되어야 합니다. 비즈니스의 구조를 이해하고 그에 맞게 최적화 된 흐름을 만들어갑니다. 
+    </p>
+  </article>
+
+  <article class="pcs-next-card pcs-reveal pcs-reveal-delay-3">
+    <span class="pcs-next-card-num">02</span>
+    <h4 class="pcs-next-card-title">신뢰 및 브랜딩 설계</h4>
+    <p class="pcs-next-card-body">
+      회사의 캐릭터와 특장점을 이해하여, 방문하는 순간 브랜드의 기준과 방향이 전달되도록 설계하여, 고객의 의심을 줄이고 신뢰를 빠르게 형성하는데 집중합니다.
+    </p>
+  </article>
+
+  <article class="pcs-next-card pcs-reveal pcs-reveal-delay-4">
+    <span class="pcs-next-card-num">03</span>
+    <h4 class="pcs-next-card-title">참여를 이끄는 흐름</h4>
+    <p class="pcs-next-card-body">
+      고객이 단순히 보고 떠나는 것이 아니라, 문의와 상담으로 이어지는 실제 행동을 만들어내는 구조를 만들어갑니다.
+    </p>
+  </article>
+</div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var section = document.getElementById('premiumStoryScrollSection');
+      if (!section) return;
+
+      var stage = section.querySelector('[data-pcs-stage]');
+      var intro = section.querySelector('[data-pcs-intro]');
+      var introShell = section.querySelector('[data-pcs-intro-shell]');
+      var card = section.querySelector('[data-pcs-card]');
+      var overlay = section.querySelector('[data-pcs-overlay]');
+      var copy = section.querySelector('[data-pcs-copy]');
+      var revealItems = section.querySelectorAll('.pcs-reveal');
+      var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+      if (!stage || !intro || !introShell || !card || !overlay || !copy) return;
+
+      var ticking = false;
+      var metrics = {
+        start: 0,
+        end: 0,
+        range: 1,
+        isMobile: false
+      };
+
+      var config = {
+        desktopScale: 2.18,
+        tabletScale: 1.92,
+        mobileScale: 1.58,
+
+        desktopLift: -28,
+        tabletLift: -20,
+        mobileLift: -12,
+
+        maxOverlay: 0.56,
+
+        radiusStart: 30,
+        radiusEnd: 4,
+        radiusStartMobile: 22,
+        radiusEndMobile: 2,
+
+        textRevealStart: 0.44,
+        textRevealEnd: 0.78,
+
+        introFadeStart: 0.10,
+        introFadeEnd: 0.34,
+
+        introMoveY: -22,
+
+        textStartY: 34,
+        textStartYMobile: 26
+      };
+
+      function clamp(value, min, max) {
+        return Math.min(Math.max(value, min), max);
+      }
+
+      function mix(start, end, t) {
+        return start + (end - start) * t;
+      }
+
+      function easeOutCubic(t) {
+        return 1 - Math.pow(1 - t, 3);
+      }
+
+      function easeInOutCubic(t) {
+        return t < 0.5
+          ? 4 * t * t * t
+          : 1 - Math.pow(-2 * t + 2, 3) / 2;
+      }
+
+      function mapRange(value, inMin, inMax) {
+        if (inMax - inMin === 0) return 0;
+        return clamp((value - inMin) / (inMax - inMin), 0, 1);
+      }
+
+      function recalc() {
+        var rect = stage.getBoundingClientRect();
+        var scrollY = window.pageYOffset || window.scrollY || 0;
+        var top = rect.top + scrollY;
+        var height = stage.offsetHeight;
+        var viewportH = window.innerHeight || document.documentElement.clientHeight || 1;
+
+        metrics.start = top;
+        metrics.end = top + height - viewportH;
+        metrics.range = Math.max(metrics.end - metrics.start, 1);
+        metrics.isMobile = window.matchMedia('(max-width: 767px)').matches;
+
+        update();
+      }
+
+      function update() {
+        if (reduceMotion.matches) {
+          card.style.transform = 'scale(1) translate3d(0, 0, 0)';
+          card.style.borderRadius = metrics.isMobile ? config.radiusEndMobile + 'px' : config.radiusEnd + 'px';
+          overlay.style.opacity = String(config.maxOverlay * 0.88);
+          intro.style.opacity = '0';
+          introShell.style.transform = 'translate3d(0, -10px, 0)';
+          copy.style.opacity = '1';
+
+          if (metrics.isMobile) {
+            copy.style.transform = 'translate3d(0, -50%, 0)';
+          } else {
+            copy.style.transform = 'translate3d(-50%, -50%, 0)';
+          }
+          return;
+        }
+
+        var scrollY = window.pageYOffset || window.scrollY || 0;
+        var raw = (scrollY - metrics.start) / metrics.range;
+        var progress = clamp(raw, 0, 1);
+
+        var motion = easeInOutCubic(progress);
+
+        var targetScale = metrics.isMobile
+          ? config.mobileScale
+          : (window.matchMedia('(max-width: 1024px)').matches ? config.tabletScale : config.desktopScale);
+
+        var currentLift = metrics.isMobile
+          ? config.mobileLift
+          : (window.matchMedia('(max-width: 1024px)').matches ? config.tabletLift : config.desktopLift);
+
+        var radiusStart = metrics.isMobile ? config.radiusStartMobile : config.radiusStart;
+        var radiusEnd = metrics.isMobile ? config.radiusEndMobile : config.radiusEnd;
+
+        var scale = mix(1, targetScale, motion);
+        var lift = mix(0, currentLift, motion);
+        var radius = mix(radiusStart, radiusEnd, motion);
+
+        var overlayT = easeOutCubic(mapRange(progress, 0.08, 0.90));
+        var overlayOpacity = mix(0, config.maxOverlay, overlayT);
+
+        var introT = easeOutCubic(mapRange(progress, config.introFadeStart, config.introFadeEnd));
+        var introOpacity = 1 - introT;
+        var introY = mix(0, config.introMoveY, introT);
+
+        var textT = easeOutCubic(mapRange(progress, config.textRevealStart, config.textRevealEnd));
+        var textStartY = metrics.isMobile ? config.textStartYMobile : config.textStartY;
+        var textOpacity = textT;
+        var textY = mix(textStartY, 0, textT);
+
+        card.style.transform = 'scale(' + scale.toFixed(4) + ') translate3d(0, ' + lift.toFixed(2) + 'px, 0)';
+        card.style.borderRadius = radius.toFixed(2) + 'px';
+        overlay.style.opacity = overlayOpacity.toFixed(4);
+
+        intro.style.opacity = introOpacity.toFixed(4);
+        introShell.style.transform = 'translate3d(0, ' + introY.toFixed(2) + 'px, 0)';
+
+        copy.style.opacity = textOpacity.toFixed(4);
+
+        if (metrics.isMobile) {
+          copy.style.transform = 'translate3d(0, calc(-50% + ' + textY.toFixed(2) + 'px), 0)';
+        } else {
+          copy.style.transform = 'translate3d(-50%, calc(-50% + ' + textY.toFixed(2) + 'px), 0)';
+        }
+      }
+
+      function runReveal() {
+        if (!revealItems.length) return;
+
+        var triggerY = (window.innerHeight || document.documentElement.clientHeight || 0) * 0.88;
+
+        revealItems.forEach(function (item) {
+          var rect = item.getBoundingClientRect();
+          if (rect.top < triggerY) {
+            item.classList.add('is-visible');
+          }
+        });
+      }
+
+      function requestTick() {
+        if (!ticking) {
+          window.requestAnimationFrame(function () {
+            update();
+            runReveal();
+            ticking = false;
+          });
+          ticking = true;
+        }
+      }
+
+      function onResizeLike() {
+        recalc();
+        runReveal();
+      }
+
+      window.addEventListener('scroll', requestTick, { passive: true });
+      window.addEventListener('resize', onResizeLike);
+      window.addEventListener('orientationchange', onResizeLike);
+
+      if (typeof reduceMotion.addEventListener === 'function') {
+        reduceMotion.addEventListener('change', onResizeLike);
+      } else if (typeof reduceMotion.addListener === 'function') {
+        reduceMotion.addListener(onResizeLike);
+      }
+
+      recalc();
+      runReveal();
+    })();
+  </script>
+</section>
+
+
+
+<section id="philosophy" aria-label="제품철학">
+<style>
+#philosophy {
+  --jp-bg: #0a0a0a;
+  --jp-bg-dark: #000000;
+  --jp-white: #ffffff;
+  --jp-gray-light: rgba(255,255,255,0.55);
+  --jp-gray-dim: rgba(255,255,255,0.3);
+  --jp-gray-faint: rgba(255,255,255,0.12);
+  --jp-transition: 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
+
+  font-family: 'Noto Sans KR', 'Pretendard', -apple-system, sans-serif;
+  background-color: var(--jp-bg);
+  color: var(--jp-white);
+  position: relative;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#philosophy *,
+#philosophy *::before,
+#philosophy *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ===== INTRO ===== */
+#philosophy .jp-intro {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 120px 8% 120px;
+}
+
+#philosophy .jp-intro-inner {
+  max-width: 520px;
+}
+
+#philosophy .jp-intro-title {
+  font-size: clamp(32px, 4.5vw, 48px);
+  font-weight: 900;
+  line-height: 1.35;
+  letter-spacing: -0.02em;
+  margin-bottom: 40px;
+}
+
+#philosophy .jp-intro-desc {
+  font-size: clamp(14px, 1.1vw, 16px);
+  font-weight: 300;
+  line-height: 1.85;
+  color: var(--jp-gray-light);
+  margin-bottom: 20px;
+}
+
+/* ===== MAIN ===== */
+#philosophy .jp-main {
+  position: relative;
+}
+
+/* ===== DESKTOP NAV ===== */
+#philosophy .jp-nav {
+  position: fixed;
+  top: 50%;
+  left: 8%;
+  transform: translateY(-50%);
+  width: 280px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  z-index: 100;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.35s ease, visibility 0.35s ease;
+  pointer-events: none;
+}
+
+#philosophy .jp-nav[data-floating="true"] {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+#philosophy .jp-nav[data-stopped="true"] {
+  position: absolute;
+  left: 8%;
+  transform: none;
+  top: 0;
+}
+
+#philosophy .jp-nav-track {
+  display: contents;
+}
+
+#philosophy .jp-nav-item {
+  padding: 14px 0;
+  border-bottom: 1px solid var(--jp-gray-faint);
+  cursor: pointer;
+  transition: all var(--jp-transition);
+  position: relative;
+}
+
+#philosophy .jp-nav-item::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--jp-white);
+  transition: width var(--jp-transition);
+}
+
+#philosophy .jp-nav-item[data-active="true"]::after {
+  width: 100%;
+}
+
+#philosophy .jp-nav-num {
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 4px;
+  display: block;
+  transition: color var(--jp-transition);
+  color: var(--jp-gray-dim);
+}
+
+#philosophy .jp-nav-label {
+  font-size: 16px;
+  font-weight: 500;
+  display: block;
+  transition: color var(--jp-transition), font-weight var(--jp-transition);
+  color: var(--jp-gray-dim);
+}
+
+#philosophy .jp-nav-item[data-active="true"] .jp-nav-num,
+#philosophy .jp-nav-item[data-active="true"] .jp-nav-label {
+  color: var(--jp-white);
+  font-weight: 700;
+}
+
+/* ===== CONTENT ===== */
+#philosophy .jp-content {
+  margin-left: calc(8% + 320px);
+  padding-right: 8%;
+  min-width: 0;
+}
+
+#philosophy .jp-content-item {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 100px 0;
+  position: relative;
+}
+
+#philosophy .jp-content-title {
+  font-size: clamp(28px, 3.5vw, 42px);
+  font-weight: 900;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+  margin-bottom: 28px;
+  opacity: 0;
+  transform: translateY(30px);
+  filter: blur(2px);
+  transition: opacity 0.7s ease, transform 0.7s ease, filter 0.7s ease;
+}
+
+#philosophy .jp-content-lead {
+  font-size: clamp(14px, 1.15vw, 17px);
+  font-weight: 500;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.75);
+  margin-bottom: 20px;
+  opacity: 0;
+  transform: translateY(25px);
+  filter: blur(2px);
+  transition: opacity 0.7s ease 0.08s, transform 0.7s ease 0.08s, filter 0.7s ease 0.08s;
+}
+
+#philosophy .jp-content-desc {
+  font-size: clamp(13px, 1vw, 15px);
+  font-weight: 300;
+  line-height: 1.85;
+  color: var(--jp-gray-light);
+  max-width: 600px;
+  margin-bottom: 40px;
+  opacity: 0;
+  transform: translateY(20px);
+  filter: blur(2px);
+  transition: opacity 0.7s ease 0.15s, transform 0.7s ease 0.15s, filter 0.7s ease 0.15s;
+}
+
+#philosophy .jp-content-img {
+  width: 100%;
+  max-width: 700px;
+  aspect-ratio: 16 / 9;
+  background-color: rgba(255,255,255,0.05);
+  border-radius: 2px;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+}
+
+#philosophy .jp-content-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+#philosophy .jp-content-item[data-visible="true"] .jp-content-title,
+#philosophy .jp-content-item[data-visible="true"] .jp-content-lead,
+#philosophy .jp-content-item[data-visible="true"] .jp-content-desc,
+#philosophy .jp-content-item[data-visible="true"] .jp-content-img {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+
+#philosophy .jp-content-item.jp-last-align {
+  justify-content: flex-start;
+}
+
+/* ===== MEDIA ROOM ===== */
+#philosophy .jp-mediaroom {
+  background-color: var(--jp-bg-dark);
+  padding: 140px 8% 100px;
+  position: relative;
+}
+
+#philosophy .jp-mediaroom::before {
+  content: '';
+  position: absolute;
+  top: -120px;
+  left: 0;
+  right: 0;
+  height: 120px;
+  background: linear-gradient(to bottom, var(--jp-bg), var(--jp-bg-dark));
+  pointer-events: none;
+}
+
+#philosophy .jp-mediaroom-title {
+  font-size: clamp(36px, 4vw, 52px);
+  font-weight: 300;
+  letter-spacing: -0.01em;
+  margin-bottom: 60px;
+  font-style: italic;
+}
+
+#philosophy .jp-mediaroom-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+
+#philosophy .jp-mediaroom-card {
+  padding-bottom: 20px;
+}
+
+#philosophy .jp-mediaroom-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+#philosophy .jp-mediaroom-card-title {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+#philosophy .jp-mediaroom-card-desc {
+  font-size: 14px;
+  color: var(--jp-gray-light);
+  font-weight: 300;
+}
+
+#philosophy .jp-mediaroom-plus {
+  width: 24px;
+  height: 24px;
+  position: relative;
+  opacity: 0.5;
+}
+
+#philosophy .jp-mediaroom-plus::before,
+#philosophy .jp-mediaroom-plus::after {
+  content: '';
+  position: absolute;
+  background: var(--jp-white);
+}
+
+#philosophy .jp-mediaroom-plus::before {
+  width: 24px;
+  height: 1px;
+  top: 50%;
+  left: 0;
+}
+
+#philosophy .jp-mediaroom-plus::after {
+  width: 1px;
+  height: 24px;
+  left: 50%;
+  top: 0;
+}
+
+@media (max-width: 1100px) {
+  #philosophy .jp-nav {
+    width: 220px;
+    left: 5%;
+  }
+
+  #philosophy .jp-nav[data-stopped="true"] {
+    left: 5%;
+  }
+
+  #philosophy .jp-nav-label {
+    font-size: 14px;
+  }
+
+  #philosophy .jp-content {
+    margin-left: calc(5% + 260px);
+    padding-right: 5%;
+  }
+
+  #philosophy .jp-content-img {
+    max-width: 100%;
+  }
+
+  #philosophy .jp-intro {
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+}
+
+/* ===== MOBILE / DRAG NAV ===== */
+@media (max-width: 768px) {
+  #philosophy {
+    padding-bottom: 92px;
+  }
+
+  #philosophy .jp-intro {
+    padding: 80px 6% 60px;
+    min-height: 80vh;
+  }
+
+  #philosophy .jp-nav {
+    position: fixed !important;
+    top: auto !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    transform: none !important;
+    width: 100%;
+    height: 72px;
+    padding: 0;
+    display: block;
+    background: rgba(8,8,8,0.92);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(255,255,255,0.08);
+    border-bottom: none;
+    z-index: 300;
+    transition: opacity 0.35s ease, visibility 0.35s ease;
+    overflow: hidden;
+    touch-action: pan-y;
+  }
+
+  #philosophy .jp-nav[data-stopped="true"] {
+    position: fixed !important;
+    top: auto !important;
+    bottom: 0 !important;
+    left: 0 !important;
+  }
+
+  #philosophy .jp-nav::before,
+  #philosophy .jp-nav::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 40px;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  #philosophy .jp-nav::before {
+    left: 0;
+    background: linear-gradient(to right, rgba(8,8,8,0.96), rgba(8,8,8,0));
+  }
+
+  #philosophy .jp-nav::after {
+    right: 0;
+    background: linear-gradient(to left, rgba(8,8,8,0.96), rgba(8,8,8,0));
+  }
+
+  #philosophy .jp-nav-track {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: max-content;
+    min-width: max-content;
+    padding: 0 18px;
+    transform: translate3d(0, -50%, 0);
+    will-change: transform;
+    transition: transform 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+    cursor: grab;
+  }
+
+  #philosophy .jp-nav-track.jp-dragging {
+    cursor: grabbing;
+    transition: none !important;
+  }
+
+  #philosophy .jp-nav-item {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 40px;
+    padding: 10px 14px;
+    border: none;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.04);
+    text-align: left;
+    white-space: nowrap;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  #philosophy .jp-nav-item::after {
+    display: none;
+  }
+
+  #philosophy .jp-nav-item[data-active="true"] {
+    background: rgba(255,255,255,0.14);
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08);
+  }
+
+  #philosophy .jp-nav-num {
+    font-size: 11px;
+    margin-bottom: 0;
+    line-height: 1;
+  }
+
+  #philosophy .jp-nav-label {
+    font-size: 13px;
+    line-height: 1;
+    white-space: nowrap;
+    overflow: visible;
+    text-overflow: clip;
+  }
+
+  #philosophy .jp-content {
+    margin-left: 0;
+    padding: 0 6%;
+  }
+
+  #philosophy .jp-content-item {
+    min-height: auto;
+    padding: 60px 0;
+  }
+
+  #philosophy .jp-content-item.jp-last-align {
+    justify-content: center;
+    min-height: auto !important;
+    padding-top: 60px !important;
+    padding-bottom: 60px !important;
+  }
+
+  #philosophy .jp-content-img {
+    max-width: 100%;
+  }
+
+  #philosophy .jp-mediaroom {
+    padding: 80px 6% 60px;
+  }
+
+  #philosophy .jp-mediaroom-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+}
+
+@media (max-width: 480px) {
+  #philosophy {
+    padding-bottom: 88px;
+  }
+
+  #philosophy .jp-nav {
+    height: 68px;
+  }
+
+  #philosophy .jp-nav-track {
+    gap: 10px;
+    padding: 0 14px;
+  }
+
+  #philosophy .jp-nav-item {
+    padding: 9px 12px;
+  }
+
+  #philosophy .jp-nav-label {
+    font-size: 12px;
+  }
+}
+</style>
+
+<div class="jp-intro">
+  <div class="jp-intro-inner">
+    <h2 class="jp-intro-title">FLOS의 변함없는<br>브랜딩 철학</h2>
+    <p class="jp-intro-desc">
+      FLOS는 정직, 신뢰, 그리고 브랜드 본연의 가치를 중심으로<br>
+      고객에게 최고의 경험을 제공합니다.
+    </p>
+    <p class="jp-intro-desc">
+      시대의 변화에 발 맞춰
+      좋은 상품을 만드는 기업이 고객과 만나는<br>
+      건강한 미래를 열어가고자 합니다.
+    </p>
+  </div>
+</div>
+
+<div class="jp-main">
+  <nav class="jp-nav" data-floating="false" data-stopped="false" aria-label="제품철학 항목 목록">
+    <div class="jp-nav-track"></div>
+  </nav>
+  <div class="jp-content" role="region" aria-label="제품철학 상세 내용"></div>
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  var philosophyData = [
+    {
+      num: '01',
+      title: '우린 설계합니다.',
+      lead: 'FLOS는 비즈니스적으로 활용 가능한 설계를 만듭니다.',
+      desc: '만들고 나서 바로 방치되는 사이트가 아닌, 온라인 마케팅과 비즈니스에 활용되는 구조를 처음부터 만들어갑니다.',
+      image: 'https://cdn.imweb.me/thumbnail/20210224/3fec3844a6d04.png'
+    },
+    {
+      num: '02',
+      title: '우린 연결합니다.',
+      lead: '좋은 상품이 원하는 고객과 만날 수 있도록, 연결의 시작점을 설계합니다.',
+      desc: '세상에는 상품은 있지만 고객과 연결되지 못한 채 사라지는 경우가 많습니다. FLOS는 단지 보기 좋은 화면이 아니라, 브랜드의 가치가 실제 고객과 이어질 수 있는 흐름을 만드는 데 집중합니다.',
+      image: 'https://images.unsplash.com/photo-1542744094-3a31f272c490?w=800&h=450&fit=crop&q=80'
+    },
+    {
+      num: '03',
+      title: '우린 품격을 만듭니다.',
+      lead: '단순한 정보 전달을 넘어, 봤을 때 "우와!" 할 수 있도록 직관적인 가치를 만듭니다.',
+      desc: '첫 순간. 첫 페이지를 보는 순간 모든 인상이 결정됩니다. 그 첫 순간의 느낌을 강렬하고 직관적인 느낌을 줄 수 있도록 만들어갑니다.',
+      image: 'https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?w=800&h=450&fit=crop&q=80'
+    },
+    {
+      num: '04',
+      title: '우린 신뢰를 전합니다.',
+      lead: '좋은 인상과 더불어 신뢰를 전합니다.',
+      desc: '아무리 좋은 상품도 신뢰가 전해지지 않으면 선택받기 어렵습니다. FLOS는 화면의 분위기, 문장, 구조, 정보 배치까지 세심하게 설계하여 고객이 짧은 순간 안에 브랜드의 진정성과 수준을 느끼도록 만듭니다.',
+      image: 'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=800&h=450&fit=crop&q=80'
+    },
+    {
+      num: '05',
+      title: '우린 참여를 이끕니다.',
+      lead: '좋은 브랜드 경험은 머무름에서 끝나지 않고, 고객의 행동을 이끌어야 합니다.',
+      desc: 'FLOS는 단순히 방문자가 스쳐 지나가는 사이트를 만들지 않습니다. 고객이 읽고, 느끼고, 반응하고, 결국 문의와 상담, 구매까지 이어질 수 있도록 참여를 유도하는 구조를 고민합니다.',
+      image: 'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=800&h=450&fit=crop&q=80'
+    },
+    {
+      num: '06',
+      title: 'AI에 최적화 된 흐름을 만들어갑니다.',
+      lead: 'AI 검색에 최적화 된 ',
+      desc: '꽃이 피어야 꿀벌이 찾아오듯, 비즈니스에도 고객과 만날 수 있는 구조가 필요합니다. FLOS는 브랜드가 세상 앞에 펼쳐지는 그 순간, 설명하지 않아도 가치와 품격이 전해지도록 돕습니다.',
+      image: 'https://images.unsplash.com/photo-1490750967868-88df5691cc7e?w=800&h=450&fit=crop&q=80'
+    },
+    {
+      num: '07',
+      title: '우린 함께 성장합니다.',
+      lead: 'FLOS는 제작으로 끝나는 관계가 아니라, 브랜드의 성장 과정에 함께하는 파트너를 지향합니다.',
+      desc: '고객과의 만남은 한 번의 납품으로 끝나지 않습니다. 우리는 브랜드가 더 많은 고객과 연결되고, 더 건강한 흐름 안에서 성장할 수 있도록 함께 고민하며 오래가는 관계를 만들어갑니다.',
+      image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&h=450&fit=crop&q=80'
+    }
+  ];
+
+  var root = document.getElementById('philosophy');
+  if (!root) return;
+
+  var nav = root.querySelector('.jp-nav');
+  var navTrack = root.querySelector('.jp-nav-track');
+  var content = root.querySelector('.jp-content');
+  var jpMain = root.querySelector('.jp-main');
+
+  philosophyData.forEach(function(item, i) {
+    var navEl = document.createElement('div');
+    navEl.className = 'jp-nav-item';
+    navEl.setAttribute('data-index', i);
+    navEl.setAttribute('data-active', i === 0 ? 'true' : 'false');
+    navEl.setAttribute('role', 'button');
+    navEl.setAttribute('aria-label', item.num + ' ' + item.title);
+    navEl.setAttribute('tabindex', '0');
+    navEl.innerHTML =
+      '<span class="jp-nav-num">' + item.num + '.</span>' +
+      '<span class="jp-nav-label">' + item.title + '</span>';
+    navTrack.appendChild(navEl);
+
+    var leadHtml = item.lead.replace(/\n/g, '<br>');
+    var contentEl = document.createElement('article');
+    contentEl.className = 'jp-content-item' + (i === philosophyData.length - 1 ? ' jp-last-align' : '');
+    contentEl.setAttribute('data-index', i);
+    contentEl.setAttribute('data-visible', 'false');
+    contentEl.setAttribute('aria-label', item.title);
+    contentEl.innerHTML =
+      '<h3 class="jp-content-title">' + item.title + '</h3>' +
+      '<p class="jp-content-lead">' + leadHtml + '</p>' +
+      '<p class="jp-content-desc">' + item.desc + '</p>' +
+      '<div class="jp-content-img">' +
+        '<img src="' + item.image + '" alt="' + item.title + ' 관련 이미지" loading="lazy">' +
+      '</div>';
+    content.appendChild(contentEl);
+  });
+
+  var navItems = nav.querySelectorAll('.jp-nav-item');
+  var contentItems = content.querySelectorAll('.jp-content-item');
+
+  var ticking = false;
+  var currentActive = -1;
+  var isMobile = false;
+  var blockSyntheticClickOnce = false;
+
+  var dragState = {
+    isDown: false,
+    startX: 0,
+    startY: 0,
+    startShift: 0,
+    currentShift: 0,
+    movedEnough: false,
+    pointerId: null
+  };
+
+  function checkMobile() {
+    isMobile = window.innerWidth <= 768;
+  }
+
+  function getOffsetTopWithin(ancestor, el) {
+    var top = 0;
+    var node = el;
+    while (node && node !== ancestor) {
+      top += node.offsetTop;
+      node = node.offsetParent;
+    }
+    return top;
+  }
+
+  function adjustLastSlideAlignment() {
+    var lastItem = contentItems[contentItems.length - 1];
+    if (!lastItem) return;
+
+    if (isMobile) {
+      lastItem.style.minHeight = '';
+      lastItem.style.paddingTop = '';
+      lastItem.style.paddingBottom = '';
+      return;
+    }
+
+    var title = lastItem.querySelector('.jp-content-title');
+    var imgWrap = lastItem.querySelector('.jp-content-img');
+    if (!title || !imgWrap) return;
+
+    var navHeight = nav.offsetHeight || 0;
+    var blockTop = title.offsetTop;
+    var blockBottom = imgWrap.offsetTop + imgWrap.offsetHeight;
+    var blockHeight = blockBottom - blockTop;
+    var paddingBottom = parseFloat(window.getComputedStyle(lastItem).paddingBottom) || 0;
+
+    var desiredPaddingTop = Math.max(80, Math.round(navHeight - blockHeight));
+    var desiredMinHeight = Math.max(window.innerHeight, desiredPaddingTop + blockHeight + paddingBottom);
+
+    lastItem.style.paddingTop = desiredPaddingTop + 'px';
+    lastItem.style.minHeight = desiredMinHeight + 'px';
+  }
+
+  function getStopNavTopInMain() {
+    var lastItem = contentItems[contentItems.length - 1];
+    var lastImg = lastItem ? lastItem.querySelector('.jp-content-img') : null;
+    if (!lastItem || !lastImg) return 0;
+
+    var lastImgBottomInMain = getOffsetTopWithin(jpMain, lastImg) + lastImg.offsetHeight;
+    return Math.max(0, lastImgBottomInMain - nav.offsetHeight);
+  }
+
+  function updateFloatingNavState() {
+    var viewportH = window.innerHeight;
+    var mainRect = jpMain.getBoundingClientRect();
+
+    if (isMobile) {
+      /* jp-main 콘텐츠 영역이 화면 안에 있을 때만 표시 */
+      var mainInView = mainRect.top < viewportH && mainRect.bottom > 0;
+
+      nav.setAttribute('data-floating', mainInView ? 'true' : 'false');
+      nav.setAttribute('data-stopped', 'false');
+      nav.style.top = '';
+      nav.style.bottom = '0';
+      return;
+    }
+
+    var navHeight = nav.offsetHeight;
+    var fixedNavTopInViewport = (viewportH - navHeight) / 2;
+    var currentFixedTopInMain = fixedNavTopInViewport - mainRect.top;
+    var stopNavTopInMain = getStopNavTopInMain();
+
+    var isBeforeMain = mainRect.top >= viewportH * 0.3;
+    var isAfterMain = mainRect.bottom <= 0;
+    var shouldStop = currentFixedTopInMain >= stopNavTopInMain;
+
+    if (isBeforeMain) {
+      nav.setAttribute('data-floating', 'false');
+      nav.setAttribute('data-stopped', 'false');
+      nav.style.top = '';
+      return;
+    }
+
+    if (isAfterMain) {
+      nav.setAttribute('data-floating', 'false');
+      nav.setAttribute('data-stopped', 'true');
+      nav.style.top = stopNavTopInMain + 'px';
+      return;
+    }
+
+    if (shouldStop) {
+      nav.setAttribute('data-floating', 'true');
+      nav.setAttribute('data-stopped', 'true');
+      nav.style.top = stopNavTopInMain + 'px';
+      return;
+    }
+
+    nav.setAttribute('data-floating', 'true');
+    nav.setAttribute('data-stopped', 'false');
+    nav.style.top = '';
+  }
+
+  function getMaxShift() {
+    var navWidth = nav.clientWidth || window.innerWidth;
+    var trackWidth = navTrack.scrollWidth || 0;
+    return Math.max(0, trackWidth - navWidth + 36);
+  }
+
+  function clampShift(value) {
+    var maxShift = getMaxShift();
+    if (value < 0) return 0;
+    if (value > maxShift) return maxShift;
+    return value;
+  }
+
+  function applyTrackShift(shift, withTransition) {
+    dragState.currentShift = clampShift(shift);
+
+    if (withTransition) {
+      navTrack.style.transition = 'transform 0.42s cubic-bezier(0.22, 1, 0.36, 1)';
+    } else {
+      navTrack.style.transition = 'none';
+    }
+
+    navTrack.style.transform = 'translate3d(' + (-dragState.currentShift) + 'px, -50%, 0)';
+  }
+
+  function moveActiveItemIntoView(activeIndex, withTransition) {
+    if (!isMobile) return;
+
+    var activeItem = navItems[activeIndex];
+    if (!activeItem) return;
+
+    var navWidth = nav.clientWidth;
+    var itemLeft = activeItem.offsetLeft;
+    var itemWidth = activeItem.offsetWidth;
+
+    var target = itemLeft - ((navWidth - itemWidth) / 2);
+    target = clampShift(target);
+
+    applyTrackShift(target, withTransition !== false);
+  }
+
+  function goToSection(idx) {
+    contentItems[idx].scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+    if (isMobile) {
+      moveActiveItemIntoView(idx, true);
+    }
+  }
+
+  function getItemFromPoint(clientX, clientY) {
+    var el = document.elementFromPoint(clientX, clientY);
+    if (!el) return null;
+    return el.closest ? el.closest('#philosophy .jp-nav-item') : null;
+  }
+
+  function beginDrag(e) {
+    dragState.isDown = true;
+    dragState.pointerId = e.pointerId || null;
+    dragState.startX = e.clientX;
+    dragState.startY = e.clientY;
+    dragState.startShift = dragState.currentShift;
+    dragState.movedEnough = false;
+
+    navTrack.classList.add('jp-dragging');
+
+    try {
+      if (dragState.pointerId != null && navTrack.setPointerCapture) {
+        navTrack.setPointerCapture(dragState.pointerId);
+      }
+    } catch (err) {}
+  }
+
+  function moveDrag(e) {
+    if (!dragState.isDown) return;
+
+    var deltaX = e.clientX - dragState.startX;
+    var deltaY = e.clientY - dragState.startY;
+
+    if (Math.abs(deltaX) > 8 && Math.abs(deltaX) > Math.abs(deltaY)) {
+      dragState.movedEnough = true;
+    }
+
+    if (dragState.movedEnough) {
+      var nextShift = dragState.startShift - deltaX;
+      applyTrackShift(nextShift, false);
+    }
+  }
+
+  function endDrag(e) {
+    if (!dragState.isDown) return;
+
+    var upTargetItem = getItemFromPoint(e.clientX, e.clientY);
+
+    navTrack.classList.remove('jp-dragging');
+    dragState.isDown = false;
+
+    if (dragState.movedEnough) {
+      blockSyntheticClickOnce = true;
+      return;
+    }
+
+    if (upTargetItem) {
+      var idx = parseInt(upTargetItem.getAttribute('data-index'), 10);
+      if (!isNaN(idx)) {
+        goToSection(idx);
+      }
+    }
+  }
+
+  function updateActiveState()
+  {
+    var viewportH = window.innerHeight;
+    var triggerPoint = viewportH * 0.4;
+    var newActive = 0;
+
+    updateFloatingNavState();
+
+    for (var i = 0; i < contentItems.length; i++) {
+      var rect = contentItems[i].getBoundingClientRect();
+      if (rect.top <= triggerPoint) {
+        newActive = i;
+      }
+    }
+
+    if (newActive !== currentActive) {
+      currentActive = newActive;
+
+      for (var j = 0; j < navItems.length; j++) {
+        navItems[j].setAttribute('data-active', j === currentActive ? 'true' : 'false');
+      }
+
+      if (isMobile && !dragState.isDown) {
+        moveActiveItemIntoView(currentActive, true);
+      }
+    }
+
+    for (var k = 0; k < contentItems.length; k++) {
+      var r = contentItems[k].getBoundingClientRect();
+      var isVisible = r.top < viewportH * 0.75 && r.bottom > viewportH * 0.15;
+      contentItems[k].setAttribute('data-visible', isVisible ? 'true' : 'false');
+    }
+
+    ticking = false;
+  }
+
+  function onScroll() {
+    if (!ticking) {
+      requestAnimationFrame(updateActiveState);
+      ticking = true;
+    }
+  }
+
+  function fullRefresh() {
+    checkMobile();
+    nav.setAttribute('data-stopped', 'false');
+    nav.setAttribute('data-floating', 'false');
+    nav.style.top = '';
+    adjustLastSlideAlignment();
+
+    if (!isMobile) {
+      navTrack.style.transition = '';
+      navTrack.style.transform = '';
+    } else {
+      moveActiveItemIntoView(currentActive >= 0 ? currentActive : 0, false);
+    }
+
+    requestAnimationFrame(updateActiveState);
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', fullRefresh, { passive: true });
+  window.addEventListener('load', fullRefresh);
+
+  navTrack.addEventListener('pointerdown', function(e) {
+    if (e.pointerType === 'mouse' && e.button !== 0) return;
+    beginDrag(e);
+  });
+
+  navTrack.addEventListener('pointermove', function(e) {
+    moveDrag(e);
+  });
+
+  navTrack.addEventListener('pointerup', function(e) {
+    endDrag(e);
+  });
+
+  navTrack.addEventListener('pointercancel', function() {
+    if (!dragState.isDown) return;
+    navTrack.classList.remove('jp-dragging');
+    dragState.isDown = false;
+  });
+
+  navTrack.addEventListener('lostpointercapture', function() {
+    if (dragState.isDown) {
+      navTrack.classList.remove('jp-dragging');
+      dragState.isDown = false;
+    }
+  });
+
+  navItems.forEach(function(navItem, idx) {
+    navItem.addEventListener('click', function(e) {
+      if (blockSyntheticClickOnce) {
+        e.preventDefault();
+        e.stopPropagation();
+        blockSyntheticClickOnce = false;
+        return;
+      }
+      goToSection(idx);
+    });
+
+    navItem.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        goToSection(idx);
+      }
+    });
+  });
+
+  var lastImgEl = contentItems[contentItems.length - 1].querySelector('img');
+  if (lastImgEl) {
+    if (lastImgEl.complete) {
+      fullRefresh();
+    } else {
+      lastImgEl.addEventListener('load', fullRefresh);
+    }
+  }
+
+  requestAnimationFrame(fullRefresh);
+})();
+</script>
+</section>
+
+
+
+
+
+    <div id="footer_template"></div>
+
+
+
+  </body>
+  <script src="./js/jquery-1.11.0.min.js"></script>
+  <script src="./js/validation1.js"> </script>
+  <script src="./js/main.js"> </script>
+  <script src="./js/footer.js"></script>
+
+</html>

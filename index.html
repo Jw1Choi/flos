@@ -1,0 +1,4020 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Premium Hero Loading</title>
+</head>
+
+<body style="margin:0;padding:0;background:#000;">
+
+<!-- <section id="flosLoading">
+  <style>
+    #flosLoading {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100vh;
+      background:
+        radial-gradient(circle at center, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 22%, rgba(0,0,0,0) 48%),
+        linear-gradient(180deg, #0a0a0a 0%, #000 100%);
+      z-index: 999999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      transition:
+        opacity 1.1s cubic-bezier(0.22, 1, 0.36, 1),
+        visibility 1.1s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 1.1s cubic-bezier(0.22, 1, 0.36, 1),
+        filter 1.1s cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: opacity, transform, filter;
+    }
+
+    #flosLoading.hidden {
+      opacity: 0;
+      visibility: hidden;
+      transform: scale(1.06);
+      filter: blur(12px);
+    }
+
+    #flosLoading::before {
+      content: "";
+      position: absolute;
+      inset: -20%;
+      background:
+        radial-gradient(circle at 50% 50%, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.025) 20%, rgba(255,255,255,0) 55%);
+      animation: flosAmbientPulse 4.6s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    #flosLoading::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        115deg,
+        rgba(255,255,255,0) 0%,
+        rgba(255,255,255,0.08) 46%,
+        rgba(255,255,255,0.0) 60%
+      );
+      transform: translateX(-140%);
+      animation: flosSweep 3.8s ease-in-out infinite;
+      pointer-events: none;
+      mix-blend-mode: screen;
+      opacity: 0.5;
+    }
+
+    #flosLoading .flos-loading-inner {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 20px 24px;
+      max-width: 900px;
+    }
+
+    #flosLoading .flos-logo-wrap {
+      position: relative;
+      display: inline-block;
+      margin-bottom: 22px;
+    }
+
+    #flosLoading .flos-logo {
+      position: relative;
+      display: inline-block;
+      font-family: "Pretendard","Noto Sans KR",sans-serif;
+      font-size: clamp(34px, 5vw, 68px);
+      font-weight: 600;
+      letter-spacing: 0.28em;
+      color: #fff;
+      opacity: 0;
+      transform: translateY(22px) scale(0.98);
+      animation: flosLogoReveal 1.35s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      text-shadow:
+        0 0 18px rgba(255,255,255,0.08),
+        0 0 40px rgba(255,255,255,0.04);
+      white-space: nowrap;
+    }
+
+    #flosLoading .flos-logo-glow {
+      position: absolute;
+      inset: 0;
+      font-family: "Pretendard","Noto Sans KR",sans-serif;
+      font-size: clamp(34px, 5vw, 68px);
+      font-weight: 600;
+      letter-spacing: 0.28em;
+      color: rgba(255,255,255,0.12);
+      filter: blur(16px);
+      transform: scale(1.04);
+      pointer-events: none;
+      user-select: none;
+      white-space: nowrap;
+      animation: flosGlowBreath 3.6s ease-in-out infinite;
+    }
+
+    #flosLoading .flos-tagline {
+      position: relative;
+      display: inline-block;
+      font-family: "Pretendard","Noto Sans KR",sans-serif;
+      font-size: clamp(14px, 1.5vw, 18px);
+      font-weight: 400;
+      letter-spacing: 0.16em;
+      color: rgba(255,255,255,0.76);
+      line-height: 1.8;
+      opacity: 0;
+      transform: translateY(18px);
+      animation: flosTaglineReveal 1.2s cubic-bezier(0.22, 1, 0.36, 1) 0.45s forwards;
+      white-space: nowrap;
+    }
+
+    #flosLoading .flos-tagline::after {
+      content: "";
+      display: block;
+      width: 0;
+      height: 1px;
+      margin: 14px auto 0;
+      background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,0.7), rgba(255,255,255,0));
+      animation: flosLineGrow 1.4s cubic-bezier(0.22, 1, 0.36, 1) 1s forwards;
+    }
+
+    #flosLoading .flos-dots {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      opacity: 0;
+      animation: flosDotsShow 0.8s ease 1.1s forwards;
+    }
+
+    #flosLoading .flos-dots span {
+      display: block;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.62);
+      animation: flosDotPulse 1.5s ease-in-out infinite;
+    }
+
+    #flosLoading .flos-dots span:nth-child(2) { animation-delay: 0.18s; }
+    #flosLoading .flos-dots span:nth-child(3) { animation-delay: 0.36s; }
+
+    #flosLoading .flos-exit-curtain {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(255,255,255,0.06) 0%, rgba(0,0,0,0) 36%, rgba(0,0,0,0.24) 100%);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 3;
+    }
+
+    #flosLoading.is-exiting .flos-exit-curtain {
+      animation: flosExitCurtain 1.1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    #flosLoading.is-exiting .flos-loading-inner {
+      animation: flosInnerExit 1.05s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    @keyframes flosLogoReveal {
+      0% {
+        opacity: 0;
+        transform: translateY(22px) scale(0.98);
+        letter-spacing: 0.45em;
+        filter: blur(8px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        letter-spacing: 0.28em;
+        filter: blur(0);
+      }
+    }
+
+    @keyframes flosTaglineReveal {
+      0% {
+        opacity: 0;
+        transform: translateY(18px);
+        filter: blur(8px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+      }
+    }
+
+    @keyframes flosLineGrow {
+      0% { width: 0; opacity: 0; }
+      100% { width: 180px; opacity: 1; }
+    }
+
+    @keyframes flosGlowBreath {
+      0%, 100% {
+        opacity: 0.45;
+        transform: scale(1.03);
+      }
+      50% {
+        opacity: 0.9;
+        transform: scale(1.07);
+      }
+    }
+
+    @keyframes flosAmbientPulse {
+      0%, 100% {
+        transform: scale(1);
+        opacity: 0.7;
+      }
+      50% {
+        transform: scale(1.08);
+        opacity: 1;
+      }
+    }
+
+    @keyframes flosSweep {
+      0% {
+        transform: translateX(-140%);
+        opacity: 0;
+      }
+      18% {
+        opacity: 0.42;
+      }
+      55% {
+        opacity: 0.32;
+      }
+      100% {
+        transform: translateX(140%);
+        opacity: 0;
+      }
+    }
+
+    @keyframes flosDotsShow {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes flosDotPulse {
+      0%, 100% {
+        opacity: 0.22;
+        transform: translateY(0) scale(1);
+      }
+      50% {
+        opacity: 1;
+        transform: translateY(-4px) scale(1.2);
+      }
+    }
+
+    @keyframes flosInnerExit {
+      0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-34px) scale(1.06);
+        filter: blur(10px);
+      }
+    }
+
+    @keyframes flosExitCurtain {
+      0% {
+        opacity: 0;
+        transform: translateY(0);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(-100%);
+      }
+    }
+
+    @media (max-width: 768px) {
+      #flosLoading .flos-logo,
+      #flosLoading .flos-logo-glow {
+        letter-spacing: 0.18em;
+      }
+
+      #flosLoading .flos-tagline {
+        font-size: 13px;
+        letter-spacing: 0.1em;
+        white-space: normal;
+      }
+
+      #flosLoading .flos-tagline::after {
+        margin-top: 12px;
+      }
+    }
+  </style>
+
+  <div class="flos-loading-inner">
+    <div class="flos-logo-wrap">
+      <div class="flos-logo-glow">FLOS</div>
+      <div class="flos-logo">FLOS</div>
+    </div>
+
+    <div class="flos-tagline">고객과의 인연을 만들어갑니다</div>
+
+    <div class="flos-dots" aria-hidden="true">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+
+  <div class="flos-exit-curtain"></div>
+
+  <script>
+    (function () {
+      var loading = document.getElementById('flosLoading');
+      if (!loading) return;
+
+      function startExit() {
+        loading.classList.add('is-exiting');
+
+        setTimeout(function () {
+          loading.classList.add('hidden');
+        }, 720);
+
+        setTimeout(function () {
+          if (loading && loading.parentNode) {
+            loading.parentNode.removeChild(loading);
+          }
+        }, 1900);
+      }
+
+      window.addEventListener('load', function () {
+        setTimeout(startExit, 2200);
+      });
+
+      setTimeout(function () {
+        if (document.body.contains(loading) && !loading.classList.contains('is-exiting')) {
+          startExit();
+        }
+      }, 5000);
+    })();
+  </script>
+</section> -->
+  
+  <div id="menu_navi"></div>
+  <script src="./js/menu3.js"></script>
+
+
+
+
+<section id="sec_visual_hero" style="margin:0;padding:0;box-sizing:border-box; opacity:1; visibility:visible; transition:opacity 0.8s ease, visibility 0.8s ease;">
+
+  <style>
+  #sec_visual_hero {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    min-height: 600px;
+    overflow: hidden;
+    background: #000;
+    font-family: 'Pretendard', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+  }
+
+  #sec_visual_hero.hero-ready {
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
+  #sec_visual_hero .hero-slides {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  #sec_visual_hero .hero-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 1s ease, visibility 1s ease;
+    z-index: 1;
+    background: #000;
+  }
+
+  #sec_visual_hero .hero-slide.active {
+    opacity: 1;
+    visibility: visible;
+    z-index: 2;
+  }
+
+  #sec_visual_hero .hero-slide .video-wrap {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #000;
+  }
+
+  #sec_visual_hero .hero-slide .video-wrap .vimeo-wrap {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #000;
+  }
+
+  #sec_visual_hero .hero-slide .video-wrap .media-layer {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.9s ease;
+    will-change: opacity;
+    z-index: 1;
+    background: #000;
+  }
+
+  #sec_visual_hero .hero-slide.video-started .video-wrap .media-layer {
+    opacity: 1;
+  }
+
+  #sec_visual_hero .hero-slide .video-wrap .preview-layer {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    opacity: 1;
+    transition: opacity 0.9s ease;
+    pointer-events: none;
+    will-change: opacity;
+    background: #000;
+  }
+
+  #sec_visual_hero .hero-slide.video-started .video-wrap .preview-layer {
+    opacity: 0;
+  }
+
+  #sec_visual_hero .hero-slide .video-wrap .preview-layer img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transform: scale(1.15);
+    backface-visibility: hidden;
+    will-change: transform;
+  }
+
+  /* 활성화될 때만 축소 애니메이션 실행 */
+  #sec_visual_hero .hero-slide.active .video-wrap .preview-layer img.preview-zoomout {
+    animation: previewZoomOut 6s ease-out forwards;
+  }
+
+  /* 영상 시작되면 애니메이션 종료 + 최종 상태 유지 */
+  #sec_visual_hero .hero-slide.video-started .preview-layer img {
+    animation: none !important;
+    transform: scale(1);
+  }
+
+  @keyframes previewZoomOut {
+    0% {
+      transform: scale(1.15);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  #sec_visual_hero .hero-slide .video-wrap .vimeo-wrap iframe {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: max(100vw, calc(100vh * 1.7777777778));
+    height: max(100vh, calc(100vw / 1.7777777778));
+    transform: translate(-50%, -50%);
+    border: 0;
+    display: block;
+    pointer-events: none;
+    opacity: 1;
+    background: #000;
+  }
+
+  #sec_visual_hero .hero-slide .video-wrap .dim-left {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 40%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0) 100%);
+    z-index: 3;
+    pointer-events: none;
+  }
+
+  #sec_visual_hero .hero-slide .video-wrap .dim-right {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40%;
+    height: 100%;
+    background: linear-gradient(to left, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0) 100%);
+    z-index: 3;
+    pointer-events: none;
+  }
+
+  #sec_visual_hero .hero-slide .txt-box {
+    position: absolute;
+    bottom: 180px;
+    left: 80px;
+    z-index: 4;
+    color: #fff;
+    max-width: 700px;
+  }
+
+  #sec_visual_hero .hero-slide .txt-box .hero-title {
+    display: block;
+    font-size: 42px;
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -0.5px;
+    color: #fff;
+    margin: 0 0 16px 0;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease 0.3s, transform 0.8s ease 0.3s;
+  }
+
+  #sec_visual_hero .hero-slide .txt-box .hero-sub {
+    display: block;
+    font-size: 20px;
+    font-weight: 300;
+    line-height: 1.6;
+    color: rgba(255,255,255,0.85);
+    margin: 0;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease 0.6s, transform 0.8s ease 0.6s;
+  }
+
+  #sec_visual_hero .hero-slide.active .txt-box .hero-title {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  #sec_visual_hero .hero-slide.active .txt-box .hero-sub {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  #sec_visual_hero .control-box {
+    position: absolute;
+    bottom: 120px;
+    left: 80px;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  #sec_visual_hero .control-box .pagination {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+
+  #sec_visual_hero .control-box .pagination .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.4);
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: background 0.3s ease, transform 0.3s ease;
+    outline: none;
+  }
+
+  #sec_visual_hero .control-box .pagination .dot:hover {
+    background: rgba(255,255,255,0.7);
+  }
+
+  #sec_visual_hero .control-box .pagination .dot.active {
+    background: #fff;
+    transform: scale(1.3);
+  }
+
+  #sec_visual_hero .control-box .play-pause-btn {
+    width: 36px;
+    height: 36px;
+    border: 2px solid rgba(255,255,255,0.6);
+    border-radius: 50%;
+    background: transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: border-color 0.3s ease;
+    outline: none;
+    flex-shrink: 0;
+  }
+
+  #sec_visual_hero .control-box .play-pause-btn:hover {
+    border-color: #fff;
+  }
+
+  #sec_visual_hero .control-box .play-pause-btn svg {
+    fill: rgba(255,255,255,0.9);
+    width: 12px;
+    height: 12px;
+  }
+
+  #sec_visual_hero .control-box .play-pause-btn .icon-play {
+    display: none;
+  }
+
+  #sec_visual_hero .control-box .play-pause-btn .icon-pause {
+    display: block;
+  }
+
+  #sec_visual_hero .control-box .play-pause-btn.paused .icon-play {
+    display: block;
+  }
+
+  #sec_visual_hero .control-box .play-pause-btn.paused .icon-pause {
+    display: none;
+  }
+
+  #sec_visual_hero .bottom-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+    display: flex;
+    align-items: stretch;
+    height: 60px;
+  }
+
+  #sec_visual_hero .bottom-bar .progress-area {
+    flex: 1;
+    position: relative;
+    background: rgba(255,255,255,0.12);
+    overflow: hidden;
+  }
+
+  #sec_visual_hero .bottom-bar .progress-current {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: rgba(255,255,255,0.25);
+    width: 0%;
+    transition: width 0.1s linear;
+  }
+
+  #sec_visual_hero .bottom-bar .progress-active {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: rgba(255,255,255,0.5);
+    width: 0%;
+  }
+
+  #sec_visual_hero .bottom-bar .company-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 40px;
+    background: rgba(0,0,0,0.5);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background 0.3s ease;
+    border: none;
+    cursor: pointer;
+    gap: 8px;
+  }
+
+  #sec_visual_hero .bottom-bar .company-link:hover {
+    background: rgba(0,0,0,0.7);
+  }
+
+  #sec_visual_hero .bottom-bar .company-link svg {
+    width: 16px;
+    height: 16px;
+    fill: #fff;
+    flex-shrink: 0;
+  }
+
+  #sec_visual_hero .slide-counter {
+    position: absolute;
+    bottom: 124px;
+    right: 80px;
+    z-index: 10;
+    color: rgba(255,255,255,0.7);
+    font-size: 14px;
+    font-weight: 300;
+    letter-spacing: 2px;
+  }
+
+  #sec_visual_hero .slide-counter .current-num {
+    color: #fff;
+    font-weight: 600;
+    font-size: 18px;
+  }
+
+  #sec_visual_hero .hero-fadein {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+
+  #sec_visual_hero .hero-fadein.fade-left {
+    transform: translateX(-40px);
+  }
+
+  #sec_visual_hero .hero-fadein.fade-right {
+    transform: translateX(40px);
+  }
+
+  #sec_visual_hero .hero-fadein.fade-up {
+    transform: translateY(30px);
+  }
+
+  #sec_visual_hero.in-view .hero-fadein {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+
+  #sec_visual_hero.in-view .hero-fadein.delay-1 {
+    transition-delay: 0.15s;
+  }
+
+  #sec_visual_hero.in-view .hero-fadein.delay-2 {
+    transition-delay: 0.3s;
+  }
+
+  #sec_visual_hero.in-view .hero-fadein.delay-3 {
+    transition-delay: 0.45s;
+  }
+
+  @media screen and (max-width: 1024px) {
+    #sec_visual_hero .hero-slide .txt-box {
+      left: 40px;
+      bottom: 160px;
+    }
+    #sec_visual_hero .hero-slide .txt-box .hero-title {
+      font-size: 38px;
+    }
+    #sec_visual_hero .hero-slide .txt-box .hero-sub {
+      font-size: 17px;
+    }
+    #sec_visual_hero .control-box {
+      left: 40px;
+      bottom: 100px;
+    }
+    #sec_visual_hero .slide-counter {
+      right: 40px;
+      bottom: 104px;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    #sec_visual_hero {
+      min-height: 500px;
+    }
+    #sec_visual_hero .hero-slide .txt-box {
+      left: 24px;
+      right: 24px;
+      bottom: 150px;
+      max-width: none;
+    }
+    #sec_visual_hero .hero-slide .txt-box .hero-title {
+      font-size: 28px;
+    }
+    #sec_visual_hero .hero-slide .txt-box .hero-sub {
+      font-size: 15px;
+    }
+    #sec_visual_hero .control-box {
+      left: 24px;
+      bottom: 90px;
+    }
+    #sec_visual_hero .slide-counter {
+      right: 24px;
+      bottom: 94px;
+    }
+    #sec_visual_hero .bottom-bar .company-link {
+      padding: 0 20px;
+      font-size: 12px;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    #sec_visual_hero .hero-slide .txt-box .hero-title {
+      font-size: 24px;
+    }
+    #sec_visual_hero .hero-slide .txt-box .hero-sub {
+      font-size: 14px;
+    }
+  }
+  </style>
+
+  <div class="hero-slides">
+
+    <!-- 슬라이드 1 -->
+    <div class="hero-slide active" data-index="0" data-media="vimeo" data-vimeo-id="1174411177">
+      <div class="video-wrap">
+        <div class="media-layer">
+          <div class="vimeo-wrap">
+            <iframe
+              class="vimeo-iframe"
+              allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+              referrerpolicy="strict-origin-when-cross-origin"
+              loading="eager"
+              title="브랜딩 홈페이지 영상">
+            </iframe>
+          </div>
+        </div>
+
+        <div class="preview-layer">
+          <img src="./img/eyes.jpg" alt="브랜딩 홈페이지 미리보기">
+        </div>
+
+        <div class="dim-left"></div>
+        <div class="dim-right"></div>
+      </div>
+
+      <div class="txt-box">
+        <strong class="hero-title">품격과 신뢰를 주는 브랜딩 홈페이지</strong>
+        <span class="hero-sub">품격을 더해 기업의 가치를 감각적으로 느끼게 만들어<br>긴 말 필요없이 기업의 신뢰를 한층 높여 드립니다.</span>
+      </div>
+    </div>
+
+    <!-- 슬라이드 2 -->
+    <div class="hero-slide" data-index="1" data-media="vimeo" data-vimeo-id="1184975601">
+      <div class="video-wrap">
+        <div class="media-layer">
+          <div class="vimeo-wrap">
+            <iframe
+              class="vimeo-iframe"
+              allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+              referrerpolicy="strict-origin-when-cross-origin"
+              loading="eager"
+              title="랜딩페이지 영상">
+            </iframe>
+          </div>
+        </div>
+
+        <div class="preview-layer">
+          <img src="./img/index-2.jpg" alt="랜딩페이지 미리보기">
+        </div>
+
+        <div class="dim-left"></div>
+        <div class="dim-right"></div>
+      </div>
+
+      <div class="txt-box">
+        <strong class="hero-title">고객의 참여와 구매를<br>이끌어내는 랜딩페이지</strong>
+        <span class="hero-sub">고객의 참여와 구매를 통해<br>비즈니스 가치를 만들어냅니다.</span>
+      </div>
+    </div>
+
+    <!-- 슬라이드 3 -->
+    <div class="hero-slide" data-index="2" data-media="vimeo" data-vimeo-id="1184975577">
+      <div class="video-wrap">
+        <div class="media-layer">
+          <div class="vimeo-wrap">
+            <iframe
+              class="vimeo-iframe"
+              allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+              referrerpolicy="strict-origin-when-cross-origin"
+              loading="eager"
+              title="AI 영상">
+            </iframe>
+          </div>
+        </div>
+
+        <div class="preview-layer">
+          <img src="./img/index-4.jpg" alt="AI 영상 미리보기">
+        </div>
+
+        <div class="dim-left"></div>
+        <div class="dim-right"></div>
+      </div>
+
+      <div class="txt-box">
+        <strong class="hero-title">감성을 전달하는 AI 영상</strong>
+        <span class="hero-sub">브랜딩 영상 / 행사 영상 / 추억 사진</span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="control-box hero-fadein fade-up delay-2">
+    <div class="pagination">
+      <button class="dot active" data-slide="0" aria-label="슬라이드 1"></button>
+      <button class="dot" data-slide="1" aria-label="슬라이드 2"></button>
+      <button class="dot" data-slide="2" aria-label="슬라이드 3"></button>
+    </div>
+    <button class="play-pause-btn" aria-label="재생/멈춤">
+      <svg class="icon-pause" viewBox="0 0 12 14" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="4" height="14" rx="1"/>
+        <rect x="8" y="0" width="4" height="14" rx="1"/>
+      </svg>
+      <svg class="icon-play" viewBox="0 0 12 14" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="0,0 12,7 0,14"/>
+      </svg>
+    </button>
+  </div>
+
+  <div class="slide-counter hero-fadein fade-right delay-3">
+    <span class="current-num">01</span> / 03
+  </div>
+
+  <div class="bottom-bar hero-fadein fade-up delay-3">
+    <div class="progress-area">
+      <div class="progress-current"></div>
+      <div class="progress-active"></div>
+    </div>
+    <a href="./introduce.html" class="company-link">
+      회사소개 바로가기
+      <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+        <path d="M6 3l5 5-5 5" stroke="#fff" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+  </div>
+
+  <script src="https://player.vimeo.com/api/player.js"></script>
+
+  <script>
+  (function() {
+    var section = document.getElementById('sec_visual_hero');
+    if (!section) return;
+
+    var slides = Array.prototype.slice.call(section.querySelectorAll('.hero-slide'));
+    var dots = section.querySelectorAll('.control-box .dot');
+    var playPauseBtn = section.querySelector('.play-pause-btn');
+    var progressActive = section.querySelector('.progress-active');
+    var progressCurrent = section.querySelector('.progress-current');
+    var counterNum = section.querySelector('.slide-counter .current-num');
+
+    var currentIndex = 0;
+    var totalSlides = slides.length;
+    var isPlaying = true;
+    var slideDuration = 6000;
+    var progressStart = 0;
+    var animFrameId = null;
+
+    var vimeoPlayers = {};
+    var vimeoState = {};
+
+    function getVimeoSrc(id) {
+      return 'https://player.vimeo.com/video/' + id + '?background=1&autoplay=0&muted=1&loop=1&autopause=0&controls=0&badge=0&playsinline=1';
+    }
+
+    function revealHeroImmediately() {
+      section.classList.add('hero-ready');
+      section.classList.add('in-view');
+    }
+
+    function getSegmentWidth() {
+      return totalSlides > 0 ? 100 / totalSlides : 100;
+    }
+
+    function markSlideVideoStarted(idx) {
+      var slide = slides[idx];
+      if (!slide) return;
+      if (slide.classList.contains('video-started')) return;
+      slide.classList.add('video-started');
+      if (vimeoState[idx]) vimeoState[idx].started = true;
+    }
+
+    function applyIframeSrcFromData(slide) {
+      var iframe = slide.querySelector('.vimeo-iframe');
+      var vimeoId = slide.getAttribute('data-vimeo-id');
+      if (!iframe || !vimeoId) return;
+      iframe.src = getVimeoSrc(vimeoId);
+    }
+
+    function buildVimeoPlayer(slide, idx) {
+      var iframe = slide.querySelector('.vimeo-iframe');
+      if (!iframe || !window.Vimeo) return;
+
+      try {
+        var player = new Vimeo.Player(iframe, {
+          autopause: false,
+          muted: true,
+          loop: true,
+          controls: false,
+          background: true
+        });
+
+        vimeoPlayers[idx] = player;
+        vimeoState[idx] = {
+          ready: false,
+          started: false,
+          playedOnce: false
+        };
+
+        player.ready().then(function() {
+          vimeoState[idx].ready = true;
+          player.setVolume(0).catch(function(){});
+          player.setLoop(true).catch(function(){});
+          player.setMuted(true).catch(function(){});
+        }).catch(function(){});
+
+        player.on('playing', function() {
+          markSlideVideoStarted(idx);
+          vimeoState[idx].playedOnce = true;
+        });
+
+        player.on('timeupdate', function(data) {
+          if (data && data.seconds > 0.05) {
+            markSlideVideoStarted(idx);
+            vimeoState[idx].playedOnce = true;
+          }
+        });
+
+      } catch (e) {}
+    }
+
+    function initPlayers() {
+      slides.forEach(function(slide, idx) {
+        applyIframeSrcFromData(slide);
+        buildVimeoPlayer(slide, idx);
+      });
+    }
+
+    function warmupAllPlayers() {
+      slides.forEach(function(slide, idx) {
+        var player = vimeoPlayers[idx];
+        if (!player) return;
+
+        player.play().then(function() {
+          return player.pause();
+        }).catch(function(){});
+      });
+    }
+
+    function pauseAllMedia() {
+      slides.forEach(function(slide, idx) {
+        var vp = vimeoPlayers[idx];
+        if (!vp) return;
+        vp.pause().catch(function(){});
+      });
+    }
+
+    function playCurrentMedia() {
+      var vp = vimeoPlayers[currentIndex];
+      if (!vp) return;
+
+      vp.setVolume(0).catch(function(){});
+      vp.play().catch(function(){});
+    }
+
+    function pauseCurrentMediaOnly() {
+      var vp = vimeoPlayers[currentIndex];
+      if (!vp) return;
+      vp.pause().catch(function(){});
+    }
+
+    function updateCounter() {
+      var num = currentIndex + 1;
+      if (counterNum) counterNum.textContent = num < 10 ? '0' + num : num;
+    }
+
+    function restartPreviewZoom(idx) {
+      var slide = slides[idx];
+      if (!slide) return;
+
+      var img = slide.querySelector('.preview-layer img');
+      if (!img) return;
+
+      slide.classList.remove('video-started');
+      img.classList.remove('preview-zoomout');
+
+      void img.offsetWidth;
+
+      img.style.transform = 'scale(1.15)';
+      img.classList.add('preview-zoomout');
+    }
+
+    function resetInactivePreviewZoom(exceptIdx) {
+      slides.forEach(function(slide, idx) {
+        if (idx === exceptIdx) return;
+
+        var img = slide.querySelector('.preview-layer img');
+        if (!img) return;
+
+        img.classList.remove('preview-zoomout');
+        img.style.transform = 'scale(1.15)';
+      });
+    }
+
+    function updateDots() {
+      for (var i = 0; i < totalSlides; i++) {
+        slides[i].classList.remove('active');
+        if (dots[i]) dots[i].classList.remove('active');
+      }
+      slides[currentIndex].classList.add('active');
+      if (dots[currentIndex]) dots[currentIndex].classList.add('active');
+
+      resetInactivePreviewZoom(currentIndex);
+      restartPreviewZoom(currentIndex);
+    }
+
+    function resetProgressBase() {
+      var filledWidth = currentIndex * getSegmentWidth();
+      if (progressCurrent) {
+        progressCurrent.style.width = filledWidth + '%';
+        progressCurrent.style.transition = 'none';
+      }
+      if (progressActive) {
+        progressActive.style.transition = 'none';
+        progressActive.style.width = filledWidth + '%';
+      }
+    }
+
+    function startProgress() {
+      if (!progressActive) return;
+
+      cancelAnimationFrame(animFrameId);
+      progressStart = Date.now();
+
+      var baseOffset = currentIndex * getSegmentWidth();
+      var segWidth = getSegmentWidth();
+
+      progressActive.style.transition = 'none';
+      progressActive.style.width = baseOffset + '%';
+
+      function tick() {
+        if (!isPlaying) return;
+
+        var elapsed = Date.now() - progressStart;
+        var ratio = Math.min(elapsed / slideDuration, 1);
+        var currentWidth = baseOffset + (segWidth * ratio);
+        progressActive.style.width = currentWidth + '%';
+
+        if (ratio >= 1) {
+          nextSlide();
+          return;
+        }
+
+        animFrameId = requestAnimationFrame(tick);
+      }
+
+      animFrameId = requestAnimationFrame(tick);
+    }
+
+    function goToSlide(index) {
+      if (!totalSlides) return;
+
+      cancelAnimationFrame(animFrameId);
+      pauseAllMedia();
+
+      currentIndex = index;
+      updateDots();
+      updateCounter();
+      resetProgressBase();
+
+      if (isPlaying) {
+        playCurrentMedia();
+        startProgress();
+      }
+    }
+
+    function nextSlide() {
+      var next = (currentIndex + 1) % totalSlides;
+      goToSlide(next);
+    }
+
+    for (var d = 0; d < dots.length; d++) {
+      (function(idx) {
+        dots[idx].addEventListener('click', function() {
+          goToSlide(idx);
+        });
+      })(d);
+    }
+
+    if (playPauseBtn) {
+      playPauseBtn.addEventListener('click', function() {
+        if (isPlaying) {
+          isPlaying = false;
+          playPauseBtn.classList.add('paused');
+          cancelAnimationFrame(animFrameId);
+          pauseCurrentMediaOnly();
+        } else {
+          isPlaying = true;
+          playPauseBtn.classList.remove('paused');
+          restartPreviewZoom(currentIndex);
+          playCurrentMedia();
+          startProgress();
+        }
+      });
+    }
+
+    function preloadPreviewImages() {
+      slides.forEach(function(slide) {
+        var img = slide.querySelector('.preview-layer img');
+        if (!img || !img.getAttribute('src')) return;
+        var preImg = new Image();
+        preImg.src = img.getAttribute('src');
+      });
+    }
+
+    revealHeroImmediately();
+    preloadPreviewImages();
+    initPlayers();
+
+    setTimeout(function() {
+      warmupAllPlayers();
+      goToSlide(0);
+    }, 300);
+  })();
+  </script>
+
+</section>
+
+  
+<section id="BusinessScrollSection" aria-label="사업영역 스크롤 비주얼 섹션">
+  <style>
+    #BusinessScrollSection {
+      --bg: #e9e9e9;
+      --card-w-start: min(92vw, 1540px);
+      --card-h-start: min(79vh, 820px);
+      --side-left: clamp(22px, 4vw, 56px);
+      --side-right: clamp(28px, 6vw, 120px);
+      --top-gap: clamp(40px, 8vh, 94px);
+      --bottom-gap: clamp(40px, 7vh, 82px);
+      --white: #ffffff;
+      --line: rgba(255, 255, 255, 0.7);
+      --dim: rgba(0, 0, 0, 0.34);
+      --dim-strong: rgba(0, 0, 0, 0.48);
+      --icon-off: rgba(255, 255, 255, 0.86);
+      --green: #7de04d;
+      --shadow: 0 26px 80px rgba(0, 0, 0, 0.16);
+      --radius-start: 28px;
+      --radius-end: 0px;
+      --transition-slide: 0.96s cubic-bezier(0.22, 1, 0.36, 1);
+      --transition-content: 0.86s cubic-bezier(0.22, 0.61, 0.36, 1);
+      position: relative;
+      width: 100%;
+      background: var(--bg);
+      padding: clamp(28px, 4vw, 56px) 0 0;
+      overflow: clip;
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
+      font-family: Pretendard, "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      color: var(--white);
+      box-sizing: border-box;
+    }
+
+    #BusinessScrollSection *,
+    #BusinessScrollSection *::before,
+    #BusinessScrollSection *::after {
+      box-sizing: border-box;
+    }
+
+    #BusinessScrollSection .bgfbsr-sticky-shell {
+      position: relative;
+      width: 100%;
+      height: 760vh;
+      overscroll-behavior: contain;
+    }
+
+    #BusinessScrollSection .bgfbsr-sticky {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      touch-action: pan-y;
+    }
+
+    #BusinessScrollSection .bgfbsr-frame {
+      position: relative;
+      width: var(--card-w-start);
+      height: var(--card-h-start);
+      background: #111;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      isolation: isolate;
+      transform: translateZ(0);
+      will-change: transform, width, height, border-radius;
+      backface-visibility: hidden;
+      border-radius: var(--radius-start);
+      contain: layout paint style;
+    }
+
+    #BusinessScrollSection .bgfbsr-frame.is-expanding {
+      transition: none;
+    }
+
+    #BusinessScrollSection .bgfbsr-slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      will-change: transform, opacity;
+      transform: translate3d(0, 100%, 0);
+      z-index: 1;
+      backface-visibility: hidden;
+      transition:
+        transform var(--transition-slide),
+        opacity 0.66s cubic-bezier(0.22, 1, 0.36, 1),
+        visibility 0.66s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    #BusinessScrollSection .bgfbsr-slide.is-active {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transform: translate3d(0, 0, 0);
+      z-index: 3;
+    }
+
+    #BusinessScrollSection .bgfbsr-slide.is-exiting-up {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: none;
+      transform: translate3d(0, -100%, 0);
+      z-index: 4;
+    }
+
+    #BusinessScrollSection .bgfbsr-slide.is-exiting-down {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: none;
+      transform: translate3d(0, 100%, 0);
+      z-index: 4;
+    }
+
+    #BusinessScrollSection .bgfbsr-slide.is-above {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transform: translate3d(0, -100%, 0);
+      z-index: 1;
+    }
+
+    #BusinessScrollSection .bgfbsr-slide.is-below {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transform: translate3d(0, 100%, 0);
+      z-index: 1;
+    }
+
+    #BusinessScrollSection .bgfbsr-bg,
+    #BusinessScrollSection .bgfbsr-bg::after,
+    #BusinessScrollSection .bgfbsr-bg::before {
+      position: absolute;
+      inset: 0;
+      content: "";
+    }
+
+    #BusinessScrollSection .bgfbsr-bg {
+      background-position: center center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      transform: scale(1.115) translate3d(0, 8%, 0);
+      will-change: transform, filter;
+      backface-visibility: hidden;
+      transition:
+        transform 1.28s cubic-bezier(0.22, 1, 0.36, 1),
+        filter 0.92s cubic-bezier(0.22, 1, 0.36, 1);
+      filter: brightness(0.78) saturate(1.05);
+      overflow: hidden;
+      background-color: #111;
+    }
+
+    #BusinessScrollSection .bgfbsr-slide.is-active .bgfbsr-bg {
+      transform: scale(1.04) translate3d(0, 0, 0);
+      filter: brightness(0.87) saturate(1.1);
+    }
+
+    #BusinessScrollSection .bgfbsr-slide.is-exiting-up .bgfbsr-bg {
+      transform: scale(1.045) translate3d(0, -5%, 0);
+      filter: brightness(0.73) saturate(0.97);
+    }
+
+    #BusinessScrollSection .bgfbsr-slide.is-exiting-down .bgfbsr-bg {
+      transform: scale(1.045) translate3d(0, 5%, 0);
+      filter: brightness(0.73) saturate(0.97);
+    }
+
+    #BusinessScrollSection .bgfbsr-bg::before {
+      background:
+        linear-gradient(90deg, rgba(0,0,0,0.44) 0%, rgba(0,0,0,0.24) 22%, rgba(0,0,0,0.1) 48%, rgba(0,0,0,0.28) 100%);
+      z-index: 6;
+      pointer-events: none;
+    }
+
+    #BusinessScrollSection .bgfbsr-bg::after {
+      background:
+        linear-gradient(180deg, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.04) 30%, rgba(0,0,0,0.22) 100%);
+      z-index: 7;
+      pointer-events: none;
+    }
+
+    /* Vimeo 배경 */
+    #BusinessScrollSection .bgfbsr-vimeo-wrap {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      overflow: hidden;
+      background: #111;
+    }
+
+    #BusinessScrollSection .bgfbsr-vimeo-poster {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      transform: scale(1.02);
+      opacity: 1;
+      visibility: visible;
+      transition: opacity 1s ease, transform 1.2s ease, visibility 1s ease;
+      will-change: opacity, transform;
+      pointer-events: none;
+    }
+
+    #BusinessScrollSection .bgfbsr-vimeo-wrap.is-playing .bgfbsr-vimeo-poster {
+      opacity: 0;
+      transform: scale(1);
+      visibility: hidden;
+    }
+
+    #BusinessScrollSection .bgfbsr-vimeo-iframe-wrap {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      opacity: 1;
+      transition: none;
+      background: transparent;
+      overflow: hidden;
+    }
+
+    #BusinessScrollSection .bgfbsr-vimeo-iframe-wrap iframe {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 177.77777778vh;
+      height: 100vh;
+      min-width: 100%;
+      min-height: 56.25vw;
+      transform: translate(-50%, -50%);
+      border: 0;
+      pointer-events: none;
+      display: block;
+      background: transparent;
+      opacity: 1;
+    }
+
+    #BusinessScrollSection .bgfbsr-inner {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      height: 100%;
+    }
+
+    #BusinessScrollSection .bgfbsr-topcopy {
+      position: absolute;
+      top: var(--top-gap);
+      left: clamp(54px, 8vw, 132px);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      text-shadow: 0 2px 16px rgba(0, 0, 0, 0.22);
+      transition: opacity 0.45s ease, transform 0.6s ease;
+    }
+
+    #BusinessScrollSection .bgfbsr-topcopy span {
+      display: block;
+      font-size: clamp(22px, 2.45vw, 34px);
+      font-weight: 700;
+      line-height: 1.24;
+      letter-spacing: -0.035em;
+    }
+
+    #BusinessScrollSection .bgfbsr-rail {
+      position: absolute;
+      left: var(--side-left);
+      top: 45%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+      z-index: 20;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    #BusinessScrollSection .bgfbsr-rail-btn {
+      width: 52px;
+      height: 52px;
+      border: 0;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      color: var(--icon-off);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      padding: 0;
+      transition:
+        transform 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+        background-color 0.32s ease,
+        color 0.28s ease,
+        box-shadow 0.32s ease,
+        opacity 0.28s ease;
+      opacity: 0.98;
+      will-change: transform;
+    }
+
+    #BusinessScrollSection .bgfbsr-rail-btn:hover {
+      transform: scale(1.08);
+      background: rgba(255,255,255,0.16);
+    }
+
+    #BusinessScrollSection .bgfbsr-rail-btn.is-active {
+      background: #f2f2f26e;
+      color: var(--white);
+      box-shadow: 0 8px 28px rgba(125, 224, 77, 0.32);
+      transform: scale(1);
+    }
+
+    #BusinessScrollSection .bgfbsr-rail-btn.is-active:hover {
+      transform: scale(1.04);
+    }
+
+    #BusinessScrollSection .bgfbsr-rail-btn svg {
+      width: 26px;
+      height: 26px;
+      display: block;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    #BusinessScrollSection .bgfbsr-copy {
+      position: absolute;
+      right: var(--side-right);
+      bottom: var(--bottom-gap);
+      width: min(45vw, 690px);
+      text-shadow: 0 2px 18px rgba(0, 0, 0, 0.2);
+      transition: opacity 0.45s ease, transform 0.6s ease;
+    }
+
+    #BusinessScrollSection .bgfbsr-link {
+      display: block;
+      color: inherit;
+      text-decoration: none;
+    }
+
+    #BusinessScrollSection .bgfbsr-title {
+      margin: 0;
+      font-size: clamp(32px, 4vw, 72px);
+      font-weight: 800;
+      line-height: 1.16;
+      letter-spacing: -0.055em;
+      word-break: keep-all;
+    }
+
+    #BusinessScrollSection .bgfbsr-line {
+      display: block;
+      width: 100%;
+      height: 1px;
+      margin: clamp(22px, 2.2vw, 30px) 0 clamp(24px, 2.3vw, 32px);
+      background: var(--line);
+      transform-origin: left center;
+      transform: scaleX(0);
+      opacity: 0;
+      transition:
+        transform 0.92s cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 0.46s ease;
+    }
+
+    #BusinessScrollSection .bgfbsr-slide.is-active .bgfbsr-line {
+      transform: scaleX(1);
+      opacity: 1;
+      transition-delay: 0.18s;
+    }
+
+    #BusinessScrollSection .bgfbsr-desc {
+      margin: 0;
+      font-size: clamp(16px, 1.18vw, 26px);
+      line-height: 1.72;
+      letter-spacing: -0.03em;
+      font-weight: 500;
+      word-break: keep-all;
+    }
+
+    #BusinessScrollSection .bgfbsr-arrow {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: clamp(24px, 2.8vw, 38px);
+      width: 38px;
+      height: 38px;
+      color: #fff;
+      transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s ease;
+    }
+
+    #BusinessScrollSection .bgfbsr-arrow svg {
+      width: 34px;
+      height: 34px;
+      display: block;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.9;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    #BusinessScrollSection .bgfbsr-link:hover .bgfbsr-arrow {
+      transform: translateX(8px);
+    }
+
+    #BusinessScrollSection .bgfbsr-progress {
+      position: absolute;
+      right: clamp(50px, 2vw, 30px);
+      bottom: clamp(18px, 2vw, 28px);
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: rgba(255, 255, 255, 0.96);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+
+    #BusinessScrollSection .bgfbsr-frame[data-expand-phase="intro"] .bgfbsr-rail {
+      opacity: 1;
+      transform: translateY(-50%);
+      pointer-events: auto;
+    }
+
+    #BusinessScrollSection .bgfbsr-frame[data-expand-phase="intro"] .bgfbsr-progress {
+      opacity: 0;
+      transform: translateY(16px);
+      pointer-events: none;
+    }
+
+    #BusinessScrollSection .bgfbsr-frame[data-expand-phase="intro"] .bgfbsr-topcopy,
+    #BusinessScrollSection .bgfbsr-frame[data-expand-phase="intro"] .bgfbsr-copy {
+      opacity: 0.92;
+    }
+
+    #BusinessScrollSection .bgfbsr-anim {
+      opacity: 0;
+      will-change: transform, opacity;
+      backface-visibility: hidden;
+    }
+
+    #BusinessScrollSection .bgfbsr-slide.is-active .bgfbsr-fade-up {
+      animation: bgfbsrFadeUp 0.78s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    #BusinessScrollSection .bgfbsr-slide.is-active .bgfbsr-fade-right {
+      animation: bgfbsrFadeRight 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    #BusinessScrollSection .bgfbsr-slide.is-active .bgfbsr-fade-left {
+      animation: bgfbsrFadeLeft 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    #BusinessScrollSection .bgfbsr-slide.is-active .bgfbsr-delay-1 { animation-delay: 0.08s; }
+    #BusinessScrollSection .bgfbsr-slide.is-active .bgfbsr-delay-2 { animation-delay: 0.16s; }
+    #BusinessScrollSection .bgfbsr-slide.is-active .bgfbsr-delay-3 { animation-delay: 0.24s; }
+    #BusinessScrollSection .bgfbsr-slide.is-active .bgfbsr-delay-4 { animation-delay: 0.32s; }
+
+    @keyframes bgfbsrFadeUp {
+      0% { opacity: 0; transform: translate3d(0, 30px, 0); }
+      100% { opacity: 1; transform: translate3d(0, 0, 0); }
+    }
+
+    @keyframes bgfbsrFadeRight {
+      0% { opacity: 0; transform: translate3d(-26px, 0, 0); }
+      100% { opacity: 1; transform: translate3d(0, 0, 0); }
+    }
+
+    @keyframes bgfbsrFadeLeft {
+      0% { opacity: 0; transform: translate3d(26px, 0, 0); }
+      100% { opacity: 1; transform: translate3d(0, 0, 0); }
+    }
+
+    @media (max-width: 1280px) {
+      #BusinessScrollSection {
+        --card-w-start: min(95vw, 1440px);
+        --card-h-start: min(76vh, 760px);
+        --side-right: clamp(24px, 5vw, 88px);
+      }
+      #BusinessScrollSection .bgfbsr-copy { width: min(50vw, 620px); }
+    }
+
+    @media (max-width: 991px) {
+      #BusinessScrollSection {
+        --card-w-start: calc(100vw - 30px);
+        --card-h-start: min(84vh, 840px);
+        --side-left: 14px;
+        --side-right: 24px;
+        --top-gap: 32px;
+        --bottom-gap: 40px;
+      }
+      #BusinessScrollSection .bgfbsr-topcopy { left: 28px; right: 28px; }
+      #BusinessScrollSection .bgfbsr-topcopy span { font-size: clamp(18px, 4.6vw, 30px); }
+      #BusinessScrollSection .bgfbsr-rail { left: 12px; gap: 12px; }
+      #BusinessScrollSection .bgfbsr-rail-btn { width: 42px; height: 42px; }
+      #BusinessScrollSection .bgfbsr-rail-btn svg { width: 22px; height: 22px; }
+      #BusinessScrollSection .bgfbsr-copy { left: 28px; right: 24px; bottom: 34px; width: auto; }
+      #BusinessScrollSection .bgfbsr-title { font-size: clamp(28px, 7vw, 52px); }
+      #BusinessScrollSection .bgfbsr-desc { font-size: clamp(14px, 2.2vw, 18px); line-height: 1.65; }
+    }
+
+    @media (max-width: 640px) {
+      #BusinessScrollSection {
+        padding: 14px 0 0;
+        --card-w-start: calc(100vw - 18px);
+        --card-h-start: min(86vh, 760px);
+        --top-gap: 24px;
+        --bottom-gap: 28px;
+        --radius-start: 20px;
+      }
+      #BusinessScrollSection .bgfbsr-sticky-shell { height: 820vh; }
+      #BusinessScrollSection .bgfbsr-bg::before {
+        background: linear-gradient(180deg, rgba(0,0,0,0.38) 0%, rgba(0,0,0,0.22) 28%, rgba(0,0,0,0.36) 100%);
+      }
+      #BusinessScrollSection .bgfbsr-topcopy { left: 20px; right: 20px; gap: 4px; }
+      #BusinessScrollSection .bgfbsr-topcopy span { font-size: 17px; line-height: 1.32; }
+      #BusinessScrollSection .bgfbsr-rail {
+        left: 10px;
+        top: 25%;
+        bottom: 22px;
+        transform: none;
+        flex-direction: column;
+        gap: 10px;
+      }
+      #BusinessScrollSection .bgfbsr-frame[data-expand-phase="intro"] .bgfbsr-rail {
+        transform: none;
+      }
+      #BusinessScrollSection .bgfbsr-copy { left: 20px; right: 20px; bottom: 26px; }
+      #BusinessScrollSection .bgfbsr-title { font-size: 24px; line-height: 1.22; width: 95%; }
+      #BusinessScrollSection .bgfbsr-line { margin: 16px 0 18px; }
+      #BusinessScrollSection .bgfbsr-desc { font-size: 13px; line-height: 1.62; width: 95%; }
+      #BusinessScrollSection .bgfbsr-arrow { margin-top: 16px; width: 28px; height: 28px; }
+      #BusinessScrollSection .bgfbsr-arrow svg { width: 26px; height: 26px; }
+      #BusinessScrollSection .bgfbsr-progress { right: 14px; bottom: 12px; font-size: 12px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #BusinessScrollSection .bgfbsr-slide,
+      #BusinessScrollSection .bgfbsr-bg,
+      #BusinessScrollSection .bgfbsr-line,
+      #BusinessScrollSection .bgfbsr-rail-btn,
+      #BusinessScrollSection .bgfbsr-arrow,
+      #BusinessScrollSection .bgfbsr-vimeo-poster,
+      #BusinessScrollSection .bgfbsr-vimeo-iframe-wrap {
+        transition: none !important;
+        animation: none !important;
+      }
+      #BusinessScrollSection .bgfbsr-anim { opacity: 1; }
+    }
+  </style>
+
+  <div class="bgfbsr-sticky-shell" data-bgfbsr-shell>
+    <div class="bgfbsr-sticky">
+      <div class="bgfbsr-frame" data-bgfbsr-frame data-expand-phase="intro">
+
+        <!-- 1번 슬라이드 : Vimeo -->
+        <article class="bgfbsr-slide is-active" data-index="0">
+          <div class="bgfbsr-bg">
+            <div
+              class="bgfbsr-vimeo-wrap"
+              data-vimeo-wrap
+              data-vimeo-id="1184975429"
+              data-vimeo-poster="./img/index-3.jpg"
+            >
+              <div
+                class="bgfbsr-vimeo-poster"
+                style="background-image:url('./img/index-3.jpg');"
+                aria-hidden="true"
+              ></div>
+              <div class="bgfbsr-vimeo-iframe-wrap" data-vimeo-stage></div>
+            </div>
+          </div>
+
+          <div class="bgfbsr-inner">
+            <div class="bgfbsr-topcopy">
+              <span class="bgfbsr-anim bgfbsr-fade-right bgfbsr-delay-1">
+                설명만 적힌 홈페이지가 아닌
+              </span>
+              <span class="bgfbsr-anim bgfbsr-fade-right bgfbsr-delay-2">
+                브랜딩과 품격을 느끼게 하는
+              </span>
+              <span class="bgfbsr-anim bgfbsr-fade-right bgfbsr-delay-2">
+                경험을 전달합니다.
+              </span>
+            </div>
+
+            <div class="bgfbsr-copy">
+              <a class="bgfbsr-link" href="javascript:void(0)">
+                <h2 class="bgfbsr-title bgfbsr-anim bgfbsr-fade-left bgfbsr-delay-1">
+                  회사의 가치를 높여주는<br>브랜딩 웹사이트
+                </h2>
+
+                <span class="bgfbsr-line"></span>
+
+                <p class="bgfbsr-desc bgfbsr-anim bgfbsr-fade-up bgfbsr-delay-3">
+                  단순한 정보 전달을 넘어, 브랜드의 깊이와 방향성을 담아냅니다.<br>
+                  첫 화면에서부터 신뢰와 품격이 전달되도록 설계하여<br>
+                  고객이 자연스럽게 ‘다르다’고 느끼는 경험을 완성합니다.
+                </p>
+
+                <span class="bgfbsr-arrow bgfbsr-anim bgfbsr-fade-up bgfbsr-delay-4" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M4 12h16"/>
+                    <path d="m13 5 7 7-7 7"/>
+                  </svg>
+                </span>
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <article class="bgfbsr-slide is-below" data-index="1">
+          <div class="bgfbsr-bg" style="background-image:url('./img/landing.jpg');"></div>
+          <div class="bgfbsr-inner">
+            <div class="bgfbsr-topcopy">
+              <span class="bgfbsr-anim bgfbsr-fade-right bgfbsr-delay-1">
+                고객이 단순히 보는 것이 아니라
+              </span>
+              <span class="bgfbsr-anim bgfbsr-fade-right bgfbsr-delay-2">
+                직접 반응하고 참여하게 만드는
+              </span>
+              <span class="bgfbsr-anim bgfbsr-fade-right bgfbsr-delay-2">
+                흐름을 설계합니다.
+              </span>
+            </div>
+
+            <div class="bgfbsr-copy">
+              <a class="bgfbsr-link" href="javascript:void(0)">
+                <h2 class="bgfbsr-title bgfbsr-anim bgfbsr-fade-left bgfbsr-delay-1">
+                  행동을 이끌어내는<br>전환 중심 랜딩페이지
+                </h2>
+
+                <span class="bgfbsr-line"></span>
+
+                <p class="bgfbsr-desc bgfbsr-anim bgfbsr-fade-up bgfbsr-delay-3">
+                  방문자가 머무르는 것을 넘어 ‘클릭하고, 입력하고, 문의하게 되는 흐름’을 만듭니다.<br>
+                  고객의 심리와 욕구를 분석해 단계별로 참여를 유도하고<br>
+                  자연스럽게 행동으로 이어지는 구조를 설계합니다.
+                </p>
+
+                <span class="bgfbsr-arrow bgfbsr-anim bgfbsr-fade-up bgfbsr-delay-4" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M4 12h16"/>
+                    <path d="m13 5 7 7-7 7"/>
+                  </svg>
+                </span>
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <article class="bgfbsr-slide is-below" data-index="2">
+          <div class="bgfbsr-bg" style="background-image:url('./img/ai-intro.jpg');"></div>
+          <div class="bgfbsr-inner">
+            <div class="bgfbsr-topcopy">
+              <span class="bgfbsr-anim bgfbsr-fade-right bgfbsr-delay-1">AI 영상으로 완성되는</span>
+              <span class="bgfbsr-anim bgfbsr-fade-right bgfbsr-delay-2">행사의 새로운 경험</span>
+            </div>
+            <div class="bgfbsr-copy">
+              <a class="bgfbsr-link" href="javascript:void(0)">
+                <h2 class="bgfbsr-title bgfbsr-anim bgfbsr-fade-left bgfbsr-delay-1">
+                  신뢰와 품격을 높여주는<br>프리미엄 AI 행사 영상
+                </h2>
+                <span class="bgfbsr-line"></span>
+                <p class="bgfbsr-desc bgfbsr-anim bgfbsr-fade-up bgfbsr-delay-3">
+                  단순 설명을 넘어, 행사 전체의 스토리와 감성을 담아냅니다.<br>
+                  AI 기반 영상 제작으로 브랜드의 메시지를 더 강렬하게 전달하고,<br>
+                  참석자와 시청자 모두에게 빠른 이해와 신뢰를 만들어냅니다.
+                </p>
+                <span class="bgfbsr-arrow bgfbsr-anim bgfbsr-fade-up bgfbsr-delay-4" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><path d="M4 12h16"/><path d="m13 5 7 7-7 7"/></svg>
+                </span>
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- 4번 슬라이드 : Vimeo -->
+        <article class="bgfbsr-slide is-below" data-index="3">
+          <div class="bgfbsr-bg">
+            <div
+              class="bgfbsr-vimeo-wrap"
+              data-vimeo-wrap
+              data-vimeo-id="1184975255"
+              data-vimeo-poster="./img/event-preview.jpg"
+            >
+              <div
+                class="bgfbsr-vimeo-poster"
+                style="background-image:url('./img/event-preview.jpg');"
+                aria-hidden="true"
+              ></div>
+              <div class="bgfbsr-vimeo-iframe-wrap" data-vimeo-stage></div>
+            </div>
+          </div>
+
+          <div class="bgfbsr-inner">
+            <div class="bgfbsr-topcopy">
+              <span class="bgfbsr-anim bgfbsr-fade-right bgfbsr-delay-1">단순한 영상이 아닌</span>
+              <span class="bgfbsr-anim bgfbsr-fade-right bgfbsr-delay-2">브랜드의 본질을 담아냅니다</span>
+            </div>
+            <div class="bgfbsr-copy">
+              <a class="bgfbsr-link" href="javascript:void(0)">
+                <h2 class="bgfbsr-title bgfbsr-anim bgfbsr-fade-left bgfbsr-delay-1">
+                  기업의 가치를 완성하는<br>브랜드 영상 제작
+                </h2>
+                <span class="bgfbsr-line"></span>
+                <p class="bgfbsr-desc bgfbsr-anim bgfbsr-fade-up bgfbsr-delay-3">
+                  기업이 전달하고자 하는 철학과 메시지를 시각적으로 구현하여<br>
+                  브랜드의 정체성과 품격을 한 편의 영상으로 완성합니다.<br>
+                  단순한 정보 전달을 넘어, 고객의 기억에 남는 브랜드 경험을 설계합니다.
+                </p>
+                <span class="bgfbsr-arrow bgfbsr-anim bgfbsr-fade-up bgfbsr-delay-4" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><path d="M4 12h16"/><path d="m13 5 7 7-7 7"/></svg>
+                </span>
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <div class="bgfbsr-rail" aria-label="사업영역 이동" data-bgfbsr-rail>
+          <button class="bgfbsr-rail-btn is-active" type="button" data-go="0" aria-label="신소재 사업">
+            <svg viewBox="0 0 24 24"><path d="M8.2 5.4 4.8 11l3.4 5.6h7.6l3.4-5.6-3.4-5.6H8.2Z"/><path d="M8.2 5.4 12 11m0 0 3.8 5.6M12 11h7"/></svg>
+          </button>
+          <button class="bgfbsr-rail-btn" type="button" data-go="1" aria-label="화이트 바이오">
+            <svg viewBox="0 0 24 24"><path d="M12 20c3.2 0 5.8-2.1 6.3-5.1-3.1-.7-5.2-2.6-6.3-5.9-1.2 3.3-3.2 5.2-6.3 5.9.5 3 3.1 5.1 6.3 5.1Z"/><path d="M12 9c0-2.7 1.5-4.8 4.6-6-.2 3.2-1.7 5.3-4.6 6Zm0 0c0-2.7-1.5-4.8-4.6-6 .2 3.2 1.7 4.6 4.6 6Z"/><path d="M3 21h18"/></svg>
+          </button>
+          <button class="bgfbsr-rail-btn" type="button" data-go="2" aria-label="재활용 소재">
+            <svg viewBox="0 0 24 24"><path d="M9.2 4.7h3.5l1.5 2.6"/><path d="m14.2 7.3-2 3.3h-4"/><path d="m8.2 10.6-2-3.3 1.7-2.9"/><path d="M6.2 7.3h4"/><path d="m5.8 10.8 3.1 5.4h3.3"/><path d="m8.9 16.2 1.8-3"/><path d="m12.1 16.2 5.8-10"/><path d="m15.1 6.2 2.8 4.8-1.8 3.1"/><path d="M17.9 11h-3.5"/></svg>
+          </button>
+          <button class="bgfbsr-rail-btn" type="button" data-go="3" aria-label="불소 소재">
+            <svg viewBox="0 0 24 24"><path d="M12 3 4 12l8 9 8-9-8-9Z"/><path d="M12 3v18"/><path d="M4 12h16"/></svg>
+          </button>
+        </div>
+
+        <div class="bgfbsr-progress" aria-hidden="true">
+          <span class="bgfbsr-progress-current">1</span>
+          <span>/</span>
+          <span class="bgfbsr-progress-total">4</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://player.vimeo.com/api/player.js"></script>
+
+  <script>
+  (function () {
+    'use strict';
+
+    var root = document.getElementById('BusinessScrollSection');
+    if (!root || root.dataset.bgfbsrInit === 'true') return;
+    root.dataset.bgfbsrInit = 'true';
+
+    /* -----------------------------
+      Vimeo 초기화
+    ----------------------------- */
+    function buildVimeoUrl(videoId) {
+      var params = new URLSearchParams({
+        autoplay: '1',
+        muted: '1',
+        loop: '1',
+        background: '1',
+        autopause: '0',
+        byline: '0',
+        title: '0',
+        portrait: '0',
+        controls: '0',
+        dnt: '1',
+        quality: 'auto',
+        transparent: '0'
+      });
+
+      return 'https://player.vimeo.com/video/' + encodeURIComponent(videoId) + '?' + params.toString();
+    }
+
+    function initVimeoBackgrounds() {
+      var wraps = root.querySelectorAll('[data-vimeo-wrap]');
+      if (!wraps.length) return;
+
+      wraps.forEach(function (wrap) {
+        var stage = wrap.querySelector('[data-vimeo-stage]');
+        var videoId = wrap.getAttribute('data-vimeo-id');
+        if (!stage || !videoId) return;
+
+        var iframe = document.createElement('iframe');
+        iframe.setAttribute('src', buildVimeoUrl(videoId));
+        iframe.setAttribute('allow', 'autoplay; fullscreen; picture-in-picture');
+        iframe.setAttribute('allowfullscreen', '');
+        iframe.setAttribute('tabindex', '-1');
+        iframe.setAttribute('aria-hidden', 'true');
+        iframe.setAttribute('loading', 'eager');
+
+        stage.appendChild(iframe);
+
+        var revealed = false;
+        var fallbackTimer = null;
+
+        function revealPosterOut() {
+          if (revealed) return;
+          revealed = true;
+
+          requestAnimationFrame(function () {
+            requestAnimationFrame(function () {
+              wrap.classList.add('is-playing');
+            });
+          });
+        }
+
+        if (window.Vimeo && window.Vimeo.Player) {
+          var player = new Vimeo.Player(iframe);
+
+          player.ready().then(function () {
+            player.setVolume(0).catch(function(){});
+            player.play().catch(function(){});
+          }).catch(function(){});
+
+          player.on('play', function () {
+            clearTimeout(fallbackTimer);
+          });
+
+          player.on('timeupdate', function (data) {
+            if (data && data.seconds >= 0.12) {
+              revealPosterOut();
+            }
+          });
+
+          player.on('loaded', function () {
+            fallbackTimer = setTimeout(function () {
+              revealPosterOut();
+            }, 1200);
+          });
+
+          iframe.addEventListener('load', function () {
+            fallbackTimer = setTimeout(function () {
+              revealPosterOut();
+            }, 1500);
+          });
+        } else {
+          iframe.addEventListener('load', function () {
+            fallbackTimer = setTimeout(function () {
+              revealPosterOut();
+            }, 1200);
+          });
+        }
+      });
+    }
+
+    initVimeoBackgrounds();
+
+    /* -----------------------------
+      기존 슬라이드 로직
+    ----------------------------- */
+    var shell = root.querySelector('[data-bgfbsr-shell]');
+    var frame = root.querySelector('[data-bgfbsr-frame]');
+    var slides = Array.prototype.slice.call(root.querySelectorAll('.bgfbsr-slide'));
+    var buttons = Array.prototype.slice.call(root.querySelectorAll('.bgfbsr-rail-btn'));
+    var progressCurrent = root.querySelector('.bgfbsr-progress-current');
+
+    var maxIndex = slides.length - 1;
+    var currentIndex = 0;
+    var isAnimating = false;
+    var animTimeout = null;
+
+    var INTRO_PORTION = 0.22;
+    var HYSTERESIS = 0.18;
+    var SNAP_LOCK_MS = 540;
+    var AUTO_SCROLL_DURATION = 720;
+
+    var rafRequested = false;
+    var updateLoopRunning = false;
+
+    var smoothedGlobalProgress = 0;
+    var targetGlobalProgress = 0;
+
+    var lastInputAt = 0;
+    var wheelAccum = 0;
+    var wheelCooldown = false;
+
+    var touchStartY = 0;
+    var touchLastY = 0;
+    var touchActive = false;
+    var touchLocked = false;
+
+    var autoScrollRAF = 0;
+    var autoScrollActive = false;
+    var autoScrollTargetY = 0;
+    var autoScrollStartY = 0;
+    var autoScrollStartedAt = 0;
+    var lastKnownY = window.pageYOffset || window.scrollY || 0;
+
+    var ALL_STATES = ['is-active', 'is-exiting-up', 'is-exiting-down', 'is-above', 'is-below'];
+
+    function clamp(n, min, max) {
+      return Math.min(Math.max(n, min), max);
+    }
+
+    function lerp(a, b, t) {
+      return a + (b - a) * t;
+    }
+
+    function easeOutCubic(t) {
+      return 1 - Math.pow(1 - t, 3);
+    }
+
+    function easeInOutQuart(t) {
+      return t < 0.5 ? 8 * t * t * t * t : 1 - Math.pow(-2 * t + 2, 4) / 2;
+    }
+
+    function getScrollRange() {
+      var top = shell.getBoundingClientRect().top + window.pageYOffset;
+      var range = Math.max(shell.offsetHeight - window.innerHeight, 1);
+      return { top: top, range: range };
+    }
+
+    function getGlobalProgressFromY(y) {
+      var d = getScrollRange();
+      return clamp((y - d.top) / d.range, 0, 1);
+    }
+
+    function getGlobalProgress() {
+      return getGlobalProgressFromY(window.pageYOffset || window.scrollY || 0);
+    }
+
+    function getIntroThreshold() {
+      return INTRO_PORTION;
+    }
+
+    function getSlideProgressFromGlobal(globalProgress) {
+      var introEnd = getIntroThreshold();
+      if (globalProgress <= introEnd) return 0;
+      return clamp((globalProgress - introEnd) / (1 - introEnd), 0, 1);
+    }
+
+    function getScrollTopForIndex(index) {
+      var d = getScrollRange();
+      var introEnd = getIntroThreshold();
+      if (maxIndex <= 0) return d.top + d.range * introEnd;
+      var slideRatio = introEnd + (index / maxIndex) * (1 - introEnd);
+      return d.top + d.range * slideRatio;
+    }
+
+    function clearStates(slide) {
+      for (var i = 0; i < ALL_STATES.length; i++) {
+        slide.classList.remove(ALL_STATES[i]);
+      }
+    }
+
+    function refreshAnimations(slide) {
+      var items = slide.querySelectorAll('.bgfbsr-anim');
+      for (var i = 0; i < items.length; i++) {
+        items[i].style.animation = 'none';
+        items[i].offsetHeight;
+        items[i].style.animation = '';
+        items[i].style.opacity = '';
+      }
+    }
+
+    function resetAnimations(slide) {
+      var items = slide.querySelectorAll('.bgfbsr-anim');
+      for (var i = 0; i < items.length; i++) {
+        items[i].style.animation = 'none';
+        items[i].style.opacity = '0';
+      }
+    }
+
+    function updateButtons(index) {
+      for (var i = 0; i < buttons.length; i++) {
+        var active = Number(buttons[i].getAttribute('data-go')) === index;
+        buttons[i].classList.toggle('is-active', active);
+        buttons[i].setAttribute('aria-pressed', active ? 'true' : 'false');
+      }
+    }
+
+    function updateProgress(index) {
+      if (progressCurrent) progressCurrent.textContent = String(index + 1);
+    }
+
+    function normalizeOtherSlides() {
+      for (var i = 0; i < slides.length; i++) {
+        if (i === currentIndex) continue;
+        if (slides[i].classList.contains('is-exiting-up') || slides[i].classList.contains('is-exiting-down')) continue;
+        clearStates(slides[i]);
+        slides[i].classList.add(i < currentIndex ? 'is-above' : 'is-below');
+      }
+    }
+
+    function setActive(nextIndex, direction, forceImmediate) {
+      nextIndex = clamp(nextIndex, 0, maxIndex);
+      forceImmediate = !!forceImmediate;
+
+      if (nextIndex === currentIndex && !isAnimating) {
+        updateButtons(nextIndex);
+        updateProgress(nextIndex);
+        return;
+      }
+
+      if (isAnimating && !forceImmediate) return;
+
+      clearTimeout(animTimeout);
+      isAnimating = true;
+
+      var oldIndex = currentIndex;
+      var oldSlide = slides[oldIndex];
+      var newSlide = slides[nextIndex];
+
+      if (typeof direction === 'undefined') {
+        direction = nextIndex > oldIndex ? 'down' : 'up';
+      }
+
+      resetAnimations(newSlide);
+
+      clearStates(newSlide);
+      newSlide.style.transition = 'none';
+      newSlide.classList.add(direction === 'down' ? 'is-below' : 'is-above');
+      newSlide.offsetHeight;
+      newSlide.style.transition = '';
+
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+          clearStates(oldSlide);
+          oldSlide.classList.add(direction === 'down' ? 'is-exiting-up' : 'is-exiting-down');
+
+          clearStates(newSlide);
+          newSlide.classList.add('is-active');
+          refreshAnimations(newSlide);
+        });
+      });
+
+      currentIndex = nextIndex;
+      updateButtons(nextIndex);
+      updateProgress(nextIndex);
+
+      animTimeout = setTimeout(function () {
+        clearStates(oldSlide);
+        oldSlide.classList.add(oldIndex < currentIndex ? 'is-above' : 'is-below');
+        normalizeOtherSlides();
+        isAnimating = false;
+      }, 980);
+    }
+
+    function cancelAutoScroll() {
+      autoScrollActive = false;
+      if (autoScrollRAF) cancelAnimationFrame(autoScrollRAF);
+      autoScrollRAF = 0;
+    }
+
+    function animateScrollTo(targetY, duration) {
+      cancelAutoScroll();
+
+      autoScrollActive = true;
+      autoScrollTargetY = targetY;
+      autoScrollStartY = window.pageYOffset || window.scrollY || 0;
+      autoScrollStartedAt = performance.now();
+      duration = duration || AUTO_SCROLL_DURATION;
+
+      function step(now) {
+        if (!autoScrollActive) return;
+
+        var elapsed = now - autoScrollStartedAt;
+        var t = clamp(elapsed / duration, 0, 1);
+        var eased = easeInOutQuart(t);
+        var nextY = lerp(autoScrollStartY, autoScrollTargetY, eased);
+
+        window.scrollTo(0, nextY);
+
+        if (t < 1) {
+          autoScrollRAF = requestAnimationFrame(step);
+        } else {
+          autoScrollActive = false;
+          autoScrollRAF = 0;
+        }
+      }
+
+      autoScrollRAF = requestAnimationFrame(step);
+    }
+
+    function goToIndex(index, opts) {
+      opts = opts || {};
+      index = clamp(index, 0, maxIndex);
+
+      if (index === currentIndex && !opts.force) {
+        animateScrollTo(getScrollTopForIndex(index), opts.duration || AUTO_SCROLL_DURATION);
+        return;
+      }
+
+      var direction = index > currentIndex ? 'down' : 'up';
+      setActive(index, direction, true);
+
+      if (opts.scroll !== false) {
+        animateScrollTo(getScrollTopForIndex(index), opts.duration || AUTO_SCROLL_DURATION);
+      }
+    }
+
+    function getCenterThresholdPx() {
+      var vh = window.innerHeight || document.documentElement.clientHeight || 0;
+      return Math.max(42, Math.min(120, vh * 0.1));
+    }
+
+    function isFrameCentered() {
+      var rect = frame.getBoundingClientRect();
+      var viewportCenter = window.innerHeight * 0.5;
+      var frameCenter = rect.top + rect.height * 0.5;
+      return Math.abs(frameCenter - viewportCenter) <= getCenterThresholdPx();
+    }
+
+    function canStartSlideWheel() {
+      var globalProgress = getGlobalProgress();
+      return globalProgress > getIntroThreshold() && isFrameCentered();
+    }
+
+    function getStableNearestIndex(slideProgress) {
+      if (maxIndex <= 0) return 0;
+
+      var currentPos = currentIndex / maxIndex;
+      var deadZone = (1 / maxIndex) * HYSTERESIS;
+
+      if (Math.abs(slideProgress - currentPos) <= deadZone) {
+        return currentIndex;
+      }
+
+      return clamp(Math.round(slideProgress * maxIndex), 0, maxIndex);
+    }
+
+    function applyIntroExpand(progressForRender) {
+      var introEnd = getIntroThreshold();
+      var introProgress = clamp(progressForRender / introEnd, 0, 1);
+      var eased = easeOutCubic(introProgress);
+
+      var viewportW = window.innerWidth;
+      var viewportH = window.innerHeight;
+
+      var startW = frame.dataset.startW ? parseFloat(frame.dataset.startW) : frame.offsetWidth;
+      var startH = frame.dataset.startH ? parseFloat(frame.dataset.startH) : frame.offsetHeight;
+
+      if (!frame.dataset.startW || !frame.dataset.startH) {
+        var computed = window.getComputedStyle(frame);
+        startW = parseFloat(computed.width);
+        startH = parseFloat(computed.height);
+        frame.dataset.startW = String(startW);
+        frame.dataset.startH = String(startH);
+      }
+
+      var nextW = lerp(startW, viewportW, eased);
+      var nextH = lerp(startH, viewportH, eased);
+      var radiusStart = parseFloat(getComputedStyle(root).getPropertyValue('--radius-start')) || 28;
+      var nextRadius = lerp(radiusStart, 0, eased);
+      var nextScale = lerp(0.972, 1, eased);
+
+      frame.classList.add('is-expanding');
+      frame.style.width = nextW + 'px';
+      frame.style.height = nextH + 'px';
+      frame.style.borderRadius = nextRadius + 'px';
+      frame.style.transform = 'scale(' + nextScale + ') translateZ(0)';
+
+      if (introProgress < 0.999) {
+        frame.setAttribute('data-expand-phase', 'intro');
+      } else {
+        frame.setAttribute('data-expand-phase', 'slides');
+      }
+    }
+
+    function updateByProgress() {
+      rafRequested = false;
+
+      var realY = window.pageYOffset || window.scrollY || 0;
+      lastKnownY = realY;
+      targetGlobalProgress = getGlobalProgressFromY(realY);
+
+      var alpha = autoScrollActive ? 0.16 : 0.12;
+      smoothedGlobalProgress += (targetGlobalProgress - smoothedGlobalProgress) * alpha;
+
+      if (Math.abs(targetGlobalProgress - smoothedGlobalProgress) < 0.0006) {
+        smoothedGlobalProgress = targetGlobalProgress;
+      }
+
+      applyIntroExpand(smoothedGlobalProgress);
+
+      if (smoothedGlobalProgress <= getIntroThreshold()) {
+        if (currentIndex !== 0 && !isAnimating) {
+          setActive(0, 'up', true);
+        }
+      } else {
+        var slideProgress = getSlideProgressFromGlobal(smoothedGlobalProgress);
+        var targetIndex = getStableNearestIndex(slideProgress);
+
+        if (!autoScrollActive && targetIndex !== currentIndex && !isAnimating) {
+          setActive(targetIndex, targetIndex > currentIndex ? 'down' : 'up', true);
+        }
+      }
+
+      if (Math.abs(targetGlobalProgress - smoothedGlobalProgress) > 0.0006 || autoScrollActive) {
+        requestUpdate();
+      } else {
+        updateLoopRunning = false;
+      }
+    }
+
+    function requestUpdate() {
+      if (rafRequested) return;
+      rafRequested = true;
+      updateLoopRunning = true;
+      requestAnimationFrame(updateByProgress);
+    }
+
+    function lockWheelBriefly() {
+      wheelCooldown = true;
+      setTimeout(function () {
+        wheelCooldown = false;
+        wheelAccum = 0;
+      }, SNAP_LOCK_MS);
+    }
+
+    function handleWheel(e) {
+      if (!canStartSlideWheel()) return;
+
+      var absDelta = Math.abs(e.deltaY);
+      if (absDelta < 6) return;
+
+      e.preventDefault();
+
+      if (autoScrollActive || isAnimating || wheelCooldown) {
+        return;
+      }
+
+      var now = Date.now();
+      if (now - lastInputAt > 160) {
+        wheelAccum = 0;
+      }
+      lastInputAt = now;
+
+      wheelAccum += e.deltaY;
+
+      var threshold = absDelta > 70 ? 55 : 90;
+
+      if (Math.abs(wheelAccum) >= threshold) {
+        var next = currentIndex + (wheelAccum > 0 ? 1 : -1);
+        next = clamp(next, 0, maxIndex);
+
+        if (next !== currentIndex) {
+          goToIndex(next, { scroll: true, force: true, duration: 680 });
+          lockWheelBriefly();
+        }
+
+        wheelAccum = 0;
+      }
+
+      requestUpdate();
+    }
+
+    function handleTouchStart(e) {
+      if (!e.touches || !e.touches.length) return;
+      touchActive = true;
+      touchLocked = false;
+      touchStartY = e.touches[0].clientY;
+      touchLastY = touchStartY;
+      if (autoScrollActive) cancelAutoScroll();
+    }
+
+    function handleTouchMove(e) {
+      if (!touchActive || !e.touches || !e.touches.length) return;
+      touchLastY = e.touches[0].clientY;
+
+      if (!canStartSlideWheel()) return;
+
+      var diff = touchStartY - touchLastY;
+      if (Math.abs(diff) < 18) return;
+
+      if (autoScrollActive || isAnimating || touchLocked) {
+        e.preventDefault();
+        return;
+      }
+
+      if (Math.abs(diff) >= 58) {
+        var next = currentIndex + (diff > 0 ? 1 : -1);
+        next = clamp(next, 0, maxIndex);
+
+        if (next !== currentIndex) {
+          e.preventDefault();
+          goToIndex(next, { scroll: true, force: true, duration: 640 });
+          touchLocked = true;
+          setTimeout(function () {
+            touchLocked = false;
+          }, SNAP_LOCK_MS);
+        }
+      }
+    }
+
+    function handleTouchEnd() {
+      touchActive = false;
+      touchLocked = false;
+    }
+
+    buttons.forEach(function (btn) {
+      btn.addEventListener('click', function (e) {
+        e.preventDefault();
+        cancelAutoScroll();
+        var index = Number(btn.getAttribute('data-go'));
+        goToIndex(index, { scroll: true, force: true, duration: 700 });
+      });
+    });
+
+    var frameObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          refreshAnimations(slides[currentIndex]);
+          requestUpdate();
+        }
+      });
+    }, { threshold: 0.45 });
+
+    frameObserver.observe(frame);
+
+    window.addEventListener('scroll', function () {
+      if (!updateLoopRunning) requestUpdate();
+    }, { passive: true });
+
+    window.addEventListener('resize', function () {
+      delete frame.dataset.startW;
+      delete frame.dataset.startH;
+      cancelAutoScroll();
+      smoothedGlobalProgress = getGlobalProgress();
+      targetGlobalProgress = smoothedGlobalProgress;
+      requestUpdate();
+    });
+
+    window.addEventListener('wheel', handleWheel, { passive: false });
+
+    root.addEventListener('touchstart', handleTouchStart, { passive: true });
+    root.addEventListener('touchmove', handleTouchMove, { passive: false });
+    root.addEventListener('touchend', handleTouchEnd, { passive: true });
+    root.addEventListener('touchcancel', handleTouchEnd, { passive: true });
+
+    updateButtons(0);
+    updateProgress(0);
+    refreshAnimations(slides[0]);
+
+    smoothedGlobalProgress = getGlobalProgress();
+    targetGlobalProgress = smoothedGlobalProgress;
+    requestUpdate();
+  })();
+  </script>
+</section>
+
+<section id="ProjectSection" aria-label="Project Scroll Section">
+  <style>
+    #ProjectSection {
+      --sfs-bg: #000000;
+      --sfs-text: #ffffff;
+      --sfs-muted: #777777;
+      --sfs-muted-2: #555555;
+      --sfs-muted-3: #333333;
+      --sfs-dot: #e02020;
+      --sfs-card-radius: 4px;
+      --sfs-ease: cubic-bezier(0.22, 1, 0.36, 1);
+      position: relative;
+      background: var(--sfs-bg);
+      color: var(--sfs-text);
+      overflow: clip;
+      font-family: 'Bebas Neue', sans-serif;
+      isolation: isolate;
+    }
+
+    #ProjectSection .sfs-google-fonts {
+      position: absolute;
+      width: 0;
+      height: 0;
+      overflow: hidden;
+    }
+
+    #ProjectSection .sfs-stage {
+      position: relative;
+      min-height: 100vh;
+      background: #000;
+      isolation: isolate;
+    }
+
+    #ProjectSection .sfs-fixed-text-container {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      pointer-events: none;
+      mix-blend-mode: difference;
+      /* padding-inline: 20px; */
+      will-change: auto;
+    }
+
+    #ProjectSection .sfs-fixed-label {
+      font-size: 14px;
+      letter-spacing: 8px;
+      text-transform: uppercase;
+      color: #fff;
+      margin-bottom: 10px;
+      line-height: 1;
+    }
+
+    #ProjectSection .sfs-fixed-title {
+      font-size: clamp(70px, 14vw, 220px);
+      letter-spacing: 10px;
+      line-height: 0.85;
+      color: #fff;
+      text-align: center;
+      font-weight: 400;
+      white-space: nowrap;
+    }
+
+    #ProjectSection .sfs-radial-lines {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: min(600px, 74vw);
+      height: min(600px, 74vw);
+      transform: translate(-50%, -50%);
+      z-index: 5;
+      pointer-events: none;
+      opacity: 0.6;
+      transition: opacity 0.5s ease;
+      will-change: opacity, transform;
+    }
+
+    #ProjectSection .sfs-radial-lines canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      transform-origin: 50% 50%;
+    }
+
+    #ProjectSection .sfs-scroll-hint {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 20;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      transition: opacity 0.6s ease;
+      pointer-events: none;
+      will-change: opacity;
+    }
+
+    #ProjectSection .sfs-scroll-hint.sfs-hidden {
+      opacity: 0;
+    }
+
+    #ProjectSection .sfs-scroll-hint span {
+      font-size: 10px;
+      letter-spacing: 4px;
+      color: var(--sfs-muted-2);
+      font-family: 'Noto Sans KR', sans-serif;
+      line-height: 1;
+    }
+
+    #ProjectSection .sfs-scroll-line {
+      width: 1px;
+      height: 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #ProjectSection .sfs-scroll-line::after {
+      content: '';
+      position: absolute;
+      top: -100%;
+      left: 0;
+      width: 1px;
+      height: 100%;
+      background: linear-gradient(to bottom, transparent, #888888);
+      animation: sfsScrollDown 1.8s ease-in-out infinite;
+    }
+
+    @keyframes sfsScrollDown {
+      0% { top: -100%; }
+      100% { top: 100%; }
+    }
+
+    #ProjectSection .sfs-hero {
+      position: relative;
+      height: 0;
+      z-index: 1;
+    }
+
+    #ProjectSection .sfs-tagline {
+      position: relative;
+      z-index: 6;
+      text-align: center;
+      padding: 0 20px 0;
+      height: 50vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 18px;
+      color: var(--sfs-muted);
+      letter-spacing: 2px;
+      line-height: 2;
+    }
+
+    #ProjectSection .sfs-tagline strong {
+      color: #fff;
+      font-weight: 700;
+      font-size: 22px;
+    }
+
+    #ProjectSection .sfs-scroll-content {
+      position: relative;
+      z-index: 6;
+      padding: 10vh 0 15vh;
+    }
+
+    #ProjectSection .sfs-project-card {
+      position: relative;
+      margin: 0 auto 0;
+      width: 55%;
+      max-width: 750px;
+      opacity: 0;
+      transform: translateY(150px) scale(0.95);
+      transition:
+        opacity 1s var(--sfs-ease),
+        transform 1s var(--sfs-ease);
+      will-change: transform, opacity;
+    }
+
+    #ProjectSection .sfs-project-card.sfs-visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    #ProjectSection .sfs-card-link {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      border-radius: var(--sfs-card-radius);
+    }
+
+    #ProjectSection .sfs-card-link:focus-visible {
+      outline: 2px solid rgba(255,255,255,0.9);
+      outline-offset: 6px;
+      border-radius: 8px;
+    }
+
+    #ProjectSection .sfs-card-link:hover .sfs-card-image,
+    #ProjectSection .sfs-card-link:focus-visible .sfs-card-image {
+      transform: translateY(-4px);
+      box-shadow: 0 38px 90px rgba(0, 0, 0, 0.34);
+    }
+
+    #ProjectSection .sfs-card-image {
+      width: 100%;
+      aspect-ratio: 3 / 2;
+      border-radius: var(--sfs-card-radius);
+      overflow: hidden;
+      position: relative;
+      background: #070707;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.28);
+      transition: transform 0.45s var(--sfs-ease), box-shadow 0.45s var(--sfs-ease);
+      cursor: pointer;
+    }
+
+    #ProjectSection .sfs-card-image canvas,
+    #ProjectSection .sfs-card-image img {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    #ProjectSection .sfs-card-image canvas {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+    }
+
+    #ProjectSection .sfs-card-photo {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      object-fit: contain;
+      object-position: center;
+      opacity: 0;
+      transition: opacity 0.45s ease;
+      background: #070707;
+    }
+
+    #ProjectSection .sfs-card-photo.sfs-loaded {
+      opacity: 1;
+    }
+
+    #ProjectSection .sfs-card-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 24px 0 100px 0;
+    }
+
+    #ProjectSection .sfs-card-label-dot {
+      width: 10px;
+      height: 10px;
+      background: var(--sfs-dot);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    #ProjectSection .sfs-card-label-text {
+      font-size: 15px;
+      letter-spacing: 3px;
+      color: #bbbbbb;
+      line-height: 1.4;
+      word-break: break-word;
+    }
+
+    #ProjectSection .sfs-project-card:nth-child(1) { margin-left: 8%; width: 50%; }
+    #ProjectSection .sfs-project-card:nth-child(2) { margin-left: auto; margin-right: 8%; width: 45%; }
+    #ProjectSection .sfs-project-card:nth-child(3) { margin: 0 auto; width: 60%; }
+    #ProjectSection .sfs-project-card:nth-child(4) { margin-left: 12%; width: 40%; }
+    #ProjectSection .sfs-project-card:nth-child(5) { margin-left: auto; margin-right: 5%; width: 55%; }
+    #ProjectSection .sfs-project-card:nth-child(6) { margin: 0 auto; width: 50%; }
+    #ProjectSection .sfs-project-card:nth-child(7) { margin-left: 6%; width: 48%; }
+
+    #ProjectSection .sfs-footer {
+      position: relative;
+      z-index: 6;
+      text-align: center;
+      padding: 100px 20px;
+      font-size: 12px;
+      letter-spacing: 3px;
+      color: var(--sfs-muted-3);
+      font-family: 'Noto Sans KR', sans-serif;
+      line-height: 1.7;
+    }
+
+    @media (max-width: 1024px) {
+      #ProjectSection .sfs-fixed-title {
+        letter-spacing: 6px;
+      }
+
+      #ProjectSection .sfs-project-card,
+      #ProjectSection .sfs-project-card:nth-child(1),
+      #ProjectSection .sfs-project-card:nth-child(2),
+      #ProjectSection .sfs-project-card:nth-child(3),
+      #ProjectSection .sfs-project-card:nth-child(4),
+      #ProjectSection .sfs-project-card:nth-child(5),
+      #ProjectSection .sfs-project-card:nth-child(6),
+      #ProjectSection .sfs-project-card:nth-child(7) {
+        width: min(86vw, 760px);
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      #ProjectSection .sfs-card-label {
+        padding-bottom: 76px;
+      }
+    }
+
+    @media (max-width: 767px) {
+      #ProjectSection .sfs-fixed-label {
+        font-size: 11px;
+        letter-spacing: 5px;
+        margin-bottom: 8px;
+      }
+
+      #ProjectSection .sfs-fixed-title {
+        font-size: clamp(42px, 14vw, 78px);
+        letter-spacing: 3px;
+      }
+
+      #ProjectSection .sfs-radial-lines {
+        width: min(360px, 80vw);
+        height: min(360px, 80vw);
+      }
+
+      #ProjectSection .sfs-tagline {
+        height: 42vh;
+        font-size: 14px;
+        letter-spacing: 1.2px;
+        line-height: 1.9;
+        padding-inline: 24px;
+      }
+
+      #ProjectSection .sfs-tagline strong {
+        font-size: 18px;
+      }
+
+      #ProjectSection .sfs-scroll-content {
+        padding: 5vh 0 12vh;
+      }
+
+      #ProjectSection .sfs-project-card,
+      #ProjectSection .sfs-project-card:nth-child(1),
+      #ProjectSection .sfs-project-card:nth-child(2),
+      #ProjectSection .sfs-project-card:nth-child(3),
+      #ProjectSection .sfs-project-card:nth-child(4),
+      #ProjectSection .sfs-project-card:nth-child(5),
+      #ProjectSection .sfs-project-card:nth-child(6),
+      #ProjectSection .sfs-project-card:nth-child(7) {
+        width: min(88vw, 680px);
+      }
+
+      #ProjectSection .sfs-card-label {
+        gap: 10px;
+        padding: 18px 0 56px 0;
+      }
+
+      #ProjectSection .sfs-card-label-text {
+        font-size: 12px;
+        letter-spacing: 2px;
+      }
+
+      #ProjectSection .sfs-scroll-hint {
+        bottom: 24px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #ProjectSection .sfs-project-card,
+      #ProjectSection .sfs-scroll-hint,
+      #ProjectSection .sfs-radial-lines,
+      #ProjectSection .sfs-card-photo {
+        transition: none;
+      }
+
+      #ProjectSection .sfs-scroll-line::after {
+        animation: none;
+      }
+    }
+  </style>
+
+  <div class="sfs-google-fonts">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+  </div>
+
+  <div class="sfs-stage">
+    <div class="sfs-fixed-text-container" data-sfs-fixed-text>
+      <div class="sfs-fixed-label">FLOS</div>
+      <div class="sfs-fixed-title">Portfolio</div>
+    </div>
+
+    <div class="sfs-radial-lines" data-sfs-radial-lines>
+      <canvas data-sfs-radial-canvas width="600" height="600"></canvas>
+    </div>
+
+    <div class="sfs-scroll-hint" data-sfs-scroll-hint>
+      <span>SCROLL</span>
+      <div class="sfs-scroll-line"></div>
+    </div>
+
+    <div class="sfs-hero" aria-hidden="true"></div>
+
+    <div class="sfs-tagline">
+      <div></div>
+      <strong></strong>
+    </div>
+
+    <div class="sfs-scroll-content">
+      <!-- data-image 에 이미지 주소를 넣으면 해당 이미지가 표시됩니다 -->
+      <article class="sfs-project-card" data-sfs-color="purple-blue" data-image="./img/ajou.jpg">
+        <a class="sfs-card-link" href="" target="_blank" rel="noopener noreferrer" aria-label="HANAM 페이지 열기">
+          <div class="sfs-card-image">
+            <img class="sfs-card-photo" alt="아주대학교 대학발전기금 프로젝트 이미지" loading="lazy">
+            <canvas></canvas>
+          </div>
+        </a>
+        <div class="sfs-card-label">
+          <div class="sfs-card-label-dot"></div>
+          <span class="sfs-card-label-text">아주대학교 대학발전기금</span>
+        </div>
+      </article>
+
+      <article class="sfs-project-card" data-sfs-color="warm-gold" data-image="./img/htu.jpg">
+        <a class="sfs-card-link" href="" target="_blank" rel="noopener noreferrer" aria-label="">
+          <div class="sfs-card-image">
+            <img class="sfs-card-photo" alt="" loading="lazy">
+            <canvas></canvas>
+          </div>
+        </a>
+        <div class="sfs-card-label">
+          <div class="sfs-card-label-dot"></div>
+          <span class="sfs-card-label-text">HTU GLOBAL HOLDINGS</span>
+        </div>
+      </article>
+
+      <article class="sfs-project-card" data-sfs-color="teal-green" data-image="./img/bil.jpg">
+        <a class="sfs-card-link" href="" target="_blank" rel="noopener noreferrer" aria-label="ANSEONG 페이지 열기">
+          <div class="sfs-card-image">
+            <img class="sfs-card-photo" alt="ANSEONG 프로젝트 이미지" loading="lazy">
+            <canvas></canvas>
+          </div>
+        </a>
+        <div class="sfs-card-label">
+          <div class="sfs-card-label-dot"></div>
+          <span class="sfs-card-label-text">비즈니스 혁신연구소</span>
+        </div>
+      </article>
+
+      <article class="sfs-project-card" data-sfs-color="pink-magenta" data-image="./img/pinder.jpg">
+        <a class="sfs-card-link" href="" target="_blank" rel="noopener noreferrer" aria-label="SUWON 페이지 열기">
+          <div class="sfs-card-image">
+            <img class="sfs-card-photo" alt="SUWON 프로젝트 이미지" loading="lazy">
+            <canvas></canvas>
+          </div>
+        </a>
+        <div class="sfs-card-label">
+          <div class="sfs-card-label-dot"></div>
+          <span class="sfs-card-label-text">Pinder 대출 플랫폼</span>
+        </div>
+      </article>
+
+      <article class="sfs-project-card" data-sfs-color="rgb-led" data-image="./img/glory.jpg">
+        <a class="sfs-card-link" href="https://www..co.kr/bucheon/main.do" target="_blank" rel="noopener noreferrer" aria-label="CITY BUCHEON 페이지 열기">
+          <div class="sfs-card-image">
+            <img class="sfs-card-photo" alt="CITY BUCHEON 프로젝트 이미지" loading="lazy">
+            <canvas></canvas>
+          </div>
+        </a>
+        <div class="sfs-card-label">
+          <div class="sfs-card-label-dot"></div>
+          <span class="sfs-card-label-text">법무법인 글로리 형사센터</span>
+        </div>
+      </article>
+
+      <article class="sfs-project-card" data-sfs-color="blue-cool" data-image="./img/ajou50.jpg">
+        <a class="sfs-card-link" href="https://www..co.kr/wirye/main.do" target="_blank" rel="noopener noreferrer" aria-label="CITY WIRYE 페이지 열기">
+          <div class="sfs-card-image">
+            <img class="sfs-card-photo" alt="CITY WIRYE 프로젝트 이미지" loading="lazy">
+            <canvas></canvas>
+          </div>
+        </a>
+        <div class="sfs-card-label">
+          <div class="sfs-card-label-dot"></div>
+          <span class="sfs-card-label-text">아주대학교 50주년 기념 홈페이지</span>
+        </div>
+      </article>
+
+      <article class="sfs-project-card" data-sfs-color="cyan-glass" data-image="./img/xi.jpg">
+        <a class="sfs-card-link" href="" target="_blank" rel="noopener noreferrer" aria-label="CITY MYEONGJI 페이지 열기">
+          <div class="sfs-card-image">
+            <img class="sfs-card-photo" alt="CITY MYEONGJI 프로젝트 이미지" loading="lazy">
+            <canvas></canvas>
+          </div>
+        </a>
+        <div class="sfs-card-label">
+          <div class="sfs-card-label-dot"></div>
+          <span class="sfs-card-label-text">GS 건설 XI 행사 안내 영상</span>
+        </div>
+      </article>
+
+          <article class="sfs-project-card" data-sfs-color="cyan-glass" data-image="./img/sharp.jpg">
+        <a class="sfs-card-link" href="" target="_blank" rel="noopener noreferrer" aria-label="CITY MYEONGJI 페이지 열기">
+          <div class="sfs-card-image">
+            <img class="sfs-card-photo" alt="CITY MYEONGJI 프로젝트 이미지" loading="lazy">
+            <canvas></canvas>
+          </div>
+        </a>
+        <div class="sfs-card-label">
+          <div class="sfs-card-label-dot"></div>
+          <span class="sfs-card-label-text">포스코 건설 행사 안내 영상</span>
+        </div>
+      </article>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const section = document.getElementById('ProjectSection');
+      if (!section || section.dataset.sfsInitialized === 'true') return;
+      section.dataset.sfsInitialized = 'true';
+
+      const radialWrap = section.querySelector('[data-sfs-radial-lines]');
+      const radialCanvas = section.querySelector('[data-sfs-radial-canvas]');
+      const scrollHint = section.querySelector('[data-sfs-scroll-hint]');
+      const fixedText = section.querySelector('[data-sfs-fixed-text]');
+      const projectCards = Array.from(section.querySelectorAll('.sfs-project-card'));
+
+      const palettes = {
+        'purple-blue': ['#6B3FA0', '#3A1F6F', '#8B5FCF', '#2A1050', '#C4A0FF', '#1A0A3A', '#9070D0', '#4020A0'],
+        'warm-gold': ['#C89030', '#8B6520', '#F0C060', '#5A3A10', '#FFE090', '#3A2505', '#D4A040', '#6B4A15'],
+        'teal-green': ['#1A8060', '#0A5030', '#30C090', '#052A18', '#80FFD0', '#082820', '#20A070', '#0D6040'],
+        'pink-magenta': ['#C03070', '#801040', '#FF60A0', '#500828', '#FFB0D0', '#3A0518', '#D04080', '#901850'],
+        'rgb-led': ['#FF2020', '#20FF20', '#2020FF', '#FFFF00', '#FF00FF', '#00FFFF', '#FF8800', '#8800FF'],
+        'blue-cool': ['#2050A0', '#0A2060', '#4080E0', '#051540', '#80B0FF', '#0A1830', '#3060C0', '#1A3080'],
+        'cyan-glass': ['#20A0B0', '#0A6070', '#40D0E0', '#053040', '#80F0FF', '#082028', '#30B0C0', '#0C7080']
+      };
+
+      function drawRadialLines() {
+        if (!radialCanvas) return;
+        const ctx = radialCanvas.getContext('2d');
+        if (!ctx) return;
+
+        const size = 600;
+        radialCanvas.width = size;
+        radialCanvas.height = size;
+        ctx.clearRect(0, 0, size, size);
+
+        const cx = size / 2;
+        const cy = size / 2;
+        for (let i = 0; i < 72; i += 1) {
+          const angle = (i / 72) * Math.PI * 2 - Math.PI / 2;
+          const r1 = 160;
+          const r2 = 260;
+          ctx.beginPath();
+          ctx.moveTo(cx + Math.cos(angle) * r1, cy + Math.sin(angle) * r1);
+          ctx.lineTo(cx + Math.cos(angle) * r2, cy + Math.sin(angle) * r2);
+          ctx.strokeStyle = 'rgba(180, 30, 30, ' + (0.3 + Math.random() * 0.4).toFixed(3) + ')';
+          ctx.lineWidth = 1.5;
+          ctx.stroke();
+        }
+      }
+
+      function drawCanvas(canvas, colorKey) {
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return;
+
+        const colors = palettes[colorKey] || palettes['purple-blue'];
+        const width = 900;
+        const height = 600;
+        canvas.width = width;
+        canvas.height = height;
+        ctx.clearRect(0, 0, width, height);
+
+        const skyGrad = ctx.createLinearGradient(0, 0, 0, 200);
+        skyGrad.addColorStop(0, '#1A2540');
+        skyGrad.addColorStop(1, '#3060A0');
+        ctx.fillStyle = skyGrad;
+        ctx.fillRect(0, 0, width, 250);
+
+        const buildGrad = ctx.createLinearGradient(0, 150, 0, height);
+        buildGrad.addColorStop(0, colors[0]);
+        buildGrad.addColorStop(0.5, colors[1]);
+        buildGrad.addColorStop(1, colors[3]);
+        ctx.fillStyle = buildGrad;
+        ctx.fillRect(100, 150, 700, 450);
+
+        if (colorKey === 'rgb-led') {
+          for (let y = 160; y < 580; y += 18) {
+            for (let x = 120; x < 780; x += 18) {
+              const color = colors[Math.floor(Math.random() * colors.length)];
+              ctx.fillStyle = color;
+              ctx.globalAlpha = 0.5 + Math.random() * 0.5;
+              ctx.beginPath();
+              ctx.arc(x, y, 5, 0, Math.PI * 2);
+              ctx.fill();
+            }
+          }
+          ctx.globalAlpha = 1;
+        } else {
+          const spacing = 40;
+          ctx.strokeStyle = colors[4] || '#ffffff';
+          ctx.globalAlpha = 0.15;
+          ctx.lineWidth = 1;
+
+          for (let y = 160; y < 600; y += spacing) {
+            for (let x = 100; x < 800; x += spacing) {
+              ctx.beginPath();
+              ctx.moveTo(x, y);
+              ctx.lineTo(x + spacing / 2, y + spacing / 2);
+              ctx.lineTo(x + spacing, y);
+              ctx.stroke();
+
+              ctx.beginPath();
+              ctx.moveTo(x, y);
+              ctx.lineTo(x + spacing / 2, y - spacing / 2);
+              ctx.stroke();
+            }
+          }
+          ctx.globalAlpha = 1;
+
+          const glowGrad = ctx.createRadialGradient(450, 350, 50, 450, 350, 400);
+          glowGrad.addColorStop(0, (colors[4] ? colors[4] : '#ffffff') + '40');
+          glowGrad.addColorStop(1, 'transparent');
+          ctx.fillStyle = glowGrad;
+          ctx.fillRect(100, 150, 700, 450);
+        }
+
+        ctx.fillStyle = '#0A0A0A';
+        ctx.fillRect(0, 520, width, 80);
+
+        for (let i = 0; i < 5; i += 1) {
+          const tx = 150 + i * 150 + (Math.random() - 0.5) * 60;
+          ctx.fillStyle = '#0A1510';
+          ctx.beginPath();
+          ctx.arc(tx, 500, 25 + Math.random() * 15, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.fillRect(tx - 3, 500, 6, 30);
+        }
+
+        const vignette = ctx.createRadialGradient(width / 2, height / 2, 140, width / 2, height / 2, 560);
+        vignette.addColorStop(0, 'rgba(0,0,0,0)');
+        vignette.addColorStop(1, 'rgba(0,0,0,0.28)');
+        ctx.fillStyle = vignette;
+        ctx.fillRect(0, 0, width, height);
+      }
+
+      function applyCardImage(card) {
+        const imageUrl = (card.getAttribute('data-image') || '').trim();
+        const img = card.querySelector('.sfs-card-photo');
+        const canvas = card.querySelector('.sfs-card-image canvas');
+        const colorKey = card.getAttribute('data-sfs-color') || 'purple-blue';
+
+        if (!img || !canvas) return;
+
+        if (imageUrl) {
+          img.onload = function () {
+            img.classList.add('sfs-loaded');
+            canvas.style.display = 'none';
+          };
+
+          img.onerror = function () {
+            img.classList.remove('sfs-loaded');
+            canvas.style.display = 'block';
+            drawCanvas(canvas, colorKey);
+          };
+
+          img.src = imageUrl;
+        } else {
+          img.removeAttribute('src');
+          img.classList.remove('sfs-loaded');
+          canvas.style.display = 'block';
+          drawCanvas(canvas, colorKey);
+        }
+      }
+
+      drawRadialLines();
+      projectCards.forEach(applyCardImage);
+
+      const cardObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('sfs-visible');
+            } else {
+              entry.target.classList.remove('sfs-visible');
+            }
+          });
+        },
+        {
+          threshold: 0.12,
+          rootMargin: '0px 0px -40px 0px'
+        }
+      );
+
+      projectCards.forEach((card) => cardObserver.observe(card));
+
+      let hintHidden = false;
+      let ticking = false;
+
+      function updateOnScroll() {
+        ticking = false;
+        const sy = window.scrollY || window.pageYOffset || 0;
+        const vh = window.innerHeight || 1;
+        const sectionRect = section.getBoundingClientRect();
+        const sectionTop = sy + sectionRect.top;
+        const localY = Math.max(0, sy - sectionTop);
+
+        if (!hintHidden && sy > sectionTop + 80) {
+          scrollHint && scrollHint.classList.add('sfs-hidden');
+          hintHidden = true;
+        } else if (hintHidden && sy <= sectionTop + 80) {
+          scrollHint && scrollHint.classList.remove('sfs-hidden');
+          hintHidden = false;
+        }
+
+        if (radialWrap) {
+          const radialFade = Math.max(0, 1 - localY / (vh * 0.6));
+          radialWrap.style.opacity = String(radialFade * 0.6);
+        }
+
+        if (radialCanvas) {
+          radialCanvas.style.transform = 'rotate(' + (localY * 0.02).toFixed(3) + 'deg)';
+        }
+
+        if (fixedText) {
+          fixedText.style.opacity = '1';
+          fixedText.style.transform = 'translate3d(0,0,0)';
+        }
+      }
+
+      function requestTick() {
+        if (!ticking) {
+          ticking = true;
+          window.requestAnimationFrame(updateOnScroll);
+        }
+      }
+
+      window.addEventListener('scroll', requestTick, { passive: true });
+      window.addEventListener('resize', function () {
+        drawRadialLines();
+        requestTick();
+      });
+
+      updateOnScroll();
+    })();
+  </script>
+</section>
+
+
+<section id="pmPartnerScrollText">
+
+<style>
+
+#pmPartnerScrollText{
+    position:relative;
+    width:100%;
+    overflow:hidden;
+    background:#000;
+    padding:120px 0;
+}
+
+/* row */
+#pmPartnerScrollText .pm-row{
+    position:relative;
+    width:100%;
+    overflow:hidden;
+    margin:10px 0;
+}
+
+/* mask fade */
+#pmPartnerScrollText .pm-row:before,
+#pmPartnerScrollText .pm-row:after{
+    content:"";
+    position:absolute;
+    top:0;
+    width:120px;
+    height:100%;
+    z-index:2;
+}
+
+#pmPartnerScrollText .pm-row:before{
+    left:0;
+    background:linear-gradient(to right,#000,rgba(0,0,0,0));
+}
+
+#pmPartnerScrollText .pm-row:after{
+    right:0;
+    background:linear-gradient(to left,#000,rgba(0,0,0,0));
+}
+
+/* track */
+#pmPartnerScrollText .pm-track{
+    display:flex;
+    white-space:nowrap;
+}
+
+/* text */
+#pmPartnerScrollText .pm-text{
+    font-size:120px;
+    font-weight:700;
+    letter-spacing:-2px;
+    padding-right:140px;
+    color:#fff;
+}
+
+/* thin */
+#pmPartnerScrollText .pm-light{
+    font-weight:300;
+    font-size:90px;
+    color:#fff;
+}
+
+/* outline */
+#pmPartnerScrollText .pm-outline{
+    font-weight:700;
+    font-size:110px;
+    color:transparent;
+    -webkit-text-stroke:1px #fff;
+}
+
+/* animation speeds */
+
+#pmPartnerScrollText .move-right{
+    animation:pmMoveRight 10s linear infinite;
+}
+
+#pmPartnerScrollText .move-left{
+    animation:pmMoveLeft 12s linear infinite;
+}
+
+#pmPartnerScrollText .move-left-slow{
+    animation:pmMoveRight 8s linear infinite;
+}
+
+@keyframes pmMoveLeft{
+    0%{transform:translateX(0)}
+    100%{transform:translateX(-50%)}
+}
+
+@keyframes pmMoveRight{
+    0%{transform:translateX(-50%)}
+    100%{transform:translateX(0)}
+}
+
+@media (max-width:900px){
+
+#pmPartnerScrollText .pm-text{
+    font-size:56px;
+}
+
+#pmPartnerScrollText .pm-light{
+    font-size:48px;
+}
+
+#pmPartnerScrollText .pm-outline{
+    font-size:52px;
+}
+
+}
+
+</style>
+
+
+<!-- row1 -->
+<div class="pm-row">
+<div class="pm-track move-right">
+
+<div class="pm-text pm-light">Creating Premium Online Business & Value</div>
+<div class="pm-text pm-light">Creating Premium Online Business & Value</div>
+<div class="pm-text pm-light">Creating Premium Online Business & Value</div>
+<div class="pm-text pm-light">Creating Premium Online Business & Value</div>
+
+</div>
+</div>
+
+
+<!-- row2 -->
+<div class="pm-row">
+<div class="pm-track move-left">
+
+<div class="pm-text">Property Management Company.</div>
+<div class="pm-text">Property Management Company.</div>
+<div class="pm-text">Property Management Company.</div>
+<div class="pm-text">Property Management Company.</div>
+
+</div>
+</div>
+
+
+<!-- row3 -->
+<div class="pm-row">
+<div class="pm-track move-left-slow">
+
+<div class="pm-text pm-outline">Premier PM Partner & Value Creator</div>
+<div class="pm-text pm-outline">Premier PM Partner & Value Creator</div>
+<div class="pm-text pm-outline">Premier PM Partner & Value Creator</div>
+<div class="pm-text pm-outline">Premier PM Partner & Value Creator</div>
+
+</div>
+</div>
+
+
+<script>
+
+(function(){
+
+const section=document.querySelector("#pmPartnerScrollText")
+
+const observer=new IntersectionObserver((entries)=>{
+
+entries.forEach(entry=>{
+
+const tracks=section.querySelectorAll(".pm-track")
+
+if(entry.isIntersecting){
+
+tracks.forEach(el=>{
+
+const clone=el.cloneNode(true)
+el.parentNode.replaceChild(clone,el)
+
+})
+
+}
+
+})
+
+},{threshold:0.2})
+
+observer.observe(section)
+
+})()
+
+</script>
+
+</section>
+
+<section id="cosmoContentSection" aria-label="Cosmopolitan content section">
+  <style>
+    #cosmoContentSection {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      background: #050505;
+      padding: clamp(48px, 8vw, 96px) clamp(20px, 5vw, 48px);
+      box-sizing: border-box;
+      font-family: 'Pretendard', 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif;
+      color: #ffffff;
+    }
+
+    #cosmoContentSection .cosmo-shell {
+      width: 100%;
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+
+    #cosmoContentSection .cosmo-hero {
+      margin-bottom: clamp(42px, 7vw, 72px);
+    }
+
+    #cosmoContentSection .cosmo-kicker {
+      margin: 0;
+      font-size: clamp(34px, 5.2vw, 68px);
+      line-height: 0.92;
+      letter-spacing: -0.05em;
+      font-weight: 800;
+      color: #f5f5f5;
+    }
+
+    #cosmoContentSection .cosmo-kicker strong {
+      display: block;
+      color: #fff;
+      font-weight: 900;
+    }
+
+    #cosmoContentSection .cosmo-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.36fr) minmax(240px, 0.88fr);
+      gap: clamp(18px, 2.4vw, 26px);
+      align-items: start;
+      margin-bottom: clamp(28px, 4vw, 40px);
+    }
+
+    #cosmoContentSection .cosmo-grid--reverse {
+      grid-template-columns: minmax(240px, 0.88fr) minmax(0, 1.36fr);
+    }
+
+    #cosmoContentSection .cosmo-card,
+    #cosmoContentSection .cosmo-copy {
+      min-width: 0;
+    }
+
+    #cosmoContentSection .cosmo-card {
+      position: relative;
+      overflow: hidden;
+      background: #0d0d0d;
+    }
+
+    #cosmoContentSection .cosmo-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0));
+      pointer-events: none;
+    }
+
+    #cosmoContentSection .cosmo-card img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      aspect-ratio: 16 / 9.2;
+      transform: scale(1.001);
+    }
+
+    #cosmoContentSection .cosmo-copy {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-top: clamp(2px, 0.5vw, 8px);
+    }
+
+    #cosmoContentSection .cosmo-title {
+      margin: 0 0 12px;
+      font-size: clamp(22px, 2.6vw, 34px);
+      line-height: 1.1;
+      letter-spacing: -0.04em;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    #cosmoContentSection .cosmo-desc {
+      margin: 0;
+      font-size: clamp(14px, 1.18vw, 20px);
+      line-height: 1.72;
+      letter-spacing: -0.03em;
+      color: rgba(255,255,255,0.72);
+      word-break: keep-all;
+    }
+
+    #cosmoContentSection .cosmo-anim {
+      opacity: 0;
+      transform: translate3d(0, 32px, 0);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+      will-change: opacity, transform;
+    }
+
+    #cosmoContentSection .fadeInLeft {
+      transform: translate3d(-44px, 0, 0);
+    }
+
+    #cosmoContentSection .fadeInRight {
+      transform: translate3d(44px, 0, 0);
+    }
+
+    #cosmoContentSection .fadeInUp {
+      transform: translate3d(0, 32px, 0);
+    }
+
+    #cosmoContentSection .is-visible {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+
+    @media (max-width: 900px) {
+      #cosmoContentSection {
+        padding: 40px 18px 56px;
+      }
+
+      #cosmoContentSection .cosmo-shell {
+        max-width: 100%;
+      }
+
+      #cosmoContentSection .cosmo-grid,
+      #cosmoContentSection .cosmo-grid--reverse {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        margin-bottom: 42px;
+      }
+
+      #cosmoContentSection .cosmo-grid--reverse .cosmo-copy {
+        order: 2;
+      }
+
+      #cosmoContentSection .cosmo-grid--reverse .cosmo-card {
+        order: 1;
+      }
+
+      #cosmoContentSection .cosmo-card img {
+        aspect-ratio: 16 / 8.9;
+      }
+
+      #cosmoContentSection .cosmo-copy {
+        padding-top: 0;
+      }
+
+      #cosmoContentSection .cosmo-hero {
+        margin-bottom: 34px;
+      }
+    }
+
+    @media (max-width: 560px) {
+      #cosmoContentSection {
+        padding: 30px 16px 44px;
+      }
+
+      #cosmoContentSection .cosmo-hero {
+        margin-bottom: 26px;
+      }
+
+      #cosmoContentSection .cosmo-kicker {
+        font-size: clamp(28px, 10.6vw, 48px);
+        line-height: 0.94;
+        letter-spacing: -0.055em;
+      }
+
+      #cosmoContentSection .cosmo-grid,
+      #cosmoContentSection .cosmo-grid--reverse {
+        gap: 14px;
+        margin-bottom: 44px;
+      }
+
+      #cosmoContentSection .cosmo-card img {
+        aspect-ratio: 16 / 10.5;
+      }
+
+      #cosmoContentSection .cosmo-title {
+        margin-bottom: 12px;
+        font-size: clamp(22px, 7.1vw, 30px);
+        line-height: 1.08;
+      }
+
+      #cosmoContentSection .cosmo-desc {
+        font-size: 14px;
+        line-height: 1.64;
+        letter-spacing: -0.035em;
+      }
+    }
+  </style>
+
+ <div class="cosmo-shell">
+  <div class="cosmo-hero cosmo-anim fadeInUp">
+    <h2 class="cosmo-kicker">
+      단순한 웹사이트를 넘어<br>
+      <strong>브랜드의 격을 높여드립니다</strong>
+    </h2>
+  </div>
+
+  <div class="cosmo-grid">
+    <div class="cosmo-card cosmo-anim fadeInLeft">
+      <img src="./img/premium.png" alt="프리미엄 브랜드 경험">
+    </div>
+    <div class="cosmo-copy cosmo-anim fadeInRight">
+      <h3 class="cosmo-title">Premium Brand Experience</h3>
+      <p class="cosmo-desc">
+        FLOS는 단순한 웹사이트 제작이 아닌, 
+        방문하는 순간 브랜드의 품격과 신뢰를 체감하게 만드는 경험을 설계합니다.  
+        첫 화면에서부터 전달되는 인상 하나로 고객의 인식은 완전히 달라집니다.
+      </p>
+    </div>
+  </div>
+
+  <div class="cosmo-grid cosmo-grid--reverse">
+    <div class="cosmo-copy cosmo-anim fadeInLeft">
+      <h3 class="cosmo-title">Strategic Design & Conversion</h3>
+      <p class="cosmo-desc">
+        감각적인 디자인을 넘어, 고객의 심리와 행동 흐름까지 고려한 구조로 설계합니다.  
+        브랜드 이미지 상승은 물론, 자연스럽게 상담·문의·전환으로 이어지는 흐름을 만들어냅니다.
+      </p>
+    </div>
+    <div class="cosmo-card cosmo-anim fadeInRight">
+      <img src="./img/solution-3-3.jpg" alt="전략적 설계">
+    </div>
+  </div>
+
+  <div class="cosmo-grid">
+    <div class="cosmo-card cosmo-anim fadeInLeft">
+      <img src="./img/model.png" alt="콘텐츠 가치">
+    </div>
+    <div class="cosmo-copy cosmo-anim fadeInRight">
+      <h3 class="cosmo-title">Content That Elevates Value</h3>
+      <p class="cosmo-desc">
+        브랜드의 철학과 스토리를 담은 콘텐츠 설계를 통해 
+        단순한 정보 전달이 아닌 ‘기억에 남는 브랜드’로 자리잡게 합니다.  
+        FLOS는 고객의 시선을 머무르게 하고, 신뢰를 축적하는 콘텐츠를 만듭니다.
+      </p>
+    </div>
+  </div>
+</div>
+
+  <script>
+    (function () {
+      var section = document.getElementById('cosmoContentSection');
+      if (!section) return;
+
+      var targets = section.querySelectorAll('.cosmo-anim');
+      if (!targets.length) return;
+
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+          } else {
+            entry.target.classList.remove('is-visible');
+          }
+        });
+      }, {
+        threshold: 0.18,
+        rootMargin: '0px 0px -8% 0px'
+      });
+
+      targets.forEach(function (el) {
+        observer.observe(el);
+      });
+    })();
+  </script>
+</section>
+
+
+<section id="globalClientsSection">
+
+<style>
+#globalClientsSection{
+position:relative;
+width:100%;
+height:760px;
+background:#000;
+overflow:hidden;
+font-family: Pretendard, sans-serif;
+}
+
+/* 배경 지구 */
+#globalClientsSection .gcs-bg{
+position:absolute;
+inset:0;
+background:url("./img/earth.jpg") center bottom/cover no-repeat;
+filter:brightness(.8);
+}
+
+/* 어두운 그라데이션 */
+#globalClientsSection .gcs-dim{
+position:absolute;
+inset:0;
+background:linear-gradient(to bottom,rgba(0,0,0,.85),rgba(0,0,0,.2) 40%,rgba(0,0,0,.9));
+}
+
+/* 텍스트 영역 */
+#globalClientsSection .gcs-text{
+position:absolute;
+left:8%;
+top:16%;
+color:#fff;
+max-width:620px;
+z-index:3;
+}
+
+#globalClientsSection .gcs-small{
+font-size:15px;
+opacity:.7;
+margin-bottom:16px;
+letter-spacing:.04em;
+}
+
+#globalClientsSection .gcs-title{
+font-size:40px;
+line-height:1.5;
+font-weight:700;
+}
+
+/* 로고 슬라이드 영역 */
+#globalClientsSection .gcs-logo-wrap{
+position:absolute;
+bottom:320px;
+left:0;
+width:100%;
+overflow:hidden;
+z-index:3;
+filter: grayscale(1);
+}
+
+/* 슬라이드 트랙 */
+#globalClientsSection .gcs-logo-track{
+display:flex;
+gap:90px;
+align-items:center;
+width:max-content;
+animation:gcsSlide 88s linear infinite;
+}
+
+/* 로고 */
+#globalClientsSection .gcs-logo{
+height:34px;
+opacity:.8;
+filter:brightness(1.8);
+transition:.3s;
+}
+
+#globalClientsSection .gcs-logo:hover{
+opacity:1;
+transform:scale(1.1);
+}
+
+/* 슬라이드 애니메이션 */
+@keyframes gcsSlide{
+0%{
+transform:translateX(0);
+}
+100%{
+transform:translateX(-50%);
+}
+}
+
+/* fade */
+#globalClientsSection .gcs-text{
+opacity:0;
+transform:translateY(30px);
+transition:1.2s;
+}
+
+#globalClientsSection.gcs-show .gcs-text{
+opacity:1;
+transform:translateY(0);
+}
+
+/* 모바일 */
+@media(max-width:768px){
+
+#globalClientsSection{
+height:620px;
+}
+
+#globalClientsSection .gcs-title{
+font-size:26px;
+}
+
+#globalClientsSection .gcs-logo-track{
+gap:50px;
+}
+
+#globalClientsSection .gcs-logo{
+height:26px;
+}
+
+#globalClientsSection .gcs-logo-wrap{
+bottom:250px;
+}
+
+}
+</style>
+
+
+<div class="gcs-bg"></div>
+<div class="gcs-dim"></div>
+
+<div class="gcs-text">
+<div class="gcs-small">Our Clients</div>
+
+<div class="gcs-title">
+많은 업체들과 함께<br>
+온라인 비즈니스를<br>
+새롭게 만들어가고 있습니다.
+</div>
+</div>
+
+
+<div class="gcs-logo-wrap">
+
+<div class="gcs-logo-track">
+
+
+<img class="gcs-logo" src="https://htuglobal.com/img/logo-ccn.png">
+<img class="gcs-logo" src="https://zipcare.kr/img/logo-color.png">
+<img class="gcs-logo" src="https://image.newdaily.co.kr/site/data/img/2021/06/15/2021061500091_0.png">
+<img class="gcs-logo" src="https://dqwc99gnfppi1.cloudfront.net/frontend/static/img/img-about-naver02.833f427.png">
+<img class="gcs-logo" src="https://i.namu.wiki/i/rSvqwV34oQwiwD24RMdGl7unDojJKXexCbi2VTdmqvSIcCGWAS9uG10oKdtF6VwNMFD4aD7GAX443cszgF0LDA.svg">
+<img class="gcs-logo" src="./img/ajou-logo.png">
+<img class="gcs-logo" src="http://biznovalab.com/img/logo-w.png">
+<img class="gcs-logo" src="https://htuglobal.com/img/logo-g-htu.png">
+<img class="gcs-logo" src="./img/ready.png">
+<img class="gcs-logo" src="./img/daewoong.png">
+<img class="gcs-logo" src="https://mindwellpath.co.kr/img/logo-menu3.png">
+
+
+
+</div>
+
+</div>
+
+
+<script>
+
+(function(){
+
+const section=document.getElementById("globalClientsSection")
+
+function reveal(){
+
+const rect=section.getBoundingClientRect()
+
+if(rect.top<window.innerHeight*0.8){
+section.classList.add("gcs-show")
+}else{
+section.classList.remove("gcs-show")
+}
+
+}
+
+window.addEventListener("scroll",reveal)
+reveal()
+
+})()
+
+</script>
+
+</section>
+  
+  <div id="footer_template"></div>
+  <script src="./js/footer.js"></script>
+
+</body>
+</html>

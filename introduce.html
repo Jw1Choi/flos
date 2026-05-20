@@ -1,0 +1,1379 @@
+<!doctype html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+
+
+  <!-- 소유권 인증(각 도메인별 값으로 교체) -->
+  <meta name="naver-site-verification" content="네이버_인증코드_여기에" />
+  <meta name="google-site-verification" content="구글_인증코드_여기에" />
+
+  <!-- Canonical (대표 URL로 고정) -->
+  <link rel="canonical" href="https://htuglobal.com/" />
+  <meta name="robots" content="index,follow" />
+  <meta name="subject" content="HTU GLOBAL" />
+  <meta name="title" content="HTU GLOBAL" />
+  <meta name="author" content="HTU GLOBAL">
+  <meta name="description" content="HTU GLOBAL — 건강한 아름다움을 만들어가는 뷰티,헬스 비즈니스 파트너" />
+  <meta name="keywords"
+    content="HTU GLOBAL, HTU GLOBAL HOLDINGS, Healthy Beauty, Well-aging, Beauty Health Industry, 글로벌 뷰티 헬스 기업, 건강한 아름다움, 뷰티 산업, 헬스 산업, 웰에이징 산업, 뷰티 헬스 비즈니스, 글로벌 네트워크, 뷰티 교육, 헬스 교육, 뷰티 전문가, 건강 산업, 라이프스타일 산업, 글로벌 비즈니스 플랫폼, HTU 브랜드" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:rich_attachment" content="true" />
+  <meta property="og:site_name" content="HTU GLOBAL" />
+  <meta property="og:title" content="HTU GLOBAL" />
+  <meta property="og:description" content="HTU GLOBAL — 건강한 아름다움을 만들어가는 뷰티,헬스 비즈니스 파트너" />
+  <meta property="og:image" content="https://htuglobal.com/img/og-biznovlab.jpg" />
+  <meta property="og:url" content="https://htuglobal.com/" />
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="HTU GLOBAL" />
+  <meta name="twitter:description" content="HTU GLOBAL — 건강한 아름다움을 만들어가는 뷰티,헬스 비즈니스 파트너" />
+  <meta name="twitter:image" content="https://htuglobal.com/img/og-biznovlab.jpg" />
+
+  <meta itemprop="name" content="HTU GLOBAL" />
+  <meta itemprop="description" content="HTU GLOBAL — 건강한 아름다움을 만들어가는 뷰티,헬스 비즈니스 파트너" />
+  <meta itemprop="image" content="https://htuglobal.com/img/og-biznovlab.jpg" />
+  <title>HTU GLOBAL</title>
+
+  <link href="./css/reset.css" rel="stylesheet" type="text/css" />
+  <link href="./css/style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+      <div id="menu_navi"></div>
+
+<script src="./js/menu3.js"></script>
+
+
+
+  </head>
+
+  <body style="margin:0;padding:0;">
+
+    <!-- 메뉴(외부 로드) -->
+    <div id="menu"></div>
+
+<section id="HeroScroll">
+  <style>
+    #HeroScroll {
+      --iaan-gold: #C8A96E;
+      --iaan-dark: #1a1a1a;
+      --iaan-teal: #2D6B5E;
+      --iaan-white: #ffffff;
+      --iaan-gray: #f5f3ef;
+      --iaan-text-sub: rgba(255,255,255,0.8);
+      position: relative;
+      width: 100%;
+      font-family: 'Noto Sans KR', 'Pretendard', -apple-system, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      overflow: visible;
+      background-color: #1a1a1a;
+    }
+
+    #HeroScroll .iaan-stage {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: hidden;
+      z-index: 1;
+      background-color: #1a1a1a;
+    }
+
+    #HeroScroll .iaan-scroll-spacer {
+      height: 620vh;
+      pointer-events: none;
+    }
+
+    /* ===== 배경 래퍼 ===== */
+    #HeroScroll .iaan-video-wrap {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      overflow: hidden;
+      pointer-events: none;
+      background: #111;
+    }
+
+    /* ===== 미리보기 이미지 ===== */
+    #HeroScroll .iaan-poster {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      opacity: 1;
+      transition: opacity 0.9s ease;
+      will-change: opacity;
+    }
+
+    #HeroScroll .iaan-poster img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+      display: block;
+      transform: scale(1.04);
+      filter: brightness(0.72);
+    }
+
+    /* ===== Vimeo 레이어 ===== */
+    #HeroScroll .iaan-vimeo-box {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      transform: scale(1.04);
+      transform-origin: center center;
+      filter: brightness(0.72);
+      z-index: 2;
+      opacity: 0;
+      transition: opacity 1.1s ease;
+      will-change: opacity;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+
+    #HeroScroll .iaan-video-wrap.video-ready .iaan-vimeo-box {
+      opacity: 1;
+    }
+
+    /* 영상이 충분히 보이면 포스터는 천천히 사라짐 */
+    #HeroScroll .iaan-video-wrap.video-ready .iaan-poster {
+      opacity: 0;
+    }
+
+    #HeroScroll .iaan-vimeo-box iframe {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 177.78vh;
+      height: 56.25vw;
+      min-width: 100%;
+      min-height: 100%;
+      transform: translate(-50%, -50%);
+      border: 0;
+      pointer-events: none;
+      background: transparent;
+    }
+
+    /* 공통 오버레이 */
+    #HeroScroll .iaan-video-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      background:
+        linear-gradient(135deg, rgba(0,0,0,0.22) 0%, rgba(0,0,0,0.10) 45%, rgba(0,0,0,0.34) 100%),
+        linear-gradient(to bottom, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.22) 100%);
+      pointer-events: none;
+    }
+
+    #HeroScroll .iaan-content-layer {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      opacity: 0;
+      transform: translate3d(0, 54px, 0);
+      will-change: opacity, transform;
+      pointer-events: none;
+      z-index: 10;
+      box-sizing: border-box;
+      transition:
+        opacity 0.42s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.72s cubic-bezier(0.22, 1, 0.36, 1);
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+
+    #HeroScroll .iaan-content-layer.active {
+      pointer-events: auto;
+    }
+
+    #HeroScroll .iaan-p1-content {
+      justify-content: center;
+      text-align: center;
+    }
+
+    #HeroScroll .iaan-p1-inner {
+      max-width: 800px;
+      padding: 0 40px;
+    }
+
+    #HeroScroll .iaan-p1-title {
+      font-size: clamp(30px, 4.2vw, 52px);
+      font-weight: 700;
+      color: var(--iaan-white);
+      line-height: 1.4;
+      margin: 0 0 30px 0;
+      letter-spacing: -0.025em;
+      text-shadow: 0 2px 30px rgba(0,0,0,0.25);
+    }
+
+    #HeroScroll .iaan-p1-sub {
+      font-size: clamp(13px, 1.35vw, 16px);
+      color: var(--iaan-text-sub);
+      line-height: 1.85;
+      font-weight: 300;
+      text-shadow: 0 1px 15px rgba(0,0,0,0.2);
+    }
+
+    #HeroScroll .iaan-p2-content {
+      padding: 0 8%;
+    }
+
+    #HeroScroll .iaan-p2-inner {
+      max-width: 620px;
+    }
+
+    #HeroScroll .iaan-p2-title {
+      font-size: clamp(28px, 3.8vw, 46px);
+      font-weight: 800;
+      color: var(--iaan-white);
+      line-height: 1.3;
+      margin: 0 0 26px 0;
+      letter-spacing: -0.015em;
+    }
+
+    #HeroScroll .iaan-p2-sub {
+      font-size: clamp(13px, 1.3vw, 15.5px);
+      color: var(--iaan-text-sub);
+      line-height: 1.9;
+      font-weight: 300;
+    }
+
+    #HeroScroll .iaan-p3-content {
+      justify-content: flex-end;
+      padding: 0 8%;
+    }
+
+    #HeroScroll .iaan-p3-inner {
+      max-width: 620px;
+      text-align: right;
+    }
+
+    #HeroScroll .iaan-p3-title {
+      font-size: clamp(28px, 3.8vw, 46px);
+      font-weight: 700;
+      color: var(--iaan-white);
+      line-height: 1.4;
+      margin: 0 0 26px 0;
+    }
+
+    #HeroScroll .iaan-p3-sub {
+      font-size: clamp(13px, 1.3vw, 15.5px);
+      color: var(--iaan-text-sub);
+      line-height: 1.9;
+      font-weight: 300;
+    }
+
+    #HeroScroll .iaan-p4-content {
+      padding: 0 8%;
+    }
+
+    #HeroScroll .iaan-p4-inner {
+      max-width: 620px;
+    }
+
+    #HeroScroll .iaan-p4-title {
+      font-size: clamp(28px, 3.8vw, 46px);
+      font-weight: 800;
+      color: var(--iaan-white);
+      line-height: 1.35;
+      margin: 0 0 22px 0;
+    }
+
+    #HeroScroll .iaan-p4-sub {
+      font-size: clamp(13px, 1.3vw, 15.5px);
+      color: rgba(255,255,255,0.82);
+      line-height: 1.85;
+      font-weight: 300;
+    }
+
+    #HeroScroll .iaan-scroll-indicator {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 20;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      opacity: 1;
+      transition: opacity 0.5s ease;
+      pointer-events: none;
+    }
+
+    #HeroScroll .iaan-scroll-indicator.hidden {
+      opacity: 0;
+    }
+
+    #HeroScroll .iaan-scroll-text {
+      font-size: 11px;
+      color: rgba(255,255,255,0.5);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      font-weight: 300;
+    }
+
+    #HeroScroll .iaan-scroll-line {
+      width: 1px;
+      height: 44px;
+      background: rgba(255,255,255,0.2);
+      position: relative;
+      overflow: hidden;
+      border-radius: 1px;
+    }
+
+    #HeroScroll .iaan-scroll-line::after {
+      content: '';
+      display: block;
+      width: 1px;
+      height: 100%;
+      background: rgba(255,255,255,0.7);
+      animation: iaanScrollPulse 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    }
+
+    #HeroScroll .iaan-progress {
+      position: absolute;
+      right: 32px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 20;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      pointer-events: auto;
+    }
+
+    #HeroScroll .iaan-progress.visible {
+      opacity: 1;
+    }
+
+    #HeroScroll .iaan-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.25);
+      transition: background 0.4s ease, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
+      cursor: pointer;
+      border: none;
+      outline: none;
+      padding: 0;
+    }
+
+    #HeroScroll .iaan-dot:hover {
+      transform: scale(1.5);
+    }
+
+    #HeroScroll .iaan-dot.active {
+      background: var(--iaan-white);
+      transform: scale(1.5);
+      box-shadow: 0 0 8px rgba(255,255,255,0.3);
+    }
+
+    @keyframes iaanScrollPulse {
+      0% { transform: translateY(-100%); }
+      100% { transform: translateY(100%); }
+    }
+
+    @media (max-width: 768px) {
+      #HeroScroll .iaan-p3-inner {
+        text-align: left;
+      }
+
+      #HeroScroll .iaan-p3-content {
+        justify-content: flex-start;
+      }
+
+      #HeroScroll .iaan-progress {
+        right: 16px;
+        gap: 10px;
+      }
+
+      #HeroScroll .iaan-dot {
+        width: 6px;
+        height: 6px;
+      }
+
+      #HeroScroll .iaan-p2-content,
+      #HeroScroll .iaan-p3-content,
+      #HeroScroll .iaan-p4-content {
+        padding: 0 6%;
+      }
+
+      #HeroScroll .iaan-poster img,
+      #HeroScroll .iaan-vimeo-box {
+        transform: scale(1.02);
+      }
+    }
+  </style>
+
+  <div class="iaan-stage">
+    <div class="iaan-video-wrap" id="iaanVideoWrap">
+      <!-- 미리보기 이미지 -->
+      <div class="iaan-poster">
+        <img src="./img/index-1.jpg" alt="video preview">
+      </div>
+
+      <!-- Vimeo 영상 -->
+      <div class="iaan-vimeo-box">
+        <iframe
+          id="iaanVimeoFrame"
+          src="https://player.vimeo.com/video/1184975255?background=1&autoplay=1&loop=1&muted=1&autopause=0&controls=0&title=0&byline=0&portrait=0"
+          frameborder="0"
+          allow="autoplay; fullscreen; picture-in-picture"
+          allowfullscreen
+          title="Background Vimeo Video">
+        </iframe>
+      </div>
+
+      <div class="iaan-video-overlay"></div>
+    </div>
+
+    <div class="iaan-content-layer iaan-p1-content" data-panel="1">
+      <div class="iaan-p1-inner">
+        <h2 class="iaan-p1-title">FLOS는?</h2>
+        <p class="iaan-p1-sub">
+          FLOS는 단순한 홈페이지 제작을 넘어,<br>
+          브랜드가 가진 ‘보이지 않는 가치’를 시각적으로 구현하고<br>
+          AI 마케팅 흐름까지 연결하는<br>
+          프리미엄 브랜딩 종합 솔루션 기업입니다.
+        </p>
+      </div>
+    </div>
+
+    <div class="iaan-content-layer iaan-p2-content" data-panel="2">
+      <div class="iaan-p2-inner">
+        <h2 class="iaan-p2-title">단순한 홈페이지를 넘어</h2>
+        <p class="iaan-p2-sub">
+          말로 설명하기 어려운 ‘특별함’과 ‘고급스러움’을<br>
+          고객이 보는 순간 신뢰와 품격을 느끼도록 설계합니다.
+        </p>
+      </div>
+    </div>
+
+    <div class="iaan-content-layer iaan-p3-content" data-panel="3">
+      <div class="iaan-p3-inner">
+        <h2 class="iaan-p3-title">직관적으로 회사의 가치와<br>신뢰를 느낄 수 있도록</h2>
+        <p class="iaan-p3-sub">
+          첫 화면을 보는 순간 브랜드의 품격이 전달되도록<br>
+          디자인, 영상, 스토리 흐름을 정교하게 설계하고,<br>
+          고객의 시선을 사로잡는 경험을 만듭니다.
+        </p>
+      </div>
+    </div>
+
+    <div class="iaan-content-layer iaan-p4-content" data-panel="4">
+      <div class="iaan-p4-inner">
+        <h2 class="iaan-p4-title">AI시대 적합한 브랜딩과<br>컨텐츠 마케팅의 결합</h2>
+        <p class="iaan-p4-sub">
+          높은 퀄리티의 디자인과 브랜딩을 기반으로<br>
+          고객의 참여와 구매를 유도하는 마케팅 흐름까지 담겨<br>
+          활용도 높은 온라인 공간을 만드는데 집중합니다.
+        </p>
+      </div>
+    </div>
+
+    <div class="iaan-scroll-indicator" id="iaanScrollIndicator">
+      <span class="iaan-scroll-text">Scroll</span>
+      <div class="iaan-scroll-line"></div>
+    </div>
+
+    <nav class="iaan-progress" id="iaanProgress">
+      <div class="iaan-dot active" data-target="1"></div>
+      <div class="iaan-dot" data-target="2"></div>
+      <div class="iaan-dot" data-target="3"></div>
+      <div class="iaan-dot" data-target="4"></div>
+    </nav>
+  </div>
+
+  <div class="iaan-scroll-spacer"></div>
+
+  <script src="https://player.vimeo.com/api/player.js"></script>
+  <script>
+    (function() {
+      'use strict';
+
+      var section = document.getElementById('HeroScroll');
+      if (!section) return;
+
+      var contents = section.querySelectorAll('.iaan-content-layer');
+      var dots = section.querySelectorAll('.iaan-dot');
+      var scrollIndicator = section.querySelector('#iaanScrollIndicator');
+      var progressNav = section.querySelector('#iaanProgress');
+      var videoWrap = section.querySelector('#iaanVideoWrap');
+      var iframe = section.querySelector('#iaanVimeoFrame');
+
+      var totalPanels = 4;
+      var ticking = false;
+      var vimeoPlayer = null;
+      var videoShown = false;
+
+      var panelStops = [0, 0.24, 0.50, 0.72, 1];
+
+      function clamp(val, min, max) {
+        return Math.max(min, Math.min(max, val));
+      }
+
+      function smoothstep(edge0, edge1, x) {
+        var t = clamp((x - edge0) / (edge1 - edge0), 0, 1);
+        return t * t * (3 - 2 * t);
+      }
+
+      function getScrollProgress() {
+        var rect = section.getBoundingClientRect();
+        var sectionTop = -rect.top;
+        var sectionHeight = section.offsetHeight - window.innerHeight;
+        if (sectionHeight <= 0) return 0;
+        return clamp(sectionTop / sectionHeight, 0, 1);
+      }
+
+      function getSegmentedRawIndex(progress) {
+        for (var i = 0; i < panelStops.length - 1; i++) {
+          var start = panelStops[i];
+          var end = panelStops[i + 1];
+
+          if (progress >= start && progress <= end) {
+            var local = (progress - start) / (end - start);
+            return i + local;
+          }
+        }
+        return totalPanels - 1;
+      }
+
+      function getActivePanel(progress) {
+        for (var i = 0; i < totalPanels; i++) {
+          if (progress >= panelStops[i] && progress <= panelStops[i + 1]) {
+            return i + 1;
+          }
+        }
+        return totalPanels;
+      }
+
+      function getContentOpacity(distance) {
+        if (distance >= 0.62) return 0;
+        return 1 - smoothstep(0.06, 0.62, distance);
+      }
+
+      function markVideoReady() {
+        if (videoShown) return;
+        videoShown = true;
+        if (videoWrap) {
+          videoWrap.classList.add('video-ready');
+        }
+      }
+
+      function tryPlayVideo() {
+        if (!vimeoPlayer) return;
+
+        vimeoPlayer.setVolume(0).catch(function(){});
+        vimeoPlayer.setLoop(true).catch(function(){});
+
+        vimeoPlayer.play()
+          .then(function() {
+            setTimeout(markVideoReady, 250);
+          })
+          .catch(function(){});
+      }
+
+      function setupVimeo() {
+        if (!(window.Vimeo && iframe)) return;
+
+        vimeoPlayer = new Vimeo.Player(iframe);
+
+        iframe.addEventListener('load', function() {
+          tryPlayVideo();
+        });
+
+        vimeoPlayer.ready().then(function() {
+          tryPlayVideo();
+
+          vimeoPlayer.on('play', function() {
+            setTimeout(markVideoReady, 180);
+          });
+
+          vimeoPlayer.on('loaded', function() {
+            tryPlayVideo();
+          });
+
+          vimeoPlayer.on('bufferend', function() {
+            setTimeout(markVideoReady, 180);
+          });
+        }).catch(function(){});
+
+        setTimeout(function() {
+          tryPlayVideo();
+        }, 600);
+
+        setTimeout(function() {
+          tryPlayVideo();
+        }, 1400);
+
+        setTimeout(function() {
+          if (!videoShown) {
+            markVideoReady();
+          }
+        }, 4000);
+      }
+
+      function updatePanels() {
+        ticking = false;
+
+        var progress = getScrollProgress();
+        var rawIndex = getSegmentedRawIndex(progress);
+        var activePanel = getActivePanel(progress);
+
+        if (progressNav) {
+          progressNav.classList.toggle('visible', progress > 0.02);
+          progressNav.style.opacity = (progress > 0.02 ? 1 : 0).toFixed(4);
+        }
+
+        if (scrollIndicator) {
+          scrollIndicator.classList.toggle('hidden', progress > 0.025);
+          scrollIndicator.style.opacity = (progress <= 0.025 ? 1 : 0).toFixed(4);
+        }
+
+        contents.forEach(function(content) {
+          var p = parseInt(content.dataset.panel, 10);
+          var panelIndex = p - 1;
+          var signedDistance = rawIndex - panelIndex;
+          var distance = Math.abs(signedDistance);
+          var opacity;
+          var safeTranslate;
+
+          if (p === totalPanels && progress >= panelStops[totalPanels - 1]) {
+            opacity = 1;
+            safeTranslate = 0;
+          } else {
+            opacity = getContentOpacity(distance);
+            var translateY = signedDistance * -78;
+            safeTranslate = clamp(translateY, -78, 78);
+
+            if (progress > 0.94 && p !== totalPanels) {
+              safeTranslate -= smoothstep(0.94, 1.00, progress) * 36;
+            }
+          }
+
+          content.style.opacity = opacity.toFixed(4);
+          content.style.transform = 'translate3d(0,' + safeTranslate.toFixed(2) + 'px,0)';
+          content.classList.toggle('active', opacity > 0.12);
+        });
+
+        dots.forEach(function(dot) {
+          var t = parseInt(dot.dataset.target, 10);
+          dot.classList.toggle('active', t === activePanel);
+        });
+      }
+
+      function onScroll() {
+        if (!ticking) {
+          ticking = true;
+          requestAnimationFrame(updatePanels);
+        }
+      }
+
+      dots.forEach(function(dot) {
+        dot.addEventListener('click', function() {
+          var target = parseInt(this.dataset.target, 10);
+          var sectionRect = section.getBoundingClientRect();
+          var sectionTop = window.pageYOffset + sectionRect.top;
+          var sectionHeight = section.offsetHeight - window.innerHeight;
+          var targetProgress = panelStops[target - 1];
+          var targetScroll = sectionTop + targetProgress * sectionHeight;
+
+          window.scrollTo({
+            top: targetScroll,
+            behavior: 'smooth'
+          });
+        });
+      });
+
+      setupVimeo();
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', function() {
+        requestAnimationFrame(updatePanels);
+      }, { passive: true });
+
+      requestAnimationFrame(updatePanels);
+    })();
+  </script>
+</section>
+
+
+<section id="editorialCultureSection" aria-label="콘텐츠 매거진 섹션">
+  <style>
+    #editorialCultureSection {
+      position: relative;
+      width: 100%;
+      background: #050505;
+      overflow: hidden;
+      font-family: 'Pretendard', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+      color: #f5f5f5;
+    }
+
+    /* 전체 텍스트 기준 영역 */
+    #editorialCultureSection .ecs-inner {
+      width: min(1280px, calc(100% - 120px));
+      margin: 0 auto;
+      padding: 88px 0 92px;
+    }
+
+    /* 상단 카피: 아래 -> 위 */
+    #editorialCultureSection .ecs-copy {
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 0 64px;
+      opacity: 0;
+      transform: translate3d(0, 52px, 0);
+      transition: opacity .9s ease, transform .9s ease;
+      will-change: opacity, transform;
+    }
+
+    #editorialCultureSection.ecs-inview .ecs-copy {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+
+    #editorialCultureSection .ecs-headline {
+      margin: 0;
+      font-size: clamp(24px, 4.2vw, 40px);
+      line-height: 1.34;
+      font-weight: 800;
+      letter-spacing: -0.045em;
+      word-break: keep-all;
+    }
+
+    /* 핵심: 이미지만 화면 오른쪽 끝까지 확장 */
+    #editorialCultureSection .ecs-gallery-wrap {
+      width: 100vw;
+      margin-left: calc(-50vw + 50%);
+      padding-left: max(calc((100vw - min(1280px, calc(100% - 120px))) / 2), 0px);
+      padding-right: 0;
+      overflow: hidden;
+    }
+
+    #editorialCultureSection .ecs-gallery {
+      width: 100%;
+    }
+
+    #editorialCultureSection .ecs-card {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      background: #151515;
+    }
+
+    /* 오른쪽 -> 왼쪽 로딩되듯 reveal */
+    #editorialCultureSection .ecs-card img {
+      display: block;
+      width: 100%;
+      height: min(34vw, 520px);
+      min-height: 350px;
+      object-fit: cover;
+      object-position: center center;
+
+      opacity: 0;
+      clip-path: inset(0 100% 0 0);
+      transform: scale(1.08);
+      filter: blur(10px);
+
+      transition:
+        clip-path 1.35s cubic-bezier(.22, 1, .36, 1) .08s,
+        opacity .55s ease .08s,
+        transform 1.45s cubic-bezier(.22, 1, .36, 1) .08s,
+        filter 1.2s ease .08s;
+
+      will-change: clip-path, opacity, transform, filter;
+    }
+
+    #editorialCultureSection.ecs-inview .ecs-card img {
+      opacity: 1;
+      clip-path: inset(0 0 0 0);
+      transform: scale(1);
+      filter: blur(0);
+    }
+
+    /* 로딩바처럼 지나가는 밝은 하이라이트 */
+    #editorialCultureSection .ecs-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 24%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        rgba(255,255,255,0) 0%,
+        rgba(255,255,255,.20) 48%,
+        rgba(255,255,255,0) 100%
+      );
+      transform: translate3d(120%, 0, 0);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 2;
+      will-change: transform, opacity;
+    }
+
+    #editorialCultureSection.ecs-inview .ecs-card::before {
+      animation: ecsImageSweep 1.25s cubic-bezier(.22, 1, .36, 1) .12s forwards;
+    }
+
+    @keyframes ecsImageSweep {
+      0% {
+        transform: translate3d(120%, 0, 0);
+        opacity: 0;
+      }
+      12% {
+        opacity: .95;
+      }
+      100% {
+        transform: translate3d(-460%, 0, 0);
+        opacity: 0;
+      }
+    }
+
+    #editorialCultureSection .ecs-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.0) 0%, rgba(0,0,0,0.08) 100%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    #editorialCultureSection .ecs-bottom {
+      display: grid;
+      grid-template-columns: minmax(320px, 1fr) minmax(0, 1fr);
+      gap: 32px;
+      align-items: start;
+      margin-top: 28px;
+    }
+
+    /* 하단 텍스트: 아래 -> 위 */
+    #editorialCultureSection .ecs-bottom-copy {
+      opacity: 0;
+      transform: translate3d(0, 52px, 0);
+      transition: opacity .9s ease .2s, transform .9s ease .2s;
+      will-change: opacity, transform;
+    }
+
+    #editorialCultureSection.ecs-inview .ecs-bottom-copy {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+
+    #editorialCultureSection .ecs-subtitle {
+      margin: 0 0 18px;
+      font-size: clamp(24px, 2.3vw, 38px);
+      line-height: 1.3;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      color: #ffffff;
+      word-break: keep-all;
+    }
+
+    #editorialCultureSection .ecs-description {
+      margin: 0;
+      font-size: clamp(18px, 1.3vw, 24px);
+      line-height: 1.72;
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      color: rgba(255,255,255,0.94);
+      word-break: keep-all;
+    }
+
+    #editorialCultureSection .ecs-spacer {
+      min-height: 10px;
+    }
+
+    @media (max-width: 1280px) {
+      #editorialCultureSection .ecs-inner {
+        width: min(100%, calc(100% - 72px));
+        padding: 80px 0 88px;
+      }
+
+      #editorialCultureSection .ecs-gallery-wrap {
+        padding-left: 36px;
+      }
+
+      #editorialCultureSection .ecs-card img {
+        height: min(42vw, 480px);
+        min-height: 320px;
+      }
+    }
+
+    @media (max-width: 900px) {
+      #editorialCultureSection .ecs-inner {
+        width: min(100%, calc(100% - 40px));
+        padding: 64px 0 72px;
+      }
+
+      #editorialCultureSection .ecs-copy {
+        margin-bottom: 42px;
+      }
+
+      #editorialCultureSection .ecs-headline {
+        font-size: clamp(28px, 8.9vw, 56px);
+        line-height: 1.38;
+      }
+
+      #editorialCultureSection .ecs-gallery-wrap {
+        width: 100%;
+        margin-left: 0;
+        padding-left: 0;
+      }
+
+      #editorialCultureSection .ecs-card img {
+        height: 58vw;
+        min-height: 420px;
+      }
+
+      #editorialCultureSection .ecs-bottom {
+        grid-template-columns: 1fr;
+        gap: 0;
+        margin-top: 36px;
+      }
+
+      #editorialCultureSection .ecs-description {
+        max-width: 100%;
+      }
+
+      #editorialCultureSection .ecs-spacer {
+        display: none;
+      }
+    }
+
+    @media (max-width: 640px) {
+      #editorialCultureSection .ecs-inner {
+        width: 100%;
+        padding: 60px 0 66px;
+      }
+
+      #editorialCultureSection .ecs-copy,
+      #editorialCultureSection .ecs-bottom-copy {
+        padding-left: 22px;
+        padding-right: 22px;
+      }
+
+      #editorialCultureSection .ecs-copy {
+        margin-bottom: 34px;
+      }
+
+      #editorialCultureSection .ecs-headline {
+        font-size: clamp(24px, 8.5vw, 48px);
+        line-height: 1.36;
+      }
+
+      #editorialCultureSection .ecs-gallery-wrap {
+        width: 100%;
+        margin-left: 0;
+        padding-left: 0;
+      }
+
+      #editorialCultureSection .ecs-card img {
+        height: 64vw;
+        min-height: 320px;
+        object-position: center center;
+      }
+
+      #editorialCultureSection .ecs-subtitle {
+        margin-bottom: 16px;
+        font-size: clamp(22px, 5.8vw, 34px);
+        line-height: 1.34;
+      }
+
+      #editorialCultureSection .ecs-description {
+        font-size: clamp(14px, 3.9vw, 20px);
+        line-height: 1.7;
+      }
+    }
+  </style>
+
+  <div class="ecs-inner">
+    <div class="ecs-copy">
+      <h2 class="ecs-headline">
+        검색과 노출의 시대는 저물고<br>
+        AI의 선택을 받아야 살아남는 시대
+      </h2>
+    </div>
+
+    <div class="ecs-gallery-wrap">
+      <div class="ecs-gallery">
+        <figure class="ecs-card">
+          <img src="./img/premium1.png" alt="건강소비자 연대 포럼 현장 이미지" style="object-position: 20%;">
+        </figure>
+      </div>
+    </div>
+
+    <div class="ecs-bottom">
+      <div class="ecs-bottom-copy">
+        <h3 class="ecs-subtitle">AI가 선호하고 참조하는<br>더 차별화 되는 브랜딩과 컨텐츠에<br>프리미엄의 가치를 더합니다.</h3>
+        <p class="ecs-description">
+          AI가 제품을 선택하고 구매를 결정하는 시대에는<br>
+          자체적인 브랜딩과 컨텐츠가 필수적입니다.<br>
+          그 공간에 프리미엄의 가치를 더합니다.
+        </p>
+      </div>
+      <div class="ecs-spacer" aria-hidden="true"></div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var section = document.getElementById('editorialCultureSection');
+      if (!section) return;
+
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            section.classList.add('ecs-inview');
+          } else {
+            section.classList.remove('ecs-inview');
+          }
+        });
+      }, {
+        threshold: 0.18
+      });
+
+      observer.observe(section);
+    })();
+  </script>
+</section>
+
+
+
+<section id="rdOverviewSection" aria-label="R&D 소개 섹션">
+  <style>
+    #rdOverviewSection {
+      --rd-bg: #0b0b0b;
+      --rd-card-max: 1018px;
+      --rd-text: #ffffff;
+      --rd-muted: #6b6b6b;
+      --rd-line: rgba(255,255,255,0.18);
+      --rd-accent: #78c850;
+      --rd-navy: #18335a;
+      --rd-img-radius: 0px;
+      --rd-side-pad: clamp(20px, 4vw, 36px);
+      --rd-row-gap: clamp(30px, 4vw, 48px);
+      --rd-title-size: clamp(26px, 4vw, 44px);
+      --rd-label-size: clamp(15px, 1.6vw, 18px);
+      --rd-body-size: clamp(14px, 1.2vw, 16px);
+      position: relative;
+      width: 100%;
+      background: var(--rd-bg);
+      padding: clamp(28px, 4vw, 34px) 0 clamp(52px, 7vw, 88px);
+      overflow: hidden;
+      box-sizing: border-box;
+      font-family: "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+      color: var(--rd-text);
+    }
+
+    #rdOverviewSection,
+    #rdOverviewSection::before,
+    #rdOverviewSection::after,
+    #rdOverviewSection section,
+    #rdOverviewSection div,
+    #rdOverviewSection img,
+    #rdOverviewSection h2,
+    #rdOverviewSection h3,
+    #rdOverviewSection p,
+    #rdOverviewSection svg,
+    #rdOverviewSection span {
+      box-sizing: border-box;
+    }
+
+    #rdOverviewSection .rd-shell {
+      width: min(calc(100% - 48px), calc(var(--rd-card-max) + (var(--rd-side-pad) * 2)));
+      margin: 0 auto;
+    }
+
+    #rdOverviewSection .rd-visual {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1018 / 347;
+      min-height: 220px;
+      overflow: hidden;
+      border-radius: var(--rd-img-radius);
+      background: #dfe4e9;
+    }
+
+    #rdOverviewSection .rd-visual img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      object-position: center top;
+      transform: scale(1.01);
+    }
+
+    #rdOverviewSection .rd-content {
+      display: grid;
+      grid-template-columns: clamp(180px, 22vw, 240px) minmax(0, 1fr);
+      gap: clamp(26px, 4vw, 54px);
+      align-items: start;
+      margin-top: clamp(42px, 5vw, 70px);
+    }
+
+    #rdOverviewSection .rd-side {
+      display: flex;
+      align-items: center;
+      gap: clamp(12px, 1.8vw, 18px);
+      padding-left: clamp(4px, 1vw, 10px);
+    }
+
+    #rdOverviewSection .rd-side-icon {
+      width: clamp(46px, 4.2vw, 58px);
+      height: clamp(46px, 4.2vw, 58px);
+      flex: 0 0 auto;
+    }
+
+    #rdOverviewSection .rd-side-title {
+      margin: 0;
+      font-size: var(--rd-title-size);
+      line-height: 1;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      color: #ffffff;
+    }
+
+    #rdOverviewSection .rd-list {
+      min-width: 0;
+    }
+
+    #rdOverviewSection .rd-item {
+      position: relative;
+      display: grid;
+      grid-template-columns: clamp(122px, 18vw, 160px) minmax(0, 1fr);
+      gap: clamp(20px, 3vw, 44px);
+      padding: clamp(10px, 1vw, 14px) 0 clamp(48px, 5vw, 62px);
+      border-top: 1px solid var(--rd-line);
+    }
+
+    #rdOverviewSection .rd-item:first-child {
+      border-top: none;
+      padding-top: 0;
+    }
+
+    #rdOverviewSection .rd-item + .rd-item {
+      margin-top: 0;
+    }
+
+    #rdOverviewSection .rd-label {
+      margin: 0;
+      font-size: clamp(18px, 2vw, 21px);
+      line-height: 1.35;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      color: #ffffff;
+      word-break: keep-all;
+    }
+
+    #rdOverviewSection .rd-desc {
+      margin: 0;
+      font-size: var(--rd-body-size);
+      line-height: 1.7;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      color: rgba(255,255,255,0.82);
+      word-break: keep-all;
+    }
+
+    #rdOverviewSection .rd-anim {
+      opacity: 0;
+      will-change: transform, opacity;
+      transition: opacity 0.85s ease, transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    #rdOverviewSection .rd-anim.is-inview {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+
+    #rdOverviewSection .fadeInup {
+      transform: translate3d(0, 34px, 0);
+    }
+
+    #rdOverviewSection .fadeInleft {
+      transform: translate3d(-36px, 0, 0);
+    }
+
+    #rdOverviewSection .fadeInright {
+      transform: translate3d(36px, 0, 0);
+    }
+
+    #rdOverviewSection .rd-item:nth-child(2) .rd-label,
+    #rdOverviewSection .rd-item:nth-child(2) .rd-desc {
+      transition-delay: 0.06s;
+    }
+
+    #rdOverviewSection .rd-item:nth-child(3) .rd-label,
+    #rdOverviewSection .rd-item:nth-child(3) .rd-desc {
+      transition-delay: 0.12s;
+    }
+
+    @media (max-width: 900px) {
+      #rdOverviewSection .rd-content {
+        grid-template-columns: 1fr;
+        gap: 26px;
+      }
+
+      #rdOverviewSection .rd-side {
+        padding-left: 0;
+      }
+
+      #rdOverviewSection .rd-list {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 640px) {
+      #rdOverviewSection {
+        padding: 18px 0 44px;
+      }
+
+      #rdOverviewSection .rd-shell {
+        width: min(calc(100% - 28px), calc(var(--rd-card-max) + (var(--rd-side-pad) * 2)));
+      }
+
+      #rdOverviewSection .rd-visual {
+        aspect-ratio: 16 / 10.4;
+        min-height: 190px;
+      }
+
+      #rdOverviewSection .rd-side {
+        gap: 12px;
+      }
+
+      #rdOverviewSection .rd-item {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        padding-bottom: 28px;
+      }
+
+      #rdOverviewSection .rd-label {
+        font-size: 16px;
+      }
+
+      #rdOverviewSection .rd-desc {
+        font-size: 14px;
+        line-height: 1.65;
+      }
+    }
+  </style>
+
+  <div class="rd-shell">
+    <div class="rd-visual rd-anim fadeInup">
+      <img src="https://mobiinsidecontent.s3.ap-northeast-2.amazonaws.com/kr/wp-content/uploads/2024/11/14112557/241118_%EB%A6%AC%EB%B8%8C%EB%9E%9C%EB%94%A9_%EC%84%AC%EB%84%A4%EC%9D%BC.jpg" alt="R&D 연구 비주얼" />
+    </div>
+
+ <div class="rd-content">
+  <div class="rd-side rd-anim fadeInleft">
+    <h2 class="rd-side-title">프로그램</h2>
+  </div>
+
+  <div class="rd-list">
+
+    <div class="rd-item">
+      <h3 class="rd-label rd-anim fadeInup">브랜딩 홈페이지</h3>
+      <p class="rd-desc rd-anim fadeInright">
+        단순한 회사 소개가 아닌, 첫 방문에서 신뢰를 완성하는 브랜드 공간을 만듭니다.<br>
+        고객이 보는 순간 ‘다르다’고 느끼는 인상 설계로<br>
+        프리미엄의 품격을 주는 브랜드 홈페이지를 구축합니다.
+      </p>
+    </div>
+
+    <div class="rd-item">
+      <h3 class="rd-label rd-anim fadeInup">랜딩페이지</h3>
+      <p class="rd-desc rd-anim fadeInright">
+        고객의 타겟에 맞춰서 문제를 해결할 수 있는 상품을 소개하고<br>
+        문의 혹은 신청할 수 있는 흐름을 만듭니다.
+      </p>
+    </div>
+
+    <div class="rd-item">
+      <h3 class="rd-label rd-anim fadeInup">컨텐츠 마케팅 설계</h3>
+      <p class="rd-desc rd-anim fadeInright">
+        단순히 콘텐츠를 만드는 것이 아니라,<br>
+        고객이 유입되고 신뢰가 쌓이며 선택으로 이어지는 흐름을 설계합니다.<br>
+        AI 시대에 맞는 ‘참조되고 추천되는 콘텐츠 구조’를 구축합니다.
+      </p>
+    </div>
+
+    <div class="rd-item">
+      <h3 class="rd-label rd-anim fadeInup">브랜드 AI 영상</h3>
+      <p class="rd-desc rd-anim fadeInright">
+        단 몇 초 안에 브랜드의 품격을 느끼게 하는 영상을 만듭니다.<br>
+        AI 기술을 활용해 기존과는 다른 몰입감과 임팩트를 제공하며<br>
+        ‘기억되는 브랜드’로 인식되도록 설계합니다.
+      </p>
+    </div>
+
+    <div class="rd-item">
+      <h3 class="rd-label rd-anim fadeInup">AI 추억 영상 복원</h3>
+      <p class="rd-desc rd-anim fadeInright">
+        추억 사진을 영상으로 복원하여<br>
+        예전에 잊고 있었던 감정과 추억을 불러일으키고<br>
+        그 당시에 느꼈던 순간을 다시 살아나게 하여<br>
+        특별한 메세지와 감동을 전달합니다.
+      </p>
+    </div>
+
+
+  </div>
+</div>
+  </div>
+
+  <script>
+    (function () {
+      var section = document.getElementById('rdOverviewSection');
+      if (!section) return;
+
+      var targets = section.querySelectorAll('.rd-anim');
+      if (!targets.length) return;
+
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-inview');
+          } else {
+            entry.target.classList.remove('is-inview');
+          }
+        });
+      }, {
+        threshold: 0.18,
+        rootMargin: '0px 0px -8% 0px'
+      });
+
+      targets.forEach(function (el) {
+        io.observe(el);
+      });
+    })();
+  </script>
+</section>
+
+
+
+
+    <div id="footer_template"></div>
+
+
+
+  </body>
+  <script src="./js/jquery-1.11.0.min.js"></script>
+  <script src="./js/validation1.js"> </script>
+  <script src="./js/main.js"> </script>
+  <script src="./js/footer.js"></script>
+
+</html>

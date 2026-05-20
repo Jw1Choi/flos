@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+<!-- 소유권 인증(각 도메인별 값으로 교체) -->
+<meta name="naver-site-verification" content="네이버_인증코드_여기에" />
+<meta name="google-site-verification" content="구글_인증코드_여기에" />
+
+<!-- Canonical (대표 URL로 고정) -->
+<link rel="canonical" href="https://biznovlab.com/" />
+<link rel="canonical" href="https://biznovlab.com/" />
+<meta name="robots" content="index,follow" />
+<meta name="subject" content="비즈니스혁신연구소" />
+<meta name="title" content="비즈니스혁신연구소" />
+<meta name="author" content="비즈니스혁신연구소">
+<meta name="description" content="비즈니스혁신연구소 — 현장 혁신을 일으킬 수 있는 환경을 제공하여, 새로운 시대의 성장하는 비즈니스로 전환하는 실행형 혁신 플랫폼."/>
+<meta name="keywords" content="비즈니스혁신연구소, 비즈니스 혁신 연구소, Business Innovation Lab, biznovlab, 현장혁신, 실행형 혁신, 혁신 플랫폼, 사업 혁신, 조직 혁신, 운영 혁신, 프로세스 개선, 업무 효율화, 성장 전략, 신사업, 지속 성장, 기업 혁신" />
+
+<meta property="og:type" content="website" />
+<meta property="og:rich_attachment" content="true" />
+<meta property="og:site_name" content="비즈니스혁신연구소" />
+<meta property="og:title" content="비즈니스혁신연구소" />
+<meta property="og:description" content="비즈니스혁신연구소 — 현장 혁신을 일으킬 수 있는 환경을 제공하여, 새로운 시대의 성장하는 비즈니스로 전환하는 실행형 혁신 플랫폼." />
+<meta property="og:image" content="https://biznovlab.com/img/og-biznovlab.jpg" />
+<meta property="og:url" content="https://biznovlab.com/" />
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="비즈니스혁신연구소" />
+<meta name="twitter:description" content="비즈니스혁신연구소 — 현장 혁신을 일으킬 수 있는 환경을 제공하여, 새로운 시대의 성장하는 비즈니스로 전환하는 실행형 혁신 플랫폼." />
+<meta name="twitter:image" content="https://biznovlab.com/img/og-biznovlab.jpg" />
+  
+<meta itemprop="name" content="비즈니스혁신연구소" />
+<meta itemprop="description" content="비즈니스혁신연구소 — 현장 혁신을 일으킬 수 있는 환경을 제공하여, 새로운 시대의 성장하는 비즈니스로 전환하는 실행형 혁신 플랫폼." />
+<meta itemprop="image" content="https://biznovlab.com/img/og-biznovlab.jpg" />
+<title>비즈니스혁신연구소</title>
+
+  
+  <link href="./css/reset.css" rel="stylesheet" type="text/css" />
+   <link href="./css/style.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <div id="menu_navi"></div>
+
+<script src="./js/menu3.js"></script>
+
+
+
+  <style>
+    /* ── RESET & LAYOUT ── */
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Pretendard',sans-serif;background:#111;color:#fff;overflow-x:hidden}
+    .container{display:flex}
+    #main{flex:1;position:relative;overflow:hidden}
+    #visualTransWrap{position:absolute;inset:0;pointer-events:none;z-index:5}
+
+    /* ── SWIPER & BG ── */
+    .mv_container{width:100%;height:90vh;position:relative}
+    .swiper-container,.swiper-wrapper,.swiper-slide{width:100%;height:100%}
+    .bg{position:absolute;inset:0;background-size:cover;background-position:center;transition:transform 6s ease;filter:brightness(0.5)}
+    .swiper-slide-active .bg{transform:scale(1.12)}
+    .bg1{background-image:url('./img/intro-1.jpg')}
+    .bg2{background-image:url('./img/intro-2.jpg')}
+    .bg3{background-image:url('./img/page-3.jpg')}
+    .bg4{background-image:url('./img/repair.jpg')}
+
+    /* ── TEXT & BUTTON ── */
+    .mv_txt_box{position:absolute;top:20%;left:5%;max-width:640px;z-index:2}
+    .mv_cate{font-size:18px;font-weight:600;margin-bottom:14px;color:#ffeb55;display:inline-block}
+    .mv_tit{font-size:43px;line-height:1.4;margin:0 0 12px}
+    @media screen and (max-width:620px){ .mv_tit{font-size:34px !important;} }
+    @media screen and (max-width:500px){ .mv_tit{font-size:26px !important;} }
+    .mv_txt{font-size:18px;line-height:1.6;font-weight:300}
+    .mv_btn{
+      display:inline-block;margin-top:30px;padding:14px 36px;
+      border:2px solid #fff;border-radius:40px;
+      background:transparent;color:#fff;font-weight:600;letter-spacing:.3px;
+      opacity:0;pointer-events:none;
+      transition:opacity .6s,background .35s,box-shadow .35s,color .35s,transform .35s;
+      position:relative;overflow:hidden;text-decoration:none;
+    }
+    .swiper-slide-active .mv_btn{opacity:1;pointer-events:auto}
+    .mv_btn::after{
+      content:'';position:absolute;inset:0;background:rgba(255,255,255,.15);
+      transform:translateX(-100%);transition:transform .4s;
+    }
+    .mv_btn:hover::after{transform:translateX(0)}
+    .mv_btn:hover{
+      background:#fff;color:#111;box-shadow:0 8px 24px rgba(0,0,0,.25);
+      transform:translateY(-2px);
+    }
+
+    /* ── WAVE ANIMATION ── */
+    .wave_anim .wave{display:inline-block;opacity:0;animation:wave 1.1s ease-out forwards}
+    @keyframes wave{0%{transform:translateY(25px);opacity:0}100%{transform:translateY(0);opacity:1}}
+    .wave_anim.custom .wave:nth-child(1){animation-delay:.15s}
+    .wave_anim.custom .wave:nth-child(2){animation-delay:.3s}
+    .wave_anim.custom .wave:nth-child(3){animation-delay:.45s}
+
+    /* ── PROGRESS BAR ── */
+    .progress-container{position:absolute;bottom:80px;left:5%;right:5%;height:4px;display:flex;gap:10px;z-index:3;width:150px;}
+    .progress-segment{flex:1;background:rgba(255,255,255,.25);border-radius:2px;overflow:hidden;cursor:pointer}
+    .progress-fill{width:0;height:100%;background:#fff;display:block}
+
+    .wheel_down{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);width:24px;opacity:.7;z-index:3;animation: wheel-bounce 2s ease-in-out infinite;}
+    .wheel_down .wheel {animation: wheel-fade 2s ease-in-out infinite;}
+    @keyframes wheel-fade {
+      0%{opacity:1;transform:translateY(0)}
+      80%{opacity:.2;transform:translateY(10px)}
+      100%{opacity:0;transform:translateY(14px)}
+    }
+    #sidebar{display:none}
+  </style>
+
+  <style>
+    /* ──────────────────────────────────────────
+          #visual-section 전용 스타일
+      ─────────────────────────────────────────── */
+    #visual-section{position:relative;width:100%;height:100vh;overflow:hidden}
+    #visual-section .video_wrap{position:absolute;inset:0;z-index:0}
+    #visual-section .video_wrap video{width:100%;height:100%;object-fit:cover;object-position:center}
+    #visual-section .overlay{position:absolute;inset:0;background:rgba(0,0,0,0.5)}
+    #visual-section .txt_container{
+      position:absolute;inset:0;z-index:2;
+      display:flex;flex-direction:column;
+      justify-content:space-evenly;align-items:center;
+      text-align:center;pointer-events:none
+    }
+    @keyframes fadeInUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+    #visual-section .company,#visual-section .logo,#visual-section .exp{opacity:0}
+    #visual-section.animate .company{
+      color:#fff;font-size:2.5rem;font-weight:500;margin-bottom:.5em;
+      animation:fadeInUp 1s ease-out forwards;animation-delay:.2s
+    }
+    #visual-section.animate .logo{animation:fadeInUp 1s ease-out forwards;animation-delay:.7s}
+    #visual-section .logo .m_logo{
+      width:800px;height:130px;
+      background:url("../img/sm-logo.png") no-repeat center/contain;
+      margin-bottom:.5em
+    }
+    #visual-section.animate .exp{
+      color:#fff;font-size:1.25rem;line-height:1.6;max-width:80%;
+      animation:fadeInUp 1s ease-out forwards;animation-delay:1s
+    }
+    #visual-section .highlight{color:#e6d3a3;font-weight:600}
+    @media (max-width:768px){
+      #visual-section .company{font-size:2rem !important}
+      #visual-section .logo .m_logo{
+        background:url("../img/sm-font.png") no-repeat center/contain;
+        width:400px;height:300px
+      }
+      #visual-section .exp{font-size:1rem}
+      #visual-section .video_wrap video{object-position:right center}
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- 메뉴(외부 로드) -->
+<div id="menu"></div>
+
+<section id="chanelCategorySection">
+  <style>
+    #chanelCategorySection{position:relative;width:100%;padding:110px 24px 120px;background:#000;overflow:hidden;font-family:"Pretendard","Noto Sans KR",serif;color:#fff;}
+    #chanelCategorySection .ccs-wrap{width:min(100%,1380px);margin:0 auto;position:relative;z-index:2;}
+    #chanelCategorySection .ccs-head{text-align:center;margin-bottom:44px;}
+    #chanelCategorySection .ccs-kicker,#chanelCategorySection .ccs-title,#chanelCategorySection .ccs-desc,#chanelCategorySection .ccs-filter-wrap,#chanelCategorySection .ccs-grid,#chanelCategorySection .ccs-loadmore{opacity:0;will-change:transform,opacity;animation:ccsFadeInUp 1s ease forwards;}
+    #chanelCategorySection .ccs-kicker{margin:0 0 18px;font-size:16px;letter-spacing:.38em;font-weight:600;color:rgba(255,255,255,.82);text-transform:uppercase;animation-delay:.05s;}
+    #chanelCategorySection .ccs-title{margin:0;font-size:clamp(44px,6vw,82px);line-height:1.15;font-weight:500;letter-spacing:-.05em;font-family:"Times New Roman","Noto Serif KR",serif;animation-delay:.18s;}
+    #chanelCategorySection .ccs-divider{width:62px;height:1px;background:rgba(255,255,255,.4);margin:28px auto 26px;transform:scaleX(0);animation:ccsLine 1s ease .35s forwards;}
+    #chanelCategorySection .ccs-desc{margin:0;font-size:19px;line-height:1.8;color:rgba(255,255,255,.76);animation-delay:.32s;}
+
+    #chanelCategorySection .ccs-filter-wrap{display:flex;justify-content:center;margin:0 auto 62px;animation-delay:.42s;}
+    #chanelCategorySection .ccs-filter{display:inline-flex;gap:8px;padding:9px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.05);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-radius:999px;flex-wrap:wrap;}
+    #chanelCategorySection .ccs-filter-btn{appearance:none;border:0;background:transparent;color:rgba(255,255,255,.68);font-size:14px;padding:14px 24px;border-radius:999px;cursor:pointer;transition:background .4s ease,color .4s ease,transform .35s ease;font-weight:600;font-family:"Pretendard","Noto Sans KR",sans-serif;}
+    #chanelCategorySection .ccs-filter-btn:hover{color:#fff;transform:translateY(-1px);}
+    #chanelCategorySection .ccs-filter-btn.is-active{background:#fff;color:#000;}
+
+    #chanelCategorySection .ccs-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;animation-delay:.48s;}
+    #chanelCategorySection .ccs-card{position:relative;display:flex;min-height:650px;text-decoration:none;color:#fff;border:1px solid rgba(255,255,255,.22);overflow:hidden;transition:transform .5s ease,border-color .5s ease,box-shadow .5s ease;background:#050505;}
+    #chanelCategorySection .ccs-card:hover{transform:translateY(-8px);border-color:rgba(255,255,255,.5);box-shadow:0 30px 70px rgba(255,255,255,.06);}
+    #chanelCategorySection .ccs-card::before{content:"";position:absolute;inset:0;background-image:var(--card-bg);background-size:cover;background-position:center;filter:grayscale(100%) brightness(.7);transform:scale(1);transition:transform 1s ease,filter 1s ease;}
+    #chanelCategorySection .ccs-card::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.1) 0%,rgba(0,0,0,.2) 18%,rgba(0,0,0,.72) 60%,rgba(0,0,0,.94) 100%);}
+    #chanelCategorySection .ccs-card:hover::before{transform:scale(1.07);filter:brightness(.9) grayscale(100%);}
+    #chanelCategorySection .ccs-inner{position:relative;z-index:2;display:flex;flex-direction:column;justify-content:space-between;width:100%;padding:28px;}
+    #chanelCategorySection .ccs-number{font-size:38px;font-family:"Times New Roman","Noto Serif KR",serif;line-height:1;}
+    #chanelCategorySection .ccs-number-line{width:28px;height:2px;background:#fff;margin-top:8px;}
+    #chanelCategorySection .ccs-bottom{margin-top:auto;padding-top:320px;}
+    #chanelCategorySection .ccs-eng{font-size:13px;letter-spacing:.3em;opacity:.8;display:block;margin-bottom:12px;}
+    #chanelCategorySection .ccs-card-title{font-size:40px;font-family:"Times New Roman","Noto Serif KR",serif;margin:0;line-height:1.2;font-weight:500;letter-spacing:-.04em;}
+    #chanelCategorySection .ccs-text-line{width:56px;height:1px;background:#fff;margin:20px 0;opacity:.8;}
+    #chanelCategorySection .ccs-copy{font-size:17px;line-height:1.7;opacity:.8;margin:0;min-height:86px;}
+    #chanelCategorySection .ccs-link{margin-top:30px;display:inline-flex;gap:12px;align-items:center;color:#fff;font-size:16px;}
+    #chanelCategorySection .ccs-link-arrow{font-size:22px;transition:transform .35s ease;display:inline-block;}
+    #chanelCategorySection .ccs-card:hover .ccs-link-arrow{transform:translateX(8px);}
+
+    #chanelCategorySection .ccs-loadmore{display:flex;justify-content:center;margin-top:60px;animation-delay:.56s;}
+    #chanelCategorySection .ccs-loadmore button{background:#fff;color:#000;border:none;padding:16px 48px;border-radius:50px;font-weight:600;font-size:14px;cursor:pointer;transition:transform .35s ease,box-shadow .35s ease,opacity .35s ease;}
+    #chanelCategorySection .ccs-loadmore button:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(255,255,255,.2);}
+    #chanelCategorySection .ccs-loadmore button.is-hidden{display:none;}
+
+    @keyframes ccsFadeInUp{from{opacity:0;transform:translateY(40px);}to{opacity:1;transform:translateY(0);}}
+    @keyframes ccsLine{to{transform:scaleX(1);}}
+
+    @media(max-width:1180px){
+      #chanelCategorySection .ccs-grid{grid-template-columns:1fr;max-width:760px;margin:0 auto;}
+      #chanelCategorySection .ccs-card{min-height:580px;}
+      #chanelCategorySection .ccs-bottom{padding-top:240px;}
+    }
+    @media(max-width:767px){
+      #chanelCategorySection{padding:78px 16px 86px;}
+      #chanelCategorySection .ccs-head{margin-bottom:34px;}
+      #chanelCategorySection .ccs-kicker{font-size:12px;letter-spacing:.28em;}
+      #chanelCategorySection .ccs-title{font-size:48px;}
+      #chanelCategorySection .ccs-desc{font-size:15px;line-height:1.7;}
+      #chanelCategorySection .ccs-filter-wrap{margin-bottom:34px;}
+      #chanelCategorySection .ccs-filter{width:100%;border-radius:24px;padding:8px;gap:6px;}
+      #chanelCategorySection .ccs-filter-btn{flex:1 1 calc(50% - 6px);padding:12px 12px;font-size:13px;}
+      #chanelCategorySection .ccs-grid{gap:18px;}
+      #chanelCategorySection .ccs-card{min-height:520px;}
+      #chanelCategorySection .ccs-inner{padding:22px 20px 24px;}
+      #chanelCategorySection .ccs-number{font-size:30px;}
+      #chanelCategorySection .ccs-bottom{padding-top:220px;}
+      #chanelCategorySection .ccs-card-title{font-size:40px;}
+      #chanelCategorySection .ccs-copy{font-size:15px;min-height:auto;}
+      #chanelCategorySection .ccs-link{margin-top:24px;font-size:15px;}
+    }
+  </style>
+
+  <div class="ccs-wrap">
+    <div class="ccs-head">
+      <p class="ccs-kicker">FLOS COLUMNS</p>
+      <h2 class="ccs-title">FLOS 칼럼</h2>
+      <div class="ccs-divider"></div>
+      <p class="ccs-desc">브랜드 및 프리미엄 비즈니스<br>성공을 위한 핵심 칼럼</p>
+    </div>
+
+    <div class="ccs-filter-wrap">
+      <div class="ccs-filter" role="tablist" aria-label="칼럼 카테고리">
+        <button type="button" class="ccs-filter-btn is-active" data-filter="all">전체</button>
+        <button type="button" class="ccs-filter-btn" data-filter="marketing">마케팅</button>
+        <button type="button" class="ccs-filter-btn" data-filter="homepage">홈페이지</button>
+        <button type="button" class="ccs-filter-btn" data-filter="aivideo">AI 영상</button>
+      </div>
+    </div>
+
+    <div class="ccs-grid" id="ccsGrid">
+      <a href="./column-1.html" class="ccs-card" data-category="marketing" style="--card-bg:url('https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1200&q=80');">
+        <div class="ccs-inner">
+          <div><span class="ccs-number">01</span><div class="ccs-number-line"></div></div>
+          <div class="ccs-bottom"><span class="ccs-eng">MARKETING</span><h3 class="ccs-card-title">마케팅</h3><div class="ccs-text-line"></div><p class="ccs-copy">전략 중심 마케팅 칼럼으로 브랜드 인지도와 전환 구조를 함께 설계합니다.</p><span class="ccs-link">자세히 보기 <span class="ccs-link-arrow">→</span></span></div>
+        </div>
+      </a>
+
+      <a href="./column-2.html" class="ccs-card" data-category="homepage" style="--card-bg:url('https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&w=1200&q=80');">
+        <div class="ccs-inner">
+          <div><span class="ccs-number">02</span><div class="ccs-number-line"></div></div>
+          <div class="ccs-bottom"><span class="ccs-eng">HOMEPAGE</span><h3 class="ccs-card-title">홈페이지</h3><div class="ccs-text-line"></div><p class="ccs-copy">브랜드 구조 설계와 신뢰를 높이는 프리미엄 홈페이지 칼럼입니다.</p><span class="ccs-link">자세히 보기 <span class="ccs-link-arrow">→</span></span></div>
+        </div>
+      </a>
+
+      <a href="./column-3.html" class="ccs-card" data-category="aivideo" style="--card-bg:url('https://images.unsplash.com/photo-1611162616475-46b635cb6868?auto=format&fit=crop&w=1200&q=80');">
+        <div class="ccs-inner">
+          <div><span class="ccs-number">03</span><div class="ccs-number-line"></div></div>
+          <div class="ccs-bottom"><span class="ccs-eng">AI VIDEO</span><h3 class="ccs-card-title">AI 영상</h3><div class="ccs-text-line"></div><p class="ccs-copy">브랜드 첫인상을 강화하는 AI 영상 연출과 기획 칼럼입니다.</p><span class="ccs-link">자세히 보기 <span class="ccs-link-arrow">→</span></span></div>
+        </div>
+      </a>
+
+      <a href="./column-4.html" class="ccs-card" data-category="marketing" style="--card-bg:url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80');">
+        <div class="ccs-inner">
+          <div><span class="ccs-number">04</span><div class="ccs-number-line"></div></div>
+          <div class="ccs-bottom"><span class="ccs-eng">MARKETING</span><h3 class="ccs-card-title">광고 성과 분석</h3><div class="ccs-text-line"></div><p class="ccs-copy">광고 집행 이후 성과를 읽고 다음 전략으로 연결하는 분석형 칼럼입니다.</p><span class="ccs-link">자세히 보기 <span class="ccs-link-arrow">→</span></span></div>
+        </div>
+      </a>
+
+      <a href="./column-5.html" class="ccs-card" data-category="homepage" style="--card-bg:url('https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1200&q=80');">
+        <div class="ccs-inner">
+          <div><span class="ccs-number">05</span><div class="ccs-number-line"></div></div>
+          <div class="ccs-bottom"><span class="ccs-eng">HOMEPAGE</span><h3 class="ccs-card-title">전환형 구조 설계</h3><div class="ccs-text-line"></div><p class="ccs-copy">고객이 신뢰하고 움직이게 되는 화면 흐름과 설계를 담은 칼럼입니다.</p><span class="ccs-link">자세히 보기 <span class="ccs-link-arrow">→</span></span></div>
+        </div>
+      </a>
+
+      <a href="./column-6.html" class="ccs-card" data-category="aivideo" style="--card-bg:url('https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=1200&q=80');">
+        <div class="ccs-inner">
+          <div><span class="ccs-number">06</span><div class="ccs-number-line"></div></div>
+          <div class="ccs-bottom"><span class="ccs-eng">AI VIDEO</span><h3 class="ccs-card-title">브랜드 영상 연출</h3><div class="ccs-text-line"></div><p class="ccs-copy">단순한 영상이 아니라 가치와 분위기를 연출하는 브랜드 영상 칼럼입니다.</p><span class="ccs-link">자세히 보기 <span class="ccs-link-arrow">→</span></span></div>
+        </div>
+      </a>
+    </div>
+
+    <div class="ccs-loadmore">
+      <button type="button" id="ccsLoadMoreBtn">더 보기</button>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      var root = document.getElementById('chanelCategorySection');
+      if(!root) return;
+
+      var buttons = root.querySelectorAll('.ccs-filter-btn');
+      var cards = Array.prototype.slice.call(root.querySelectorAll('.ccs-card'));
+      var loadBtn = root.querySelector('#ccsLoadMoreBtn');
+      var currentFilter = 'all';
+      var visibleCount = 3;
+
+      function getMatchedCards(){
+        return cards.filter(function(card){
+          return currentFilter === 'all' || card.getAttribute('data-category') === currentFilter;
+        });
+      }
+
+      function renderCards(){
+        var matched = getMatchedCards();
+
+        cards.forEach(function(card){
+          card.style.display = 'none';
+        });
+
+        matched.slice(0, visibleCount).forEach(function(card){
+          card.style.display = 'flex';
+        });
+
+        if(loadBtn){
+          if(visibleCount >= matched.length){
+            loadBtn.classList.add('is-hidden');
+          }else{
+            loadBtn.classList.remove('is-hidden');
+          }
+        }
+      }
+
+      buttons.forEach(function(btn){
+        btn.addEventListener('click', function(){
+          buttons.forEach(function(other){ other.classList.remove('is-active'); });
+          btn.classList.add('is-active');
+          currentFilter = btn.getAttribute('data-filter');
+          visibleCount = 3;
+          renderCards();
+        });
+      });
+
+      if(loadBtn){
+        loadBtn.addEventListener('click', function(){
+          visibleCount += 3;
+          renderCards();
+        });
+      }
+
+      renderCards();
+    })();
+  </script>
+</section>
+
+<div id="footer_template"></div>
+
+
+
+
+
+</body>
+<script src="./js/jquery-1.11.0.min.js"></script>
+<script src="./js/validation1.js"> </script>
+<script src="./js/main.js"> </script>
+<script src="./js/footer.js"></script>
+</html>

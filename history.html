@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>기업 히스토리 타임라인</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  html { scroll-behavior: smooth; }
+  body { margin: 0; padding: 0; }
+</style>
+</head>
+<body>
+
+
+
+
+<section id="historyTimelineSection" style="position:relative;">
+<style>
+  #historyTimelineSection {
+    font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #ffffff;
+    color: #111;
+    position: relative;
+    box-sizing: border-box;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  #historyTimelineSection *,
+  #historyTimelineSection *::before,
+  #historyTimelineSection *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* ── Era Tab Navigation ── */
+  #historyTimelineSection .hts-era-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: #fff;
+    border-bottom: 1px solid #e0e0e0;
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    padding: 0;
+    width: 100%;
+  }
+
+  #historyTimelineSection .hts-era-nav-btn {
+    background: none;
+    border: none;
+    font-family: inherit;
+    font-size: 14px;
+    color: #999;
+    padding: 18px 24px;
+    cursor: pointer;
+    position: relative;
+    transition: color 0.3s ease;
+    white-space: nowrap;
+    letter-spacing: -0.02em;
+    flex: 0 0 auto;
+    font-weight: 400;
+  }
+
+  #historyTimelineSection .hts-era-nav-btn:hover {
+    color: #333;
+  }
+
+  #historyTimelineSection .hts-era-nav-btn.active {
+    color: #111;
+    font-weight: 600;
+  }
+
+  #historyTimelineSection .hts-era-nav-btn.active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: #111;
+  }
+
+  /* ── Era Block ── */
+  #historyTimelineSection .hts-era-block {
+    position: relative;
+    display: flex;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 48px;
+    min-height: 100vh;
+  }
+
+  /* ── Left Sticky Panel ── */
+  #historyTimelineSection .hts-left {
+    width: 38%;
+    flex-shrink: 0;
+    padding-right: 64px;
+  }
+
+  #historyTimelineSection .hts-left-inner {
+    position: sticky;
+    top: 80px;
+    padding-top: 80px;
+    padding-bottom: 80px;
+  }
+
+  #historyTimelineSection .hts-era-label {
+    font-size: 14.5px;
+    color: #888;
+    margin-bottom: 14px;
+    letter-spacing: -0.01em;
+    font-weight: 400;
+  }
+
+  #historyTimelineSection .hts-era-title {
+    font-size: 34px;
+    font-weight: 800;
+    line-height: 1.3;
+    margin-bottom: 28px;
+    letter-spacing: -0.04em;
+    color: #111;
+  }
+
+  #historyTimelineSection .hts-era-desc {
+    font-size: 14.5px;
+    line-height: 1.85;
+    color: #555;
+    word-break: keep-all;
+    font-weight: 400;
+  }
+
+  /* ── Right Timeline ── */
+  #historyTimelineSection .hts-right {
+    width: 62%;
+    position: relative;
+    padding-left: 44px;
+    border-left: 1px solid #ddd;
+  }
+
+  /* ── Intro content block ── */
+  #historyTimelineSection .hts-intro-block {
+    padding: 80px 0 40px 0;
+  }
+
+  #historyTimelineSection .hts-intro-text {
+    font-size: 14.5px;
+    line-height: 1.9;
+    color: #444;
+    margin-bottom: 28px;
+    word-break: keep-all;
+  }
+
+  #historyTimelineSection .hts-intro-image {
+    width: 100%;
+    overflow: hidden;
+    margin-bottom: 32px;
+  }
+
+  #historyTimelineSection .hts-intro-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* ── Timeline Year Item ── */
+  #historyTimelineSection .hts-year-item {
+    position: relative;
+    padding: 36px 0 56px 0;
+    opacity: 0.2;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  #historyTimelineSection .hts-year-item.active {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  #historyTimelineSection .hts-year-item::before {
+    content: '';
+    position: absolute;
+    left: -49px;
+    top: 48px;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #ccc;
+    transition: background 0.4s ease;
+  }
+
+  #historyTimelineSection .hts-year-item.active::before {
+    background: #111;
+  }
+
+  #historyTimelineSection .hts-year-number {
+    font-size: 36px;
+    font-weight: 700;
+    color: #111;
+    margin-bottom: 18px;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+
+  /* ── Event Entry ── */
+  #historyTimelineSection .hts-event {
+    display: flex;
+    align-items: baseline;
+    padding: 5px 0;
+    font-size: 14px;
+    line-height: 1.75;
+    color: #333;
+  }
+
+  #historyTimelineSection .hts-event-date {
+    flex-shrink: 0;
+    width: 56px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #999;
+    letter-spacing: 0.01em;
+  }
+
+  #historyTimelineSection .hts-event-text {
+    flex: 1;
+    font-size: 14px;
+    color: #333;
+    line-height: 1.75;
+  }
+
+  /* ── Spacer between eras ── */
+  #historyTimelineSection .hts-era-spacer {
+    height: 40px;
+  }
+
+  /* ── Scroll to top button ── */
+  #historyTimelineSection .hts-scroll-top {
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 1px solid #ddd;
+    background: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 50;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+  }
+
+  #historyTimelineSection .hts-scroll-top.visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  #historyTimelineSection .hts-scroll-top svg {
+    width: 18px;
+    height: 18px;
+    stroke: #555;
+  }
+
+  /* ── Mobile ── */
+  @media (max-width: 768px) {
+    #historyTimelineSection .hts-era-nav {
+      overflow-x: auto;
+      overflow-y: hidden;
+      justify-content: flex-start;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      cursor: grab;
+      padding: 0 8px;
+      touch-action: pan-x;
+    }
+
+    #historyTimelineSection .hts-era-nav.dragging {
+      cursor: grabbing;
+    }
+
+    #historyTimelineSection .hts-era-nav::-webkit-scrollbar {
+      display: none;
+    }
+
+    #historyTimelineSection .hts-era-nav-btn {
+      font-size: 13px;
+      padding: 14px 16px;
+    }
+
+    #historyTimelineSection .hts-era-block {
+      flex-direction: column;
+      padding: 0 20px;
+    }
+
+    #historyTimelineSection .hts-left {
+      width: 100%;
+      padding-right: 0;
+    }
+
+    #historyTimelineSection .hts-left-inner {
+      position: relative;
+      top: auto;
+      padding-top: 40px;
+      padding-bottom: 20px;
+    }
+
+    #historyTimelineSection .hts-era-title {
+      font-size: 24px;
+    }
+
+    #historyTimelineSection .hts-era-desc {
+      font-size: 13.5px;
+    }
+
+    #historyTimelineSection .hts-right {
+      width: 100%;
+      padding-left: 28px;
+    }
+
+    #historyTimelineSection .hts-year-item::before {
+      left: -33px;
+      width: 7px;
+      height: 7px;
+    }
+
+    #historyTimelineSection .hts-year-number {
+      font-size: 26px;
+    }
+
+    #historyTimelineSection .hts-intro-block {
+      padding-top: 40px;
+    }
+
+    #historyTimelineSection .hts-scroll-top {
+      bottom: 24px;
+      right: 24px;
+      width: 42px;
+      height: 42px;
+    }
+  }
+</style>
+
+<nav class="hts-era-nav" id="htsEraNav">
+  <button class="hts-era-nav-btn active" data-era="era1">진화와 변신</button>
+  <button class="hts-era-nav-btn" data-era="era2">도전과 성장</button>
+  <button class="hts-era-nav-btn" data-era="era3">성장기반의 구축</button>
+  <button class="hts-era-nav-btn" data-era="era4">사업구조의 고도화</button>
+  <button class="hts-era-nav-btn" data-era="era5">사업기반의 확대</button>
+  <button class="hts-era-nav-btn" data-era="era6">창업과 도약기</button>
+</nav>
+
+<div class="hts-era-block" id="era1">
+  <div class="hts-left">
+    <div class="hts-left-inner">
+      <p class="hts-era-label">2010 - 현재</p>
+      <h2 class="hts-era-title">진화와 변신</h2>
+      <p class="hts-era-desc">
+        분할 이후 회사는 산업소재, 화학, 패션 등을 중심으로
+        안정적인 성장과 경쟁력 강화를 실현하고 있으며,
+        코오롱그룹의 성장을 선도하는 기업으로서의 위상을
+        확립하였습니다.
+      </p>
+    </div>
+  </div>
+  <div class="hts-right">
+    <div class="hts-intro-block">
+      <p class="hts-intro-text">
+        2010년 이후 코오롱인더스트리는 다른차원의 성과를 창출하고자 다양한 노력을 전개하고 있습니다.
+      </p>
+      <div class="hts-intro-image">
+        <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80" alt="현대 건축물">
+      </div>
+      <p class="hts-intro-text">
+        산업소재, 화학, 패션 등 다각화된 사업 포트폴리오를 기반으로 아라미드, 스페셜리 석유수지 등
+        선재적이고 적극적인 미래먹거리 투자 및 베트남, 멕시코 등 해외공장의 생산기지 건설을 통해 성장
+        교두보를 확보하고 있습니다.
+      </p>
+      <p class="hts-intro-text">
+        아울러, 다양한 분문의 발전을 위해 본사 및 R&D센터를 미국으로 이전해 새로운 시너지를 
+        창출해가고 있습니다.
+      </p>
+    </div>
+
+    <div class="hts-year-item" data-year>
+      <div class="hts-year-number">2017</div>
+      <div class="hts-event"><span class="hts-event-date">09</span><span class="hts-event-text">코오롱글로텍(주) 충청법인 설립</span></div>
+      <div class="hts-event"><span class="hts-event-date">01.06</span><span class="hts-event-text">베트남 코오드 법인 설립</span></div>
+    </div>
+
+    <div class="hts-year-item" data-year>
+      <div class="hts-year-number">2016</div>
+      <div class="hts-event"><span class="hts-event-date">08.16</span><span class="hts-event-text">베트남 에어백 법인 설립</span></div>
+      <div class="hts-event"><span class="hts-event-date">06</span><span class="hts-event-text">코오롱글로텍(주) 멕시코법인 설립</span></div>
+    </div>
+
+    <div class="hts-year-item" data-year>
+      <div class="hts-year-number">2015</div>
+      <div class="hts-event"><span class="hts-event-date">10.20</span><span class="hts-event-text">멕시코 에어백 법인 설립</span></div>
+      <div class="hts-event"><span class="hts-event-date">04</span><span class="hts-event-text">코오롱글로텍(주) 중국 영성법인 설립</span></div>
+    </div>
+
+    <div class="hts-year-item" data-year>
+      <div class="hts-year-number">2014</div>
+      <div class="hts-event"><span class="hts-event-date">11</span><span class="hts-event-text">코오롱글로텍(주) 구미공장 인조가죽(PVC) 생산라인 구축</span></div>
+    </div>
+
+    <div class="hts-year-item" data-year>
+      <div class="hts-year-number">2012</div>
+      <div class="hts-event"><span class="hts-event-date">04.13</span><span class="hts-event-text">중국 혜주 DFR법인 설립</span></div>
+    </div>
+
+    <div class="hts-year-item" data-year>
+      <div class="hts-year-number">2011</div>
+      <div class="hts-event"><span class="hts-event-date">07</span><span class="hts-event-text">아라미드 2공장 준공(구미)</span></div>
+      <div class="hts-event"><span class="hts-event-date">03</span><span class="hts-event-text">코오롱글로텍(주) 베트남 법인 설립</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="hts-era-spacer"></div>
+
+<div class="hts-era-block" id="era2">
+  <div class="hts-left">
+    <div class="hts-left-inner">
+      <p class="hts-era-label">2000 - 2009</p>
+      <h2 class="hts-era-title">도전과 성장</h2>
+      <p class="hts-era-desc">
+        '글로벌 TOP 종합 화학/소재 기업'을 21세기
+        기업비전으로 설정하고 적극적인 경영전략을
+        수립하였습니다.
+      </p>
+    </div>
+  </div>
+  <div class="hts-right">
+    <div class="hts-intro-block">
+      <p class="hts-intro-text">
+        2000년대 들어와서 주력 제품인 화학심유, 포장용 필름 등이 경영력에서 약화되고 노사 대립 및
+        수익성 저하 등의 악조건들이 겹침으로써 한때 기업경영에 어려움을 겪기도 하였습니다.
+      </p>
+      <p class="hts-intro-text">
+        이러한 위기 가운데서도, 회사는 미래성장을 위해 사업별로, 청직, 환경 등 지속적인 포트폴리오
+        혁신 작업을 실시함으로써 과거와 다른 새로운 기업의 모습을 만들어가고 있습니다.
+      </p>
+      <p class="hts-intro-text">
+        특히 2009년 12월자로 기존의 코오롱이 영위하고 있던 제조 및 패션사업군에서 분할,
+        코오롱인더스트리는 새로운 이름을 하에 사업전문기업으로 한차 출범하여 실시하였습니다.
+      </p>
+    </div>
+
+    <div class="hts-year-item" data-year>
+      <div class="hts-year-number">2009</div>
+      <div class="hts-event"><span class="hts-event-date">12.31</span><span class="hts-event-text">코오롱그룹, 지주회사 체제로 전환</span></div>
+      <div class="hts-event"><span class="hts-event-date"></span><span class="hts-event-text">(주)코오롱의 제조사업부문을 분할하여 코오롱인더스트리 설립</span></div>
+      <div class="hts-event"><span class="hts-event-date">09</span><span class="hts-event-text">코오롱글로텍(주) 중국 상해 마케팅센터(KGMC) 설립</span></div>
+      <div class="hts-event"><span class="hts-event-date">08.01</span><span class="hts-event-text">FnC코오롱(주), (주)코오롱에 합병</span></div>
+    </div>
+
+    <div class="hts-year-item" data-year>
+      <div class="hts-year-number">2008</div>
+      <div class="hts-event"><span class="hts-event-date">09.01</span><span class="hts-event-text">고등수성수지사업, LG화학에 양도</span></div>
+      <div class="hts-event"><span class="hts-event-date">06.01</span><span class="hts-event-text">폴리아미드필름 생산회사인 SKC KOLON PI 합작법인 설립</span></div>
+      <div class="hts-event"><span class="hts-event-date"></span><span class="hts-event-text">플라스틱사업, 코오롱플라스틱(주)에 양도</span></div>
+      <div class="hts-event"><span class="hts-event-date">03.03</span><span class="hts-event-text">원사사업(N/F.P/F)부문 양도</span></div>
+    </div>
+
+    <div class="hts-year-item" data-year>
+      <div class="hts-year-number">2007</div>
+      <div class="hts-event"><span class="hts-event-date">12</span><span class="hts-event-text">구미공장 EP 증설 완료</span></div>
+      <div class="hts-event"><span class="hts-event-date">09</span><span class="hts-event-text">코오롱글로텍(주) 김천공장 증설</span></div>
+    </div>
+
+    <div class="hts-year-item" data-year>
+      <div class="hts-year-number">2005</div>
+      <div class="hts-event"><span class="hts-event-date">07</span><span class="hts-event-text">에어백 원단 사업 진출</span></div>
+      <div class="hts-event"><span class="hts-event-date">03</span><span class="hts-event-text">아라미드 1공장 준공(구미)</span></div>
+    </div>
+
+    <div class="hts-year-item" data-year>
+      <div class="hts-year-number">2002</div>
+      <div class="hts-event"><span class="hts-event-date">04</span><span class="hts-event-text">코오롱유화(주) 합병</span></div>
+      <div class="hts-event"><span class="hts-event-date">01</span><span class="hts-event-text">FnC코오롱(주) 설립 (패션부문 분사)</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="hts-era-spacer"></div>
+
+<div class="hts-era-block" id="era3">
+  <div class="hts-left">
+    <div class="hts-left-inner">
+      <p class="hts-era-label">1994 - 1999</p>
+      <h2 class="hts-era-title">성장기반의 구축</h2>
+      <p class="hts-era-desc">
+        1994년에 시작한 김천 CIM 무인자동화 프로젝트가
+        97년에 완료됨으로써 코오롱인더스트리는 최첨단 신예
+        설비를 통해 최고품질과 최저원가를 실현함으로써
+        마침내 무인화 시대를 열었습니다.
+      </p>
+    </div>
+  </div>
+  <div class="hts-right">
+    <div class="hts-intro-block">
+      <p class="hts-intro-text">
+        90년대 중반 무렵 신예설비로 무장한 후발경쟁업체의 등장과 지속적 임금인상 등의 외적
+        주수익원이었던 섬유부분에서의 고전을 겪었습니다.
+      </p>
+      <div class="hts-intro-image">
+        <img src="https://images.unsplash.com/photo-1513828583688-c52646db42da?w=800&q=80" alt="공장 야경">
+      </div>
+      <p class="hts-intro-text">
+        코오롱인더스트리는 94년 이웅열 부회장이 코오롱인더스트리의 사장으로 취임하여 직접
+        경영함으로써 그룹 경쟁력 강화를 위한 전략경영 실천을 가속화 함으로써 위기를 벗어나갑니다.
+      </p>
+    </div>
+
+    <div class="hts-year-item" data-year>
+      <div class="hts-year-number">1998</div>
+      <div class="hts-event"><span class="hts-event-date"></span><span class="hts-event-text">스판덱스 사업 진출</span></div>
+      <div class="hts-event"><span class="hts-event-date">07.15</span><span class="hts-event-text">코오롱글로텍(주) 설립 (코오롱 F&T, 코오롱남비, 코오롱테크고 합병)</span></div>
+    </div>
+
+    <div class="hts-year-item" data-year>
+      <div class="hts-year-number">1997</div>
+      <div class="hts-event"><span class="hts-event-date">10.01</span><span class="hts-event-text">김천공장 ACE N-2 공장 준공</span></div>
+      <div class="hts-event"><span class="hts-event-date">07.07</span><span class="hts-event-text">과천 코오롱타워 준공</span></div>
+      <div class="hts-event"><span class="hts-event-date">04.29</span><span class="hts-event-text">인도네시아 PT.KOLON INA, 필름공장 준공</span></div>
+    </div>
+
+    <div class="hts-year-item" data-year>
+      <div class="hts-year-number">1996</div>
+      <div class="hts-event"><span class="hts-event-date">11.27</span><span class="hts-event-text">GP-24, FBK-1, ACE P-2 공장 준공</span></div>
+      <div class="hts-event"><span class="hts-event-date"></span><span class="hts-event-text">캐미터 사업 진출</span></div>
+      <div class="hts-event"><span class="hts-event-date"></span><span class="hts-event-text">코오롱 F&T로 상호변경 (한국명견, 코오롱세이렌 합병)</span></div>
+      <div class="hts-event"><span class="hts-event-date">04.29</span><span class="hts-event-text">인도네시아 PT.KOLON INA, 필름공장 준공</span></div>
+    </div>
+
+    <div class="hts-year-item" data-year>
+      <div class="hts-year-number">1995</div>
+      <div class="hts-event"><span class="hts-event-date">09.25</span><span class="hts-event-text">고려나일론, (주)코오롱에 합병</span></div>
+      <div class="hts-event"><span class="hts-event-date">08.22</span><span class="hts-event-text">인도네시아 해외합작법인(PT.KOLON INA) 설립</span></div>
+      <div class="hts-event"><span class="hts-event-date">05.12</span><span class="hts-event-text">김천 CIM폴리에스터필름사공장(ACE P-1) 준공</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="hts-era-spacer"></div>
+
+<div class="hts-era-block" id="era4">
+  <div class="hts-left">
+    <div class="hts-left-inner">
+      <p class="hts-era-label">1983 - 1993</p>
+      <h2 class="hts-era-title">사업구조의 고도화</h2>
+      <p class="hts-era-desc">
+        1990년대 들어 코오롱인더스트리는 합성 생산 기술을
+        바탕으로 고분자 및 정밀화학을 축으로 하는 대규모 소재
+        메이커로 변신을 꾀하였습니다.
+      </p>
+    </div>
+  </div>
+  <div class="hts-right">
+    <div class="hts-intro-block">
+      <p class="hts-intro-text">
+        인공피혁 사업 본격화와 함께 다양한 신소재 분야로의 진출을 추진하였습니다.
+      </p>
+    </div>
+
+    <div class="hts-year-item" data-year>
+      <div class="hts-year-number">1992</div>
+      <div class="hts-event"><span class="hts-event-date"></span><span class="hts-event-text">인조잔디 코너·그린 미국 수출</span></div>
+      <div class="hts-event"><span class="hts-event-date">04.29</span><span class="hts-event-text">HELS-2(PET 초지수축사) 공장 준공</span></div>
+    </div>
+
+    <div class="hts-year-item" data-year>
+      <div class="hts-year-number">1990</div>
+      <div class="hts-event"><span class="hts-event-date">09.10</span><span class="hts-event-text">구미공장, P-19 무인화 공장 준공</span></div>
+      <div class="hts-event"><span class="hts-event-date">05.16</span><span class="hts-event-text">폴리프로필렌 스판본드 공장 준공</span></div>
+    </div>
+
+    <div class="hts-year-item" data-year>
+      <div class="hts-year-number">1989</div>
+      <div class="hts-event"><span class="hts-event-date">04</span><span class="hts-event-text">코오롱메디크섬유 설립 (이탈리아 메리클론보와 합작투자)</span></div>
+    </div>
+
+    <div class="hts-year-item" data-year>
+      <div class="hts-year-number">1988</div>
+      <div class="hts-event"><span class="hts-event-date">11</span><span class="hts-event-text">코오롱남비 설립 (일본 남비트레스회와 합작투자)</span></div>
+    </div>
+
+    <div class="hts-year-item" data-year>
+      <div class="hts-year-number">1987</div>
+      <div class="hts-event"><span class="hts-event-date"></span><span class="hts-event-text">폴리에스터필름 1차 증설 공장 준공</span></div>
+      <div class="hts-event"><span class="hts-event-date">07.10</span><span class="hts-event-text">과천공장, 형배투석기 국산화 성공 및 대량생산체제 돌입</span></div>
+      <div class="hts-event"><span class="hts-event-date">03.25</span><span class="hts-event-text">코오롱세이렌 설립 (일본 세이렌(주)와 합작투자)</span></div>
+    </div>
+
+    <div class="hts-year-item" data-year>
+      <div class="hts-year-number">1986</div>
+      <div class="hts-event"><span class="hts-event-date">10.15</span><span class="hts-event-text">비디오 테이프(SCENA) 공장 준공</span></div>
+    </div>
+
+    <div class="hts-year-item" data-year>
+      <div class="hts-year-number">1985</div>
+      <div class="hts-event"><span class="hts-event-date">10.11</span><span class="hts-event-text">스판본드 생산공장 준공</span></div>
+      <div class="hts-event"><span class="hts-event-date">04.12</span><span class="hts-event-text">폴리에스터필름 공장 준공</span></div>
+    </div>
+
+    <div class="hts-year-item" data-year>
+      <div class="hts-year-number">1984</div>
+      <div class="hts-event"><span class="hts-event-date">02.07</span><span class="hts-event-text">프랑스 롱·프랑사와 엔지니어링 프라스틱 기술 제휴</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="hts-era-spacer"></div>
+
+<div class="hts-era-block" id="era5">
+  <div class="hts-left">
+    <div class="hts-left-inner">
+      <p class="hts-era-label">1969 - 1982</p>
+      <h2 class="hts-era-title">사업기반의 확대</h2>
+      <p class="hts-era-desc">
+        1970년대에 접어들면서 합성섬유 산업이 본격적인
+        수출산업으로 성장하면서 코오롱은 생산능력의
+        확대와 품질 개선에 주력하였습니다.
+      </p>
+    </div>
+  </div>
+  <div class="hts-right">
+    <div class="hts-intro-block">
+      <p class="hts-intro-text">
+        국내 합성섬유 산업의 성장과 함께 코오롱인더스트리는 설비 확충과 신제품 개발로
+        사업기반을 확대해 나갔습니다.
+      </p>
+    </div>
+
+    <div class="hts-year-item" data-year>
+      <div class="hts-year-number">1982</div>
+      <div class="hts-event"><span class="hts-event-date">09</span><span class="hts-event-text">코오롱유화(주) 설립</span></div>
+      <div class="hts-event"><span class="hts-event-date">04</span><span class="hts-event-text">나이론필름 공장 준공</span></div>
+    </div>
+
+    <div class="hts-year-item" data-year>
+      <div class="hts-year-number">1979</div>
+      <div class="hts-event"><span class="hts-event-date">12</span><span class="hts-event-text">폴리에스터 장섬유 공장 준공(구미)</span></div>
+      <div class="hts-event"><span class="hts-event-date">06</span><span class="hts-event-text">고려나일론(주), 주식 상장</span></div>
+    </div>
+
+    <div class="hts-year-item" data-year>
+      <div class="hts-year-number">1975</div>
+      <div class="hts-event"><span class="hts-event-date">11</span><span class="hts-event-text">나이론타이어코드 공장 준공</span></div>
+      <div class="hts-event"><span class="hts-event-date">04</span><span class="hts-event-text">구미 제2공장 착공</span></div>
+    </div>
+
+    <div class="hts-year-item" data-year>
+      <div class="hts-year-number">1972</div>
+      <div class="hts-event"><span class="hts-event-date">10</span><span class="hts-event-text">폴리에스터 원사 공장 준공</span></div>
+    </div>
+
+    <div class="hts-year-item" data-year>
+      <div class="hts-year-number">1969</div>
+      <div class="hts-event"><span class="hts-event-date">05</span><span class="hts-event-text">나이론 직물공장 준공</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="hts-era-spacer"></div>
+
+<div class="hts-era-block" id="era6">
+  <div class="hts-left">
+    <div class="hts-left-inner">
+      <p class="hts-era-label">1954 - 1968</p>
+      <h2 class="hts-era-title">창업과 도약기</h2>
+      <p class="hts-era-desc">
+        1954년 개성에서 시작된 코오롱의 역사는
+        한국 합성섬유 산업의 역사이기도 합니다.
+        나이론 생산으로 시작하여 대한민국 산업화의
+        초석을 놓았습니다.
+      </p>
+    </div>
+  </div>
+  <div class="hts-right">
+    <div class="hts-intro-block">
+      <p class="hts-intro-text">
+        대한민국 합성섬유의 선구자로서 코오롱은 창업 이래 끊임없는 도전과 혁신으로
+        산업 발전에 기여해 왔습니다.
+      </p>
+    </div>
+
+    <div class="hts-year-item" data-year>
+      <div class="hts-year-number">1968</div>
+      <div class="hts-event"><span class="hts-event-date">04</span><span class="hts-event-text">구미공장 부지 매입</span></div>
+    </div>
+
+    <div class="hts-year-item" data-year>
+      <div class="hts-year-number">1964</div>
+      <div class="hts-event"><span class="hts-event-date">05</span><span class="hts-event-text">한국나이론(주) 설립</span></div>
+    </div>
+
+    <div class="hts-year-item" data-year>
+      <div class="hts-year-number">1960</div>
+      <div class="hts-event"><span class="hts-event-date">08</span><span class="hts-event-text">나이론사 생산 시작</span></div>
+    </div>
+
+    <div class="hts-year-item" data-year>
+      <div class="hts-year-number">1957</div>
+      <div class="hts-event"><span class="hts-event-date">03</span><span class="hts-event-text">고려나일론(주) 설립</span></div>
+    </div>
+
+    <div class="hts-year-item" data-year>
+      <div class="hts-year-number">1954</div>
+      <div class="hts-event"><span class="hts-event-date">06</span><span class="hts-event-text">개성에서 창업</span></div>
+    </div>
+  </div>
+</div>
+
+<button class="hts-scroll-top" id="htsScrollTop" aria-label="맨 위로 이동">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="18 15 12 9 6 15"></polyline>
+  </svg>
+</button>
+
+<script>
+(function() {
+  var section = document.getElementById('historyTimelineSection');
+  if (!section) return;
+
+  var yearItems = section.querySelectorAll('.hts-year-item');
+  var eraBlocks = section.querySelectorAll('.hts-era-block');
+  var navBtns = section.querySelectorAll('.hts-era-nav-btn');
+  var eraNav = section.querySelector('.hts-era-nav');
+  var scrollBtn = document.getElementById('htsScrollTop');
+
+  var isManualEraJump = false;
+  var manualEraJumpTimer = null;
+
+  function isMobileNavMode() {
+    return window.innerWidth <= 768;
+  }
+
+  function scrollNavBtnIntoView(btn, smooth) {
+    if (!btn || !eraNav || !isMobileNavMode()) return;
+
+    var navRect = eraNav.getBoundingClientRect();
+    var btnRect = btn.getBoundingClientRect();
+    var currentScroll = eraNav.scrollLeft;
+    var targetScroll = currentScroll + (btnRect.left - navRect.left) - ((navRect.width - btnRect.width) / 2);
+    var maxScroll = eraNav.scrollWidth - eraNav.clientWidth;
+
+    if (targetScroll < 0) targetScroll = 0;
+    if (targetScroll > maxScroll) targetScroll = maxScroll;
+
+    eraNav.scrollTo({
+      left: targetScroll,
+      behavior: smooth ? 'smooth' : 'auto'
+    });
+  }
+
+  function setActiveNav(eraId, smooth) {
+    navBtns.forEach(function(btn) {
+      if (btn.dataset.era === eraId) {
+        btn.classList.add('active');
+        scrollNavBtnIntoView(btn, smooth);
+      } else {
+        btn.classList.remove('active');
+      }
+    });
+  }
+
+  function refreshYearVisibility() {
+    var viewportH = window.innerHeight || document.documentElement.clientHeight;
+
+    yearItems.forEach(function(item) {
+      var rect = item.getBoundingClientRect();
+      var visible = rect.top < viewportH * 0.72 && rect.bottom > viewportH * 0.20;
+
+      if (visible) item.classList.add('active');
+      else item.classList.remove('active');
+    });
+  }
+
+  function startManualEraJump(targetEraId) {
+    isManualEraJump = true;
+    clearTimeout(manualEraJumpTimer);
+
+    /* 클릭한 버튼만 즉시 굵게 */
+    setActiveNav(targetEraId, false);
+
+    manualEraJumpTimer = setTimeout(function() {
+      isManualEraJump = false;
+      refreshYearVisibility();
+      syncActiveEraToViewport();
+    }, 220);
+  }
+
+  function syncActiveEraToViewport() {
+    if (isManualEraJump) return;
+
+    var bestBlock = null;
+    var bestDistance = Infinity;
+
+    eraBlocks.forEach(function(block) {
+      var rect = block.getBoundingClientRect();
+      var distance = Math.abs(rect.top - (window.innerHeight * 0.24));
+
+      if (rect.bottom > 120 && rect.top < window.innerHeight - 120) {
+        if (distance < bestDistance) {
+          bestDistance = distance;
+          bestBlock = block;
+        }
+      }
+    });
+
+    if (bestBlock) {
+      setActiveNav(bestBlock.id, true);
+    }
+  }
+
+  var yearObserver = new IntersectionObserver(function(entries) {
+    if (isManualEraJump) return;
+
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('active');
+      } else {
+        entry.target.classList.remove('active');
+      }
+    });
+  }, {
+    root: null,
+    rootMargin: '-25% 0px -35% 0px',
+    threshold: 0
+  });
+
+  yearItems.forEach(function(item) {
+    yearObserver.observe(item);
+  });
+
+  var eraObserver = new IntersectionObserver(function(entries) {
+    if (isManualEraJump) return;
+
+    var visibleEntries = entries.filter(function(entry) {
+      return entry.isIntersecting;
+    });
+
+    if (!visibleEntries.length) return;
+
+    visibleEntries.sort(function(a, b) {
+      return Math.abs(a.boundingClientRect.top - window.innerHeight * 0.24) - Math.abs(b.boundingClientRect.top - window.innerHeight * 0.24);
+    });
+
+    setActiveNav(visibleEntries[0].target.id, true);
+  }, {
+    root: null,
+    rootMargin: '-35% 0px -45% 0px',
+    threshold: 0
+  });
+
+  eraBlocks.forEach(function(block) {
+    eraObserver.observe(block);
+  });
+
+  navBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var target = document.getElementById(btn.dataset.era);
+      if (!target) return;
+
+      var navHeight = eraNav.offsetHeight;
+      var y = target.getBoundingClientRect().top + window.pageYOffset - navHeight - 20;
+
+      startManualEraJump(btn.dataset.era);
+
+      /* 중간 구간 active 방지를 위해 즉시 이동 */
+      window.scrollTo(0, y);
+    });
+  });
+
+  var ticking = false;
+  window.addEventListener('scroll', function() {
+    if (!ticking) {
+      window.requestAnimationFrame(function() {
+        var sectionRect = section.getBoundingClientRect();
+        var inSection = sectionRect.top < window.innerHeight && sectionRect.bottom > 0;
+        var scrolledDown = window.scrollY > 600;
+
+        if (inSection && scrolledDown) scrollBtn.classList.add('visible');
+        else scrollBtn.classList.remove('visible');
+
+        if (!isManualEraJump) {
+          refreshYearVisibility();
+          syncActiveEraToViewport();
+        }
+
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }, { passive: true });
+
+  scrollBtn.addEventListener('click', function() {
+    var navTop = eraNav.getBoundingClientRect().top + window.pageYOffset;
+    window.scrollTo({ top: navTop, behavior: 'smooth' });
+  });
+
+  var isPointerDown = false;
+  var startX = 0;
+  var startScrollLeft = 0;
+  var moved = false;
+
+  function getPageX(e) {
+    if (e.touches && e.touches.length) return e.touches[0].pageX;
+    if (e.changedTouches && e.changedTouches.length) return e.changedTouches[0].pageX;
+    return e.pageX;
+  }
+
+  function dragStart(e) {
+    if (!isMobileNavMode()) return;
+    isPointerDown = true;
+    moved = false;
+    eraNav.classList.add('dragging');
+    startX = getPageX(e);
+    startScrollLeft = eraNav.scrollLeft;
+  }
+
+  function dragMove(e) {
+    if (!isPointerDown || !isMobileNavMode()) return;
+    var x = getPageX(e);
+    var walk = x - startX;
+
+    if (Math.abs(walk) > 4) moved = true;
+    eraNav.scrollLeft = startScrollLeft - walk;
+  }
+
+  function dragEnd() {
+    if (!isMobileNavMode()) return;
+    isPointerDown = false;
+    eraNav.classList.remove('dragging');
+  }
+
+  eraNav.addEventListener('mousedown', dragStart);
+  window.addEventListener('mousemove', dragMove);
+  window.addEventListener('mouseup', dragEnd);
+  eraNav.addEventListener('mouseleave', dragEnd);
+
+  eraNav.addEventListener('touchstart', dragStart, { passive: true });
+  eraNav.addEventListener('touchmove', dragMove, { passive: true });
+  eraNav.addEventListener('touchend', dragEnd, { passive: true });
+  eraNav.addEventListener('touchcancel', dragEnd, { passive: true });
+
+  navBtns.forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      if (moved) {
+        e.preventDefault();
+        e.stopPropagation();
+        moved = false;
+      }
+    }, true);
+  });
+
+  window.addEventListener('load', function() {
+    var activeBtn = section.querySelector('.hts-era-nav-btn.active');
+    if (activeBtn) scrollNavBtnIntoView(activeBtn, false);
+    refreshYearVisibility();
+    syncActiveEraToViewport();
+  });
+
+  window.addEventListener('resize', function() {
+    var activeBtn = section.querySelector('.hts-era-nav-btn.active');
+    if (activeBtn) scrollNavBtnIntoView(activeBtn, false);
+    refreshYearVisibility();
+    syncActiveEraToViewport();
+  });
+})();
+</script>
+</section>
+
+</body>
+</html>

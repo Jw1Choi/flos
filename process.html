@@ -1,0 +1,1089 @@
+<section id="process1" aria-label="홈페이지 제작 프로세스">
+<style>
+#process1 {
+  --jp-bg: #000000;
+  --jp-bg-dark: #000000;
+  --jp-white: #ffffff;
+  --jp-gray-light: rgba(255,255,255,0.58);
+  --jp-gray-dim: rgba(255,255,255,0.3);
+  --jp-gray-faint: rgba(255,255,255,0.12);
+  --jp-transition: 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
+
+  font-family: 'Noto Sans KR', 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background-color: var(--jp-bg);
+  color: var(--jp-white);
+  position: relative;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#process1 *,
+#process1 *::before,
+#process1 *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ===== INTRO ===== */
+#process1 .jp-intro {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 120px 8% 120px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+#process1 .jp-intro-inner {
+  max-width: 760px;
+}
+
+#process1 .jp-intro-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 26px;
+}
+
+#process1 .jp-intro-eyebrow::before {
+  content: "";
+  width: 52px;
+  height: 1px;
+  background: rgba(255,255,255,0.32);
+  display: block;
+}
+
+#process1 .jp-intro-eyebrow span {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.62);
+}
+
+#process1 .jp-intro-title {
+  font-size: clamp(34px, 5.5vw, 78px);
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: -0.055em;
+  margin-bottom: 30px;
+}
+
+#process1 .jp-intro-title .light {
+  display: block;
+  color: rgba(255,255,255,0.82);
+  font-weight: 700;
+}
+
+#process1 .jp-intro-desc {
+  font-size: clamp(15px, 1.12vw, 18px);
+  font-weight: 400;
+  line-height: 1.95;
+  color: var(--jp-gray-light);
+  max-width: 680px;
+  word-break: keep-all;
+}
+
+#process1 .jp-intro-quote {
+  margin-top: 28px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  font-size: clamp(17px, 1.2vw, 20px);
+  line-height: 1.8;
+  font-weight: 700;
+  color: rgba(255,255,255,0.88);
+  word-break: keep-all;
+}
+
+/* ===== MAIN ===== */
+#process1 .jp-main {
+  position: relative;
+}
+
+/* ===== DESKTOP NAV ===== */
+#process1 .jp-nav {
+  position: fixed;
+  top: 50%;
+  left: 8%;
+  transform: translateY(-50%);
+  width: 290px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  z-index: 100;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.35s ease, visibility 0.35s ease;
+  pointer-events: none;
+}
+
+#process1 .jp-nav[data-floating="true"] {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+#process1 .jp-nav[data-stopped="true"] {
+  position: absolute;
+  left: 8%;
+  transform: none;
+  top: auto;
+  bottom: 0;
+}
+
+#process1 .jp-nav-track {
+  display: contents;
+}
+
+#process1 .jp-nav-item {
+  padding: 14px 0;
+  border-bottom: 1px solid var(--jp-gray-faint);
+  cursor: pointer;
+  transition: all var(--jp-transition);
+  position: relative;
+}
+
+#process1 .jp-nav-item::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--jp-white);
+  transition: width var(--jp-transition);
+}
+
+#process1 .jp-nav-item[data-active="true"]::after {
+  width: 100%;
+}
+
+#process1 .jp-nav-num {
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 4px;
+  display: block;
+  transition: color var(--jp-transition);
+  color: var(--jp-gray-dim);
+}
+
+#process1 .jp-nav-label {
+  font-size: 16px;
+  font-weight: 500;
+  display: block;
+  transition: color var(--jp-transition), font-weight var(--jp-transition);
+  color: var(--jp-gray-dim);
+  word-break: keep-all;
+}
+
+#process1 .jp-nav-item[data-active="true"] .jp-nav-num,
+#process1 .jp-nav-item[data-active="true"] .jp-nav-label {
+  color: var(--jp-white);
+  font-weight: 700;
+}
+
+/* ===== CONTENT ===== */
+#process1 .jp-content {
+  margin-left: calc(8% + 340px);
+  padding-right: 8%;
+  min-width: 0;
+}
+
+#process1 .jp-content-item {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 100px 0;
+  position: relative;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+#process1 .jp-step-num {
+  display: inline-block;
+  margin-bottom: 18px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: rgba(255,255,255,0.36);
+}
+
+#process1 .jp-content-title {
+  font-size: clamp(30px, 3.4vw, 48px);
+  font-weight: 900;
+  line-height: 1.22;
+  letter-spacing: -0.035em;
+  margin-bottom: 22px;
+  opacity: 0;
+  transform: translateY(30px);
+  filter: blur(2px);
+  transition: opacity 0.7s ease, transform 0.7s ease, filter 0.7s ease;
+  word-break: keep-all;
+}
+
+#process1 .jp-content-lead {
+  font-size: clamp(19px, 1.15vw, 22px);
+  font-weight: 800;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.78);
+  margin-bottom: 18px;
+  opacity: 0;
+  transform: translateY(25px);
+  filter: blur(2px);
+  transition: opacity 0.7s ease 0.08s, transform 0.7s ease 0.08s, filter 0.7s ease 0.08s;
+  word-break: keep-all;
+}
+
+#process1 .jp-content-desc {
+  font-size: clamp(16px, 1vw, 18px);
+  font-weight: 500;
+  line-height: 1.95;
+  color: var(--jp-gray-light);
+  max-width: 720px;
+  margin-bottom: 34px;
+  opacity: 0;
+  transform: translateY(20px);
+  filter: blur(2px);
+  transition: opacity 0.7s ease 0.15s, transform 0.7s ease 0.15s, filter 0.7s ease 0.15s;
+  word-break: keep-all;
+}
+
+#process1 .jp-bullets {
+  list-style: none;
+  display: grid;
+  gap: 12px;
+  max-width: 760px;
+  margin-bottom: 34px;
+  opacity: 0;
+  transform: translateY(18px);
+  filter: blur(2px);
+  transition: opacity 0.7s ease 0.18s, transform 0.7s ease 0.18s, filter 0.7s ease 0.18s;
+}
+
+#process1 .jp-bullets li {
+  position: relative;
+  padding-left: 18px;
+  font-size: clamp(15px, 1vw, 17px);
+  line-height: 1.9;
+  color: rgba(255,255,255,0.76);
+}
+
+#process1 .jp-bullets li::before {
+  content: "";
+  position: absolute;
+  top: 12px;
+  left: 0;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.82);
+}
+
+#process1 .jp-content-visual {
+  width: 100%;
+  max-width: 920px;
+  margin-bottom: 28px;
+  opacity: 0;
+  transform: translateY(20px);
+  filter: blur(2px);
+  transition: opacity 0.8s ease 0.22s, transform 0.8s ease 0.22s, filter 0.8s ease 0.22s;
+}
+
+#process1 .jp-content-visual.is-empty {
+  display: none;
+}
+
+#process1 .jp-visual-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.08);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.035) 0%, rgba(255,255,255,0.015) 100%);
+}
+
+#process1 .jp-visual-frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(0,0,0,0.02) 0%, rgba(0,0,0,0.24) 100%);
+  pointer-events: none;
+}
+
+#process1 .jp-visual-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transform: scale(1.01);
+}
+
+#process1 .jp-point {
+  display: inline-flex;
+  align-items: center;
+  min-height: 52px;
+  padding: 16px 22px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: linear-gradient(180deg, rgba(255,255,255,0.045) 0%, rgba(255,255,255,0.02) 100%);
+  font-size: clamp(15px, 1vw, 17px);
+  font-weight: 700;
+  line-height: 1.8;
+  color: #ffffff;
+  opacity: 0;
+  transform: translateY(20px);
+  filter: blur(2px);
+  transition: opacity 0.8s ease 0.26s, transform 0.8s ease 0.26s, filter 0.8s ease 0.26s;
+  word-break: keep-all;
+}
+
+#process1 .jp-content-item[data-visible="true"] .jp-content-title,
+#process1 .jp-content-item[data-visible="true"] .jp-content-lead,
+#process1 .jp-content-item[data-visible="true"] .jp-content-desc,
+#process1 .jp-content-item[data-visible="true"] .jp-bullets,
+#process1 .jp-content-item[data-visible="true"] .jp-content-visual,
+#process1 .jp-content-item[data-visible="true"] .jp-point {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+
+@media (max-width: 1100px) {
+  #process1 .jp-nav {
+    width: 230px;
+    left: 5%;
+  }
+
+  #process1 .jp-nav[data-stopped="true"] {
+    left: 5%;
+  }
+
+  #process1 .jp-nav-label {
+    font-size: 14px;
+  }
+
+  #process1 .jp-content {
+    margin-left: calc(5% + 265px);
+    padding-right: 5%;
+  }
+
+  #process1 .jp-intro {
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+}
+
+@media (max-width: 768px) {
+  #process1 {
+    padding-bottom: 92px;
+  }
+
+  #process1 .jp-intro {
+    min-height: auto;
+    padding: 84px 6% 64px;
+  }
+
+  #process1 .jp-intro-title {
+    margin-bottom: 22px;
+  }
+
+  #process1 .jp-intro-quote {
+    font-size: 16px;
+    line-height: 1.75;
+  }
+
+  #process1 .jp-nav {
+    position: fixed !important;
+    top: auto !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    transform: none !important;
+    width: 100%;
+    height: 72px;
+    padding: 0;
+    display: block;
+    background: rgba(8,8,8,0.92);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(255,255,255,0.08);
+    border-bottom: none;
+    z-index: 300;
+    transition: opacity 0.35s ease, visibility 0.35s ease;
+    overflow: hidden;
+    touch-action: pan-y;
+  }
+
+  #process1 .jp-nav[data-stopped="true"] {
+    position: fixed !important;
+    top: auto !important;
+    bottom: 0 !important;
+    left: 0 !important;
+  }
+
+  #process1 .jp-nav::before,
+  #process1 .jp-nav::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 40px;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  #process1 .jp-nav::before {
+    left: 0;
+    background: linear-gradient(to right, rgba(8,8,8,0.96), rgba(8,8,8,0));
+  }
+
+  #process1 .jp-nav::after {
+    right: 0;
+    background: linear-gradient(to left, rgba(8,8,8,0.96), rgba(8,8,8,0));
+  }
+
+  #process1 .jp-nav-track {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: max-content;
+    min-width: max-content;
+    padding: 0 18px;
+    transform: translate3d(0, -50%, 0);
+    will-change: transform;
+    transition: transform 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+    cursor: grab;
+  }
+
+  #process1 .jp-nav-track.jp-dragging {
+    cursor: grabbing;
+    transition: none !important;
+  }
+
+  #process1 .jp-nav-item {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 40px;
+    padding: 10px 14px;
+    border: none;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.04);
+    text-align: left;
+    white-space: nowrap;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  #process1 .jp-nav-item::after {
+    display: none;
+  }
+
+  #process1 .jp-nav-item[data-active="true"] {
+    background: rgba(255,255,255,0.14);
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08);
+  }
+
+  #process1 .jp-nav-num {
+    font-size: 11px;
+    margin-bottom: 0;
+    line-height: 1;
+  }
+
+  #process1 .jp-nav-label {
+    font-size: 13px;
+    line-height: 1;
+    white-space: nowrap;
+    overflow: visible;
+    text-overflow: clip;
+  }
+
+  #process1 .jp-content {
+    margin-left: 0;
+    padding: 0 6%;
+  }
+
+  #process1 .jp-content-item {
+    min-height: auto;
+    padding: 72px 0;
+  }
+
+  #process1 .jp-content-title {
+    font-size: clamp(28px, 8vw, 38px);
+    margin-bottom: 18px;
+  }
+
+  #process1 .jp-content-lead {
+    font-size: 18px;
+    margin-bottom: 14px;
+  }
+
+  #process1 .jp-content-desc {
+    font-size: 15px;
+    line-height: 1.9;
+    margin-bottom: 26px;
+  }
+
+  #process1 .jp-bullets {
+    gap: 10px;
+    margin-bottom: 26px;
+  }
+
+  #process1 .jp-bullets li {
+    font-size: 15px;
+    line-height: 1.8;
+  }
+
+  #process1 .jp-content-visual {
+    margin-bottom: 22px;
+  }
+
+  #process1 .jp-visual-frame {
+    aspect-ratio: 4 / 3;
+  }
+
+  #process1 .jp-point {
+    display: flex;
+    width: 100%;
+    padding: 15px 16px;
+    font-size: 15px;
+    line-height: 1.75;
+  }
+}
+
+@media (max-width: 480px) {
+  #process1 {
+    padding-bottom: 88px;
+  }
+
+  #process1 .jp-nav {
+    height: 68px;
+  }
+
+  #process1 .jp-nav-track {
+    gap: 10px;
+    padding: 0 14px;
+  }
+
+  #process1 .jp-nav-item {
+    padding: 9px 12px;
+  }
+
+  #process1 .jp-nav-label {
+    font-size: 12px;
+  }
+}
+</style>
+
+<div class="jp-intro">
+  <div class="jp-intro-inner">
+    <div class="jp-intro-eyebrow">
+      <span>Homepage Process</span>
+    </div>
+
+    <h2 class="jp-intro-title">
+      홈페이지 제작이 아니라<br>
+      <span class="light">비즈니스를 만들어갑니다.</span>
+    </h2>
+
+    <p class="jp-intro-desc">
+      우리는 화면만 예쁘게 만드는 것이 아니라,<br>
+      비즈니스가 어떤 방식으로 신뢰를 얻고 어떤 흐름으로 가치를 전달해야 하는지부터 정리합니다.<br>
+      그래서 보통의 제작보다 더 많은 시간이 필요하고,<br>
+      그만큼 결과물의 밀도와 완성도도 달라집니다.
+    </p>
+
+    <p class="jp-intro-quote">
+      보통 홈페이지 제작은 2~3달이 걸립니다.<br>
+      그 이유는 디자인 때문이 아니라, 이 모든 과정을 거쳐야 하기 때문입니다.
+    </p>
+  </div>
+</div>
+
+<div class="jp-main">
+  <nav class="jp-nav" data-floating="false" data-stopped="false" aria-label="홈페이지 제작 프로세스 목록">
+    <div class="jp-nav-track"></div>
+  </nav>
+  <div class="jp-content" role="region" aria-label="홈페이지 제작 프로세스 상세 내용"></div>
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  var process1Data = [
+    {
+      num: '01',
+      nav: '비즈니스 구조 분석',
+      title: '비즈니스 구조를 먼저 분석합니다.',
+      lead: '디자인보다 먼저, 지금 이 비즈니스가 어떻게 작동하는지부터 이해합니다.',
+      desc: '업종, 수익 구조, 고객 유입 방식, 현재 홈페이지의 한계까지 먼저 정리합니다. 단순히 화면을 새로 만드는 것이 아니라 이 홈페이지가 무엇을 해야 하는지 역할부터 명확하게 잡는 단계입니다.',
+      bullets: [
+        '업종 / 서비스 / 수익 구조 파악',
+        '현재 고객 유입 흐름과 신뢰 형성 방식 분석',
+        '홈페이지가 해결해야 할 핵심 역할 정의'
+      ],
+      image: './img/process-01.jpg',
+      point: '단순 제작이 아니라 비즈니스 설계 단계입니다.'
+    },
+    {
+      num: '02',
+      nav: '타겟 & 고객 심리',
+      title: '정확한 타겟과 고객 심리를 정리합니다.',
+      lead: '누구에게 보여줄 것인지가 명확해야 메시지도 정리됩니다.',
+      desc: '막연한 대중이 아니라 실제로 이 홈페이지를 보게 될 핵심 고객을 설정합니다. 고객이 무엇을 기대하고 어디에서 불안함을 느끼며 무엇을 보고 신뢰하는지까지 정리해야 전달력이 생깁니다.',
+      bullets: [
+        '핵심 타겟 정의',
+        '고객의 기대 / 불안 / 결정 포인트 분석',
+        '고객 입장에서 신뢰가 생기는 기준 정리'
+      ],
+      image: './img/process-02.jpg',
+      point: '카피와 구조 방향이 이 단계에서 결정됩니다.'
+    },
+    {
+      num: '03',
+      nav: '브랜드 메시지',
+      title: '브랜드 메시지와 포지셔닝을 설계합니다.',
+      lead: '이 회사가 왜 선택받아야 하는지, 그 이유를 명확하게 만듭니다.',
+      desc: '잘 만든 홈페이지는 정보를 많이 보여주는 것이 아니라 핵심 메시지가 분명합니다. 경쟁사와 무엇이 다르고, 어떤 태도와 어떤 가치로 기억되어야 하는지 정리해야 첫인상에서부터 차이가 생깁니다.',
+      bullets: [
+        '브랜드 핵심 메시지 정의',
+        '경쟁사 대비 차별 포인트 정리',
+        '신뢰를 만드는 스토리라인 구성'
+      ],
+      image: './img/process-03.jpg',
+      point: '첫 화면에서 느껴지는 인상은 이 단계에서 결정됩니다.'
+    },
+    {
+      num: '04',
+      nav: '구조 설계',
+      title: '고객이 납득하는 홈페이지 구조를 설계합니다.',
+      lead: '좋은 홈페이지는 많이 읽게 하지 않고 자연스럽게 이해되게 만듭니다.',
+      desc: '메인 비주얼부터 회사 소개, 강점, 신뢰 요소, 세부 서비스, 문의 흐름까지 고객이 스크롤하는 순서대로 납득할 수 있도록 구조를 정리합니다. 정보 나열이 아니라 흐름 설계가 핵심입니다.',
+      bullets: [
+        '메인 → 이해 → 신뢰 → 설득 흐름 설계',
+        '읽지 않아도 이해되는 섹션 순서 정리',
+        '고객 시선 기준의 UX 구조 구성'
+      ],
+      image: './img/process-04.jpg',
+      point: '설명하지 않아도 납득되는 구조를 만드는 단계입니다.'
+    },
+    {
+      num: '05',
+      nav: '콘텐츠 & 카피',
+      title: '콘텐츠와 카피를 정돈합니다.',
+      lead: '길게 설명하지 않아도 전달되도록 핵심만 남깁니다.',
+      desc: '홈페이지에서 중요한 것은 정보의 양이 아니라 전달력입니다. 불필요한 문장을 덜어내고, 고객이 보는 순간 이해되는 문장과 구조로 정리해 메시지의 밀도를 높입니다.',
+      bullets: [
+        '불필요한 설명 제거',
+        '핵심 메시지 중심 카피라이팅',
+        '브랜드 톤에 맞는 문장 정리'
+      ],
+      image: './img/process-05.jpg',
+      point: '보는 순간 이해되는 상태를 만드는 과정입니다.'
+    },
+    {
+      num: '06',
+      nav: '디자인 & 인터랙션',
+      title: '프리미엄 디자인과 인터랙션을 설계합니다.',
+      lead: '디자인은 예쁘게 꾸미는 일이 아니라 신뢰를 느끼게 하는 장치입니다.',
+      desc: '브랜드의 무드에 맞는 타이포, 여백, 컬러, 이미지, 시각적 리듬을 정리합니다. 필요할 경우 과하지 않은 인터랙션을 더해 홈페이지 전체의 밀도와 고급감을 높입니다.',
+      bullets: [
+        '브랜드 무드에 맞는 비주얼 방향 정리',
+        '타이포 / 여백 / 시각적 밸런스 설계',
+        '필요한 구간에만 절제된 인터랙션 적용'
+      ],
+      image: './img/process-06.jpg',
+      point: '느낌만으로도 신뢰가 생기는 상태를 만듭니다.'
+    },
+    {
+      num: '07',
+      nav: '개발 & 구현',
+      title: '설계된 구조를 실제 홈페이지로 구현합니다.',
+      lead: '기획과 디자인이 흔들리지 않도록 그대로 구현하는 단계입니다.',
+      desc: 'PC와 모바일 모두에서 자연스럽게 보이도록 반응형으로 개발하고, 실제 운영 환경에서도 안정적으로 작동할 수 있도록 세부 요소를 정리합니다. 시안이 아니라 실제 자산으로 만드는 과정입니다.',
+      bullets: [
+        '반응형 퍼블리싱',
+        '실제 운영 기준의 구조 구현',
+        '브랜드 퀄리티를 해치지 않는 디테일 개발'
+      ],
+      image: './img/process-07.jpg',
+      point: '보여주기용 결과물이 아닌 실제 운영 가능한 결과물로 완성합니다.'
+    },
+    {
+      num: '08',
+      nav: '디테일 보정',
+      title: '마지막 디테일까지 다듬어 완성합니다.',
+      lead: '프리미엄은 큰 차이가 아니라 작은 디테일에서 완성됩니다.',
+      desc: '텍스트 흐름, 여백, 리듬, 시선 이동, 모바일 밸런스까지 최종적으로 보정합니다. 처음부터 끝까지 한 호흡으로 읽히고, 브랜드의 품격이 무너지지 않도록 마지막 완성도를 높이는 단계입니다.',
+      bullets: [
+        '전체 흐름 재점검',
+        '시각적 완성도 및 밸런스 보정',
+        '최종 납품 전 디테일 정리'
+      ],
+      image: './img/process-08.jpg',
+      point: '수정이 자주 필요한 홈페이지가 아니라 처음부터 완성도 높은 홈페이지를 지향합니다.'
+    }
+  ];
+
+  var root = document.getElementById('process1');
+  if (!root) return;
+
+  var nav = root.querySelector('.jp-nav');
+  var navTrack = root.querySelector('.jp-nav-track');
+  var content = root.querySelector('.jp-content');
+  var jpMain = root.querySelector('.jp-main');
+
+  process1Data.forEach(function(item, i) {
+    var navEl = document.createElement('div');
+    navEl.className = 'jp-nav-item';
+    navEl.setAttribute('data-index', i);
+    navEl.setAttribute('data-active', i === 0 ? 'true' : 'false');
+    navEl.setAttribute('role', 'button');
+    navEl.setAttribute('aria-label', item.num + ' ' + item.nav);
+    navEl.setAttribute('tabindex', '0');
+    navEl.innerHTML =
+      '<span class="jp-nav-num">' + item.num + '.</span>' +
+      '<span class="jp-nav-label">' + item.nav + '</span>';
+    navTrack.appendChild(navEl);
+
+    var bulletsHtml = '';
+    if (item.bullets && item.bullets.length) {
+      bulletsHtml = '<ul class="jp-bullets">';
+      item.bullets.forEach(function(bullet) {
+        bulletsHtml += '<li>' + bullet + '</li>';
+      });
+      bulletsHtml += '</ul>';
+    }
+
+    var imageHtml = '';
+    if (item.image) {
+      imageHtml =
+        '<div class="jp-content-visual">' +
+          '<div class="jp-visual-frame">' +
+            '<img src="' + item.image + '" alt="' + item.title + ' 이미지" loading="lazy">' +
+          '</div>' +
+        '</div>';
+    } else {
+      imageHtml = '<div class="jp-content-visual is-empty"></div>';
+    }
+
+    var contentEl = document.createElement('article');
+    contentEl.className = 'jp-content-item';
+    contentEl.setAttribute('data-index', i);
+    contentEl.setAttribute('data-visible', 'false');
+    contentEl.setAttribute('aria-label', item.title);
+    contentEl.innerHTML =
+      '<span class="jp-step-num">STEP ' + item.num + '</span>' +
+      '<h3 class="jp-content-title">' + item.title + '</h3>' +
+      '<p class="jp-content-lead">' + item.lead + '</p>' +
+      '<p class="jp-content-desc">' + item.desc + '</p>' +
+      bulletsHtml +
+      imageHtml +
+      '<div class="jp-point">' + item.point + '</div>';
+    content.appendChild(contentEl);
+  });
+
+  var navItems = nav.querySelectorAll('.jp-nav-item');
+  var contentItems = content.querySelectorAll('.jp-content-item');
+
+  var ticking = false;
+  var currentActive = -1;
+  var isMobile = false;
+  var blockSyntheticClickOnce = false;
+
+  var dragState = {
+    isDown: false,
+    startX: 0,
+    startY: 0,
+    startShift: 0,
+    currentShift: 0,
+    movedEnough: false,
+    pointerId: null
+  };
+
+  function checkMobile() {
+    isMobile = window.innerWidth <= 768;
+  }
+
+  function getOffsetTopWithin(ancestor, el) {
+    var top = 0;
+    var node = el;
+    while (node && node !== ancestor) {
+      top += node.offsetTop;
+      node = node.offsetParent;
+    }
+    return top;
+  }
+
+  function getStopNavTopInMain() {
+    var lastItem = contentItems[contentItems.length - 1];
+    if (!lastItem) return 0;
+
+    var lastItemBottom = getOffsetTopWithin(jpMain, lastItem) + lastItem.offsetHeight;
+    var navHeight = nav.offsetHeight || 0;
+    return Math.max(0, lastItemBottom - navHeight);
+  }
+
+  function updateFloatingNavState() {
+    var viewportH = window.innerHeight;
+    var mainRect = jpMain.getBoundingClientRect();
+
+    if (isMobile) {
+      var mainInView = mainRect.top < viewportH && mainRect.bottom > 0;
+      nav.setAttribute('data-floating', mainInView ? 'true' : 'false');
+      nav.setAttribute('data-stopped', 'false');
+      nav.style.top = '';
+      nav.style.bottom = '0';
+      return;
+    }
+
+    var navHeight = nav.offsetHeight;
+    var fixedNavTopInViewport = (viewportH - navHeight) / 2;
+    var currentFixedTopInMain = fixedNavTopInViewport - mainRect.top;
+    var stopNavTopInMain = getStopNavTopInMain();
+
+    var isBeforeMain = mainRect.top >= viewportH * 0.3;
+
+    if (isBeforeMain) {
+      nav.setAttribute('data-floating', 'false');
+      nav.setAttribute('data-stopped', 'false');
+      nav.style.top = '';
+      return;
+    }
+
+    if (currentFixedTopInMain >= stopNavTopInMain) {
+      nav.setAttribute('data-floating', 'true');
+      nav.setAttribute('data-stopped', 'true');
+      nav.style.top = '';
+      return;
+    }
+
+    nav.setAttribute('data-floating', 'true');
+    nav.setAttribute('data-stopped', 'false');
+    nav.style.top = '';
+  }
+
+  function getMaxShift() {
+    var navWidth = nav.clientWidth || window.innerWidth;
+    var trackWidth = navTrack.scrollWidth || 0;
+    return Math.max(0, trackWidth - navWidth + 36);
+  }
+
+  function clampShift(value) {
+    var maxShift = getMaxShift();
+    if (value < 0) return 0;
+    if (value > maxShift) return maxShift;
+    return value;
+  }
+
+  function applyTrackShift(shift, withTransition) {
+    dragState.currentShift = clampShift(shift);
+
+    if (withTransition) {
+      navTrack.style.transition = 'transform 0.42s cubic-bezier(0.22, 1, 0.36, 1)';
+    } else {
+      navTrack.style.transition = 'none';
+    }
+
+    navTrack.style.transform = 'translate3d(' + (-dragState.currentShift) + 'px, -50%, 0)';
+  }
+
+  function moveActiveItemIntoView(activeIndex, withTransition) {
+    if (!isMobile) return;
+
+    var activeItem = navItems[activeIndex];
+    if (!activeItem) return;
+
+    var navWidth = nav.clientWidth;
+    var itemLeft = activeItem.offsetLeft;
+    var itemWidth = activeItem.offsetWidth;
+
+    var target = itemLeft - ((navWidth - itemWidth) / 2);
+    target = clampShift(target);
+
+    applyTrackShift(target, withTransition !== false);
+  }
+
+  function goToSection(idx) {
+    contentItems[idx].scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+    if (isMobile) {
+      moveActiveItemIntoView(idx, true);
+    }
+  }
+
+  function getItemFromPoint(clientX, clientY) {
+    var el = document.elementFromPoint(clientX, clientY);
+    if (!el) return null;
+    return el.closest ? el.closest('#process1 .jp-nav-item') : null;
+  }
+
+  function beginDrag(e) {
+    dragState.isDown = true;
+    dragState.pointerId = e.pointerId || null;
+    dragState.startX = e.clientX;
+    dragState.startY = e.clientY;
+    dragState.startShift = dragState.currentShift;
+    dragState.movedEnough = false;
+    navTrack.classList.add('jp-dragging');
+
+    try {
+      if (dragState.pointerId != null && navTrack.setPointerCapture) {
+        navTrack.setPointerCapture(dragState.pointerId);
+      }
+    } catch (err) {}
+  }
+
+  function moveDrag(e) {
+    if (!dragState.isDown) return;
+
+    var deltaX = e.clientX - dragState.startX;
+    var deltaY = e.clientY - dragState.startY;
+
+    if (Math.abs(deltaX) > 8 && Math.abs(deltaX) > Math.abs(deltaY)) {
+      dragState.movedEnough = true;
+    }
+
+    if (dragState.movedEnough) {
+      var nextShift = dragState.startShift - deltaX;
+      applyTrackShift(nextShift, false);
+    }
+  }
+
+  function endDrag(e) {
+    if (!dragState.isDown) return;
+
+    var upTargetItem = getItemFromPoint(e.clientX, e.clientY);
+
+    navTrack.classList.remove('jp-dragging');
+    dragState.isDown = false;
+
+    if (dragState.movedEnough) {
+      blockSyntheticClickOnce = true;
+      return;
+    }
+
+    if (upTargetItem) {
+      var idx = parseInt(upTargetItem.getAttribute('data-index'), 10);
+      if (!isNaN(idx)) {
+        goToSection(idx);
+      }
+    }
+  }
+
+  function updateActiveState() {
+    var viewportH = window.innerHeight;
+    var triggerPoint = viewportH * 0.4;
+    var newActive = 0;
+
+    updateFloatingNavState();
+
+    for (var i = 0; i < contentItems.length; i++) {
+      var rect = contentItems[i].getBoundingClientRect();
+      if (rect.top <= triggerPoint) {
+        newActive = i;
+      }
+    }
+
+    if (newActive !== currentActive) {
+      currentActive = newActive;
+
+      for (var j = 0; j < navItems.length; j++) {
+        navItems[j].setAttribute('data-active', j === currentActive ? 'true' : 'false');
+      }
+
+      if (isMobile && !dragState.isDown) {
+        moveActiveItemIntoView(currentActive, true);
+      }
+    }
+
+    for (var k = 0; k < contentItems.length; k++) {
+      var r = contentItems[k].getBoundingClientRect();
+      var isVisible = r.top < viewportH * 0.75 && r.bottom > viewportH * 0.15;
+      contentItems[k].setAttribute('data-visible', isVisible ? 'true' : 'false');
+    }
+
+    ticking = false;
+  }
+
+  function onScroll() {
+    if (!ticking) {
+      requestAnimationFrame(updateActiveState);
+      ticking = true;
+    }
+  }
+
+  function fullRefresh() {
+    checkMobile();
+    nav.setAttribute('data-stopped', 'false');
+    nav.setAttribute('data-floating', 'false');
+    nav.style.top = '';
+
+    if (!isMobile) {
+      navTrack.style.transition = '';
+      navTrack.style.transform = '';
+    } else {
+      moveActiveItemIntoView(currentActive >= 0 ? currentActive : 0, false);
+    }
+
+    requestAnimationFrame(updateActiveState);
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', fullRefresh, { passive: true });
+  window.addEventListener('load', fullRefresh);
+
+  navTrack.addEventListener('pointerdown', function(e) {
+    if (e.pointerType === 'mouse' && e.button !== 0) return;
+    beginDrag(e);
+  });
+
+  navTrack.addEventListener('pointermove', function(e) {
+    moveDrag(e);
+  });
+
+  navTrack.addEventListener('pointerup', function(e) {
+    endDrag(e);
+  });
+
+  navTrack.addEventListener('pointercancel', function() {
+    if (!dragState.isDown) return;
+    navTrack.classList.remove('jp-dragging');
+    dragState.isDown = false;
+  });
+
+  navTrack.addEventListener('lostpointercapture', function() {
+    if (dragState.isDown) {
+      navTrack.classList.remove('jp-dragging');
+      dragState.isDown = false;
+    }
+  });
+
+  navItems.forEach(function(navItem, idx) {
+    navItem.addEventListener('click', function(e) {
+      if (blockSyntheticClickOnce) {
+        e.preventDefault();
+        e.stopPropagation();
+        blockSyntheticClickOnce = false;
+        return;
+      }
+      goToSection(idx);
+    });
+
+    navItem.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        goToSection(idx);
+      }
+    });
+  });
+
+  requestAnimationFrame(fullRefresh);
+})();
+</script>
+</section>

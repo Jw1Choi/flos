@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+<!-- 권장: 문서 언어/지역 힌트(가능하면 <html lang="ko">도 함께) -->
+<meta http-equiv="Content-Language" content="ko" />
+<meta name="language" content="Korean" />
+
+<!-- 소유권 인증(각 도메인별 값으로 교체) -->
+<meta name="naver-site-verification" content="네이버_인증코드_여기에" />
+<meta name="google-site-verification" content="구글_인증코드_여기에" />
+
+<!-- Canonical (대표 URL로 고정) -->
+<link rel="canonical" href="https://biznovlab.com/" />
+
+<!-- Robots -->
+<meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1" />
+<meta name="googlebot" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1" />
+<!-- 기본 메타(검색 스니펫 최적화) -->
+<title>비즈니스혁신연구소 | 현장 혁신을 실행으로 전환하는 성장 플랫폼 Business Innovation Lab</title>
+<meta name="title" content="비즈니스혁신연구소 | 현장 혁신을 실행으로 전환하는 성장 플랫폼 Business Innovation Lab" />
+<meta name="description" content="비즈니스혁신연구소(Business Innovation Lab)는 현장에서 실제 혁신이 일어날 수 있는 환경을 제공하여, 변화하는 시대의 흐름에 맞는 성장하는 비즈니스로 전환하도록 돕는 실행형 혁신 플랫폼입니다." />
+<meta name="keywords" content="비즈니스혁신연구소, Business Innovation Lab, biznovlab, 현장혁신, 실행형 혁신, 조직 혁신, 사업 혁신, 운영 혁신, 프로세스 개선, 업무 효율화, 디지털 전환, 혁신 플랫폼, 성장 전략, 신사업, 지속 성장, 기업 혁신" />
+
+<!-- 작성자/브랜드 -->
+<meta name="author" content="비즈니스혁신연구소 (Business Innovation Lab)" />
+<meta name="publisher" content="비즈니스혁신연구소" />
+<meta name="application-name" content="비즈니스혁신연구소" />
+
+<!-- SNS/공유용 Open Graph -->
+<meta property="og:locale" content="ko_KR" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="비즈니스혁신연구소" />
+<meta property="og:title" content="비즈니스혁신연구소 | 현장 혁신을 실행으로 전환하는 성장 플랫폼 Business Innovation Lab" />
+<meta property="og:description" content="비즈니스혁신연구소는 현장에서 실제 혁신이 일어날 수 있는 환경을 제공하여, 변화하는 시대의 흐름에 맞는 성장하는 비즈니스로 전환하도록 돕는 실행형 혁신 플랫폼입니다." />
+<meta property="og:url" content="https://biznovlab.com/" />
+<meta property="og:image" content="https://biznovlab.com/img/og-biznovlab.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="비즈니스혁신연구소 - 현장 혁신 실행형 성장 플랫폼" />
+<meta property="og:rich_attachment" content="true" />
+
+<!-- Twitter(X) -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="비즈니스혁신연구소 | 현장 혁신을 실행으로 전환하는 성장 플랫폼 Business Innovation Lab" />
+<meta name="twitter:description" content="현장에서 실제 혁신이 일어날 수 있는 환경을 제공해, 변화하는 시대의 흐름에 맞는 성장 비즈니스로 전환하도록 돕는 실행형 혁신 플랫폼." />
+<meta name="twitter:image" content="https://biznovlab.com/img/og-biznovlab.jpg" />
+
+<!-- 구글 리치결과/지식패널 보조(Microdata 호환용) -->
+<meta itemprop="name" content="비즈니스혁신연구소" />
+<meta itemprop="description" content="현장에서 실제 혁신이 일어날 수 있는 환경을 제공해, 변화하는 시대의 흐름에 맞는 성장 비즈니스로 전환하도록 돕는 실행형 혁신 플랫폼." />
+<meta itemprop="image" content="https://biznovlab.com/img/og-biznovlab.jpg" />
+
+  <meta name="color-scheme" content="dark">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+
+  <style>
+    :root {
+      --bg: #000000;
+      --surface: #0a0a0a;
+      --accent: #ff4d00;
+      --text-primary: #ffffff;
+      --text-secondary: #888888;
+      --text-muted: #666666;
+      --border: #1a1a1a;
+    }
+
+    *{ box-sizing:border-box; }
+    html, body{ height:100%; }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-primary);
+      font-family: 'Pretendard', system-ui, -apple-system, Segoe UI, Roboto, 'Noto Sans KR', sans-serif;
+      margin: 0;
+      padding: 0;
+      line-height: 1.8;
+      word-break: keep-all;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .column-wrapper {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 120px 24px;
+    }
+
+    /* 상단 헤더 */
+    .super-title {
+      color: var(--accent);
+      text-align: center;
+      font-size: 14px;
+      font-weight: 900;
+      letter-spacing: 5px;
+      margin-bottom: 40px;
+      text-transform: uppercase;
+    }
+
+    .main-headline {
+      text-align: center;
+      font-size: 3.2rem;
+      font-weight: 800;
+      line-height: 1.25;
+      margin: 0 0 60px;
+    }
+
+    .accent-bar {
+      width: 50px;
+      height: 4px;
+      background: var(--accent);
+      margin: 0 auto 120px;
+    }
+
+    /* 섹션 레이아웃 */
+    .section {
+      margin-bottom: 140px;
+      position: relative;
+    }
+
+    .section-index {
+      color: var(--accent);
+      font-size: 24px;
+      font-weight: 800;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .section-h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      margin-bottom: 16px;
+      letter-spacing: -0.5px;
+    }
+
+    .section-desc {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 48px;
+      display: block;
+    }
+
+    /* 텍스트 스타일링 */
+    p {
+      margin: 0 0 24px;
+      font-size: 1.3rem;
+      color: #eeeeee;
+      font-weight: 400;
+    }
+
+    .sentence-group {
+      margin-bottom: 40px;
+    }
+
+    .highlight-text {
+      display: inline-block;
+      padding-left: 14px;
+
+      color: var(--text-primary);
+      font-weight: 700;
+      font-size: 1.7rem;
+
+      background-image: linear-gradient(var(--accent), var(--accent));
+      background-repeat: no-repeat;
+      background-size: 4px 100%;
+      background-position: left top;
+    }
+
+    .quote-text {
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    /* 박스 요소 */
+    .insight-card {
+      background: var(--surface);
+      border-left: 2px solid var(--accent);
+      padding: 40px;
+      margin: 60px 0;
+    }
+
+    .insight-label {
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      margin-bottom: 20px;
+      display: block;
+      text-transform: uppercase;
+    }
+
+    .insight-content {
+      font-size: 1.4rem;
+      font-weight: 700;
+      line-height: 1.6;
+    }
+
+    .list-box {
+      border: 1px solid var(--border);
+      padding: 30px;
+      margin: 30px 0;
+      border-radius: 4px;
+    }
+
+    .list-item {
+      display: flex;
+      margin-bottom: 12px;
+      color: var(--text-secondary);
+    }
+
+    .list-item::before {
+      content: "→";
+      color: var(--accent);
+      margin-right: 12px;
+      font-weight: bold;
+    }
+
+    /* =========================
+       “첨부 이미지” 스타일 카드형 이미지 섹션
+       - 이미지 URL만 바꾸면 그대로 사용
+    ========================== */
+    .imgDeck{
+      margin: 26px 0 80px;
+    }
+
+    .imgDeck-title{
+      text-align:center;
+      margin: 0 0 22px;
+      font-size: clamp(22px, 3.2vw, 34px);
+      line-height: 1.25;
+      font-weight: 850;
+      letter-spacing: -0.02em;
+      color: #ffffff;
+    }
+
+    .imgDeck-list{
+      display:flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+
+    .imgCard{
+      position: relative;
+      overflow:hidden;
+      border-radius: 18px;
+      background:#0b0d12;
+      height: 220px;
+      border: 1px solid rgba(255,255,255,.06);
+      box-shadow: 0 18px 55px rgba(0,0,0,.45);
+    }
+
+    .imgCard img{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      object-fit: cover;
+      transform: scale(1.02);
+      filter: saturate(1.02) contrast(1.02);
+    }
+
+    .imgCard::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(90deg, rgba(0,0,0,.62) 0%, rgba(0,0,0,.20) 46%, rgba(0,0,0,.08) 100%),
+        linear-gradient(180deg, rgba(0,0,0,.10) 0%, rgba(0,0,0,.25) 100%);
+      pointer-events:none;
+    }
+
+    .imgCard-center{
+      position:absolute;
+      inset:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      padding: 18px 18px;
+      z-index: 2;
+      pointer-events:none;
+      color:#fff;
+    }
+
+    .imgCard-logo{
+      font-weight: 900;
+      font-size: clamp(20px, 2.6vw, 34px);
+      letter-spacing: .02em;
+      margin: 0 0 10px;
+      line-height: 1.1;
+      text-transform: uppercase;
+    }
+
+    .imgCard-desc{
+      margin: 0 auto;
+      max-width: 46ch;
+      font-size: 13px;
+      line-height: 1.55;
+      opacity: .92;
+    }
+
+    .imgCard-plus{
+      position:absolute;
+      right: 14px;
+      bottom: 14px;
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.65);
+      background: rgba(0,0,0,.25);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:#fff;
+      font-weight: 900;
+      line-height:1;
+      cursor:pointer;
+      z-index: 3;
+      transition: transform .18s ease, background .18s ease;
+    }
+
+    .imgCard:hover .imgCard-plus{
+      transform: translateY(-2px);
+      background: rgba(0,0,0,.35);
+    }
+
+    @media (max-width:680px){
+      .imgCard{ height: 190px; }
+    }
+
+    /* 하단 안내 */
+    .next-preview {
+      border-top: 1px solid var(--border);
+      padding-top: 60px;
+      margin-top: 100px;
+    }
+
+    .next-tag {
+      background: var(--accent);
+      color: white;
+      padding: 4px 12px;
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 20px;
+      display: inline-block;
+    }
+
+    @media (max-width: 600px) {
+      .main-headline { font-size: 2.2rem; }
+      .section-h1 { font-size: 1.7rem; }
+      p{ font-size: 1.15rem; }
+    }
+
+    /* =========================
+       NEXT BUTTON (Footer)
+    ========================= */
+    .next-btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+
+      margin-top:42px;
+      padding:18px 34px;
+      border:1px solid var(--accent);
+      border-radius:12px;
+
+      color:var(--accent);
+      background:transparent;
+      text-decoration:none;
+
+      font-weight:800;
+      font-size:1.05rem;
+      letter-spacing:.3px;
+
+      transition:transform .18s ease, background .22s ease, color .22s ease, box-shadow .22s ease;
+      user-select:none;
+      -webkit-tap-highlight-color:transparent;
+    }
+
+    .next-btn:hover{
+      background:var(--accent);
+      color:#000;
+      transform:translateY(-1px);
+      box-shadow:0 10px 28px rgba(255,77,0,.16);
+    }
+
+    .next-btn:active{
+      transform:translateY(0);
+    }
+
+    @media (max-width:600px){
+      .next-btn{
+        width:100%;
+        padding:18px 18px;
+        font-size:1.05rem;
+        border-radius:14px;
+      }
+    }
+
+    /* =========================
+       FLOATING NEXT BUTTON
+       ✅ iOS 안전영역 포함
+    ========================= */
+    .next-float{
+      position:fixed;
+      left:50%;
+      bottom: max(14px, env(safe-area-inset-bottom));
+      transform:translateX(-50%);
+
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+
+      width:min(520px, calc(100% - 28px));
+      padding:16px 18px;
+
+      border:1px solid rgba(255,77,0,.45);
+      border-radius:16px;
+
+      background:rgba(10,10,10,.88);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+
+      color:#fff;
+      text-decoration:none;
+
+      box-shadow:0 14px 40px rgba(0,0,0,.45);
+      z-index:999999;
+
+      opacity:0;
+      pointer-events:none;
+      transform:translateX(-50%) translateY(14px);
+      transition:opacity .25s ease, transform .25s ease;
+    }
+
+    .next-float.is-show{
+      opacity:1;
+      pointer-events:auto;
+      transform:translateX(-50%) translateY(0);
+    }
+
+    .next-float__label{
+      font-weight:800;
+      font-size:1.02rem;
+      letter-spacing:.2px;
+      transition: color .25s ease;
+    }
+
+    .next-float__arrow{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+
+      width:42px;
+      height:42px;
+      border-radius:12px;
+
+      background:var(--accent);
+      color:#000;
+      font-weight:900;
+      flex:0 0 auto;
+      transition: transform .25s ease, background .25s ease, color .25s ease, box-shadow .25s ease;
+    }
+
+    .next-float:active{
+      transform:translateX(-50%) translateY(1px);
+    }
+
+    @media (max-width:600px){
+      .next-float{
+        bottom: max(12px, env(safe-area-inset-bottom));
+        padding:15px 16px;
+        border-radius:18px;
+      }
+      .next-float__label{ font-size:1.02rem; }
+      .next-float__arrow{
+        width:44px; height:44px; border-radius:14px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .next-btn, .next-float{ transition:none; }
+    }
+
+    /* FLOATING NEXT BUTTON : HOVER EFFECT */
+    .next-float:hover{
+      background: rgba(20,20,20,.95);
+      border-color: var(--accent);
+      box-shadow:
+        0 18px 50px rgba(0,0,0,.55),
+        0 0 0 1px rgba(255,77,0,.25);
+      transform:translateX(-50%) translateY(-2px);
+    }
+
+    .next-float:hover .next-float__arrow{
+      background:#fff;
+      color:var(--accent);
+      transform:translateX(4px);
+      box-shadow:0 6px 20px rgba(255,77,0,.35);
+    }
+
+    .next-float:hover .next-float__label{
+      color:var(--accent);
+    }
+  </style>
+</head>
+
+<body>
+<div class="column-wrapper">
+  <header>
+    <div class="super-title">Special Column</div>
+    <h1 class="main-headline">2편. 혁신을 위해 꼭 알아야 할 비즈니스의 본질</h1>
+    <div class="accent-bar"></div>
+  </header>
+
+  <section class="section">
+    <span class="section-index">02</span>
+    <!-- <h2 class="section-h1">2편. 혁신을 위해 꼭 알아야 할 비즈니스의 본질</h2> -->
+
+    <div class="sentence-group">
+        <br>
+      <p>20년 넘게 다양한 사업을 직접 해오고</p>
+      <p>전세계적으로 혁신에 성공한 수많은 기업들과</p>
+      <p>다양한 사례를 접하면서 알게 된 사실이 있다.</p>
+      <br>
+      <p>시대가 바뀌고, 기술이 바뀌고, 시장의 모습이 달라져도</p>
+        <p>비즈니스의 본질은 단 한 번도 바뀐 적이 없다는 것이다.</p>
+    </div>
+
+    <div class="sentence-group">
+      <p>그 본질은 단순하다.</p>
+    </div>
+    <br>
+
+    <!-- 이미지 섹션(원하면 이미지 URL만 교체) -->
+    <section class="imgDeck" aria-label="칼럼 이미지 카드">
+      <div class="imgDeck-list">
+        <article class="imgCard">
+          <img src="./img/business.jpg" alt="칼럼 이미지" loading="lazy">
+          <div class="imgCard-center">
+            <div>
+              <div class="imgCard-logo">BUSINESS</div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+    
+    <div class="sentence-group">
+      <p class="highlight-text">비즈니스란?</p>
+    </div>
+
+    <div class="insight-card">
+      <span class="insight-label">Point</span>
+      <div class="insight-content">
+        고객의 문제를 해결하고,그에 상응하는 가치를 돈으로 받는 것.
+      </div>
+    </div>
+
+    <div class="sentence-group">
+      <p>이 구조가 성립되지 않으면</p>
+      <p>아무리 멋진 아이디어도 비즈니스가 될 수 없다.</p>
+    </div>
+
+    <div class="sentence-group">
+      <p>고객의 문제를 해결하지만 돈을 받지 못하면</p>
+    <p>그것은 사업이 아니라 봉사나 취미에 가깝다.</p>
+    <br>
+      <p>반대로, 돈은 받지만 고객의 문제를 해결하지 못한다면</p>
+        <p>의도했든 아니든 결국 오래가지 못한다.</p>
+      <p>신뢰를 잃고, 시장에서 도태된다.</p>
+      <br>
+      <p>그래서 혁신을 이야기하기 전에</p>
+        <p>반드시 이 질문부터 다시 던져야 한다.</p>
+    </div>
+
+    <!-- 이미지 섹션(원하면 이미지 URL만 교체) -->
+    <section class="imgDeck" aria-label="칼럼 이미지 카드">
+      <div class="imgDeck-list">
+        <article class="imgCard">
+          <img src="./img/city.jpg" alt="칼럼 이미지" loading="lazy">
+          <div class="imgCard-center">
+            <div>
+              <div class="imgCard-logo"></div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <div class="sentence-group">
+      <p class="highlight-text">그렇다면 성공한 비즈니스란 무엇인가?</p>
+    </div>
+
+    <div class="insight-card">
+      <span class="insight-label">Definition</span>
+      <div class="insight-content">
+        많은 고객의 문제를 해결하고, 그만큼의 가치를 돈으로 지속적으로 많이 받아내는 것.
+      </div>
+    </div>
+
+    <div class="sentence-group">
+      <p>결국 성공한 비즈니스는</p><p>세상에 존재하는 큰 문제를 해결하고,</p>
+      <p>그 문제 해결에 대한 정당한 대가를</p><p>지속적으로 받아낼 수 있는 구조를 만들어낸다.</p>
+    </div>
+
+    <div class="sentence-group">
+      <p>그렇다면 이런 비즈니스를 만들기 위해</p><p> 우리는 무엇을 이해해야 할까?</p>
+    </div>
+    <br>
+
+<!-- 이미지 섹션(원하면 이미지 URL만 교체) -->
+    <section class="imgDeck" aria-label="칼럼 이미지 카드">
+      <div class="imgDeck-list">
+        <article class="imgCard">
+          <img src="./img/lab1.jpg" alt="칼럼 이미지" loading="lazy">
+          <div class="imgCard-center">
+            <div>
+              <div class="imgCard-logo"></div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+
+
+    <div class="sentence-group">
+      <p class="highlight-text">성공하는 비즈니스를 만드는 두 가지 축</p>
+      <p>모든 비즈니스는 두 가지 요소로 구성된다.</p>
+    </div>
+    <br>
+   
+
+
+    
+    <section>
+        <h2>성공하는 비즈니스를 만드는 2가지 축</h2>
+
+        <div style="display: flex; gap: 10px; margin: 40px 0;">
+            <div style="flex:1; background: #1a1a1a; padding: 20px; text-align: center; border-radius: 4px; color: #fff; font-weight: 800;border: 1px solid #ff4d00;border-radius:5px;">상품(서비스)</div>
+            <div style="flex:1; background: #1a1a1a; padding: 20px; text-align: center; border-radius: 4px; color: #fff; font-weight: 800;border: 1px solid #ff4d00;border-radius:5px;">비즈니스 모델</div>
+        </div>
+
+        <p>비즈니스에서 고객의 문제를 해결하는 과정은 2개의 큰 요소로 구성된다.</p>
+        <p>고객의 실제 문제를 해결하는 '상품' 과 그 상품을 고객이 선택하게 만드는 '비즈니스 모델'</p>
+    </section>
+
+    <div class="sentence-group">
+      <p>비즈니스에서 고객의 문제를 해결하는 과정은이 두 축의 조합으로 결정된다.</p>
+    </div>
+
+    <div class="sentence-group">
+      <p>고객의 문제를 실제로 해결하는 것이 상품(서비스)이라면</p>
+      <p>그 상품을 고객이 직접 선택하여 자기 문제를 해결받도록 만드는 과정이 비즈니스 모델이다</p>
+    </div>
+
+    <div class="sentence-group">
+      <p>이 둘 중 하나라도 무너지면 비즈니스는 제대로 작동하지 않는다.</p>
+    </div>
+
+    <div class="sentence-group">
+      <p class="highlight-text">상품(서비스)이란 무엇인가</p>
+    </div>
+
+    <div class="sentence-group">
+      <p class="quote-text">상품과 서비스는 고객의 문제를 해결하기 위한 방법이자 수단이다.</p>
+      <p>깨끗한 물을 마시기 어려운 문제를 해결하기 위해 정수기가 만들어졌고,</p>
+      <p>더위와 불쾌함을 없애기 위해 에어컨이 등장했다.</p>
+      <p>모든 상품과 서비스는그 형태가 무엇이든 하나의 공통점을 가진다.</p>
+    </div>
+
+    <div class="insight-card">
+      <span class="insight-label">Core</span>
+      <div class="insight-content">
+        상품과 서비스는<br>고객이 겪고 있는 불편, 불안, 불만을<br>
+         구체적으로 해결해주는 방법 수단이라는 점이다.
+      </div>
+    </div>
+
+    <div class="sentence-group">
+      <p>이 기능이 없다면 그것은 상품이 아니라 아이디어에 불과하다.</p>
+    </div>
+
+
+<!-- 이미지 섹션(원하면 이미지 URL만 교체) -->
+    <section class="imgDeck" aria-label="칼럼 이미지 카드">
+      <div class="imgDeck-list">
+        <article class="imgCard" style="height:400px;">
+          <img src="./img/column1-10.jpg" alt="칼럼 이미지" loading="lazy" style="object-fit: contain;">
+          <div class="imgCard-center">
+            <div>
+              <div class="imgCard-logo"></div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+
+    <div class="sentence-group">
+      <p class="highlight-text">그렇다면 '비즈니스 모델'은?</p>
+    </div>
+
+    <div class="sentence-group">
+      <p>많은 사람들이 비즈니스 모델을 단순히 ‘돈 버는 방식’으로 이해하지만</p>
+    </div>
+
+    <div class="sentence-group">
+      <p>이 칼럼에서 비즈니스 모델의 본질은 이렇게 정의한다.</p>
+    </div>
+
+    <div class="insight-card">
+      <span class="insight-label">Essence</span>
+      <div class="insight-content">
+        비즈니스 모델은<br>
+        고객이 그 문제 해결(상품·서비스)에<br>접근할 수 있도록 만들어주는 구조
+      </div>
+    </div>
+
+    <div class="sentence-group">
+      <p>아무리 좋은 상품이라도 고객이 발견하고 선택하지 않으면 존재하지 않는 것과 같다.</p>
+    </div>
+
+    <div class="sentence-group">
+      <p class="highlight-text">그렇다면 비즈니스 혁신이란 무엇인가?</p>
+    </div>
+
+
+
+        <div class="insight-card">
+      <span class="insight-label">Essence</span>
+      <div class="insight-content">
+        혁신은 상품(서비스)과 비즈니스 모델 중<br>
+        하나 혹은 두 가지를 모두 바꾸어<br>
+        고객의 문제를 다르게 해결해 주는 것
+      </div>
+    </div>
+
+
+    <div class="sentence-group">
+      <p>즉, 혁신은‘무(無)에서 유(有)를 창조하는 행위’가 뿐만 아니라,</p>
+      <p>새로운 기술과 전혀 다른 분야를 융복합하여</p>
+      <p>고객이 문제를 해결하는 수단이나 경로가 바뀌는 순간에 발생한다.</p>
+    </div>
+
+    <div class="sentence-group">
+      <p>그렇다면 성공하는 비즈니스 혁신은</p>
+      <p>실제로 어떤 형태로 나타나는지</p>
+      <p>구체적인 사례와 성공 모델을 파악해보자.</p>
+    </div>
+
+   
+  </section>
+
+  <footer class="next-preview" id="nextPreview">
+    <span class="next-tag">NEXT COLUMN</span>
+    <h2 style="font-size: 1.8rem; margin-bottom: 20px;">03. 성공하는 비즈니스 혁신의 4가지 형태</h2>
+    <p>다음 편에서는 우리나라와 세계적 기업들의 실제 혁신 사례를 통해 성공하는 혁신이 어떤 패턴으로 반복되어 왔는지, 그리고 새로운 시대의 흐름 속에서 어떻게 시장을 장악할 수 있었는지를현장 사례 중심으로 구체적으로 설명한다.</p>
+    <a href="column-3.html" class="next-btn">다음 편 읽기 →</a>
+  </footer>
+</div>
+
+<!-- ✅ Floating 버튼(90% 읽으면 등장) -->
+<a href="column-3.html" class="next-float" id="nextFloatBtn" aria-label="다음 편 보기">
+  <span class="next-float__label">다음 편 보기</span>
+  <span class="next-float__arrow">→</span>
+</a>
+
+<script>
+(function(){
+  const btn = document.getElementById('nextFloatBtn');
+  if(!btn) return;
+
+  function getProgress(){
+    const doc = document.documentElement;
+    const body = document.body;
+
+    const scrollTop = window.pageYOffset || doc.scrollTop || body.scrollTop || 0;
+    const scrollHeight = Math.max(doc.scrollHeight, body.scrollHeight);
+    const clientHeight = window.innerHeight || doc.clientHeight || 0;
+
+    const maxScroll = Math.max(1, scrollHeight - clientHeight);
+    return scrollTop / maxScroll;
+  }
+
+  function update(){
+    const progress = getProgress();
+    const shouldShow = progress >= 0.90;
+    btn.classList.toggle('is-show', shouldShow);
+  }
+
+  window.addEventListener('scroll', update, { passive:true });
+  window.addEventListener('resize', update);
+  document.addEventListener('DOMContentLoaded', update);
+  update();
+})();
+</script>
+
+
+<script>
+(function(){
+  'use strict';
+
+  var MAX_COL = 6;
+  var THRESHOLD = 0.80;                  // 80%
+  var LS_KEY = 'bi_column_unlocked_max';
+  var CK_KEY = 'bi_column_unlocked_max';
+  var COOKIE_DAYS = 365;
+
+  function setCookie(name, value, days){
+    try{
+      var d = new Date();
+      d.setTime(d.getTime() + (days*24*60*60*1000));
+      var expires = "expires=" + d.toUTCString();
+      document.cookie = name + "=" + encodeURIComponent(String(value)) + ";" + expires + ";path=/;SameSite=Lax";
+    }catch(e){}
+  }
+  function getCookie(name){
+    try{
+      var n = name + "=";
+      var parts = document.cookie.split(';');
+      for(var i=0;i<parts.length;i++){
+        var c = parts[i].trim();
+        if(c.indexOf(n) === 0){
+          return decodeURIComponent(c.substring(n.length, c.length));
+        }
+      }
+    }catch(e){}
+    return null;
+  }
+  function clampInt(v, min, max){
+    v = parseInt(v, 10);
+    if(isNaN(v)) v = min;
+    if(v < min) v = min;
+    if(v > max) v = max;
+    return v;
+  }
+  function getUnlockedMax(){
+    var ls = null, ck = null;
+    try{ ls = localStorage.getItem(LS_KEY); }catch(e){}
+    ck = getCookie(CK_KEY);
+
+    var a = clampInt(ls, 1, MAX_COL);
+    var b = clampInt(ck, 1, MAX_COL);
+    return Math.max(a, b, 1);
+  }
+  function setUnlockedMax(val){
+    val = clampInt(val, 1, MAX_COL);
+    try{ localStorage.setItem(LS_KEY, String(val)); }catch(e){}
+    setCookie(CK_KEY, String(val), COOKIE_DAYS);
+    return val;
+  }
+
+  function getCurrentColumnNumber(){
+    var path = (location.pathname || '').split('/').pop() || '';
+    var m = path.match(/^column-(\d+)\.html$/i);
+    if(!m) return null;
+    var n = parseInt(m[1], 10);
+    if(isNaN(n)) return null;
+    return n;
+  }
+
+  function getScrollProgress(){
+    var doc = document.documentElement;
+    var body = document.body;
+
+    var scrollTop = (window.pageYOffset || doc.scrollTop || body.scrollTop || 0);
+    var scrollHeight = Math.max(
+      body.scrollHeight, doc.scrollHeight,
+      body.offsetHeight, doc.offsetHeight,
+      body.clientHeight, doc.clientHeight
+    );
+    var clientHeight = (window.innerHeight || doc.clientHeight || 0);
+
+    var maxScroll = Math.max(1, scrollHeight - clientHeight);
+    var progress = scrollTop / maxScroll;
+    if(progress < 0) progress = 0;
+    if(progress > 1) progress = 1;
+    return progress;
+  }
+
+  /* (선택) 해제 시 사용자에게 가볍게 알림 */
+  function miniToast(msg){
+    try{
+      var el = document.createElement('div');
+      el.textContent = msg;
+      el.style.cssText =
+        "position:fixed;left:50%;bottom:24px;transform:translateX(-50%);" +
+        "z-index:99999;max-width:min(560px,calc(100vw - 28px));" +
+        "padding:12px 14px;border-radius:14px;" +
+        "font-family:Pretendard,-apple-system,system-ui,sans-serif;" +
+        "font-size:14px;font-weight:800;letter-spacing:-.01em;" +
+        "color:#fff;background:rgba(17,24,39,.92);" +
+        "border:1px solid rgba(255,255,255,.12);" +
+        "box-shadow:0 14px 40px rgba(0,0,0,.25);" +
+        "opacity:0;transition:opacity .25s ease, transform .25s ease;";
+      document.body.appendChild(el);
+      requestAnimationFrame(function(){
+        el.style.opacity = "1";
+        el.style.transform = "translateX(-50%) translateY(-6px)";
+      });
+      setTimeout(function(){
+        el.style.opacity = "0";
+        el.style.transform = "translateX(-50%)";
+        setTimeout(function(){ el.remove(); }, 260);
+      }, 1800);
+    }catch(e){}
+  }
+
+  function boot(){
+    // 값이 없으면 1편만 열리도록 저장
+    setUnlockedMax(getUnlockedMax());
+
+    var current = getCurrentColumnNumber();
+    if(!current) return;
+    if(current >= MAX_COL) return; // 마지막 편이면 다음편 해제 없음
+
+    // 현재 편 자체는 읽을 수 있으니, 최소 current까지는 열림으로 보정
+    var unlockedMax = getUnlockedMax();
+    if(unlockedMax < current){
+      setUnlockedMax(current);
+      unlockedMax = current;
+    }
+
+    // 이미 다음편이 열렸다면 감시 불필요
+    if(unlockedMax >= current + 1) return;
+
+    var fired = false;
+
+    function onScroll(){
+      if(fired) return;
+      var p = getScrollProgress();
+      if(p >= THRESHOLD){
+        fired = true;
+        setUnlockedMax(current + 1);
+        // miniToast("✅ 다음 편이 열렸습니다! (column-" + (current+1) + ")");
+        window.removeEventListener('scroll', onScroll, {passive:true});
+      }
+    }
+
+    window.addEventListener('scroll', onScroll, {passive:true});
+    setTimeout(onScroll, 120); // 페이지 짧을 때 대비
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', boot);
+  }else{
+    boot();
+  }
+})();
+</script>
+
+
+
+</body>
+</html>
