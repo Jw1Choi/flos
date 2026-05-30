@@ -1291,8 +1291,8 @@
       --shadow: 0 26px 80px rgba(0, 0, 0, 0.16);
       --radius-start: 28px;
       --radius-end: 0px;
-      --transition-slide: 0.96s cubic-bezier(0.22, 1, 0.36, 1);
-      --transition-content: 0.86s cubic-bezier(0.22, 0.61, 0.36, 1);
+      --transition-slide: 0.86s cubic-bezier(0.22, 1, 0.36, 1);
+      --transition-content: 0.78s cubic-bezier(0.22, 0.61, 0.36, 1);
       position: relative;
       width: 100%;
       background: var(--bg);
@@ -1314,7 +1314,7 @@
     #BusinessScrollSection .bgfbsr-sticky-shell {
       position: relative;
       width: 100%;
-      height: 760vh;
+      height: 560vh;
       overscroll-behavior: contain;
     }
 
@@ -1359,8 +1359,8 @@
       backface-visibility: hidden;
       transition:
         transform var(--transition-slide),
-        opacity 0.66s cubic-bezier(0.22, 1, 0.36, 1),
-        visibility 0.66s cubic-bezier(0.22, 1, 0.36, 1);
+        opacity 0.56s cubic-bezier(0.22, 1, 0.36, 1),
+        visibility 0.56s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     #BusinessScrollSection .bgfbsr-slide.is-active {
@@ -1419,8 +1419,8 @@
       will-change: transform, filter;
       backface-visibility: hidden;
       transition:
-        transform 1.28s cubic-bezier(0.22, 1, 0.36, 1),
-        filter 0.92s cubic-bezier(0.22, 1, 0.36, 1);
+        transform 1.18s cubic-bezier(0.22, 1, 0.36, 1),
+        filter 0.82s cubic-bezier(0.22, 1, 0.36, 1);
       filter: brightness(0.78) saturate(1.05);
       overflow: hidden;
       background-color: #111;
@@ -1516,25 +1516,6 @@
       z-index: 10;
       width: 100%;
       height: 100%;
-    }
-
-    #BusinessScrollSection .bgfbsr-topcopy {
-      position: absolute;
-      top: var(--top-gap);
-      left: clamp(54px, 8vw, 132px);
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      text-shadow: 0 2px 16px rgba(0, 0, 0, 0.22);
-      transition: opacity 0.45s ease, transform 0.6s ease;
-    }
-
-    #BusinessScrollSection .bgfbsr-topcopy span {
-      display: block;
-      font-size: clamp(22px, 2.45vw, 34px);
-      font-weight: 700;
-      line-height: 1.24;
-      letter-spacing: -0.035em;
     }
 
     #BusinessScrollSection .bgfbsr-rail {
@@ -1635,14 +1616,14 @@
       transform: scaleX(0);
       opacity: 0;
       transition:
-        transform 0.92s cubic-bezier(0.22, 1, 0.36, 1),
-        opacity 0.46s ease;
+        transform 0.82s cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 0.42s ease;
     }
 
     #BusinessScrollSection .bgfbsr-slide.is-active .bgfbsr-line {
       transform: scaleX(1);
       opacity: 1;
-      transition-delay: 0.18s;
+      transition-delay: 0.14s;
     }
 
     #BusinessScrollSection .bgfbsr-desc {
@@ -1707,7 +1688,6 @@
       pointer-events: none;
     }
 
-    #BusinessScrollSection .bgfbsr-frame[data-expand-phase="intro"] .bgfbsr-topcopy,
     #BusinessScrollSection .bgfbsr-frame[data-expand-phase="intro"] .bgfbsr-copy {
       opacity: 0.92;
     }
@@ -1719,21 +1699,21 @@
     }
 
     #BusinessScrollSection .bgfbsr-slide.is-active .bgfbsr-fade-up {
-      animation: bgfbsrFadeUp 0.78s cubic-bezier(0.22, 1, 0.36, 1) both;
+      animation: bgfbsrFadeUp 0.68s cubic-bezier(0.22, 1, 0.36, 1) both;
     }
 
     #BusinessScrollSection .bgfbsr-slide.is-active .bgfbsr-fade-right {
-      animation: bgfbsrFadeRight 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+      animation: bgfbsrFadeRight 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
     }
 
     #BusinessScrollSection .bgfbsr-slide.is-active .bgfbsr-fade-left {
-      animation: bgfbsrFadeLeft 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+      animation: bgfbsrFadeLeft 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
     }
 
-    #BusinessScrollSection .bgfbsr-slide.is-active .bgfbsr-delay-1 { animation-delay: 0.08s; }
-    #BusinessScrollSection .bgfbsr-slide.is-active .bgfbsr-delay-2 { animation-delay: 0.16s; }
-    #BusinessScrollSection .bgfbsr-slide.is-active .bgfbsr-delay-3 { animation-delay: 0.24s; }
-    #BusinessScrollSection .bgfbsr-slide.is-active .bgfbsr-delay-4 { animation-delay: 0.32s; }
+    #BusinessScrollSection .bgfbsr-slide.is-active .bgfbsr-delay-1 { animation-delay: 0.06s; }
+    #BusinessScrollSection .bgfbsr-slide.is-active .bgfbsr-delay-2 { animation-delay: 0.13s; }
+    #BusinessScrollSection .bgfbsr-slide.is-active .bgfbsr-delay-3 { animation-delay: 0.2s; }
+    #BusinessScrollSection .bgfbsr-slide.is-active .bgfbsr-delay-4 { animation-delay: 0.27s; }
 
     @keyframes bgfbsrFadeUp {
       0% { opacity: 0; transform: translate3d(0, 30px, 0); }
@@ -1768,12 +1748,11 @@
         --top-gap: 32px;
         --bottom-gap: 40px;
       }
-      #BusinessScrollSection .bgfbsr-topcopy { left: 28px; right: 28px; }
-      #BusinessScrollSection .bgfbsr-topcopy span { font-size: clamp(18px, 4.6vw, 30px); }
+      #BusinessScrollSection .bgfbsr-sticky-shell { height: 500vh; }
       #BusinessScrollSection .bgfbsr-rail { left: 12px; gap: 12px; }
       #BusinessScrollSection .bgfbsr-rail-btn { width: 42px; height: 42px; }
       #BusinessScrollSection .bgfbsr-rail-btn svg { width: 22px; height: 22px; }
-      #BusinessScrollSection .bgfbsr-copy { left: 28px; right: 24px; bottom: 34px; width: auto; }
+      #BusinessScrollSection .bgfbsr-copy { left: 78px; right: 24px; bottom: 34px; width: auto; }
       #BusinessScrollSection .bgfbsr-title { font-size: clamp(28px, 7vw, 52px); }
       #BusinessScrollSection .bgfbsr-desc { font-size: clamp(14px, 2.2vw, 18px); line-height: 1.65; }
     }
@@ -1787,30 +1766,43 @@
         --bottom-gap: 28px;
         --radius-start: 20px;
       }
-      #BusinessScrollSection .bgfbsr-sticky-shell { height: 820vh; }
+      #BusinessScrollSection .bgfbsr-sticky-shell { height: 460vh; }
       #BusinessScrollSection .bgfbsr-bg::before {
         background: linear-gradient(180deg, rgba(0,0,0,0.38) 0%, rgba(0,0,0,0.22) 28%, rgba(0,0,0,0.36) 100%);
       }
-      #BusinessScrollSection .bgfbsr-topcopy { left: 20px; right: 20px; gap: 4px; }
-      #BusinessScrollSection .bgfbsr-topcopy span { font-size: 17px; line-height: 1.32; }
+
+      /* 아이콘 레일 — 헤더 아래 상단 배치 (메뉴에 가리지 않고 텍스트와 겹치지 않음) */
       #BusinessScrollSection .bgfbsr-rail {
         left: 10px;
-        top: 25%;
-        bottom: 22px;
+        top: 13vh;
+        bottom: auto;
         transform: none;
-        flex-direction: column;
+        flex-direction: row;
         gap: 10px;
       }
       #BusinessScrollSection .bgfbsr-frame[data-expand-phase="intro"] .bgfbsr-rail {
         transform: none;
       }
-      #BusinessScrollSection .bgfbsr-copy { left: 20px; right: 20px; bottom: 26px; }
-      #BusinessScrollSection .bgfbsr-title { font-size: 24px; line-height: 1.22; width: 95%; }
+
+      /* 텍스트 — 왼쪽 여백 없이 화면 왼쪽까지 */
+      #BusinessScrollSection .bgfbsr-copy {
+        left: 20px;
+        right: 20px;
+        bottom: 30vh;
+        width: auto;
+      }
+      #BusinessScrollSection .bgfbsr-title { font-size: 24px; line-height: 1.22; width: 100%; }
       #BusinessScrollSection .bgfbsr-line { margin: 16px 0 18px; }
-      #BusinessScrollSection .bgfbsr-desc { font-size: 13px; line-height: 1.62; width: 95%; }
+      #BusinessScrollSection .bgfbsr-desc { font-size: 13px; line-height: 1.62; width: 100%; }
       #BusinessScrollSection .bgfbsr-arrow { margin-top: 16px; width: 28px; height: 28px; }
       #BusinessScrollSection .bgfbsr-arrow svg { width: 26px; height: 26px; }
-      #BusinessScrollSection .bgfbsr-progress { right: 14px; bottom: 12px; font-size: 12px; }
+
+      /* 하단 페이지 숫자 — 홈바 영역 피하고 잘리지 않게 */
+      #BusinessScrollSection .bgfbsr-progress {
+        right: 36px;
+        bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+        font-size: 12px;
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -1851,18 +1843,6 @@
           </div>
 
           <div class="bgfbsr-inner">
-            <div class="bgfbsr-topcopy">
-              <span class="bgfbsr-anim bgfbsr-fade-right bgfbsr-delay-1">
-                설명만 적힌 홈페이지가 아닌
-              </span>
-              <span class="bgfbsr-anim bgfbsr-fade-right bgfbsr-delay-2">
-                브랜딩과 품격을 느끼게 하는
-              </span>
-              <span class="bgfbsr-anim bgfbsr-fade-right bgfbsr-delay-2">
-                경험을 전달합니다.
-              </span>
-            </div>
-
             <div class="bgfbsr-copy">
               <a class="bgfbsr-link" href="javascript:void(0)">
                 <h2 class="bgfbsr-title bgfbsr-anim bgfbsr-fade-left bgfbsr-delay-1">
@@ -1874,7 +1854,7 @@
                 <p class="bgfbsr-desc bgfbsr-anim bgfbsr-fade-up bgfbsr-delay-3">
                   단순한 정보 전달을 넘어, 브랜드의 깊이와 방향성을 담아냅니다.<br>
                   첫 화면에서부터 신뢰와 품격이 전달되도록 설계하여<br>
-                  고객이 자연스럽게 ‘다르다’고 느끼는 경험을 완성합니다.
+                  고객이 자연스럽게 '다르다'고 느끼는 경험을 완성합니다.
                 </p>
 
                 <span class="bgfbsr-arrow bgfbsr-anim bgfbsr-fade-up bgfbsr-delay-4" aria-hidden="true">
@@ -1891,18 +1871,6 @@
         <article class="bgfbsr-slide is-below" data-index="1">
           <div class="bgfbsr-bg" style="background-image:url('./img/landing.jpg');"></div>
           <div class="bgfbsr-inner">
-            <div class="bgfbsr-topcopy">
-              <span class="bgfbsr-anim bgfbsr-fade-right bgfbsr-delay-1">
-                고객이 단순히 보는 것이 아니라
-              </span>
-              <span class="bgfbsr-anim bgfbsr-fade-right bgfbsr-delay-2">
-                직접 반응하고 참여하게 만드는
-              </span>
-              <span class="bgfbsr-anim bgfbsr-fade-right bgfbsr-delay-2">
-                흐름을 설계합니다.
-              </span>
-            </div>
-
             <div class="bgfbsr-copy">
               <a class="bgfbsr-link" href="javascript:void(0)">
                 <h2 class="bgfbsr-title bgfbsr-anim bgfbsr-fade-left bgfbsr-delay-1">
@@ -1912,7 +1880,7 @@
                 <span class="bgfbsr-line"></span>
 
                 <p class="bgfbsr-desc bgfbsr-anim bgfbsr-fade-up bgfbsr-delay-3">
-                  방문자가 머무르는 것을 넘어 ‘클릭하고, 입력하고, 문의하게 되는 흐름’을 만듭니다.<br>
+                  방문자가 머무르는 것을 넘어 '클릭하고, 입력하고, 문의하게 되는 흐름'을 만듭니다.<br>
                   고객의 심리와 욕구를 분석해 단계별로 참여를 유도하고<br>
                   자연스럽게 행동으로 이어지는 구조를 설계합니다.
                 </p>
@@ -1931,10 +1899,6 @@
         <article class="bgfbsr-slide is-below" data-index="2">
           <div class="bgfbsr-bg" style="background-image:url('./img/ai-intro.jpg');"></div>
           <div class="bgfbsr-inner">
-            <div class="bgfbsr-topcopy">
-              <span class="bgfbsr-anim bgfbsr-fade-right bgfbsr-delay-1">AI 영상으로 완성되는</span>
-              <span class="bgfbsr-anim bgfbsr-fade-right bgfbsr-delay-2">행사의 새로운 경험</span>
-            </div>
             <div class="bgfbsr-copy">
               <a class="bgfbsr-link" href="javascript:void(0)">
                 <h2 class="bgfbsr-title bgfbsr-anim bgfbsr-fade-left bgfbsr-delay-1">
@@ -1973,10 +1937,6 @@
           </div>
 
           <div class="bgfbsr-inner">
-            <div class="bgfbsr-topcopy">
-              <span class="bgfbsr-anim bgfbsr-fade-right bgfbsr-delay-1">단순한 영상이 아닌</span>
-              <span class="bgfbsr-anim bgfbsr-fade-right bgfbsr-delay-2">브랜드의 본질을 담아냅니다</span>
-            </div>
             <div class="bgfbsr-copy">
               <a class="bgfbsr-link" href="javascript:void(0)">
                 <h2 class="bgfbsr-title bgfbsr-anim bgfbsr-fade-left bgfbsr-delay-1">
@@ -1997,17 +1957,38 @@
         </article>
 
         <div class="bgfbsr-rail" aria-label="사업영역 이동" data-bgfbsr-rail>
-          <button class="bgfbsr-rail-btn is-active" type="button" data-go="0" aria-label="신소재 사업">
-            <svg viewBox="0 0 24 24"><path d="M8.2 5.4 4.8 11l3.4 5.6h7.6l3.4-5.6-3.4-5.6H8.2Z"/><path d="M8.2 5.4 12 11m0 0 3.8 5.6M12 11h7"/></svg>
+          <!-- 1. 브랜딩 웹사이트 → 모니터 아이콘 -->
+          <button class="bgfbsr-rail-btn is-active" type="button" data-go="0" aria-label="브랜딩 웹사이트">
+            <svg viewBox="0 0 24 24">
+              <rect x="3" y="4" width="18" height="13" rx="2"/>
+              <path d="M3 8.5h18"/>
+              <path d="M8 21h8"/>
+              <path d="M12 17v4"/>
+            </svg>
           </button>
-          <button class="bgfbsr-rail-btn" type="button" data-go="1" aria-label="화이트 바이오">
-            <svg viewBox="0 0 24 24"><path d="M12 20c3.2 0 5.8-2.1 6.3-5.1-3.1-.7-5.2-2.6-6.3-5.9-1.2 3.3-3.2 5.2-6.3 5.9.5 3 3.1 5.1 6.3 5.1Z"/><path d="M12 9c0-2.7 1.5-4.8 4.6-6-.2 3.2-1.7 5.3-4.6 6Zm0 0c0-2.7-1.5-4.8-4.6-6 .2 3.2 1.7 4.6 4.6 6Z"/><path d="M3 21h18"/></svg>
+
+          <!-- 2. 전환 중심 랜딩페이지 → 커서 클릭 아이콘 -->
+          <button class="bgfbsr-rail-btn" type="button" data-go="1" aria-label="전환 중심 랜딩페이지">
+            <svg viewBox="0 0 24 24">
+              <path d="M5 3l3.5 15 2.5-6 6-2.5L5 3z"/>
+              <path d="m13.5 13.5 5 5"/>
+            </svg>
           </button>
-          <button class="bgfbsr-rail-btn" type="button" data-go="2" aria-label="재활용 소재">
-            <svg viewBox="0 0 24 24"><path d="M9.2 4.7h3.5l1.5 2.6"/><path d="m14.2 7.3-2 3.3h-4"/><path d="m8.2 10.6-2-3.3 1.7-2.9"/><path d="M6.2 7.3h4"/><path d="m5.8 10.8 3.1 5.4h3.3"/><path d="m8.9 16.2 1.8-3"/><path d="m12.1 16.2 5.8-10"/><path d="m15.1 6.2 2.8 4.8-1.8 3.1"/><path d="M17.9 11h-3.5"/></svg>
+
+          <!-- 3. AI 행사 영상 → 스파클(AI) 아이콘 -->
+          <button class="bgfbsr-rail-btn" type="button" data-go="2" aria-label="프리미엄 AI 행사 영상">
+            <svg viewBox="0 0 24 24">
+              <path d="M10 3.5 11.5 8 16 9.5 11.5 11 10 15.5 8.5 11 4 9.5 8.5 8 10 3.5z"/>
+              <path d="m18 14 .9 2.1L21 17l-2.1.9L18 20l-.9-2.1L15 17l2.1-.9L18 14z"/>
+            </svg>
           </button>
-          <button class="bgfbsr-rail-btn" type="button" data-go="3" aria-label="불소 소재">
-            <svg viewBox="0 0 24 24"><path d="M12 3 4 12l8 9 8-9-8-9Z"/><path d="M12 3v18"/><path d="M4 12h16"/></svg>
+
+          <!-- 4. 브랜드 영상 제작 → 비디오 카메라 아이콘 -->
+          <button class="bgfbsr-rail-btn" type="button" data-go="3" aria-label="브랜드 영상 제작">
+            <svg viewBox="0 0 24 24">
+              <rect x="2.5" y="6.5" width="13" height="11" rx="2"/>
+              <path d="m15.5 10.5 6-3v9l-6-3v-3z"/>
+            </svg>
           </button>
         </div>
 
@@ -2030,9 +2011,13 @@
     if (!root || root.dataset.bgfbsrInit === 'true') return;
     root.dataset.bgfbsrInit = 'true';
 
-    /* -----------------------------
-      Vimeo 초기화
-    ----------------------------- */
+    function isMobile() {
+      return window.matchMedia('(max-width: 640px)').matches;
+    }
+    function isTablet() {
+      return window.matchMedia('(max-width: 991px)').matches;
+    }
+
     function buildVimeoUrl(videoId) {
       var params = new URLSearchParams({
         autoplay: '1',
@@ -2126,9 +2111,6 @@
 
     initVimeoBackgrounds();
 
-    /* -----------------------------
-      기존 슬라이드 로직
-    ----------------------------- */
     var shell = root.querySelector('[data-bgfbsr-shell]');
     var frame = root.querySelector('[data-bgfbsr-frame]');
     var slides = Array.prototype.slice.call(root.querySelectorAll('.bgfbsr-slide'));
@@ -2140,10 +2122,44 @@
     var isAnimating = false;
     var animTimeout = null;
 
-    var INTRO_PORTION = 0.22;
-    var HYSTERESIS = 0.18;
-    var SNAP_LOCK_MS = 540;
-    var AUTO_SCROLL_DURATION = 720;
+    function getConfig() {
+      if (isMobile()) {
+        return {
+          INTRO_PORTION: 0.15,
+          HYSTERESIS: 0.22,
+          SNAP_LOCK_MS: 380,
+          AUTO_SCROLL_DURATION: 520,
+          WHEEL_THRESHOLD: 70,
+          TOUCH_THRESHOLD: 35,
+          TOUCH_VELOCITY_THRESHOLD: 0.35,
+          INDEX_CHANGE_MIN_INTERVAL: 360
+        };
+      }
+      if (isTablet()) {
+        return {
+          INTRO_PORTION: 0.18,
+          HYSTERESIS: 0.20,
+          SNAP_LOCK_MS: 460,
+          AUTO_SCROLL_DURATION: 640,
+          WHEEL_THRESHOLD: 70,
+          TOUCH_THRESHOLD: 42,
+          TOUCH_VELOCITY_THRESHOLD: 0.4,
+          INDEX_CHANGE_MIN_INTERVAL: 400
+        };
+      }
+      return {
+        INTRO_PORTION: 0.20,
+        HYSTERESIS: 0.18,
+        SNAP_LOCK_MS: 480,
+        AUTO_SCROLL_DURATION: 660,
+        WHEEL_THRESHOLD: 70,
+        TOUCH_THRESHOLD: 58,
+        TOUCH_VELOCITY_THRESHOLD: 0.5,
+        INDEX_CHANGE_MIN_INTERVAL: 430
+      };
+    }
+
+    var CFG = getConfig();
 
     var rafRequested = false;
     var updateLoopRunning = false;
@@ -2157,6 +2173,8 @@
 
     var touchStartY = 0;
     var touchLastY = 0;
+    var touchStartTime = 0;
+    var touchLastTime = 0;
     var touchActive = false;
     var touchLocked = false;
 
@@ -2165,7 +2183,11 @@
     var autoScrollTargetY = 0;
     var autoScrollStartY = 0;
     var autoScrollStartedAt = 0;
+    var autoScrollDuration = 0;
     var lastKnownY = window.pageYOffset || window.scrollY || 0;
+
+    var lastIndexChangeAt = 0;
+    var prevExpandPhase = 'intro';
 
     var ALL_STATES = ['is-active', 'is-exiting-up', 'is-exiting-down', 'is-above', 'is-below'];
 
@@ -2181,8 +2203,8 @@
       return 1 - Math.pow(1 - t, 3);
     }
 
-    function easeInOutQuart(t) {
-      return t < 0.5 ? 8 * t * t * t * t : 1 - Math.pow(-2 * t + 2, 4) / 2;
+    function easeOutQuint(t) {
+      return 1 - Math.pow(1 - t, 5);
     }
 
     function getScrollRange() {
@@ -2201,7 +2223,7 @@
     }
 
     function getIntroThreshold() {
-      return INTRO_PORTION;
+      return CFG.INTRO_PORTION;
     }
 
     function getSlideProgressFromGlobal(globalProgress) {
@@ -2306,6 +2328,7 @@
       });
 
       currentIndex = nextIndex;
+      lastIndexChangeAt = performance.now();
       updateButtons(nextIndex);
       updateProgress(nextIndex);
 
@@ -2314,7 +2337,7 @@
         oldSlide.classList.add(oldIndex < currentIndex ? 'is-above' : 'is-below');
         normalizeOtherSlides();
         isAnimating = false;
-      }, 980);
+      }, 900);
     }
 
     function cancelAutoScroll() {
@@ -2330,14 +2353,14 @@
       autoScrollTargetY = targetY;
       autoScrollStartY = window.pageYOffset || window.scrollY || 0;
       autoScrollStartedAt = performance.now();
-      duration = duration || AUTO_SCROLL_DURATION;
+      autoScrollDuration = duration || CFG.AUTO_SCROLL_DURATION;
 
       function step(now) {
         if (!autoScrollActive) return;
 
         var elapsed = now - autoScrollStartedAt;
-        var t = clamp(elapsed / duration, 0, 1);
-        var eased = easeInOutQuart(t);
+        var t = clamp(elapsed / autoScrollDuration, 0, 1);
+        var eased = isMobile() ? easeOutQuint(t) : easeOutCubic(t);
         var nextY = lerp(autoScrollStartY, autoScrollTargetY, eased);
 
         window.scrollTo(0, nextY);
@@ -2358,7 +2381,7 @@
       index = clamp(index, 0, maxIndex);
 
       if (index === currentIndex && !opts.force) {
-        animateScrollTo(getScrollTopForIndex(index), opts.duration || AUTO_SCROLL_DURATION);
+        animateScrollTo(getScrollTopForIndex(index), opts.duration || CFG.AUTO_SCROLL_DURATION);
         return;
       }
 
@@ -2366,13 +2389,13 @@
       setActive(index, direction, true);
 
       if (opts.scroll !== false) {
-        animateScrollTo(getScrollTopForIndex(index), opts.duration || AUTO_SCROLL_DURATION);
+        animateScrollTo(getScrollTopForIndex(index), opts.duration || CFG.AUTO_SCROLL_DURATION);
       }
     }
 
     function getCenterThresholdPx() {
       var vh = window.innerHeight || document.documentElement.clientHeight || 0;
-      return Math.max(42, Math.min(120, vh * 0.1));
+      return isMobile() ? Math.max(60, vh * 0.15) : Math.max(42, Math.min(120, vh * 0.1));
     }
 
     function isFrameCentered() {
@@ -2391,7 +2414,7 @@
       if (maxIndex <= 0) return 0;
 
       var currentPos = currentIndex / maxIndex;
-      var deadZone = (1 / maxIndex) * HYSTERESIS;
+      var deadZone = (1 / maxIndex) * CFG.HYSTERESIS;
 
       if (Math.abs(slideProgress - currentPos) <= deadZone) {
         return currentIndex;
@@ -2431,11 +2454,13 @@
       frame.style.borderRadius = nextRadius + 'px';
       frame.style.transform = 'scale(' + nextScale + ') translateZ(0)';
 
-      if (introProgress < 0.999) {
-        frame.setAttribute('data-expand-phase', 'intro');
-      } else {
-        frame.setAttribute('data-expand-phase', 'slides');
+      var newPhase = (introProgress < 0.999) ? 'intro' : 'slides';
+
+      if (prevExpandPhase === 'intro' && newPhase === 'slides') {
+        lastIndexChangeAt = performance.now();
       }
+      prevExpandPhase = newPhase;
+      frame.setAttribute('data-expand-phase', newPhase);
     }
 
     function updateByProgress() {
@@ -2445,7 +2470,12 @@
       lastKnownY = realY;
       targetGlobalProgress = getGlobalProgressFromY(realY);
 
-      var alpha = autoScrollActive ? 0.16 : 0.12;
+      var alpha;
+      if (autoScrollActive) {
+        alpha = isMobile() ? 0.22 : 0.16;
+      } else {
+        alpha = isMobile() ? 0.18 : 0.12;
+      }
       smoothedGlobalProgress += (targetGlobalProgress - smoothedGlobalProgress) * alpha;
 
       if (Math.abs(targetGlobalProgress - smoothedGlobalProgress) < 0.0006) {
@@ -2463,11 +2493,20 @@
         var targetIndex = getStableNearestIndex(slideProgress);
 
         if (!autoScrollActive && targetIndex !== currentIndex && !isAnimating) {
-          setActive(targetIndex, targetIndex > currentIndex ? 'down' : 'up', true);
+          var now = performance.now();
+          if (now - lastIndexChangeAt >= CFG.INDEX_CHANGE_MIN_INTERVAL) {
+            var step = targetIndex > currentIndex ? 1 : -1;
+            var nextIdx = currentIndex + step;
+            setActive(nextIdx, step > 0 ? 'down' : 'up', true);
+          }
         }
       }
 
-      if (Math.abs(targetGlobalProgress - smoothedGlobalProgress) > 0.0006 || autoScrollActive) {
+      var slideProg = getSlideProgressFromGlobal(smoothedGlobalProgress);
+      var target = smoothedGlobalProgress > getIntroThreshold() ? getStableNearestIndex(slideProg) : 0;
+      var needsMoreSteps = target !== currentIndex;
+
+      if (Math.abs(targetGlobalProgress - smoothedGlobalProgress) > 0.0006 || autoScrollActive || needsMoreSteps) {
         requestUpdate();
       } else {
         updateLoopRunning = false;
@@ -2486,7 +2525,7 @@
       setTimeout(function () {
         wheelCooldown = false;
         wheelAccum = 0;
-      }, SNAP_LOCK_MS);
+      }, CFG.SNAP_LOCK_MS);
     }
 
     function handleWheel(e) {
@@ -2509,14 +2548,14 @@
 
       wheelAccum += e.deltaY;
 
-      var threshold = absDelta > 70 ? 55 : 90;
+      var threshold = absDelta > 70 ? 45 : 75;
 
       if (Math.abs(wheelAccum) >= threshold) {
         var next = currentIndex + (wheelAccum > 0 ? 1 : -1);
         next = clamp(next, 0, maxIndex);
 
         if (next !== currentIndex) {
-          goToIndex(next, { scroll: true, force: true, duration: 680 });
+          goToIndex(next, { scroll: true, force: true, duration: CFG.AUTO_SCROLL_DURATION });
           lockWheelBriefly();
         }
 
@@ -2532,41 +2571,70 @@
       touchLocked = false;
       touchStartY = e.touches[0].clientY;
       touchLastY = touchStartY;
+      touchStartTime = performance.now();
+      touchLastTime = touchStartTime;
       if (autoScrollActive) cancelAutoScroll();
     }
 
     function handleTouchMove(e) {
       if (!touchActive || !e.touches || !e.touches.length) return;
-      touchLastY = e.touches[0].clientY;
+      var newY = e.touches[0].clientY;
+      var newTime = performance.now();
+
+      touchLastY = newY;
+      touchLastTime = newTime;
 
       if (!canStartSlideWheel()) return;
 
-      var diff = touchStartY - touchLastY;
-      if (Math.abs(diff) < 18) return;
+      var diff = touchStartY - newY;
+      if (Math.abs(diff) < 12) return;
 
       if (autoScrollActive || isAnimating || touchLocked) {
         e.preventDefault();
         return;
       }
 
-      if (Math.abs(diff) >= 58) {
+      if (Math.abs(diff) >= CFG.TOUCH_THRESHOLD) {
         var next = currentIndex + (diff > 0 ? 1 : -1);
         next = clamp(next, 0, maxIndex);
 
         if (next !== currentIndex) {
           e.preventDefault();
-          goToIndex(next, { scroll: true, force: true, duration: 640 });
+          goToIndex(next, { scroll: true, force: true, duration: CFG.AUTO_SCROLL_DURATION });
           touchLocked = true;
           setTimeout(function () {
             touchLocked = false;
-          }, SNAP_LOCK_MS);
+          }, CFG.SNAP_LOCK_MS);
         }
       }
     }
 
-    function handleTouchEnd() {
+    function handleTouchEnd(e) {
+      if (!touchActive) return;
+
+      if (!touchLocked && !autoScrollActive && !isAnimating && canStartSlideWheel()) {
+        var totalDiff = touchStartY - touchLastY;
+        var totalTime = Math.max(touchLastTime - touchStartTime, 1);
+        var velocity = Math.abs(totalDiff) / totalTime;
+
+        if (velocity >= CFG.TOUCH_VELOCITY_THRESHOLD && Math.abs(totalDiff) >= 18) {
+          var next = currentIndex + (totalDiff > 0 ? 1 : -1);
+          next = clamp(next, 0, maxIndex);
+
+          if (next !== currentIndex) {
+            goToIndex(next, { scroll: true, force: true, duration: CFG.AUTO_SCROLL_DURATION });
+            touchLocked = true;
+            setTimeout(function () {
+              touchLocked = false;
+            }, CFG.SNAP_LOCK_MS);
+          }
+        }
+      }
+
       touchActive = false;
-      touchLocked = false;
+      setTimeout(function () {
+        touchLocked = false;
+      }, 100);
     }
 
     buttons.forEach(function (btn) {
@@ -2574,7 +2642,7 @@
         e.preventDefault();
         cancelAutoScroll();
         var index = Number(btn.getAttribute('data-go'));
-        goToIndex(index, { scroll: true, force: true, duration: 700 });
+        goToIndex(index, { scroll: true, force: true, duration: CFG.AUTO_SCROLL_DURATION });
       });
     });
 
@@ -2597,9 +2665,22 @@
       delete frame.dataset.startW;
       delete frame.dataset.startH;
       cancelAutoScroll();
+      CFG = getConfig();
       smoothedGlobalProgress = getGlobalProgress();
       targetGlobalProgress = smoothedGlobalProgress;
       requestUpdate();
+    });
+
+    window.addEventListener('orientationchange', function () {
+      setTimeout(function () {
+        delete frame.dataset.startW;
+        delete frame.dataset.startH;
+        cancelAutoScroll();
+        CFG = getConfig();
+        smoothedGlobalProgress = getGlobalProgress();
+        targetGlobalProgress = smoothedGlobalProgress;
+        requestUpdate();
+      }, 120);
     });
 
     window.addEventListener('wheel', handleWheel, { passive: false });
@@ -2615,6 +2696,7 @@
 
     smoothedGlobalProgress = getGlobalProgress();
     targetGlobalProgress = smoothedGlobalProgress;
+    lastIndexChangeAt = performance.now();
     requestUpdate();
   })();
   </script>
