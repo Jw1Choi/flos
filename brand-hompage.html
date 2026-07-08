@@ -14,31 +14,31 @@
   <meta name="google-site-verification" content="구글_인증코드_여기에" />
 
   <!-- Canonical (대표 URL로 고정) -->
-  <link rel="canonical" href="https://htuglobal.com/" />
+  <link rel="canonical" href="https://flosmarketing.com/" />
   <meta name="robots" content="index,follow" />
-  <meta name="subject" content="플로스마케팅" />
-  <meta name="title" content="플로스마케팅" />
-  <meta name="author" content="플로스마케팅">
+  <meta name="subject" content="신뢰 형성과 브랜딩을 자동화해주는 브랜드 홈페이지 | 플로스마케팅" />
+  <meta name="title" content="신뢰 형성과 브랜딩을 자동화해주는 브랜드 홈페이지 | 플로스마케팅" />
+  <meta name="author" content="신뢰 형성과 브랜딩을 자동화해주는 브랜드 홈페이지 | 플로스마케팅">
   <meta name="description" content="플로스마케팅 — 프리미엄 온라인 비즈니스를 만들어갑니다" />
   <meta name="keywords"
     content="플로스마케팅, 플로스마케팅 HOLDINGS, Healthy Beauty, Well-aging, Beauty Health Industry, 글로벌 뷰티 헬스 기업, 건강한 아름다움, 뷰티 산업, 헬스 산업, 웰에이징 산업, 뷰티 헬스 비즈니스, 글로벌 네트워크, 뷰티 교육, 헬스 교육, 뷰티 전문가, 건강 산업, 라이프스타일 산업, 글로벌 비즈니스 플랫폼, HTU 브랜드" />
 
   <meta property="og:type" content="website" />
   <meta property="og:rich_attachment" content="true" />
-  <meta property="og:site_name" content="플로스마케팅" />
-  <meta property="og:title" content="플로스마케팅" />
+  <meta property="og:site_name" content="신뢰 형성과 브랜딩을 자동화해주는 브랜드 홈페이지 | 플로스마케팅" />
+  <meta property="og:title" content="신뢰 형성과 브랜딩을 자동화해주는 브랜드 홈페이지 | 플로스마케팅" />
   <meta property="og:description" content="플로스마케팅 — 프리미엄 온라인 비즈니스를 만들어갑니다" />
-  <meta property="og:image" content="https://htuglobal.com/img/og-biznovlab.jpg" />
-  <meta property="og:url" content="https://htuglobal.com/" />
+  <meta property="og:image" content="https://flosmarketing.com/img/ai-1.jpg" />
+  <meta property="og:url" content="https://flosmarketing.com/" />
 
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="플로스마케팅" />
+  <meta name="twitter:title" content="신뢰 형성과 브랜딩을 자동화해주는 브랜드 홈페이지 | 플로스마케팅" />
   <meta name="twitter:description" content="플로스마케팅 — 프리미엄 온라인 비즈니스를 만들어갑니다" />
-  <meta name="twitter:image" content="https://htuglobal.com/img/og-biznovlab.jpg" />
+  <meta name="twitter:image" content="https://flosmarketing.com/img/ai-1.jpg" />
 
-  <meta itemprop="name" content="플로스마케팅" />
+  <meta itemprop="name" content="신뢰 형성과 브랜딩을 자동화해주는 브랜드 홈페이지 | 플로스마케팅" />
   <meta itemprop="description" content="플로스마케팅 — 프리미엄 온라인 비즈니스를 만들어갑니다" />
-  <meta itemprop="image" content="https://htuglobal.com/img/og-biznovlab.jpg" />
+  <meta itemprop="image" content="https://flosmarketing.com/img/ai-1.jpg" />
   <title>플로스마케팅</title>
 
   <link href="./css/reset.css" rel="stylesheet" type="text/css" />
@@ -77,32 +77,45 @@
       background: #111;
     }
 
+    /* ✅ JS가 --iaan-vh를 픽셀값으로 잠그면 모바일 주소창 변동에도 흔들리지 않음 */
     #HeroScroll .iaan-stage {
       position: sticky;
       top: 0;
-      height: 100vh;
+      height: 100vh; /* fallback */
+      height: var(--iaan-vh, 100vh);
       overflow: hidden;
       z-index: 1;
+      background: #111;
+      contain: layout paint;
     }
 
+    /* ✅ spacer도 픽셀 기반 계산 — 모바일 리사이즈 jitter 차단 */
     #HeroScroll .iaan-scroll-spacer {
-      height: 620vh;
+      height: 340vh; /* fallback */
+      height: calc(var(--iaan-vh-raw, 1vh) * 340);
       pointer-events: none;
     }
 
+    @media (max-width: 768px) {
+      /* ✅ 모바일: 스크롤 양 축소 — 덜 내려도 다음 패널 도달 */
+      #HeroScroll .iaan-scroll-spacer {
+        height: 220vh; /* fallback */
+        height: calc(var(--iaan-vh-raw, 1vh) * 220);
+      }
+    }
+
+    /* ✅ CSS transition 제거 — JS lerp 보간이 매 프레임 직접 제어 */
     #HeroScroll .iaan-panel-bg {
       position: absolute;
       inset: 0;
       width: 100%;
       height: 100%;
       opacity: 0;
-      transform: scale(1.06);
+      transform: scale(1.05) translateZ(0);
       will-change: opacity, transform;
       pointer-events: none;
       z-index: 1;
-      transition:
-        opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
-        transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+      transition: none;
       backface-visibility: hidden;
       -webkit-backface-visibility: hidden;
     }
@@ -136,6 +149,7 @@
       z-index: 4;
     }
 
+    /* ✅ 텍스트: Y 이동 없이 제자리 페이드만 — 떨림 원천 차단, 전 패널 가운데 정렬 */
     #HeroScroll .iaan-content-layer {
       position: absolute;
       inset: 0;
@@ -146,15 +160,13 @@
       align-items: center;
       text-align: center;
       opacity: 0;
-      transform: translate3d(0, 54px, 0);
-      will-change: opacity, transform;
+      transform: translateZ(0);
+      will-change: opacity;
       pointer-events: none;
       z-index: 10;
       box-sizing: border-box;
       padding: 0 40px;
-      transition:
-        opacity 0.42s cubic-bezier(0.22, 1, 0.36, 1),
-        transform 0.72s cubic-bezier(0.22, 1, 0.36, 1);
+      transition: none;
       backface-visibility: hidden;
       -webkit-backface-visibility: hidden;
     }
@@ -198,6 +210,7 @@
       margin: 0;
     }
 
+    /* Scroll Indicator */
     #HeroScroll .iaan-scroll-indicator {
       position: absolute;
       bottom: 40px;
@@ -243,6 +256,7 @@
       animation: iaanScrollPulse 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
     }
 
+    /* Progress Dots */
     #HeroScroll .iaan-progress {
       position: absolute;
       right: 32px;
@@ -266,11 +280,18 @@
       height: 8px;
       border-radius: 50%;
       background: rgba(255,255,255,0.25);
-      transition: background 0.4s ease, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
+      transition: background 0.35s ease, transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease;
       cursor: pointer;
       border: none;
       outline: none;
       padding: 0;
+      position: relative;
+    }
+
+    #HeroScroll .iaan-dot::before {
+      content: '';
+      position: absolute;
+      inset: -10px;
     }
 
     #HeroScroll .iaan-dot:hover {
@@ -318,6 +339,16 @@
       #HeroScroll .iaan-p4-sub {
         font-size: 14px;
         line-height: 1.68;
+      }
+
+      #HeroScroll .iaan-scroll-indicator {
+        bottom: 28px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #HeroScroll .iaan-scroll-line::after {
+        animation: none;
       }
     }
   </style>
@@ -408,8 +439,35 @@
       var scrollIndicator = section.querySelector('#iaanScrollIndicator');
       var progressNav = section.querySelector('#iaanProgress');
       var totalPanels = 4;
-      var ticking = false;
-      var panelStops = [0, 0.24, 0.50, 0.72, 1];
+
+      var panelStops = [0, 0.25, 0.50, 0.75, 1];
+
+      /* ✅ 배경 이미지 사전 로드 + 디코딩 — 전환 순간 디코딩 끊김 방지 */
+      var imageUrls = [
+        './img/intro1.jpg',
+        './img/intro2.jpg',
+        './img/intro4.jpg'
+      ];
+
+      imageUrls.forEach(function(url) {
+        var img = new Image();
+        img.src = url;
+        if (img.decode) {
+          img.decode().catch(function(){});
+        }
+      });
+
+      /* ✅ 핵심: 초기 viewport 높이를 픽셀로 고정 → 모바일 주소창 변동 무시 */
+      var lockedVh = window.innerHeight;
+      var lastWidth = window.innerWidth;
+
+      function lockViewportHeight() {
+        lockedVh = window.innerHeight;
+        section.style.setProperty('--iaan-vh', lockedVh + 'px');
+        section.style.setProperty('--iaan-vh-raw', (lockedVh / 100) + 'px');
+      }
+
+      lockViewportHeight();
 
       function clamp(val, min, max) {
         return Math.max(min, Math.min(max, val));
@@ -420,10 +478,11 @@
         return t * t * (3 - 2 * t);
       }
 
+      /* ✅ window.innerHeight 대신 잠긴 값 사용 → 진행도 jitter 차단 */
       function getScrollProgress() {
         var rect = section.getBoundingClientRect();
         var sectionTop = -rect.top;
-        var sectionHeight = section.offsetHeight - window.innerHeight;
+        var sectionHeight = section.offsetHeight - lockedVh;
         if (sectionHeight <= 0) return 0;
         return clamp(sectionTop / sectionHeight, 0, 1);
       }
@@ -432,7 +491,6 @@
         for (var i = 0; i < panelStops.length - 1; i++) {
           var start = panelStops[i];
           var end = panelStops[i + 1];
-
           if (progress >= start && progress <= end) {
             var local = (progress - start) / (end - start);
             return i + local;
@@ -450,85 +508,145 @@
         return totalPanels;
       }
 
+      /* ✅ 배경: 넓은 구간에서 스며들듯 크로스페이드 */
       function getBackgroundOpacity(distance) {
-        if (distance >= 0.92) return 0;
-        return 1 - smoothstep(0.18, 0.92, distance);
+        if (distance >= 1.0) return 0;
+        return 1 - smoothstep(0.15, 1.0, distance);
       }
 
+      /* ✅ 텍스트: 완만한 페이드 (0~0.22 또렷 → 0.22~0.72 서서히) */
       function getContentOpacity(distance) {
-        if (distance >= 0.62) return 0;
-        return 1 - smoothstep(0.06, 0.62, distance);
+        if (distance >= 0.72) return 0;
+        return 1 - smoothstep(0.22, 0.72, distance);
       }
 
-      function updatePanels() {
-        ticking = false;
+      /* ============================================================
+         ✅ 부드러운 스크롤 핵심: lerp(관성 보간) 루프
+         ============================================================ */
+      var targetProgress = 0;
+      var smoothedProgress = 0;
+      var rafId = null;
+      var running = false;
 
-        var progress = getScrollProgress();
+      var reduceMotion = false;
+      try {
+        reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      } catch (e) {}
+
+      var LERP = reduceMotion ? 0.5 : 0.12;
+
+      /* ✅ 더티 체크용 캐시 — 값이 실제로 바뀐 레이어만 스타일 기록 */
+      var bgCache = [];
+      var ctCache = [];
+      backgrounds.forEach(function(){ bgCache.push({op: -1, sc: -1}); });
+      contents.forEach(function(){ ctCache.push({op: -1}); });
+
+      function renderPanels(progress) {
         var rawIndex = getSegmentedRawIndex(progress);
         var activePanel = getActivePanel(progress);
 
         var exitFade = 1;
-        if (progress > 0.94) {
-          exitFade = 1 - smoothstep(0.94, 1.00, progress);
+        if (progress > 0.95) {
+          exitFade = 1 - smoothstep(0.95, 1.00, progress);
         }
 
         if (progressNav) {
-          progressNav.classList.toggle('visible', progress > 0.02 && exitFade > 0.05);
-          progressNav.style.opacity = Math.max(0, exitFade).toFixed(4);
+          progressNav.classList.toggle('visible', progress > 0.02);
         }
 
         if (scrollIndicator) {
-          scrollIndicator.classList.toggle('hidden', progress > 0.025 || exitFade < 0.98);
-          scrollIndicator.style.opacity = (progress <= 0.025 ? exitFade : 0).toFixed(4);
+          scrollIndicator.classList.toggle('hidden', progress > 0.025);
         }
 
-        backgrounds.forEach(function(bg) {
+        backgrounds.forEach(function(bg, bi) {
           var p = parseInt(bg.dataset.panel, 10);
           var panelIndex = p - 1;
           var distance = Math.abs(rawIndex - panelIndex);
-          var opacity = getBackgroundOpacity(distance) * exitFade;
+          var opacity, scale;
 
-          var localT = clamp(1 - distance, 0, 1);
-          var scale = 1.015 + (1 - smoothstep(0, 1, localT)) * 0.045;
+          if (p === totalPanels && progress >= panelStops[totalPanels - 1]) {
+            opacity = 1;
+            scale = 1.012;
+          } else {
+            var panelFade = (p === totalPanels) ? 1 : exitFade;
+            opacity = getBackgroundOpacity(distance) * panelFade;
 
-          if (progress > 0.94) {
-            scale += smoothstep(0.94, 1.00, progress) * 0.03;
+            var localT = clamp(1 - distance, 0, 1);
+            scale = 1.012 + (1 - smoothstep(0, 1, localT)) * 0.035;
+
+            if (progress > 0.95 && p !== totalPanels) {
+              scale += smoothstep(0.95, 1.00, progress) * 0.025;
+            }
           }
 
-          bg.style.opacity = opacity.toFixed(4);
-          bg.style.transform = 'scale(' + scale.toFixed(4) + ')';
+          /* ✅ 더티 체크: 실제 변화가 있을 때만 style 기록 */
+          var cache = bgCache[bi];
+          if (Math.abs(cache.op - opacity) > 0.002) {
+            bg.style.opacity = opacity.toFixed(3);
+            cache.op = opacity;
+          }
+          if (Math.abs(cache.sc - scale) > 0.0006) {
+            bg.style.transform = 'scale(' + scale.toFixed(4) + ') translateZ(0)';
+            cache.sc = scale;
+          }
         });
 
-        contents.forEach(function(content) {
+        /* ✅ 텍스트: transform 이동 없이 opacity만 제어 — 떨림 원천 차단 */
+        contents.forEach(function(content, ci) {
           var p = parseInt(content.dataset.panel, 10);
           var panelIndex = p - 1;
-          var signedDistance = rawIndex - panelIndex;
-          var distance = Math.abs(signedDistance);
-          var opacity = getContentOpacity(distance) * exitFade;
+          var distance = Math.abs(rawIndex - panelIndex);
+          var opacity;
 
-          var translateY = signedDistance * -78;
-          var safeTranslate = clamp(translateY, -78, 78);
-
-          if (progress > 0.94) {
-            safeTranslate -= smoothstep(0.94, 1.00, progress) * 36;
+          if (p === totalPanels && progress >= panelStops[totalPanels - 1]) {
+            opacity = 1;
+          } else {
+            var panelFade = (p === totalPanels) ? 1 : exitFade;
+            opacity = getContentOpacity(distance) * panelFade;
           }
 
-          content.style.opacity = opacity.toFixed(4);
-          content.style.transform = 'translate3d(0,' + safeTranslate.toFixed(2) + 'px,0)';
-          content.classList.toggle('active', opacity > 0.12);
+          var cache = ctCache[ci];
+          if (Math.abs(cache.op - opacity) > 0.002) {
+            content.style.opacity = opacity.toFixed(3);
+            cache.op = opacity;
+            content.classList.toggle('active', opacity > 0.15);
+          }
         });
 
         dots.forEach(function(dot) {
           var t = parseInt(dot.dataset.target, 10);
-          dot.classList.toggle('active', t === activePanel && exitFade > 0.15);
+          dot.classList.toggle('active', t === activePanel);
         });
       }
 
-      function onScroll() {
-        if (!ticking) {
-          ticking = true;
-          requestAnimationFrame(updatePanels);
+      /* ✅ 매 프레임 보간 루프 — 목표 도달 시 자동 정지 (배터리 절약) */
+      function tick() {
+        targetProgress = getScrollProgress();
+
+        var diff = targetProgress - smoothedProgress;
+
+        if (Math.abs(diff) < 0.0004) {
+          smoothedProgress = targetProgress;
+          renderPanels(smoothedProgress);
+          running = false;
+          rafId = null;
+          return;
         }
+
+        smoothedProgress += diff * LERP;
+        renderPanels(smoothedProgress);
+        rafId = requestAnimationFrame(tick);
+      }
+
+      function startLoop() {
+        if (!running) {
+          running = true;
+          rafId = requestAnimationFrame(tick);
+        }
+      }
+
+      function onScroll() {
+        startLoop();
       }
 
       dots.forEach(function(dot) {
@@ -536,23 +654,47 @@
           var target = parseInt(this.dataset.target, 10);
           var sectionRect = section.getBoundingClientRect();
           var sectionTop = window.pageYOffset + sectionRect.top;
-          var sectionHeight = section.offsetHeight - window.innerHeight;
-          var targetProgress = panelStops[target - 1];
-          var targetScroll = sectionTop + targetProgress * sectionHeight;
+          var sectionHeight = section.offsetHeight - lockedVh;
+          /* 패널의 평탄 구간 중심으로 이동 (=글자가 또렷한 위치) */
+          var targetP = (panelStops[target - 1] + panelStops[target]) / 2;
+          var targetScroll = sectionTop + targetP * sectionHeight;
 
           window.scrollTo({
             top: targetScroll,
             behavior: 'smooth'
           });
+          startLoop();
         });
       });
 
       window.addEventListener('scroll', onScroll, { passive: true });
+      /* ✅ 아이폰 모멘텀 스크롤 중에도 프레임 유지 */
+      window.addEventListener('touchmove', onScroll, { passive: true });
+
+      /* ✅ 화면 회전 시에만 재계산 (주소창 변동에는 반응 X) */
+      window.addEventListener('orientationchange', function() {
+        setTimeout(function() {
+          lockViewportHeight();
+          smoothedProgress = getScrollProgress();
+          startLoop();
+        }, 200);
+      });
+
+      /* ✅ 가로폭이 바뀐 경우(데스크톱 리사이즈)에만 재계산 —
+         모바일 주소창 토글은 width가 그대로라 무시됨 */
       window.addEventListener('resize', function() {
-        requestAnimationFrame(updatePanels);
+        if (window.innerWidth !== lastWidth) {
+          lastWidth = window.innerWidth;
+          lockViewportHeight();
+          smoothedProgress = getScrollProgress();
+          startLoop();
+        }
       }, { passive: true });
 
-      requestAnimationFrame(updatePanels);
+      /* 초기 렌더 — 새로고침 시 중간 위치에서도 즉시 정확하게 표시 */
+      smoothedProgress = getScrollProgress();
+      targetProgress = smoothedProgress;
+      renderPanels(smoothedProgress);
     })();
   </script>
 </section>
@@ -1063,7 +1205,8 @@
       }
 
       #bgScrollWrap .vision .sub_text01 {
-        font-size: clamp(34px, 10vw, 54px);
+        font-size: clamp(24px, 6vw, 54px) !important;
+        line-height:1.4 !important;
       }
 
       #bgScrollWrap .con {
@@ -1153,8 +1296,7 @@
                 <div class="vision_wrap" data-bgf-visionwrap="">
                   <dl class="vision" data-bgf-vision="">
                     <dt>BRANDING HOMPAGE</dt>
-                    <dd class="sub_text01" data-bgf-visiontext=""
-                      style="line-height: normal; font-size: 16px; margin-bottom: 0px;">
+                    <dd class="sub_text01" data-bgf-visiontext="">
                       1. 품격을 드러내는 메인 페이지<br>
                       2. 브랜딩 가능한 고급 디자인<br>
                       3. 신뢰를 주는 홈페이지 내용 설계
@@ -1773,7 +1915,8 @@
       transform:translateY(28px);
       opacity:0;
       animation:mrhFadeInUp .9s cubic-bezier(.22,.61,.36,1) forwards;
-      touch-action:none;
+      /* pan-y: 세로 스크롤은 브라우저에 맡기고 가로 드래그만 JS가 처리 */
+      touch-action:pan-y;
       -webkit-user-select:none;
       user-select:none;
     }
@@ -1790,11 +1933,11 @@
       background:#dbeef5;
     }
 
+    /* transition 제거: rAF 러프(lerp)가 부드러움을 담당, transition은 드래그와 충돌해 버벅임 유발 */
     #mouseRevealHeroSection .mrh-reveal{
       z-index:2;
       pointer-events:none;
       clip-path:inset(0 0 0 50%);
-      transition:clip-path .06s linear;
       will-change:clip-path;
     }
 
@@ -1930,15 +2073,16 @@
       border-radius:0;
     }
 
+    /* left(레이아웃 속성) 대신 transform(GPU 컴포지팅)으로 이동 */
     #mouseRevealHeroSection .mrh-divider{
       position:absolute;
       top:0;
       bottom:0;
-      left:50%;
+      left:0;
+      width:0;
       z-index:6;
-      transform:translateX(-50%);
-      transition:left .06s linear;
-      will-change:left;
+      transform:translateX(50vw);
+      will-change:transform;
       pointer-events:none;
     }
 
@@ -1946,7 +2090,7 @@
       position:absolute;
       top:0;
       bottom:0;
-      left:50%;
+      left:0;
       width:4px;
       transform:translateX(-50%);
       background:rgba(255,255,255,.96);
@@ -1956,7 +2100,7 @@
     #mouseRevealHeroSection .mrh-handle{
       position:absolute;
       top:50%;
-      left:50%;
+      left:0;
       transform:translate(-50%,-50%);
       width:60px;
       height:60px;
@@ -1993,24 +2137,21 @@
       pointer-events:none;
     }
 
+    /* width(레이아웃) 대신 clip-path로 클리핑 — 매 프레임 리플로우 제거 */
     #mouseRevealHeroSection .mrh-side{
       position:absolute;
-      top:0;
-      bottom:0;
+      inset:0;
       overflow:hidden;
-      transition:width .06s linear;
-      will-change:width;
+      will-change:clip-path;
       pointer-events:none;
     }
 
     #mouseRevealHeroSection .mrh-side.before{
-      left:0;
-      width:50%;
+      clip-path:inset(0 50% 0 0);
     }
 
     #mouseRevealHeroSection .mrh-side.after{
-      right:0;
-      width:50%;
+      clip-path:inset(0 0 0 50%);
     }
 
     #mouseRevealHeroSection .mrh-badge{
@@ -2326,7 +2467,7 @@
         </section>
       </div>
 
-      <div class="mrh-reveal" data-mrh-reveal> data-mrh-reveal>
+      <div class="mrh-reveal" data-mrh-reveal>
         <div class="mrh-after-stage">
           <section id="mrhAfterHero" aria-label="After Hero">
             <div class="bg-video" aria-hidden="true">
@@ -2395,14 +2536,21 @@
       var currentPercent = 50;
       var targetPercent = 50;
       var rafId = null;
+      var heroRect = null;
 
       function clamp(value, min, max){
         return Math.min(Math.max(value, min), max);
       }
 
+      /* 매 이벤트마다 getBoundingClientRect 호출하지 않도록 캐싱 */
+      function measure(){
+        heroRect = hero.getBoundingClientRect();
+      }
+
       function updateSides(percent){
-        beforeSide.style.width = percent + '%';
-        afterSide.style.width = (100 - percent) + '%';
+        /* width(리플로우) 대신 clip-path(페인트만) 사용 */
+        beforeSide.style.clipPath = 'inset(0 ' + (100 - percent) + '% 0 0)';
+        afterSide.style.clipPath = 'inset(0 0 0 ' + percent + '%)';
 
         if(percent <= 7){
           beforeSide.classList.remove('is-visible');
@@ -2424,7 +2572,11 @@
       function applyPercent(percent){
         currentPercent = clamp(percent, 0, 100);
         reveal.style.clipPath = 'inset(0 0 0 ' + currentPercent + '%)';
-        divider.style.left = currentPercent + '%';
+
+        /* left(%) 대신 transform:translateX(px) — GPU 컴포지터에서 처리 */
+        var px = heroRect ? (heroRect.width * currentPercent / 100) : 0;
+        divider.style.transform = 'translateX(' + px + 'px)';
+
         updateSides(currentPercent);
       }
 
@@ -2436,7 +2588,9 @@
           return;
         }
 
-        applyPercent(currentPercent + diff * 0.16);
+        /* 드래그 중엔 빠르게 따라오고, 마우스 이동 시엔 살짝 여유 있게 */
+        var ease = dragging ? 0.32 : 0.16;
+        applyPercent(currentPercent + diff * ease);
         rafId = window.requestAnimationFrame(animateToTarget);
       }
 
@@ -2447,17 +2601,55 @@
       }
 
       function applyFromClientX(clientX){
-        var rect = hero.getBoundingClientRect();
-        var pos = clamp(clientX - rect.left, 0, rect.width);
-        var percent = rect.width ? (pos / rect.width) * 100 : 50;
+        if(!heroRect) measure();
+        var pos = clamp(clientX - heroRect.left, 0, heroRect.width);
+        var percent = heroRect.width ? (pos / heroRect.width) * 100 : 50;
         setTargetPercent(percent);
       }
 
-      hero.addEventListener('mousemove', function(e){
+      hero.addEventListener('pointerdown', function(e){
+        dragging = true;
+        measure();
+
+        /* 히어로 밖으로 손가락이 나가도 드래그 유지 */
+        if(hero.setPointerCapture && e.pointerId !== undefined){
+          try{ hero.setPointerCapture(e.pointerId); }catch(err){}
+        }
+
         applyFromClientX(e.clientX);
-      }, { passive:true });
+      });
+
+      hero.addEventListener('pointermove', function(e){
+        /* 마우스는 호버만으로 따라오고, 터치는 드래그 중일 때만 */
+        if(e.pointerType === 'mouse'){
+          applyFromClientX(e.clientX);
+          return;
+        }
+        if(!dragging) return;
+
+        /* 터치 좌표 보간: 일부 기기에서 이벤트가 뭉쳐 들어올 때 부드럽게 */
+        if(e.getCoalescedEvents){
+          var events = e.getCoalescedEvents();
+          if(events.length){
+            applyFromClientX(events[events.length - 1].clientX);
+            return;
+          }
+        }
+
+        applyFromClientX(e.clientX);
+      });
+
+      hero.addEventListener('pointerup', function(){
+        dragging = false;
+      });
+
+      /* 세로 스크롤로 판정돼 브라우저가 제스처를 가져가면 드래그 해제 */
+      hero.addEventListener('pointercancel', function(){
+        dragging = false;
+      });
 
       hero.addEventListener('mouseenter', function(e){
+        measure();
         applyFromClientX(e.clientX);
       }, { passive:true });
 
@@ -2465,28 +2657,17 @@
         dragging = false;
       }, { passive:true });
 
-      hero.addEventListener('pointerdown', function(e){
-        dragging = true;
-        applyFromClientX(e.clientX);
-      });
-
-      hero.addEventListener('pointermove', function(e){
-        if(e.pointerType === 'mouse'){
-          applyFromClientX(e.clientX);
-          return;
-        }
-        if(!dragging) return;
-        applyFromClientX(e.clientX);
-      });
-
-      window.addEventListener('pointerup', function(){
-        dragging = false;
-      });
-
       window.addEventListener('resize', function(){
+        measure();
         applyPercent(targetPercent);
       });
 
+      window.addEventListener('scroll', function(){
+        /* 스크롤로 위치가 바뀌면 rect 캐시 갱신 (드래그 중일 때만 필요) */
+        if(dragging) measure();
+      }, { passive:true });
+
+      measure();
       applyPercent(50);
       targetPercent = 50;
 
@@ -4617,7 +4798,7 @@
 #process1 .jp-intro-title {
   font-size: clamp(34px, 5.5vw, 78px);
   font-weight: 900;
-  line-height: 1.1;
+  line-height: 1.2;
   letter-spacing: -0.055em;
   margin-bottom: 30px;
 }
@@ -5135,12 +5316,13 @@
 <div class="jp-intro">
   <div class="jp-intro-inner">
     <div class="jp-intro-eyebrow">
-      <span>Landing Page Process</span>
+      <span>Brand Homepage</span>
     </div>
 
     <h2 class="jp-intro-title">
-      고객의 행동을 만들어내는<br>
-      랜딩페이지 구조를 설계합니다
+      비즈니스에 바로 적용되고<br>
+      신뢰 형성을 만들어주는<br>
+      흐름을 설계합니다
     </h2>
 
     <p class="jp-intro-desc">
@@ -8890,6 +9072,14 @@
       flex-direction:column;
       align-items:flex-end;
       gap:14px;
+      transition:transform .35s ease, opacity .3s ease;
+    }
+
+    /* 아래로 스크롤 시 오른쪽으로 숨김 */
+    #chanelFloatingSection .cf-floating.hide-right{
+      transform:translateX(140px);
+      opacity:0;
+      pointer-events:none;
     }
 
     #chanelFloatingSection .cf-btn{
@@ -9508,9 +9698,14 @@
         gap:10px;
       }
 
+      /* 모바일 숨김 이동 거리 */
+      #chanelFloatingSection .cf-floating.hide-right{
+        transform:translateX(100px);
+      }
+
       #chanelFloatingSection .cf-btn{
-        width:72px;
-        height:72px;
+        width:52px;
+        height:52px;
         border-radius:16px;
         gap:7px;
       }
@@ -9522,7 +9717,7 @@
       }
 
       #chanelFloatingSection .cf-btn-label{
-        font-size:10px;
+        font-size:7px;
         letter-spacing:.12em;
       }
 
@@ -9728,13 +9923,32 @@
         }
       });
 
+      /* 스크롤 방향 감지: 아래로 → 오른쪽 숨김 / 위로 → 표시 */
+      let lastScrollY = window.scrollY;
+
       window.addEventListener('scroll', function(){
-        if(window.scrollY > 220){
+        const currentY = window.scrollY;
+
+        // TOP 버튼 표시 여부
+        if(currentY > 220){
           floating.classList.add('show-top');
         }else{
           floating.classList.remove('show-top');
         }
-      });
+
+        // 미세한 흔들림 무시: 8px 이상 이동 시에만 반응
+        if(Math.abs(currentY - lastScrollY) > 8){
+          if(currentY > lastScrollY && currentY > 120){
+            // 아래로 스크롤 → 숨김
+            floating.classList.add('hide-right');
+            floating.classList.remove('open');
+          }else{
+            // 위로 스크롤 → 표시
+            floating.classList.remove('hide-right');
+          }
+          lastScrollY = currentY;
+        }
+      }, { passive: true });
 
       topBtn.addEventListener('click', function(){
         window.scrollTo({
