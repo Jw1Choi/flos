@@ -4861,6 +4861,1496 @@
 </section>
 
 
+<section id="ProjectSection" aria-label="Project Scroll Section">
+  <style>
+    #ProjectSection {
+      --sfs-bg: #000000;
+      --sfs-text: #ffffff;
+      --sfs-muted: #777777;
+      --sfs-muted-2: #555555;
+      --sfs-muted-3: #333333;
+      --sfs-dot: #e02020;
+      --sfs-card-radius: 4px;
+      --sfs-ease: cubic-bezier(0.22, 1, 0.36, 1);
+      position: relative;
+      background: var(--sfs-bg);
+      color: var(--sfs-text);
+      overflow: clip;
+      font-family: 'Bebas Neue', sans-serif;
+      isolation: isolate;
+    }
+
+    #ProjectSection .sfs-google-fonts {
+      position: absolute;
+      width: 0;
+      height: 0;
+      overflow: hidden;
+    }
+
+    #ProjectSection .sfs-stage {
+      position: relative;
+      min-height: 100vh;
+      background: #000;
+      isolation: isolate;
+    }
+
+    #ProjectSection .sfs-fixed-text-container {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      pointer-events: none;
+      mix-blend-mode: difference;
+      /* padding-inline: 20px; */
+      will-change: auto;
+    }
+
+    #ProjectSection .sfs-fixed-label {
+      font-size: 14px;
+      letter-spacing: 8px;
+      text-transform: uppercase;
+      color: #fff;
+      margin-bottom: 10px;
+      line-height: 1;
+    }
+
+    #ProjectSection .sfs-fixed-title {
+      font-size: clamp(70px, 14vw, 220px);
+      letter-spacing: 10px;
+      line-height: 0.85;
+      color: #fff;
+      text-align: center;
+      font-weight: 400;
+      white-space: nowrap;
+    }
+
+    #ProjectSection .sfs-radial-lines {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: min(600px, 74vw);
+      height: min(600px, 74vw);
+      transform: translate(-50%, -50%);
+      z-index: 5;
+      pointer-events: none;
+      opacity: 0.6;
+      transition: opacity 0.5s ease;
+      will-change: opacity, transform;
+    }
+
+    #ProjectSection .sfs-radial-lines canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      transform-origin: 50% 50%;
+    }
+
+    #ProjectSection .sfs-scroll-hint {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 20;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      transition: opacity 0.6s ease;
+      pointer-events: none;
+      will-change: opacity;
+    }
+
+    #ProjectSection .sfs-scroll-hint.sfs-hidden {
+      opacity: 0;
+    }
+
+    #ProjectSection .sfs-scroll-hint span {
+      font-size: 10px;
+      letter-spacing: 4px;
+      color: var(--sfs-muted-2);
+      font-family: 'Noto Sans KR', sans-serif;
+      line-height: 1;
+    }
+
+    #ProjectSection .sfs-scroll-line {
+      width: 1px;
+      height: 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #ProjectSection .sfs-scroll-line::after {
+      content: '';
+      position: absolute;
+      top: -100%;
+      left: 0;
+      width: 1px;
+      height: 100%;
+      background: linear-gradient(to bottom, transparent, #888888);
+      animation: sfsScrollDown 1.8s ease-in-out infinite;
+    }
+
+    @keyframes sfsScrollDown {
+      0% { top: -100%; }
+      100% { top: 100%; }
+    }
+
+    #ProjectSection .sfs-hero {
+      position: relative;
+      height: 0;
+      z-index: 1;
+    }
+
+    #ProjectSection .sfs-tagline {
+      position: relative;
+      z-index: 6;
+      text-align: center;
+      padding: 0 20px 0;
+      height: 50vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 18px;
+      color: var(--sfs-muted);
+      letter-spacing: 2px;
+      line-height: 2;
+    }
+
+    #ProjectSection .sfs-tagline strong {
+      color: #fff;
+      font-weight: 700;
+      font-size: 22px;
+    }
+
+    #ProjectSection .sfs-scroll-content {
+      position: relative;
+      z-index: 6;
+      padding: 10vh 0 15vh;
+    }
+
+    #ProjectSection .sfs-project-card {
+      position: relative;
+      margin: 0 auto 0;
+      width: 55%;
+      max-width: 750px;
+      opacity: 0;
+      transform: translateY(150px) scale(0.95);
+      transition:
+        opacity 1s var(--sfs-ease),
+        transform 1s var(--sfs-ease);
+      will-change: transform, opacity;
+    }
+
+    #ProjectSection .sfs-project-card.sfs-visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    #ProjectSection .sfs-card-link {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      border-radius: var(--sfs-card-radius);
+    }
+
+    #ProjectSection .sfs-card-link:focus-visible {
+      outline: 2px solid rgba(255,255,255,0.9);
+      outline-offset: 6px;
+      border-radius: 8px;
+    }
+
+    #ProjectSection .sfs-card-link:hover .sfs-card-image,
+    #ProjectSection .sfs-card-link:focus-visible .sfs-card-image {
+      transform: translateY(-4px);
+      box-shadow: 0 38px 90px rgba(0, 0, 0, 0.34);
+    }
+
+    #ProjectSection .sfs-card-image {
+      width: 100%;
+      aspect-ratio: 3 / 2;
+      border-radius: var(--sfs-card-radius);
+      overflow: hidden;
+      position: relative;
+      background: #070707;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.28);
+      transition: transform 0.45s var(--sfs-ease), box-shadow 0.45s var(--sfs-ease);
+      cursor: pointer;
+    }
+
+    #ProjectSection .sfs-card-image canvas,
+    #ProjectSection .sfs-card-image img {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    #ProjectSection .sfs-card-image canvas {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+    }
+
+    #ProjectSection .sfs-card-photo {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      object-fit: contain;
+      object-position: center;
+      opacity: 0;
+      transition: opacity 0.45s ease;
+      background: #070707;
+    }
+
+    #ProjectSection .sfs-card-photo.sfs-loaded {
+      opacity: 1;
+    }
+
+    /* 영상 카드 표시 — 가운데 재생 버튼 오버레이 */
+    #ProjectSection .sfs-play-badge {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(1);
+      z-index: 5;
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.45);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      border: 1.5px solid rgba(255, 255, 255, 0.55);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      transition: transform 0.35s var(--sfs-ease), background-color 0.3s ease;
+    }
+
+    #ProjectSection .sfs-project-card.sfs-is-video .sfs-play-badge {
+      display: flex;
+    }
+
+    #ProjectSection .sfs-play-badge::after {
+      content: '';
+      display: block;
+      width: 0;
+      height: 0;
+      margin-left: 5px;
+      border-style: solid;
+      border-width: 13px 0 13px 22px;
+      border-color: transparent transparent transparent #ffffff;
+    }
+
+    #ProjectSection .sfs-card-link:hover .sfs-play-badge,
+    #ProjectSection .sfs-card-link:focus-visible .sfs-play-badge {
+      transform: translate(-50%, -50%) scale(1.1);
+      background: rgba(224, 32, 32, 0.75);
+    }
+
+    #ProjectSection .sfs-card-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 24px 0 100px 0;
+    }
+
+    #ProjectSection .sfs-card-label-dot {
+      width: 10px;
+      height: 10px;
+      background: var(--sfs-dot);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    #ProjectSection .sfs-card-label-text {
+      font-size: 15px;
+      letter-spacing: 3px;
+      color: #bbbbbb;
+      line-height: 1.4;
+      word-break: break-word;
+    }
+
+    #ProjectSection .sfs-project-card:nth-child(1) { margin-left: 8%; width: 50%; }
+    #ProjectSection .sfs-project-card:nth-child(2) { margin-left: auto; margin-right: 8%; width: 45%; }
+    #ProjectSection .sfs-project-card:nth-child(3) { margin: 0 auto; width: 60%; }
+    #ProjectSection .sfs-project-card:nth-child(4) { margin-left: 12%; width: 40%; }
+    #ProjectSection .sfs-project-card:nth-child(5) { margin-left: auto; margin-right: 5%; width: 55%; }
+    #ProjectSection .sfs-project-card:nth-child(6) { margin: 0 auto; width: 50%; }
+    #ProjectSection .sfs-project-card:nth-child(7) { margin-left: 6%; width: 48%; }
+
+    #ProjectSection .sfs-footer {
+      position: relative;
+      z-index: 6;
+      text-align: center;
+      padding: 100px 20px;
+      font-size: 12px;
+      letter-spacing: 3px;
+      color: var(--sfs-muted-3);
+      font-family: 'Noto Sans KR', sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ===== 영상 팝업(라이트박스) ===== */
+    #ProjectSection .sfs-video-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 2147483000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(16px, 4vw, 48px);
+    }
+
+    #ProjectSection .sfs-video-modal.sfs-open {
+      display: flex;
+    }
+
+    #ProjectSection .sfs-video-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.9);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      opacity: 0;
+      transition: opacity 0.35s ease;
+      cursor: pointer;
+    }
+
+    #ProjectSection .sfs-video-modal.sfs-open .sfs-video-backdrop {
+      opacity: 1;
+    }
+
+    #ProjectSection .sfs-video-dialog {
+      position: relative;
+      z-index: 2;
+      width: min(92vw, 1080px);
+      aspect-ratio: 16 / 9;
+      max-height: calc(100vh - 120px);
+      background: #000;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 40px 120px rgba(0, 0, 0, 0.6);
+      opacity: 0;
+      transform: translateY(24px) scale(0.96);
+      transition:
+        opacity 0.4s var(--sfs-ease),
+        transform 0.45s var(--sfs-ease);
+    }
+
+    #ProjectSection .sfs-video-modal.sfs-open .sfs-video-dialog {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    #ProjectSection .sfs-video-dialog iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+      background: #000;
+    }
+
+    #ProjectSection .sfs-video-close {
+      position: absolute;
+      z-index: 3;
+      top: max(16px, env(safe-area-inset-top, 0px));
+      right: max(16px, env(safe-area-inset-right, 0px));
+      width: 48px;
+      height: 48px;
+      border: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      color: #fff;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      padding: 0;
+      transition: transform 0.3s var(--sfs-ease), background-color 0.3s ease;
+    }
+
+    #ProjectSection .sfs-video-close:hover {
+      transform: scale(1.1) rotate(90deg);
+      background: rgba(224, 32, 32, 0.8);
+    }
+
+    #ProjectSection .sfs-video-close svg {
+      width: 22px;
+      height: 22px;
+      stroke: currentColor;
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      fill: none;
+      display: block;
+    }
+
+    @media (max-width: 1024px) {
+      #ProjectSection .sfs-fixed-title {
+        letter-spacing: 6px;
+      }
+
+      #ProjectSection .sfs-project-card,
+      #ProjectSection .sfs-project-card:nth-child(1),
+      #ProjectSection .sfs-project-card:nth-child(2),
+      #ProjectSection .sfs-project-card:nth-child(3),
+      #ProjectSection .sfs-project-card:nth-child(4),
+      #ProjectSection .sfs-project-card:nth-child(5),
+      #ProjectSection .sfs-project-card:nth-child(6),
+      #ProjectSection .sfs-project-card:nth-child(7) {
+        width: min(86vw, 760px);
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      #ProjectSection .sfs-card-label {
+        padding-bottom: 76px;
+      }
+    }
+
+    @media (max-width: 767px) {
+      #ProjectSection .sfs-fixed-label {
+        font-size: 11px;
+        letter-spacing: 5px;
+        margin-bottom: 8px;
+      }
+
+      #ProjectSection .sfs-fixed-title {
+        font-size: clamp(42px, 14vw, 78px);
+        letter-spacing: 3px;
+      }
+
+      #ProjectSection .sfs-radial-lines {
+        width: min(360px, 80vw);
+        height: min(360px, 80vw);
+      }
+
+      #ProjectSection .sfs-tagline {
+        height: 42vh;
+        font-size: 14px;
+        letter-spacing: 1.2px;
+        line-height: 1.9;
+        padding-inline: 24px;
+      }
+
+      #ProjectSection .sfs-tagline strong {
+        font-size: 18px;
+      }
+
+      #ProjectSection .sfs-scroll-content {
+        padding: 5vh 0 12vh;
+      }
+
+      #ProjectSection .sfs-project-card,
+      #ProjectSection .sfs-project-card:nth-child(1),
+      #ProjectSection .sfs-project-card:nth-child(2),
+      #ProjectSection .sfs-project-card:nth-child(3),
+      #ProjectSection .sfs-project-card:nth-child(4),
+      #ProjectSection .sfs-project-card:nth-child(5),
+      #ProjectSection .sfs-project-card:nth-child(6),
+      #ProjectSection .sfs-project-card:nth-child(7) {
+        width: min(88vw, 680px);
+      }
+
+      #ProjectSection .sfs-card-label {
+        gap: 10px;
+        padding: 18px 0 56px 0;
+      }
+
+      #ProjectSection .sfs-card-label-text {
+        font-size: 12px;
+        letter-spacing: 2px;
+      }
+
+      #ProjectSection .sfs-scroll-hint {
+        bottom: 24px;
+      }
+
+      #ProjectSection .sfs-play-badge {
+        width: 56px;
+        height: 56px;
+      }
+
+      #ProjectSection .sfs-play-badge::after {
+        border-width: 10px 0 10px 17px;
+        margin-left: 4px;
+      }
+
+      #ProjectSection .sfs-video-dialog {
+        width: 100%;
+      }
+
+      #ProjectSection .sfs-video-close {
+        width: 42px;
+        height: 42px;
+        top: max(12px, env(safe-area-inset-top, 0px));
+        right: 12px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #ProjectSection .sfs-project-card,
+      #ProjectSection .sfs-scroll-hint,
+      #ProjectSection .sfs-radial-lines,
+      #ProjectSection .sfs-card-photo,
+      #ProjectSection .sfs-video-backdrop,
+      #ProjectSection .sfs-video-dialog,
+      #ProjectSection .sfs-video-close,
+      #ProjectSection .sfs-play-badge {
+        transition: none;
+      }
+
+      #ProjectSection .sfs-scroll-line::after {
+        animation: none;
+      }
+    }
+  </style>
+
+  <div class="sfs-google-fonts">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+  </div>
+
+  <div class="sfs-stage">
+    <div class="sfs-fixed-text-container" data-sfs-fixed-text>
+      <div class="sfs-fixed-label">FLOS</div>
+      <div class="sfs-fixed-title">Portfolio</div>
+    </div>
+
+    <div class="sfs-radial-lines" data-sfs-radial-lines>
+      <canvas data-sfs-radial-canvas width="600" height="600"></canvas>
+    </div>
+
+    <div class="sfs-scroll-hint" data-sfs-scroll-hint>
+      <span>SCROLL</span>
+      <div class="sfs-scroll-line"></div>
+    </div>
+
+    <div class="sfs-hero" aria-hidden="true"></div>
+
+    <div class="sfs-tagline">
+      <div></div>
+      <strong></strong>
+    </div>
+
+    <div class="sfs-scroll-content">
+      <!--
+        [카드 사용법]
+        - data-image : 카드 썸네일 이미지 주소
+        - 일반 웹사이트 링크 : href 에 주소를 넣으면 새 탭으로 이동
+        - 영상 팝업 : 아래 두 가지 중 하나면 자동으로 팝업 재생
+          1) data-video="유튜브 또는 비메오 링크" 를 카드(article)에 추가
+          2) href 자체가 youtube.com / youtu.be / vimeo.com 링크인 경우
+        - 지원 형식 : youtube.com/watch?v=, youtu.be/, youtube.com/shorts/, vimeo.com/숫자ID 등
+      -->
+      <article class="sfs-project-card" data-sfs-color="purple-blue" data-image="./img/ajou.jpg">
+        <a class="sfs-card-link" href="https://ajousarang.ajou.ac.kr" target="_blank" rel="noopener noreferrer" aria-label="아주대학교 대학발전기금 페이지 열기">
+          <div class="sfs-card-image">
+            <img class="sfs-card-photo" alt="아주대학교 대학발전기금 프로젝트 이미지" loading="lazy">
+            <canvas></canvas>
+            <span class="sfs-play-badge" aria-hidden="true"></span>
+          </div>
+        </a>
+        <div class="sfs-card-label">
+          <div class="sfs-card-label-dot"></div>
+          <span class="sfs-card-label-text">아주대학교 대학발전기금</span>
+        </div>
+      </article>
+
+      <article class="sfs-project-card" data-sfs-color="warm-gold" data-image="./img/htu.jpg">
+        <a class="sfs-card-link" href="https://htuglobal.com" target="_blank" rel="noopener noreferrer" aria-label="HTU GLOBAL HOLDINGS 페이지 열기">
+          <div class="sfs-card-image">
+            <img class="sfs-card-photo" alt="HTU GLOBAL HOLDINGS 프로젝트 이미지" loading="lazy">
+            <canvas></canvas>
+            <span class="sfs-play-badge" aria-hidden="true"></span>
+          </div>
+        </a>
+        <div class="sfs-card-label">
+          <div class="sfs-card-label-dot"></div>
+          <span class="sfs-card-label-text">HTU GLOBAL HOLDINGS</span>
+        </div>
+      </article>
+
+      <article class="sfs-project-card" data-sfs-color="teal-green" data-image="./img/bil.jpg">
+        <a class="sfs-card-link" href="https://biznovalab.com" target="_blank" rel="noopener noreferrer" aria-label="비즈니스 혁신연구소 페이지 열기">
+          <div class="sfs-card-image">
+            <img class="sfs-card-photo" alt="비즈니스 혁신연구소 프로젝트 이미지" loading="lazy">
+            <canvas></canvas>
+            <span class="sfs-play-badge" aria-hidden="true"></span>
+          </div>
+        </a>
+        <div class="sfs-card-label">
+          <div class="sfs-card-label-dot"></div>
+          <span class="sfs-card-label-text">비즈니스 혁신연구소</span>
+        </div>
+      </article>
+
+      <article class="sfs-project-card" data-sfs-color="pink-magenta" data-image="./img/pinder.jpg">
+        <a class="sfs-card-link" href="https://pinder.co.kr" target="_blank" rel="noopener noreferrer" aria-label="Pinder 대출 플랫폼 페이지 열기">
+          <div class="sfs-card-image">
+            <img class="sfs-card-photo" alt="Pinder 대출 플랫폼 프로젝트 이미지" loading="lazy">
+            <canvas></canvas>
+            <span class="sfs-play-badge" aria-hidden="true"></span>
+          </div>
+        </a>
+        <div class="sfs-card-label">
+          <div class="sfs-card-label-dot"></div>
+          <span class="sfs-card-label-text">Pinder 대출 플랫폼</span>
+        </div>
+      </article>
+
+      <article class="sfs-project-card" data-sfs-color="rgb-led" data-image="./img/glory.jpg">
+        <a class="sfs-card-link" href="https://glorylawfirm-crime.com/" target="_blank" rel="noopener noreferrer" aria-label="법무법인 글로리 형사센터 페이지 열기">
+          <div class="sfs-card-image">
+            <img class="sfs-card-photo" alt="법무법인 글로리 형사센터 프로젝트 이미지" loading="lazy">
+            <canvas></canvas>
+            <span class="sfs-play-badge" aria-hidden="true"></span>
+          </div>
+        </a>
+        <div class="sfs-card-label">
+          <div class="sfs-card-label-dot"></div>
+          <span class="sfs-card-label-text">법무법인 글로리 형사센터</span>
+        </div>
+      </article>
+
+      <article class="sfs-project-card" data-sfs-color="blue-cool" data-image="./img/ajou50.jpg">
+        <a class="sfs-card-link" href="https://50.ajou.ac.kr/" target="_blank" rel="noopener noreferrer" aria-label="아주대학교 50주년 기념 홈페이지 열기">
+          <div class="sfs-card-image">
+            <img class="sfs-card-photo" alt="아주대학교 50주년 기념 홈페이지 프로젝트 이미지" loading="lazy">
+            <canvas></canvas>
+            <span class="sfs-play-badge" aria-hidden="true"></span>
+          </div>
+        </a>
+        <div class="sfs-card-label">
+          <div class="sfs-card-label-dot"></div>
+          <span class="sfs-card-label-text">아주대학교 50주년 기념 홈페이지</span>
+        </div>
+      </article>
+
+      <article class="sfs-project-card" data-sfs-color="blue-cool" data-image="./img/gasiri.jpg">
+        <a class="sfs-card-link" href="https://gasiriforest.co.kr/" target="_blank" rel="noopener noreferrer" aria-label="생태명상 가시리 포레스트 페이지 열기">
+          <div class="sfs-card-image">
+            <img class="sfs-card-photo" alt="생태명상 가시리 포레스트 프로젝트 이미지" loading="lazy">
+            <canvas></canvas>
+            <span class="sfs-play-badge" aria-hidden="true"></span>
+          </div>
+        </a>
+        <div class="sfs-card-label">
+          <div class="sfs-card-label-dot"></div>
+          <span class="sfs-card-label-text">생태명상 가시리 포레스트</span>
+        </div>
+      </article>
+
+      <!-- 영상 카드 : data-video 에 유튜브/비메오 링크를 넣으면 클릭 시 팝업 재생 -->
+      <!-- <article class="sfs-project-card" data-sfs-color="cyan-glass" data-image="./img/xi.jpg"
+               data-video="https://www.youtube.com/watch?v=NT1OfZLTrI8">
+        <a class="sfs-card-link" href="javascript:void(0)" aria-label="GS 건설 XI 행사 안내 영상 재생">
+          <div class="sfs-card-image">
+            <img class="sfs-card-photo" alt="GS 건설 XI 행사 안내 영상 썸네일" loading="lazy">
+            <canvas></canvas>
+            <span class="sfs-play-badge" aria-hidden="true"></span>
+          </div>
+        </a>
+        <div class="sfs-card-label">
+          <div class="sfs-card-label-dot"></div>
+          <span class="sfs-card-label-text">GS 건설 XI 행사 안내 영상</span>
+        </div>
+      </article> -->
+
+      <!-- 영상 카드 : data-video 에 유튜브/비메오 링크를 넣으면 클릭 시 팝업 재생 -->
+      <!-- <article class="sfs-project-card" data-sfs-color="cyan-glass" data-image="./img/sharp.jpg"
+               data-video="https://www.youtube.com/watch?v=KBfdTUvbnQw">
+        <a class="sfs-card-link" href="javascript:void(0)" aria-label="포스코 건설 행사 안내 영상 재생">
+          <div class="sfs-card-image">
+            <img class="sfs-card-photo" alt="포스코 건설 행사 안내 영상 썸네일" loading="lazy">
+            <canvas></canvas>
+            <span class="sfs-play-badge" aria-hidden="true"></span>
+          </div>
+        </a>
+        <div class="sfs-card-label">
+          <div class="sfs-card-label-dot"></div>
+          <span class="sfs-card-label-text">포스코 건설 행사 안내 영상</span>
+        </div>
+      </article> -->
+    </div>
+  </div>
+
+  <!-- 영상 팝업 모달 -->
+  <div class="sfs-video-modal" data-sfs-video-modal role="dialog" aria-modal="true" aria-label="영상 재생 팝업" aria-hidden="true">
+    <div class="sfs-video-backdrop" data-sfs-video-backdrop></div>
+    <button class="sfs-video-close" type="button" data-sfs-video-close aria-label="영상 팝업 닫기">
+      <svg viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19"/></svg>
+    </button>
+    <div class="sfs-video-dialog" data-sfs-video-dialog></div>
+  </div>
+
+  <script>
+    (function () {
+      const section = document.getElementById('ProjectSection');
+      if (!section || section.dataset.sfsInitialized === 'true') return;
+      section.dataset.sfsInitialized = 'true';
+
+      const radialWrap = section.querySelector('[data-sfs-radial-lines]');
+      const radialCanvas = section.querySelector('[data-sfs-radial-canvas]');
+      const scrollHint = section.querySelector('[data-sfs-scroll-hint]');
+      const fixedText = section.querySelector('[data-sfs-fixed-text]');
+      const projectCards = Array.from(section.querySelectorAll('.sfs-project-card'));
+
+      const palettes = {
+        'purple-blue': ['#6B3FA0', '#3A1F6F', '#8B5FCF', '#2A1050', '#C4A0FF', '#1A0A3A', '#9070D0', '#4020A0'],
+        'warm-gold': ['#C89030', '#8B6520', '#F0C060', '#5A3A10', '#FFE090', '#3A2505', '#D4A040', '#6B4A15'],
+        'teal-green': ['#1A8060', '#0A5030', '#30C090', '#052A18', '#80FFD0', '#082820', '#20A070', '#0D6040'],
+        'pink-magenta': ['#C03070', '#801040', '#FF60A0', '#500828', '#FFB0D0', '#3A0518', '#D04080', '#901850'],
+        'rgb-led': ['#FF2020', '#20FF20', '#2020FF', '#FFFF00', '#FF00FF', '#00FFFF', '#FF8800', '#8800FF'],
+        'blue-cool': ['#2050A0', '#0A2060', '#4080E0', '#051540', '#80B0FF', '#0A1830', '#3060C0', '#1A3080'],
+        'cyan-glass': ['#20A0B0', '#0A6070', '#40D0E0', '#053040', '#80F0FF', '#082028', '#30B0C0', '#0C7080']
+      };
+
+      function drawRadialLines() {
+        if (!radialCanvas) return;
+        const ctx = radialCanvas.getContext('2d');
+        if (!ctx) return;
+
+        const size = 600;
+        radialCanvas.width = size;
+        radialCanvas.height = size;
+        ctx.clearRect(0, 0, size, size);
+
+        const cx = size / 2;
+        const cy = size / 2;
+        for (let i = 0; i < 72; i += 1) {
+          const angle = (i / 72) * Math.PI * 2 - Math.PI / 2;
+          const r1 = 160;
+          const r2 = 260;
+          ctx.beginPath();
+          ctx.moveTo(cx + Math.cos(angle) * r1, cy + Math.sin(angle) * r1);
+          ctx.lineTo(cx + Math.cos(angle) * r2, cy + Math.sin(angle) * r2);
+          ctx.strokeStyle = 'rgba(180, 30, 30, ' + (0.3 + Math.random() * 0.4).toFixed(3) + ')';
+          ctx.lineWidth = 1.5;
+          ctx.stroke();
+        }
+      }
+
+      function drawCanvas(canvas, colorKey) {
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return;
+
+        const colors = palettes[colorKey] || palettes['purple-blue'];
+        const width = 900;
+        const height = 600;
+        canvas.width = width;
+        canvas.height = height;
+        ctx.clearRect(0, 0, width, height);
+
+        const skyGrad = ctx.createLinearGradient(0, 0, 0, 200);
+        skyGrad.addColorStop(0, '#1A2540');
+        skyGrad.addColorStop(1, '#3060A0');
+        ctx.fillStyle = skyGrad;
+        ctx.fillRect(0, 0, width, 250);
+
+        const buildGrad = ctx.createLinearGradient(0, 150, 0, height);
+        buildGrad.addColorStop(0, colors[0]);
+        buildGrad.addColorStop(0.5, colors[1]);
+        buildGrad.addColorStop(1, colors[3]);
+        ctx.fillStyle = buildGrad;
+        ctx.fillRect(100, 150, 700, 450);
+
+        if (colorKey === 'rgb-led') {
+          for (let y = 160; y < 580; y += 18) {
+            for (let x = 120; x < 780; x += 18) {
+              const color = colors[Math.floor(Math.random() * colors.length)];
+              ctx.fillStyle = color;
+              ctx.globalAlpha = 0.5 + Math.random() * 0.5;
+              ctx.beginPath();
+              ctx.arc(x, y, 5, 0, Math.PI * 2);
+              ctx.fill();
+            }
+          }
+          ctx.globalAlpha = 1;
+        } else {
+          const spacing = 40;
+          ctx.strokeStyle = colors[4] || '#ffffff';
+          ctx.globalAlpha = 0.15;
+          ctx.lineWidth = 1;
+
+          for (let y = 160; y < 600; y += spacing) {
+            for (let x = 100; x < 800; x += spacing) {
+              ctx.beginPath();
+              ctx.moveTo(x, y);
+              ctx.lineTo(x + spacing / 2, y + spacing / 2);
+              ctx.lineTo(x + spacing, y);
+              ctx.stroke();
+
+              ctx.beginPath();
+              ctx.moveTo(x, y);
+              ctx.lineTo(x + spacing / 2, y - spacing / 2);
+              ctx.stroke();
+            }
+          }
+          ctx.globalAlpha = 1;
+
+          const glowGrad = ctx.createRadialGradient(450, 350, 50, 450, 350, 400);
+          glowGrad.addColorStop(0, (colors[4] ? colors[4] : '#ffffff') + '40');
+          glowGrad.addColorStop(1, 'transparent');
+          ctx.fillStyle = glowGrad;
+          ctx.fillRect(100, 150, 700, 450);
+        }
+
+        ctx.fillStyle = '#0A0A0A';
+        ctx.fillRect(0, 520, width, 80);
+
+        for (let i = 0; i < 5; i += 1) {
+          const tx = 150 + i * 150 + (Math.random() - 0.5) * 60;
+          ctx.fillStyle = '#0A1510';
+          ctx.beginPath();
+          ctx.arc(tx, 500, 25 + Math.random() * 15, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.fillRect(tx - 3, 500, 6, 30);
+        }
+
+        const vignette = ctx.createRadialGradient(width / 2, height / 2, 140, width / 2, height / 2, 560);
+        vignette.addColorStop(0, 'rgba(0,0,0,0)');
+        vignette.addColorStop(1, 'rgba(0,0,0,0.28)');
+        ctx.fillStyle = vignette;
+        ctx.fillRect(0, 0, width, height);
+      }
+
+      function applyCardImage(card) {
+        const imageUrl = (card.getAttribute('data-image') || '').trim();
+        const img = card.querySelector('.sfs-card-photo');
+        const canvas = card.querySelector('.sfs-card-image canvas');
+        const colorKey = card.getAttribute('data-sfs-color') || 'purple-blue';
+
+        if (!img || !canvas) return;
+
+        if (imageUrl) {
+          img.onload = function () {
+            img.classList.add('sfs-loaded');
+            canvas.style.display = 'none';
+          };
+
+          img.onerror = function () {
+            img.classList.remove('sfs-loaded');
+            canvas.style.display = 'block';
+            drawCanvas(canvas, colorKey);
+          };
+
+          img.src = imageUrl;
+        } else {
+          img.removeAttribute('src');
+          img.classList.remove('sfs-loaded');
+          canvas.style.display = 'block';
+          drawCanvas(canvas, colorKey);
+        }
+      }
+
+      /* ===== 영상 팝업 ===== */
+
+      const videoModal = section.querySelector('[data-sfs-video-modal]');
+      const videoDialog = section.querySelector('[data-sfs-video-dialog]');
+      const videoBackdrop = section.querySelector('[data-sfs-video-backdrop]');
+      const videoCloseBtn = section.querySelector('[data-sfs-video-close]');
+
+      let modalOpen = false;
+      let lastFocusedEl = null;
+      let bodyOverflowBackup = '';
+
+      // 유튜브 / 비메오 링크를 임베드용 주소로 변환 (아니면 null)
+      function getVideoEmbedUrl(rawUrl) {
+        if (!rawUrl) return null;
+        const url = String(rawUrl).trim();
+        if (!url || url === '#' || url.indexOf('javascript:') === 0) return null;
+
+        // YouTube
+        let m = url.match(/(?:youtube\.com\/(?:watch\?(?:.*&)?v=|shorts\/|embed\/|live\/)|youtu\.be\/)([A-Za-z0-9_-]{6,})/);
+        if (m && m[1]) {
+          return 'https://www.youtube.com/embed/' + m[1]
+            + '?autoplay=1&rel=0&modestbranding=1&playsinline=1';
+        }
+
+        // Vimeo
+        m = url.match(/(?:player\.)?vimeo\.com\/(?:video\/)?(\d{6,})/);
+        if (m && m[1]) {
+          return 'https://player.vimeo.com/video/' + m[1]
+            + '?autoplay=1&title=0&byline=0&portrait=0&dnt=1';
+        }
+
+        return null;
+      }
+
+      // 카드의 영상 링크 결정: data-video 우선, 없으면 href 자동 감지
+      function resolveCardVideo(card, link) {
+        const dataVideo = (card.getAttribute('data-video') || '').trim();
+        if (dataVideo) {
+          return { url: dataVideo, embed: getVideoEmbedUrl(dataVideo), declared: true };
+        }
+        const href = link ? (link.getAttribute('href') || '').trim() : '';
+        const embed = getVideoEmbedUrl(href);
+        if (embed) {
+          return { url: href, embed: embed, declared: true };
+        }
+        return { url: '', embed: null, declared: false };
+      }
+
+      function openVideoModal(embedUrl) {
+        if (!videoModal || !videoDialog || !embedUrl) return;
+
+        const iframe = document.createElement('iframe');
+        iframe.setAttribute('src', embedUrl);
+        iframe.setAttribute('allow', 'autoplay; fullscreen; picture-in-picture; encrypted-media');
+        iframe.setAttribute('allowfullscreen', '');
+        iframe.setAttribute('title', '프로젝트 영상');
+
+        videoDialog.innerHTML = '';
+        videoDialog.appendChild(iframe);
+
+        lastFocusedEl = document.activeElement;
+        bodyOverflowBackup = document.body.style.overflow;
+        document.body.style.overflow = 'hidden';
+
+        videoModal.classList.add('sfs-open');
+        videoModal.setAttribute('aria-hidden', 'false');
+        modalOpen = true;
+
+        if (videoCloseBtn) videoCloseBtn.focus();
+      }
+
+      function closeVideoModal() {
+        if (!videoModal || !modalOpen) return;
+
+        videoModal.classList.remove('sfs-open');
+        videoModal.setAttribute('aria-hidden', 'true');
+        modalOpen = false;
+
+        // iframe 제거로 재생 완전 중지
+        if (videoDialog) videoDialog.innerHTML = '';
+
+        document.body.style.overflow = bodyOverflowBackup;
+
+        if (lastFocusedEl && typeof lastFocusedEl.focus === 'function') {
+          lastFocusedEl.focus();
+        }
+        lastFocusedEl = null;
+      }
+
+      if (videoBackdrop) videoBackdrop.addEventListener('click', closeVideoModal);
+      if (videoCloseBtn) videoCloseBtn.addEventListener('click', closeVideoModal);
+
+      document.addEventListener('keydown', function (e) {
+        if (modalOpen && (e.key === 'Escape' || e.key === 'Esc')) {
+          closeVideoModal();
+        }
+      });
+
+      // 각 카드에 영상 여부 판정 + 클릭 핸들러 연결
+      projectCards.forEach(function (card) {
+        const link = card.querySelector('.sfs-card-link');
+        if (!link) return;
+
+        const video = resolveCardVideo(card, link);
+
+        if (video.declared || card.hasAttribute('data-video')) {
+          card.classList.add('sfs-is-video');
+
+          link.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            // 클릭 시점에 다시 판정 (data-video 를 나중에 바꿔도 반영)
+            const v = resolveCardVideo(card, link);
+            if (v.embed) {
+              openVideoModal(v.embed);
+            }
+            // 링크가 유효한 영상 주소가 아니면 아무 동작 안 함 (일반 이동 방지)
+          });
+        }
+      });
+
+      drawRadialLines();
+      projectCards.forEach(applyCardImage);
+
+      const cardObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('sfs-visible');
+            } else {
+              entry.target.classList.remove('sfs-visible');
+            }
+          });
+        },
+        {
+          threshold: 0.12,
+          rootMargin: '0px 0px -40px 0px'
+        }
+      );
+
+      projectCards.forEach((card) => cardObserver.observe(card));
+
+      let hintHidden = false;
+      let ticking = false;
+
+      function updateOnScroll() {
+        ticking = false;
+        const sy = window.scrollY || window.pageYOffset || 0;
+        const vh = window.innerHeight || 1;
+        const sectionRect = section.getBoundingClientRect();
+        const sectionTop = sy + sectionRect.top;
+        const localY = Math.max(0, sy - sectionTop);
+
+        if (!hintHidden && sy > sectionTop + 80) {
+          scrollHint && scrollHint.classList.add('sfs-hidden');
+          hintHidden = true;
+        } else if (hintHidden && sy <= sectionTop + 80) {
+          scrollHint && scrollHint.classList.remove('sfs-hidden');
+          hintHidden = false;
+        }
+
+        if (radialWrap) {
+          const radialFade = Math.max(0, 1 - localY / (vh * 0.6));
+          radialWrap.style.opacity = String(radialFade * 0.6);
+        }
+
+        if (radialCanvas) {
+          radialCanvas.style.transform = 'rotate(' + (localY * 0.02).toFixed(3) + 'deg)';
+        }
+
+        if (fixedText) {
+          fixedText.style.opacity = '1';
+          fixedText.style.transform = 'translate3d(0,0,0)';
+        }
+      }
+
+      function requestTick() {
+        if (!ticking) {
+          ticking = true;
+          window.requestAnimationFrame(updateOnScroll);
+        }
+      }
+
+      window.addEventListener('scroll', requestTick, { passive: true });
+      window.addEventListener('resize', function () {
+        drawRadialLines();
+        requestTick();
+      });
+
+      updateOnScroll();
+    })();
+  </script>
+</section>
+
+
+
+<section id="chanelReviewSection">
+  <style>
+    #chanelReviewSection{
+      --bg:#0a0a0a;
+      --bg-soft:#111111;
+      --line:rgba(255,255,255,0.12);
+      --line-strong:rgba(255,255,255,0.22);
+      --text:#f5f5f5;
+      --muted:rgba(255,255,255,0.62);
+      --muted-2:rgba(255,255,255,0.42);
+      --card:rgba(255,255,255,0.03);
+      --card-hover:rgba(255,255,255,0.05);
+      --shadow:0 30px 80px rgba(0,0,0,0.38);
+      --radius:28px;
+      --max:1280px;
+
+      position:relative;
+      overflow:hidden;
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,0.05) 0%, transparent 34%),
+        radial-gradient(circle at bottom right, rgba(255,255,255,0.04) 0%, transparent 30%),
+        linear-gradient(180deg, #050505 0%, #0a0a0a 100%);
+      color:var(--text);
+      padding:120px 20px;
+      font-family:"Helvetica Neue","Pretendard","Noto Sans KR",Arial,sans-serif;
+      isolation:isolate;
+    }
+
+    #chanelReviewSection *{box-sizing:border-box;}
+
+    #chanelReviewSection .review-wrap{
+      max-width:var(--max);
+      margin:0 auto;
+      position:relative;
+      z-index:2;
+    }
+
+    #chanelReviewSection .review-head{
+      max-width:900px;
+      margin:0 auto 80px;
+      text-align:center;
+    }
+
+    #chanelReviewSection .review-kicker{
+      display:inline-block;
+      font-size:12px;
+      letter-spacing:.28em;
+      text-transform:uppercase;
+      color:var(--muted);
+      padding-bottom:14px;
+      margin-bottom:22px;
+      position:relative;
+    }
+
+    #chanelReviewSection .review-kicker::after{
+      content:"";
+      position:absolute;
+      left:50%;
+      bottom:0;
+      width:66px;
+      height:1px;
+      background:rgba(255,255,255,0.35);
+      transform:translateX(-50%);
+    }
+
+    #chanelReviewSection .review-title{
+      margin:0;
+      font-size:clamp(2rem, 5vw, 4.4rem);
+      line-height:1.08;
+      font-weight:500;
+      letter-spacing:-0.04em;
+    }
+
+    #chanelReviewSection .review-sub{
+      margin:26px auto 0;
+      max-width:760px;
+      font-size:clamp(1rem, 1.4vw, 1.1rem);
+      line-height:1.9;
+      color:var(--muted);
+      font-weight:400;
+    }
+
+    #chanelReviewSection .review-list{
+      display:grid;
+      grid-template-columns:repeat(3, minmax(0,1fr));
+      gap:24px;
+    }
+
+    #chanelReviewSection .review-card{
+      position:relative;
+      min-height:420px;
+      padding:34px 30px 30px;
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.045) 0%, rgba(255,255,255,0.02) 100%);
+      backdrop-filter:blur(8px);
+      box-shadow:var(--shadow);
+      transition:
+        transform .7s cubic-bezier(.22,1,.36,1),
+        border-color .5s ease,
+        background .5s ease,
+        box-shadow .5s ease;
+      overflow:hidden;
+    }
+
+    #chanelReviewSection .review-card::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.11) 0%, transparent 18%, transparent 82%, rgba(255,255,255,0.05) 100%);
+      opacity:.6;
+      pointer-events:none;
+    }
+
+    #chanelReviewSection .review-card::after{
+      content:"";
+      position:absolute;
+      left:28px;
+      right:28px;
+      top:0;
+      height:1px;
+      background:linear-gradient(90deg, transparent, rgba(255,255,255,0.45), transparent);
+      opacity:.8;
+    }
+
+    #chanelReviewSection .review-card:hover{
+      transform:translateY(-10px);
+      border-color:var(--line-strong);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.028) 100%);
+      box-shadow:0 40px 100px rgba(0,0,0,0.5);
+    }
+
+    #chanelReviewSection .quote-mark{
+      font-size:58px;
+      line-height:1;
+      color:rgba(255,255,255,0.18);
+      font-weight:500;
+      margin-bottom:14px;
+      font-family:Georgia, "Times New Roman", serif;
+    }
+
+    #chanelReviewSection .review-text{
+      margin:0;
+      font-size:1rem;
+      line-height:1.95;
+      color:rgba(255,255,255,0.9);
+      letter-spacing:-0.01em;
+    }
+
+    #chanelReviewSection .review-bottom{
+      margin-top:34px;
+      padding-top:22px;
+      border-top:1px solid rgba(255,255,255,0.1);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+
+    #chanelReviewSection .review-user{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+    }
+
+    #chanelReviewSection .review-name{
+      font-size:1rem;
+      font-weight:500;
+      letter-spacing:.02em;
+      color:#fff;
+    }
+
+    #chanelReviewSection .review-meta{
+      font-size:.88rem;
+      color:var(--muted-2);
+      letter-spacing:.06em;
+      text-transform:uppercase;
+    }
+
+    #chanelReviewSection .review-star{
+      color:#fff;
+      letter-spacing:.18em;
+      font-size:.8rem;
+      opacity:.9;
+      white-space:nowrap;
+    }
+
+    #chanelReviewSection .review-side-line{
+      width:100%;
+      height:1px;
+      margin:90px 0 0;
+      background:linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+      opacity:.7;
+    }
+
+    #chanelReviewSection .reveal{
+      opacity:0;
+      transform:translateY(45px) scale(.985);
+      filter:blur(8px);
+      transition:
+        opacity 1.2s cubic-bezier(.22,1,.36,1),
+        transform 1.2s cubic-bezier(.22,1,.36,1),
+        filter 1.2s cubic-bezier(.22,1,.36,1);
+      will-change:transform, opacity, filter;
+    }
+
+    #chanelReviewSection .reveal.is-visible{
+      opacity:1;
+      transform:translateY(0) scale(1);
+      filter:blur(0);
+    }
+
+    #chanelReviewSection .delay-1{transition-delay:.08s;}
+    #chanelReviewSection .delay-2{transition-delay:.18s;}
+    #chanelReviewSection .delay-3{transition-delay:.28s;}
+
+    #chanelReviewSection .ambient{
+      position:absolute;
+      border-radius:50%;
+      filter:blur(70px);
+      opacity:.12;
+      pointer-events:none;
+      z-index:1;
+    }
+
+    #chanelReviewSection .ambient.a1{
+      width:300px;
+      height:300px;
+      top:5%;
+      left:-80px;
+      background:#ffffff;
+      animation:chanelFloat1 11s ease-in-out infinite alternate;
+    }
+
+    #chanelReviewSection .ambient.a2{
+      width:240px;
+      height:240px;
+      right:-70px;
+      bottom:8%;
+      background:#dcdcdc;
+      animation:chanelFloat2 13s ease-in-out infinite alternate;
+    }
+
+    @keyframes chanelFloat1{
+      0%{transform:translate3d(0,0,0) scale(1);}
+      100%{transform:translate3d(30px,20px,0) scale(1.08);}
+    }
+
+    @keyframes chanelFloat2{
+      0%{transform:translate3d(0,0,0) scale(1);}
+      100%{transform:translate3d(-20px,-30px,0) scale(1.06);}
+    }
+
+    @media (max-width:1024px){
+      #chanelReviewSection{
+        padding:100px 18px;
+      }
+      #chanelReviewSection .review-list{
+        grid-template-columns:1fr;
+      }
+      #chanelReviewSection .review-card{
+        min-height:auto;
+      }
+      #chanelReviewSection .review-head{
+        margin-bottom:56px;
+      }
+    }
+
+    @media (max-width:640px){
+      #chanelReviewSection .review-card{
+        padding:28px 22px 24px;
+        border-radius:22px;
+      }
+
+      #chanelReviewSection .review-title{
+        line-height:1.15;
+      }
+
+      #chanelReviewSection .review-sub{
+        line-height:1.8;
+      }
+
+      #chanelReviewSection .quote-mark{
+        font-size:50px;
+      }
+
+      #chanelReviewSection .review-text{
+        font-size:.97rem;
+        line-height:1.85;
+      }
+    }
+  </style>
+
+  <div class="ambient a1"></div>
+  <div class="ambient a2"></div>
+
+  <div class="review-wrap">
+    <div class="review-head reveal is-visible">
+      <span class="review-kicker">Client Voices</span>
+      <h2 class="review-title">
+        브랜딩 사이트를 통해,<br>
+        사업이 달라진 후기
+      </h2>
+      <p class="review-sub">
+        브랜드 사이트 하나만으로도 사업의 방향과 가치가 달라진<br>
+        실제 클라이언트가 체감한 변화의 이야기를 담았습니다.
+      </p>
+    </div>
+
+    <div class="review-list">
+      <article class="review-card reveal delay-1">
+        <div class="quote-mark">“</div>
+        <p class="review-text">
+          사업의 큰 그림은 있었고 기반을 10년간 차근차근 준비해왔지만 명확한 컨셉이나 타겟이 완전히 뚜렷한 상태가 아니었습니다.<br><Br>
+          2군데 이미 홈페이지 제작을 맡겨봤는데<br>원하는 흐름대로 제작도 안되고<br>결국 방치가 되어 더 나아가지 못했는데,<br><br>이곳에서 제작을 하게 되면서 느끼게 된 건<br>우리가 어떤 가치를 주는지
+          점점 선명해졌고, 명확하게 비즈니스 그림이 그려지면서 사업 진행 속도가 5~6년은 앞당겨졌다고 느껴집니다.
+        </p>
+        <div class="review-bottom">
+          <div class="review-user">
+            <span class="review-name">강XX 대표님</span>
+            <!-- <span class="review-meta">Brand Strategy</span> -->
+          </div>
+          <div class="review-star">★★★★★</div>
+        </div>
+      </article>
+
+      <article class="review-card reveal delay-2">
+        <div class="quote-mark">“</div>
+        <p class="review-text">
+          예전에는 회사를 설명하려면 매번 처음부터 끝까지 다 이야기해야 했습니다.
+          브랜딩은 커녕 뭔가를 보여주고 싶어도 온라인으로 보여줄게 전혀 없었습니다.<br><br>
+          그런데 지금은 비즈니스의 흐름에 맞게 만들어지다보니 사이트 링크 하나만 보내면 제가 2시간 말해도 못 얻던 반응들이 바로 나타난다는 걸 느낄 수 있었습니다.<br><br>
+          그리고 사이트가 멋지다보니 살펴보고 정말 큰 사업을 한다고 느꼈는지 근황을 구체적으로 여쭤보는 사람도 생기고,
+          기존 미팅 때 2시간 3시간 걸렸던 내용이 사이트만 가지고도 10분만에 전부 이해시키고 다음 스텝의 이야기를 바로 할 수 있는 흐름이 되었습니다.
+        </p>
+        <div class="review-bottom">
+          <div class="review-user">
+            <span class="review-name">S. Lee</span>
+            <span class="review-meta">Business Owner</span>
+          </div>
+          <div class="review-star">★★★★★</div>
+        </div>
+      </article>
+
+      <article class="review-card reveal delay-3">
+        <div class="quote-mark">“</div>
+        <p class="review-text">
+          미팅에 들어갔을 때 흐름이 완전히 달라졌습니다.
+          예전에는 우리를 설명하느라 정신이 없었는데, 요즘은 일단
+          사이트의 메인화면만 틀어놓습니다.<br><br>그럼 클라이언트가
+          첫 화면을 보고 처음부터 '와...잘 만들었다.' 라는 작은 감탄이 나오고
+          자연스럽게 메인 영상을 보게 되면서 공식적이고 예쁜 화면이 나오니까 
+          작은 회사가 아니라는 느낌을 바로 주게 됩니다.<br><br>
+          어느 고객이든 첫인상에서 좋은 흐름을 만들어주니까,
+          요즘은 사이트를 많이 공유하고 싶고 보여주고 싶은 마음이 자꾸만 듭니다.
+        </p>
+        <div class="review-bottom">
+          <div class="review-user">
+            <span class="review-name">H. Choi</span>
+            <span class="review-meta">Founder</span>
+          </div>
+          <div class="review-star">★★★★★</div>
+        </div>
+      </article>
+    </div>
+
+    <div class="review-side-line"></div>
+  </div>
+
+  <script>
+    (function(){
+      const section = document.querySelector('#chanelReviewSection');
+      if(!section) return;
+
+      const items = section.querySelectorAll('.reveal');
+
+      const io = new IntersectionObserver((entries)=>{
+        entries.forEach(entry=>{
+          if(entry.isIntersecting){
+            entry.target.classList.add('is-visible');
+          }
+        });
+      },{
+        threshold:0.18,
+        rootMargin:'0px 0px -8% 0px'
+      });
+
+      items.forEach(item=>{
+        if(!item.classList.contains('is-visible')){
+          io.observe(item);
+        }
+      });
+    })();
+  </script>
+</section>
+
+
 <section id="process1" aria-label="랜딩페이지 제작 프로세스">
 <style>
 #process1 {
@@ -5947,1167 +7437,6 @@
 </section>
 
 
-<section id="ProjectSection" aria-label="Project Scroll Section">
-  <style>
-    #ProjectSection {
-      --sfs-bg: #000000;
-      --sfs-text: #ffffff;
-      --sfs-muted: #777777;
-      --sfs-muted-2: #555555;
-      --sfs-muted-3: #333333;
-      --sfs-dot: #e02020;
-      --sfs-card-radius: 4px;
-      --sfs-ease: cubic-bezier(0.22, 1, 0.36, 1);
-      position: relative;
-      background: var(--sfs-bg);
-      color: var(--sfs-text);
-      overflow: clip;
-      font-family: 'Bebas Neue', sans-serif;
-      isolation: isolate;
-    }
-
-    #ProjectSection .sfs-google-fonts {
-      position: absolute;
-      width: 0;
-      height: 0;
-      overflow: hidden;
-    }
-
-    #ProjectSection .sfs-stage {
-      position: relative;
-      min-height: 100vh;
-      background: #000;
-      isolation: isolate;
-    }
-
-    #ProjectSection .sfs-fixed-text-container {
-      position: sticky;
-      top: 0;
-      width: 100%;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      z-index: 10;
-      pointer-events: none;
-      mix-blend-mode: difference;
-      /* padding-inline: 20px; */
-      will-change: auto;
-    }
-
-    #ProjectSection .sfs-fixed-label {
-      font-size: 14px;
-      letter-spacing: 8px;
-      text-transform: uppercase;
-      color: #fff;
-      margin-bottom: 10px;
-      line-height: 1;
-    }
-
-    #ProjectSection .sfs-fixed-title {
-      font-size: clamp(70px, 14vw, 220px);
-      letter-spacing: 10px;
-      line-height: 0.85;
-      color: #fff;
-      text-align: center;
-      font-weight: 400;
-      white-space: nowrap;
-    }
-
-    #ProjectSection .sfs-radial-lines {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: min(600px, 74vw);
-      height: min(600px, 74vw);
-      transform: translate(-50%, -50%);
-      z-index: 5;
-      pointer-events: none;
-      opacity: 0.6;
-      transition: opacity 0.5s ease;
-      will-change: opacity, transform;
-    }
-
-    #ProjectSection .sfs-radial-lines canvas {
-      width: 100%;
-      height: 100%;
-      display: block;
-      transform-origin: 50% 50%;
-    }
-
-    #ProjectSection .sfs-scroll-hint {
-      position: absolute;
-      bottom: 40px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 20;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      transition: opacity 0.6s ease;
-      pointer-events: none;
-      will-change: opacity;
-    }
-
-    #ProjectSection .sfs-scroll-hint.sfs-hidden {
-      opacity: 0;
-    }
-
-    #ProjectSection .sfs-scroll-hint span {
-      font-size: 10px;
-      letter-spacing: 4px;
-      color: var(--sfs-muted-2);
-      font-family: 'Noto Sans KR', sans-serif;
-      line-height: 1;
-    }
-
-    #ProjectSection .sfs-scroll-line {
-      width: 1px;
-      height: 40px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    #ProjectSection .sfs-scroll-line::after {
-      content: '';
-      position: absolute;
-      top: -100%;
-      left: 0;
-      width: 1px;
-      height: 100%;
-      background: linear-gradient(to bottom, transparent, #888888);
-      animation: sfsScrollDown 1.8s ease-in-out infinite;
-    }
-
-    @keyframes sfsScrollDown {
-      0% { top: -100%; }
-      100% { top: 100%; }
-    }
-
-    #ProjectSection .sfs-hero {
-      position: relative;
-      height: 0;
-      z-index: 1;
-    }
-
-    #ProjectSection .sfs-tagline {
-      position: relative;
-      z-index: 6;
-      text-align: center;
-      padding: 0 20px 0;
-      height: 50vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Noto Sans KR', sans-serif;
-      font-size: 18px;
-      color: var(--sfs-muted);
-      letter-spacing: 2px;
-      line-height: 2;
-    }
-
-    #ProjectSection .sfs-tagline strong {
-      color: #fff;
-      font-weight: 700;
-      font-size: 22px;
-    }
-
-    #ProjectSection .sfs-scroll-content {
-      position: relative;
-      z-index: 6;
-      padding: 10vh 0 15vh;
-    }
-
-    #ProjectSection .sfs-project-card {
-      position: relative;
-      margin: 0 auto 0;
-      width: 55%;
-      max-width: 750px;
-      opacity: 0;
-      transform: translateY(150px) scale(0.95);
-      transition:
-        opacity 1s var(--sfs-ease),
-        transform 1s var(--sfs-ease);
-      will-change: transform, opacity;
-    }
-
-    #ProjectSection .sfs-project-card.sfs-visible {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-    }
-
-    #ProjectSection .sfs-card-link {
-      display: block;
-      text-decoration: none;
-      color: inherit;
-      border-radius: var(--sfs-card-radius);
-    }
-
-    #ProjectSection .sfs-card-link:focus-visible {
-      outline: 2px solid rgba(255,255,255,0.9);
-      outline-offset: 6px;
-      border-radius: 8px;
-    }
-
-    #ProjectSection .sfs-card-link:hover .sfs-card-image,
-    #ProjectSection .sfs-card-link:focus-visible .sfs-card-image {
-      transform: translateY(-4px);
-      box-shadow: 0 38px 90px rgba(0, 0, 0, 0.34);
-    }
-
-    #ProjectSection .sfs-card-image {
-      width: 100%;
-      aspect-ratio: 3 / 2;
-      border-radius: var(--sfs-card-radius);
-      overflow: hidden;
-      position: relative;
-      background: #070707;
-      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.28);
-      transition: transform 0.45s var(--sfs-ease), box-shadow 0.45s var(--sfs-ease);
-      cursor: pointer;
-    }
-
-    #ProjectSection .sfs-card-image canvas,
-    #ProjectSection .sfs-card-image img {
-      width: 100%;
-      height: 100%;
-      display: block;
-    }
-
-    #ProjectSection .sfs-card-image canvas {
-      position: absolute;
-      inset: 0;
-      z-index: 1;
-    }
-
-    #ProjectSection .sfs-card-photo {
-      position: absolute;
-      inset: 0;
-      z-index: 2;
-      object-fit: contain;
-      object-position: center;
-      opacity: 0;
-      transition: opacity 0.45s ease;
-      background: #070707;
-    }
-
-    #ProjectSection .sfs-card-photo.sfs-loaded {
-      opacity: 1;
-    }
-
-    #ProjectSection .sfs-card-label {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 24px 0 100px 0;
-    }
-
-    #ProjectSection .sfs-card-label-dot {
-      width: 10px;
-      height: 10px;
-      background: var(--sfs-dot);
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
-
-    #ProjectSection .sfs-card-label-text {
-      font-size: 15px;
-      letter-spacing: 3px;
-      color: #bbbbbb;
-      line-height: 1.4;
-      word-break: break-word;
-    }
-
-    #ProjectSection .sfs-project-card:nth-child(1) { margin-left: 8%; width: 50%; }
-    #ProjectSection .sfs-project-card:nth-child(2) { margin-left: auto; margin-right: 8%; width: 45%; }
-    #ProjectSection .sfs-project-card:nth-child(3) { margin: 0 auto; width: 60%; }
-    #ProjectSection .sfs-project-card:nth-child(4) { margin-left: 12%; width: 40%; }
-    #ProjectSection .sfs-project-card:nth-child(5) { margin-left: auto; margin-right: 5%; width: 55%; }
-    #ProjectSection .sfs-project-card:nth-child(6) { margin: 0 auto; width: 50%; }
-    #ProjectSection .sfs-project-card:nth-child(7) { margin-left: 6%; width: 48%; }
-
-    #ProjectSection .sfs-footer {
-      position: relative;
-      z-index: 6;
-      text-align: center;
-      padding: 100px 20px;
-      font-size: 12px;
-      letter-spacing: 3px;
-      color: var(--sfs-muted-3);
-      font-family: 'Noto Sans KR', sans-serif;
-      line-height: 1.7;
-    }
-
-    @media (max-width: 1024px) {
-      #ProjectSection .sfs-fixed-title {
-        letter-spacing: 6px;
-      }
-
-      #ProjectSection .sfs-project-card,
-      #ProjectSection .sfs-project-card:nth-child(1),
-      #ProjectSection .sfs-project-card:nth-child(2),
-      #ProjectSection .sfs-project-card:nth-child(3),
-      #ProjectSection .sfs-project-card:nth-child(4),
-      #ProjectSection .sfs-project-card:nth-child(5),
-      #ProjectSection .sfs-project-card:nth-child(6),
-      #ProjectSection .sfs-project-card:nth-child(7) {
-        width: min(86vw, 760px);
-        margin-left: auto;
-        margin-right: auto;
-      }
-
-      #ProjectSection .sfs-card-label {
-        padding-bottom: 76px;
-      }
-    }
-
-    @media (max-width: 767px) {
-      #ProjectSection .sfs-fixed-label {
-        font-size: 11px;
-        letter-spacing: 5px;
-        margin-bottom: 8px;
-      }
-
-      #ProjectSection .sfs-fixed-title {
-        font-size: clamp(42px, 14vw, 78px);
-        letter-spacing: 3px;
-      }
-
-      #ProjectSection .sfs-radial-lines {
-        width: min(360px, 80vw);
-        height: min(360px, 80vw);
-      }
-
-      #ProjectSection .sfs-tagline {
-        height: 42vh;
-        font-size: 14px;
-        letter-spacing: 1.2px;
-        line-height: 1.9;
-        padding-inline: 24px;
-      }
-
-      #ProjectSection .sfs-tagline strong {
-        font-size: 18px;
-      }
-
-      #ProjectSection .sfs-scroll-content {
-        padding: 5vh 0 12vh;
-      }
-
-      #ProjectSection .sfs-project-card,
-      #ProjectSection .sfs-project-card:nth-child(1),
-      #ProjectSection .sfs-project-card:nth-child(2),
-      #ProjectSection .sfs-project-card:nth-child(3),
-      #ProjectSection .sfs-project-card:nth-child(4),
-      #ProjectSection .sfs-project-card:nth-child(5),
-      #ProjectSection .sfs-project-card:nth-child(6),
-      #ProjectSection .sfs-project-card:nth-child(7) {
-        width: min(88vw, 680px);
-      }
-
-      #ProjectSection .sfs-card-label {
-        gap: 10px;
-        padding: 18px 0 56px 0;
-      }
-
-      #ProjectSection .sfs-card-label-text {
-        font-size: 12px;
-        letter-spacing: 2px;
-      }
-
-      #ProjectSection .sfs-scroll-hint {
-        bottom: 24px;
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      #ProjectSection .sfs-project-card,
-      #ProjectSection .sfs-scroll-hint,
-      #ProjectSection .sfs-radial-lines,
-      #ProjectSection .sfs-card-photo {
-        transition: none;
-      }
-
-      #ProjectSection .sfs-scroll-line::after {
-        animation: none;
-      }
-    }
-  </style>
-
-  <div class="sfs-google-fonts">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
-  </div>
-
-  <div class="sfs-stage">
-    <div class="sfs-fixed-text-container" data-sfs-fixed-text>
-      <div class="sfs-fixed-label">FLOS</div>
-      <div class="sfs-fixed-title">Portfolio</div>
-    </div>
-
-    <div class="sfs-radial-lines" data-sfs-radial-lines>
-      <canvas data-sfs-radial-canvas width="600" height="600"></canvas>
-    </div>
-
-    <div class="sfs-scroll-hint" data-sfs-scroll-hint>
-      <span>SCROLL</span>
-      <div class="sfs-scroll-line"></div>
-    </div>
-
-    <div class="sfs-hero" aria-hidden="true"></div>
-
-    <div class="sfs-tagline">
-      <div></div>
-      <strong></strong>
-    </div>
-
-    <div class="sfs-scroll-content">
-      <!-- data-image 에 이미지 주소를 넣으면 해당 이미지가 표시됩니다 -->
-      <article class="sfs-project-card" data-sfs-color="purple-blue" data-image="./img/ajou.jpg">
-        <a class="sfs-card-link" href="" target="_blank" rel="noopener noreferrer" aria-label="HANAM 페이지 열기">
-          <div class="sfs-card-image">
-            <img class="sfs-card-photo" alt="아주대학교 대학발전기금 프로젝트 이미지" loading="lazy">
-            <canvas></canvas>
-          </div>
-        </a>
-        <div class="sfs-card-label">
-          <div class="sfs-card-label-dot"></div>
-          <span class="sfs-card-label-text">아주대학교 대학발전기금</span>
-        </div>
-      </article>
-
-      <article class="sfs-project-card" data-sfs-color="warm-gold" data-image="./img/htu.jpg">
-        <a class="sfs-card-link" href="" target="_blank" rel="noopener noreferrer" aria-label="">
-          <div class="sfs-card-image">
-            <img class="sfs-card-photo" alt="" loading="lazy">
-            <canvas></canvas>
-          </div>
-        </a>
-        <div class="sfs-card-label">
-          <div class="sfs-card-label-dot"></div>
-          <span class="sfs-card-label-text">플로스마케팅 HOLDINGS</span>
-        </div>
-      </article>
-
-      <article class="sfs-project-card" data-sfs-color="teal-green" data-image="./img/bil.jpg">
-        <a class="sfs-card-link" href="" target="_blank" rel="noopener noreferrer" aria-label="ANSEONG 페이지 열기">
-          <div class="sfs-card-image">
-            <img class="sfs-card-photo" alt="ANSEONG 프로젝트 이미지" loading="lazy">
-            <canvas></canvas>
-          </div>
-        </a>
-        <div class="sfs-card-label">
-          <div class="sfs-card-label-dot"></div>
-          <span class="sfs-card-label-text">비즈니스 혁신연구소</span>
-        </div>
-      </article>
-
-      <article class="sfs-project-card" data-sfs-color="pink-magenta" data-image="./img/pinder.jpg">
-        <a class="sfs-card-link" href="" target="_blank" rel="noopener noreferrer" aria-label="SUWON 페이지 열기">
-          <div class="sfs-card-image">
-            <img class="sfs-card-photo" alt="SUWON 프로젝트 이미지" loading="lazy">
-            <canvas></canvas>
-          </div>
-        </a>
-        <div class="sfs-card-label">
-          <div class="sfs-card-label-dot"></div>
-          <span class="sfs-card-label-text">Pinder 대출 플랫폼</span>
-        </div>
-      </article>
-
-      <article class="sfs-project-card" data-sfs-color="rgb-led" data-image="./img/glory.jpg">
-        <a class="sfs-card-link" href="https://www..co.kr/bucheon/main.do" target="_blank" rel="noopener noreferrer" aria-label="CITY BUCHEON 페이지 열기">
-          <div class="sfs-card-image">
-            <img class="sfs-card-photo" alt="CITY BUCHEON 프로젝트 이미지" loading="lazy">
-            <canvas></canvas>
-          </div>
-        </a>
-        <div class="sfs-card-label">
-          <div class="sfs-card-label-dot"></div>
-          <span class="sfs-card-label-text">법무법인 글로리 형사센터</span>
-        </div>
-      </article>
-
-      <article class="sfs-project-card" data-sfs-color="blue-cool" data-image="./img/ajou50.jpg">
-        <a class="sfs-card-link" href="https://www..co.kr/wirye/main.do" target="_blank" rel="noopener noreferrer" aria-label="CITY WIRYE 페이지 열기">
-          <div class="sfs-card-image">
-            <img class="sfs-card-photo" alt="CITY WIRYE 프로젝트 이미지" loading="lazy">
-            <canvas></canvas>
-          </div>
-        </a>
-        <div class="sfs-card-label">
-          <div class="sfs-card-label-dot"></div>
-          <span class="sfs-card-label-text">아주대학교 50주년 기념 홈페이지</span>
-        </div>
-      </article>
-
-      <article class="sfs-project-card" data-sfs-color="cyan-glass" data-image="./img/xi.jpg">
-        <a class="sfs-card-link" href="" target="_blank" rel="noopener noreferrer" aria-label="CITY MYEONGJI 페이지 열기">
-          <div class="sfs-card-image">
-            <img class="sfs-card-photo" alt="CITY MYEONGJI 프로젝트 이미지" loading="lazy">
-            <canvas></canvas>
-          </div>
-        </a>
-        <div class="sfs-card-label">
-          <div class="sfs-card-label-dot"></div>
-          <span class="sfs-card-label-text">GS 건설 XI 행사 안내 영상</span>
-        </div>
-      </article>
-
-          <article class="sfs-project-card" data-sfs-color="cyan-glass" data-image="./img/sharp.jpg">
-        <a class="sfs-card-link" href="" target="_blank" rel="noopener noreferrer" aria-label="CITY MYEONGJI 페이지 열기">
-          <div class="sfs-card-image">
-            <img class="sfs-card-photo" alt="CITY MYEONGJI 프로젝트 이미지" loading="lazy">
-            <canvas></canvas>
-          </div>
-        </a>
-        <div class="sfs-card-label">
-          <div class="sfs-card-label-dot"></div>
-          <span class="sfs-card-label-text">포스코 건설 행사 안내 영상</span>
-        </div>
-      </article>
-    </div>
-  </div>
-
-  <script>
-    (function () {
-      const section = document.getElementById('ProjectSection');
-      if (!section || section.dataset.sfsInitialized === 'true') return;
-      section.dataset.sfsInitialized = 'true';
-
-      const radialWrap = section.querySelector('[data-sfs-radial-lines]');
-      const radialCanvas = section.querySelector('[data-sfs-radial-canvas]');
-      const scrollHint = section.querySelector('[data-sfs-scroll-hint]');
-      const fixedText = section.querySelector('[data-sfs-fixed-text]');
-      const projectCards = Array.from(section.querySelectorAll('.sfs-project-card'));
-
-      const palettes = {
-        'purple-blue': ['#6B3FA0', '#3A1F6F', '#8B5FCF', '#2A1050', '#C4A0FF', '#1A0A3A', '#9070D0', '#4020A0'],
-        'warm-gold': ['#C89030', '#8B6520', '#F0C060', '#5A3A10', '#FFE090', '#3A2505', '#D4A040', '#6B4A15'],
-        'teal-green': ['#1A8060', '#0A5030', '#30C090', '#052A18', '#80FFD0', '#082820', '#20A070', '#0D6040'],
-        'pink-magenta': ['#C03070', '#801040', '#FF60A0', '#500828', '#FFB0D0', '#3A0518', '#D04080', '#901850'],
-        'rgb-led': ['#FF2020', '#20FF20', '#2020FF', '#FFFF00', '#FF00FF', '#00FFFF', '#FF8800', '#8800FF'],
-        'blue-cool': ['#2050A0', '#0A2060', '#4080E0', '#051540', '#80B0FF', '#0A1830', '#3060C0', '#1A3080'],
-        'cyan-glass': ['#20A0B0', '#0A6070', '#40D0E0', '#053040', '#80F0FF', '#082028', '#30B0C0', '#0C7080']
-      };
-
-      function drawRadialLines() {
-        if (!radialCanvas) return;
-        const ctx = radialCanvas.getContext('2d');
-        if (!ctx) return;
-
-        const size = 600;
-        radialCanvas.width = size;
-        radialCanvas.height = size;
-        ctx.clearRect(0, 0, size, size);
-
-        const cx = size / 2;
-        const cy = size / 2;
-        for (let i = 0; i < 72; i += 1) {
-          const angle = (i / 72) * Math.PI * 2 - Math.PI / 2;
-          const r1 = 160;
-          const r2 = 260;
-          ctx.beginPath();
-          ctx.moveTo(cx + Math.cos(angle) * r1, cy + Math.sin(angle) * r1);
-          ctx.lineTo(cx + Math.cos(angle) * r2, cy + Math.sin(angle) * r2);
-          ctx.strokeStyle = 'rgba(180, 30, 30, ' + (0.3 + Math.random() * 0.4).toFixed(3) + ')';
-          ctx.lineWidth = 1.5;
-          ctx.stroke();
-        }
-      }
-
-      function drawCanvas(canvas, colorKey) {
-        const ctx = canvas.getContext('2d');
-        if (!ctx) return;
-
-        const colors = palettes[colorKey] || palettes['purple-blue'];
-        const width = 900;
-        const height = 600;
-        canvas.width = width;
-        canvas.height = height;
-        ctx.clearRect(0, 0, width, height);
-
-        const skyGrad = ctx.createLinearGradient(0, 0, 0, 200);
-        skyGrad.addColorStop(0, '#1A2540');
-        skyGrad.addColorStop(1, '#3060A0');
-        ctx.fillStyle = skyGrad;
-        ctx.fillRect(0, 0, width, 250);
-
-        const buildGrad = ctx.createLinearGradient(0, 150, 0, height);
-        buildGrad.addColorStop(0, colors[0]);
-        buildGrad.addColorStop(0.5, colors[1]);
-        buildGrad.addColorStop(1, colors[3]);
-        ctx.fillStyle = buildGrad;
-        ctx.fillRect(100, 150, 700, 450);
-
-        if (colorKey === 'rgb-led') {
-          for (let y = 160; y < 580; y += 18) {
-            for (let x = 120; x < 780; x += 18) {
-              const color = colors[Math.floor(Math.random() * colors.length)];
-              ctx.fillStyle = color;
-              ctx.globalAlpha = 0.5 + Math.random() * 0.5;
-              ctx.beginPath();
-              ctx.arc(x, y, 5, 0, Math.PI * 2);
-              ctx.fill();
-            }
-          }
-          ctx.globalAlpha = 1;
-        } else {
-          const spacing = 40;
-          ctx.strokeStyle = colors[4] || '#ffffff';
-          ctx.globalAlpha = 0.15;
-          ctx.lineWidth = 1;
-
-          for (let y = 160; y < 600; y += spacing) {
-            for (let x = 100; x < 800; x += spacing) {
-              ctx.beginPath();
-              ctx.moveTo(x, y);
-              ctx.lineTo(x + spacing / 2, y + spacing / 2);
-              ctx.lineTo(x + spacing, y);
-              ctx.stroke();
-
-              ctx.beginPath();
-              ctx.moveTo(x, y);
-              ctx.lineTo(x + spacing / 2, y - spacing / 2);
-              ctx.stroke();
-            }
-          }
-          ctx.globalAlpha = 1;
-
-          const glowGrad = ctx.createRadialGradient(450, 350, 50, 450, 350, 400);
-          glowGrad.addColorStop(0, (colors[4] ? colors[4] : '#ffffff') + '40');
-          glowGrad.addColorStop(1, 'transparent');
-          ctx.fillStyle = glowGrad;
-          ctx.fillRect(100, 150, 700, 450);
-        }
-
-        ctx.fillStyle = '#0A0A0A';
-        ctx.fillRect(0, 520, width, 80);
-
-        for (let i = 0; i < 5; i += 1) {
-          const tx = 150 + i * 150 + (Math.random() - 0.5) * 60;
-          ctx.fillStyle = '#0A1510';
-          ctx.beginPath();
-          ctx.arc(tx, 500, 25 + Math.random() * 15, 0, Math.PI * 2);
-          ctx.fill();
-          ctx.fillRect(tx - 3, 500, 6, 30);
-        }
-
-        const vignette = ctx.createRadialGradient(width / 2, height / 2, 140, width / 2, height / 2, 560);
-        vignette.addColorStop(0, 'rgba(0,0,0,0)');
-        vignette.addColorStop(1, 'rgba(0,0,0,0.28)');
-        ctx.fillStyle = vignette;
-        ctx.fillRect(0, 0, width, height);
-      }
-
-      function applyCardImage(card) {
-        const imageUrl = (card.getAttribute('data-image') || '').trim();
-        const img = card.querySelector('.sfs-card-photo');
-        const canvas = card.querySelector('.sfs-card-image canvas');
-        const colorKey = card.getAttribute('data-sfs-color') || 'purple-blue';
-
-        if (!img || !canvas) return;
-
-        if (imageUrl) {
-          img.onload = function () {
-            img.classList.add('sfs-loaded');
-            canvas.style.display = 'none';
-          };
-
-          img.onerror = function () {
-            img.classList.remove('sfs-loaded');
-            canvas.style.display = 'block';
-            drawCanvas(canvas, colorKey);
-          };
-
-          img.src = imageUrl;
-        } else {
-          img.removeAttribute('src');
-          img.classList.remove('sfs-loaded');
-          canvas.style.display = 'block';
-          drawCanvas(canvas, colorKey);
-        }
-      }
-
-      drawRadialLines();
-      projectCards.forEach(applyCardImage);
-
-      const cardObserver = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add('sfs-visible');
-            } else {
-              entry.target.classList.remove('sfs-visible');
-            }
-          });
-        },
-        {
-          threshold: 0.12,
-          rootMargin: '0px 0px -40px 0px'
-        }
-      );
-
-      projectCards.forEach((card) => cardObserver.observe(card));
-
-      let hintHidden = false;
-      let ticking = false;
-
-      function updateOnScroll() {
-        ticking = false;
-        const sy = window.scrollY || window.pageYOffset || 0;
-        const vh = window.innerHeight || 1;
-        const sectionRect = section.getBoundingClientRect();
-        const sectionTop = sy + sectionRect.top;
-        const localY = Math.max(0, sy - sectionTop);
-
-        if (!hintHidden && sy > sectionTop + 80) {
-          scrollHint && scrollHint.classList.add('sfs-hidden');
-          hintHidden = true;
-        } else if (hintHidden && sy <= sectionTop + 80) {
-          scrollHint && scrollHint.classList.remove('sfs-hidden');
-          hintHidden = false;
-        }
-
-        if (radialWrap) {
-          const radialFade = Math.max(0, 1 - localY / (vh * 0.6));
-          radialWrap.style.opacity = String(radialFade * 0.6);
-        }
-
-        if (radialCanvas) {
-          radialCanvas.style.transform = 'rotate(' + (localY * 0.02).toFixed(3) + 'deg)';
-        }
-
-        if (fixedText) {
-          fixedText.style.opacity = '1';
-          fixedText.style.transform = 'translate3d(0,0,0)';
-        }
-      }
-
-      function requestTick() {
-        if (!ticking) {
-          ticking = true;
-          window.requestAnimationFrame(updateOnScroll);
-        }
-      }
-
-      window.addEventListener('scroll', requestTick, { passive: true });
-      window.addEventListener('resize', function () {
-        drawRadialLines();
-        requestTick();
-      });
-
-      updateOnScroll();
-    })();
-  </script>
-</section>
-
-
-
-
-<section id="chanelReviewSection">
-  <style>
-    #chanelReviewSection{
-      --bg:#0a0a0a;
-      --bg-soft:#111111;
-      --line:rgba(255,255,255,0.12);
-      --line-strong:rgba(255,255,255,0.22);
-      --text:#f5f5f5;
-      --muted:rgba(255,255,255,0.62);
-      --muted-2:rgba(255,255,255,0.42);
-      --card:rgba(255,255,255,0.03);
-      --card-hover:rgba(255,255,255,0.05);
-      --shadow:0 30px 80px rgba(0,0,0,0.38);
-      --radius:28px;
-      --max:1280px;
-
-      position:relative;
-      overflow:hidden;
-      background:
-        radial-gradient(circle at top left, rgba(255,255,255,0.05) 0%, transparent 34%),
-        radial-gradient(circle at bottom right, rgba(255,255,255,0.04) 0%, transparent 30%),
-        linear-gradient(180deg, #050505 0%, #0a0a0a 100%);
-      color:var(--text);
-      padding:120px 20px;
-      font-family:"Helvetica Neue","Pretendard","Noto Sans KR",Arial,sans-serif;
-      isolation:isolate;
-    }
-
-    #chanelReviewSection *{box-sizing:border-box;}
-
-    #chanelReviewSection .review-wrap{
-      max-width:var(--max);
-      margin:0 auto;
-      position:relative;
-      z-index:2;
-    }
-
-    #chanelReviewSection .review-head{
-      max-width:900px;
-      margin:0 auto 80px;
-      text-align:center;
-    }
-
-    #chanelReviewSection .review-kicker{
-      display:inline-block;
-      font-size:12px;
-      letter-spacing:.28em;
-      text-transform:uppercase;
-      color:var(--muted);
-      padding-bottom:14px;
-      margin-bottom:22px;
-      position:relative;
-    }
-
-    #chanelReviewSection .review-kicker::after{
-      content:"";
-      position:absolute;
-      left:50%;
-      bottom:0;
-      width:66px;
-      height:1px;
-      background:rgba(255,255,255,0.35);
-      transform:translateX(-50%);
-    }
-
-    #chanelReviewSection .review-title{
-      margin:0;
-      font-size:clamp(2rem, 5vw, 4.4rem);
-      line-height:1.08;
-      font-weight:500;
-      letter-spacing:-0.04em;
-    }
-
-    #chanelReviewSection .review-sub{
-      margin:26px auto 0;
-      max-width:760px;
-      font-size:clamp(1rem, 1.4vw, 1.1rem);
-      line-height:1.9;
-      color:var(--muted);
-      font-weight:400;
-    }
-
-    #chanelReviewSection .review-list{
-      display:grid;
-      grid-template-columns:repeat(3, minmax(0,1fr));
-      gap:24px;
-    }
-
-    #chanelReviewSection .review-card{
-      position:relative;
-      min-height:420px;
-      padding:34px 30px 30px;
-      border:1px solid var(--line);
-      border-radius:var(--radius);
-      background:
-        linear-gradient(180deg, rgba(255,255,255,0.045) 0%, rgba(255,255,255,0.02) 100%);
-      backdrop-filter:blur(8px);
-      box-shadow:var(--shadow);
-      transition:
-        transform .7s cubic-bezier(.22,1,.36,1),
-        border-color .5s ease,
-        background .5s ease,
-        box-shadow .5s ease;
-      overflow:hidden;
-    }
-
-    #chanelReviewSection .review-card::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:
-        linear-gradient(135deg, rgba(255,255,255,0.11) 0%, transparent 18%, transparent 82%, rgba(255,255,255,0.05) 100%);
-      opacity:.6;
-      pointer-events:none;
-    }
-
-    #chanelReviewSection .review-card::after{
-      content:"";
-      position:absolute;
-      left:28px;
-      right:28px;
-      top:0;
-      height:1px;
-      background:linear-gradient(90deg, transparent, rgba(255,255,255,0.45), transparent);
-      opacity:.8;
-    }
-
-    #chanelReviewSection .review-card:hover{
-      transform:translateY(-10px);
-      border-color:var(--line-strong);
-      background:
-        linear-gradient(180deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.028) 100%);
-      box-shadow:0 40px 100px rgba(0,0,0,0.5);
-    }
-
-    #chanelReviewSection .quote-mark{
-      font-size:58px;
-      line-height:1;
-      color:rgba(255,255,255,0.18);
-      font-weight:500;
-      margin-bottom:14px;
-      font-family:Georgia, "Times New Roman", serif;
-    }
-
-    #chanelReviewSection .review-text{
-      margin:0;
-      font-size:1rem;
-      line-height:1.95;
-      color:rgba(255,255,255,0.9);
-      letter-spacing:-0.01em;
-    }
-
-    #chanelReviewSection .review-bottom{
-      margin-top:34px;
-      padding-top:22px;
-      border-top:1px solid rgba(255,255,255,0.1);
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:14px;
-      flex-wrap:wrap;
-    }
-
-    #chanelReviewSection .review-user{
-      display:flex;
-      flex-direction:column;
-      gap:6px;
-    }
-
-    #chanelReviewSection .review-name{
-      font-size:1rem;
-      font-weight:500;
-      letter-spacing:.02em;
-      color:#fff;
-    }
-
-    #chanelReviewSection .review-meta{
-      font-size:.88rem;
-      color:var(--muted-2);
-      letter-spacing:.06em;
-      text-transform:uppercase;
-    }
-
-    #chanelReviewSection .review-star{
-      color:#fff;
-      letter-spacing:.18em;
-      font-size:.8rem;
-      opacity:.9;
-      white-space:nowrap;
-    }
-
-    #chanelReviewSection .review-side-line{
-      width:100%;
-      height:1px;
-      margin:90px 0 0;
-      background:linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
-      opacity:.7;
-    }
-
-    #chanelReviewSection .reveal{
-      opacity:0;
-      transform:translateY(45px) scale(.985);
-      filter:blur(8px);
-      transition:
-        opacity 1.2s cubic-bezier(.22,1,.36,1),
-        transform 1.2s cubic-bezier(.22,1,.36,1),
-        filter 1.2s cubic-bezier(.22,1,.36,1);
-      will-change:transform, opacity, filter;
-    }
-
-    #chanelReviewSection .reveal.is-visible{
-      opacity:1;
-      transform:translateY(0) scale(1);
-      filter:blur(0);
-    }
-
-    #chanelReviewSection .delay-1{transition-delay:.08s;}
-    #chanelReviewSection .delay-2{transition-delay:.18s;}
-    #chanelReviewSection .delay-3{transition-delay:.28s;}
-
-    #chanelReviewSection .ambient{
-      position:absolute;
-      border-radius:50%;
-      filter:blur(70px);
-      opacity:.12;
-      pointer-events:none;
-      z-index:1;
-    }
-
-    #chanelReviewSection .ambient.a1{
-      width:300px;
-      height:300px;
-      top:5%;
-      left:-80px;
-      background:#ffffff;
-      animation:chanelFloat1 11s ease-in-out infinite alternate;
-    }
-
-    #chanelReviewSection .ambient.a2{
-      width:240px;
-      height:240px;
-      right:-70px;
-      bottom:8%;
-      background:#dcdcdc;
-      animation:chanelFloat2 13s ease-in-out infinite alternate;
-    }
-
-    @keyframes chanelFloat1{
-      0%{transform:translate3d(0,0,0) scale(1);}
-      100%{transform:translate3d(30px,20px,0) scale(1.08);}
-    }
-
-    @keyframes chanelFloat2{
-      0%{transform:translate3d(0,0,0) scale(1);}
-      100%{transform:translate3d(-20px,-30px,0) scale(1.06);}
-    }
-
-    @media (max-width:1024px){
-      #chanelReviewSection{
-        padding:100px 18px;
-      }
-      #chanelReviewSection .review-list{
-        grid-template-columns:1fr;
-      }
-      #chanelReviewSection .review-card{
-        min-height:auto;
-      }
-      #chanelReviewSection .review-head{
-        margin-bottom:56px;
-      }
-    }
-
-    @media (max-width:640px){
-      #chanelReviewSection .review-card{
-        padding:28px 22px 24px;
-        border-radius:22px;
-      }
-
-      #chanelReviewSection .review-title{
-        line-height:1.15;
-      }
-
-      #chanelReviewSection .review-sub{
-        line-height:1.8;
-      }
-
-      #chanelReviewSection .quote-mark{
-        font-size:50px;
-      }
-
-      #chanelReviewSection .review-text{
-        font-size:.97rem;
-        line-height:1.85;
-      }
-    }
-  </style>
-
-  <div class="ambient a1"></div>
-  <div class="ambient a2"></div>
-
-  <div class="review-wrap">
-    <div class="review-head reveal is-visible">
-      <span class="review-kicker">Client Voices</span>
-      <h2 class="review-title">
-        브랜딩 사이트를 통해,<br>
-        사업이 달라진 후기
-      </h2>
-      <p class="review-sub">
-        브랜드 사이트 하나만으로도 사업의 방향과 가치가 달라진<br>
-        실제 클라이언트가 체감한 변화의 이야기를 담았습니다.
-      </p>
-    </div>
-
-    <div class="review-list">
-      <article class="review-card reveal delay-1">
-        <div class="quote-mark">“</div>
-        <p class="review-text">
-          큰 그림은 있었고 사업을 차근차근 10년을 준비해왔지만 명확한 컨셉이나 타겟이 완전히 뚜렷한 상태가 아니었습니다.
-          그런데 사이트를 함께 만들어가면서 우리가 어떤 가치를 주는지
-          점점 선명해졌고, 명확하게 비즈니스 그림이 그려지면서 사업 진행 속도가 5~6년은 앞당겨졌다고 느껴집니다.
-        </p>
-        <div class="review-bottom">
-          <div class="review-user">
-            <span class="review-name">J. Kim</span>
-            <span class="review-meta">Brand Strategy</span>
-          </div>
-          <div class="review-star">★★★★★</div>
-        </div>
-      </article>
-
-      <article class="review-card reveal delay-2">
-        <div class="quote-mark">“</div>
-        <p class="review-text">
-          예전에는 회사를 설명하려면 매번 처음부터 끝까지 다 이야기해야 했습니다.
-          브랜딩은 커녕 뭔가를 보여주고 싶어도 온라인으로 보여줄게 전혀 없었습니다.<br><br>
-          그런데 지금은 비즈니스의 흐름에 맞게 만들어지다보니 사이트 링크 하나만 보내면 제가 2시간 말해도 못 얻던 반응들이 바로 나타난다는 걸 느낄 수 있었습니다.<br><br>
-          그리고 사이트가 멋지다보니 살펴보고 정말 큰 사업을 한다고 느꼈는지 근황을 구체적으로 여쭤보는 사람도 생기고,
-          기존 미팅 때 2시간 3시간 걸렸던 내용이 사이트만 가지고도 10분만에 전부 이해시키고 다음 스텝의 이야기를 바로 할 수 있는 흐름이 되었습니다.
-        </p>
-        <div class="review-bottom">
-          <div class="review-user">
-            <span class="review-name">S. Lee</span>
-            <span class="review-meta">Business Owner</span>
-          </div>
-          <div class="review-star">★★★★★</div>
-        </div>
-      </article>
-
-      <article class="review-card reveal delay-3">
-        <div class="quote-mark">“</div>
-        <p class="review-text">
-          미팅에 들어갔을 때 흐름이 완전히 달라졌습니다.
-          예전에는 우리를 설명하느라 정신이 없었는데, 요즘은 일단
-          사이트의 메인화면만 틀어놓습니다.<br><br>그럼 클라이언트가
-          첫 화면을 보고 처음부터 '와...잘 만들었다.' 라는 작은 감탄이 나오고
-          자연스럽게 메인 영상을 보게 되면서 공식적이고 예쁜 화면이 나오니까 
-          작은 회사가 아니라는 느낌을 바로 주게 됩니다.<br><br>
-          어느 고객이든 첫인상에서 좋은 흐름을 만들어주니까,
-          요즘은 사이트를 많이 공유하고 싶고 보여주고 싶은 마음이 자꾸만 듭니다.
-        </p>
-        <div class="review-bottom">
-          <div class="review-user">
-            <span class="review-name">H. Choi</span>
-            <span class="review-meta">Founder</span>
-          </div>
-          <div class="review-star">★★★★★</div>
-        </div>
-      </article>
-    </div>
-
-    <div class="review-side-line"></div>
-  </div>
-
-  <script>
-    (function(){
-      const section = document.querySelector('#chanelReviewSection');
-      if(!section) return;
-
-      const items = section.querySelectorAll('.reveal');
-
-      const io = new IntersectionObserver((entries)=>{
-        entries.forEach(entry=>{
-          if(entry.isIntersecting){
-            entry.target.classList.add('is-visible');
-          }
-        });
-      },{
-        threshold:0.18,
-        rootMargin:'0px 0px -8% 0px'
-      });
-
-      items.forEach(item=>{
-        if(!item.classList.contains('is-visible')){
-          io.observe(item);
-        }
-      });
-    })();
-  </script>
-</section>
 
 <section id="flosValueStructure1">
   <style>
@@ -9879,42 +10208,70 @@
         font-size:11px;
       }
 
+      /* ✅ 모바일 팝업 크기 축소 — 화면을 꽉 채우지 않고
+         상단 고정 헤더와 겹치지 않도록 상하 여백 확보 */
       #chanelFloatingSection .cf-modal-dialog,
       #chanelFloatingSection .cf-privacy-dialog{
-        width:min(94vw, 560px);
-        max-height:calc(100vh - 24px);
+        width:min(88vw, 440px);
+        /* 상하로 넉넉한 여백을 두어 헤더/하단바와 겹침 방지 (dvh 우선) */
+        max-height:calc(100vh - 180px);
+        max-height:calc(100dvh - 180px);
         border-radius:22px;
-        padding:24px 18px 20px;
+        padding:22px 18px 20px;
       }
 
       #chanelFloatingSection .cf-modal-head,
       #chanelFloatingSection .cf-privacy-head{
-        padding-right:42px;
-        margin-bottom:20px;
+        padding-right:44px;
+        margin-bottom:18px;
+      }
+
+      #chanelFloatingSection .cf-modal-close,
+      #chanelFloatingSection .cf-privacy-close{
+        width:38px;
+        height:38px;
+        right:14px;
+        top:14px;
+      }
+
+      #chanelFloatingSection .cf-modal-close svg,
+      #chanelFloatingSection .cf-privacy-close svg{
+        width:18px;
+        height:18px;
       }
 
       #chanelFloatingSection .cf-modal-title{
-        font-size:27px;
+        font-size:25px;
       }
 
       #chanelFloatingSection .cf-privacy-title{
-        font-size:24px;
+        font-size:22px;
       }
 
       #chanelFloatingSection .cf-modal-desc{
-        font-size:14px;
+        font-size:13.5px;
         line-height:1.6;
+        margin-top:10px;
+      }
+
+      #chanelFloatingSection .cf-field{
+        margin-bottom:12px;
       }
 
       #chanelFloatingSection .cf-field input,
       #chanelFloatingSection .cf-field select{
-        height:56px;
+        height:52px;
         border-radius:12px;
         font-size:14px;
       }
 
+      #chanelFloatingSection .cf-check-text{
+        font-size:13.5px;
+      }
+
       #chanelFloatingSection .cf-submit-btn{
-        height:58px;
+        height:54px;
+        margin-top:22px;
         border-radius:14px;
         font-size:16px;
       }
@@ -9930,6 +10287,15 @@
 
       #chanelFloatingSection .cf-privacy-item p{
         font-size:13px;
+      }
+    }
+
+    /* 세로로 아주 짧은 화면(가로 모드 등) 대응 */
+    @media (max-width: 768px) and (max-height: 720px){
+      #chanelFloatingSection .cf-modal-dialog,
+      #chanelFloatingSection .cf-privacy-dialog{
+        max-height:calc(100vh - 100px);
+        max-height:calc(100dvh - 100px);
       }
     }
   </style>
