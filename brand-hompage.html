@@ -6103,14 +6103,14 @@
     }
 
     #chanelReviewSection .review-bottom{
-      margin-top:34px;
-      padding-top:22px;
-      border-top:1px solid rgba(255,255,255,0.1);
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:14px;
-      flex-wrap:wrap;
+     margin-bottom: 34px;
+    padding-bottom: 22px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    flex-wrap: wrap;
     }
 
     #chanelReviewSection .review-user{
@@ -6134,9 +6134,9 @@
     }
 
     #chanelReviewSection .review-star{
-      color:#fff;
+      color:#ffeb3b;
       letter-spacing:.18em;
-      font-size:.8rem;
+      font-size:1rem;
       opacity:.9;
       white-space:nowrap;
     }
@@ -6265,19 +6265,20 @@
 
     <div class="review-list">
       <article class="review-card reveal delay-1">
-        <div class="quote-mark">“</div>
-        <p class="review-text">
-          사업의 큰 그림은 있었고 기반을 10년간 차근차근 준비해왔지만 명확한 컨셉이나 타겟이 완전히 뚜렷한 상태가 아니었습니다.<br><Br>
-          2군데 이미 홈페이지 제작을 맡겨봤는데<br>원하는 흐름대로 제작도 안되고<br>결국 방치가 되어 더 나아가지 못했는데,<br><br>이곳에서 제작을 하게 되면서 느끼게 된 건<br>우리가 어떤 가치를 주는지
-          점점 선명해졌고, 명확하게 비즈니스 그림이 그려지면서 사업 진행 속도가 5~6년은 앞당겨졌다고 느껴집니다.
-        </p>
-        <div class="review-bottom">
+         <div class="review-bottom">
           <div class="review-user">
-            <span class="review-name">강XX 대표님</span>
+            <span class="review-name">온라인 사업적 기반이 필요했지만<br>제작에 어려움이 있었던<br><br>강XX 대표님 실제 후기</span>
             <!-- <span class="review-meta">Brand Strategy</span> -->
           </div>
           <div class="review-star">★★★★★</div>
         </div>
+        <!-- <div class="quote-mark">“</div> -->
+        <p class="review-text">
+          사업의 큰 그림은 있었고 기반을 10년간 차근차근 준비해왔지만 명확한 컨셉이나 타겟이 완전히 뚜렷한 상태가 아니었습니다.<br><Br>
+          2군데 이미 홈페이지 제작을 맡겨봤는데<br>원하는 흐름대로 제작도 안되고<br>결국 방치가 되어 더 나아가지 못했는데,<br><br>이곳에서 제작을 맡기게 되면서, 확실히 다른건<br>대표가 비즈니스를 이해하고 마케팅을 이해하고 있다는 것이었습니다.<br><br>보통 업체들은 기획서만 달라고 하니까 전문 인력이 없는 상황에서 홈페이지를 제대로 만드려면 어떻게 기획을 하고 비즈니스에 활용되려면 어 떻게 해야하는지 감이 안잡혔는데,<br><br>비즈니스의 흐름부터 먼저 다 잡아주고 마케팅을 어떻게 활용해야 하는지까지 전부 잡아주니까 생각하는 그 이상의 결과물이 나오고<br>제작 중임에도 불구하고 비즈니스에 활용되는 상황이 우리가 어떤 가치를 주는지
+          점점 선명해졌고, 명확하게 비즈니스 그림이 그려지면서 사업 진행 속도가 5~6년은 앞당겨졌다고 느껴집니다.
+        </p>
+       
       </article>
 
       <article class="review-card reveal delay-2">
@@ -9732,11 +9733,11 @@
       word-break:keep-all;
     }
 
-    /* 예약 모달 */
+    /* 예약 모달 — z-index 최상위 */
     #chanelFloatingSection .cf-modal{
       position:fixed;
       inset:0;
-      z-index:10000;
+      z-index:2147483000;
       opacity:0;
       visibility:hidden;
       pointer-events:none;
@@ -9774,6 +9775,20 @@
         0 40px 90px rgba(0,0,0,.22),
         inset 0 1px 0 rgba(255,255,255,.95);
       padding:34px 30px 30px;
+    }
+
+    /* ✅ 팝업 내부 스크롤바 숨김 (스크롤 동작은 유지) */
+    #chanelFloatingSection .cf-modal-dialog,
+    #chanelFloatingSection .cf-privacy-dialog{
+      scrollbar-width:none;        /* Firefox */
+      -ms-overflow-style:none;     /* 구형 Edge/IE */
+    }
+
+    #chanelFloatingSection .cf-modal-dialog::-webkit-scrollbar,
+    #chanelFloatingSection .cf-privacy-dialog::-webkit-scrollbar{
+      width:0;
+      height:0;
+      display:none;                /* Chrome, Safari */
     }
 
     #chanelFloatingSection .cf-modal-close{
@@ -9998,6 +10013,7 @@
       transition:
         transform .22s ease,
         opacity .22s ease,
+        background .22s ease,
         box-shadow .22s ease;
       box-shadow:0 16px 28px rgba(0,0,0,.12);
     }
@@ -10013,11 +10029,19 @@
       transform:none;
     }
 
-    /* 개인정보 팝업 */
+    /* ✅ 미완료 상태: 회색 톤 + 안내 텍스트 */
+    #chanelFloatingSection .cf-submit-btn.is-incomplete{
+      background:#9a9a9a;
+      box-shadow:0 12px 22px rgba(0,0,0,.08);
+      font-size:15px;
+      letter-spacing:-0.01em;
+    }
+
+    /* 개인정보 팝업 — z-index 최상위(+1) */
     #chanelFloatingSection .cf-privacy-modal{
       position:fixed;
       inset:0;
-      z-index:10001;
+      z-index:2147483001;
       opacity:0;
       visibility:hidden;
       pointer-events:none;
@@ -10208,85 +10232,110 @@
         font-size:11px;
       }
 
-      /* ✅ 모바일 팝업 크기 축소 — 화면을 꽉 채우지 않고
-         상단 고정 헤더와 겹치지 않도록 상하 여백 확보 */
+      /* ✅ 모바일 팝업 더 작게 — 화면을 꽉 채우지 않고 헤더와 겹치지 않게 */
       #chanelFloatingSection .cf-modal-dialog,
       #chanelFloatingSection .cf-privacy-dialog{
-        width:min(88vw, 440px);
-        /* 상하로 넉넉한 여백을 두어 헤더/하단바와 겹침 방지 (dvh 우선) */
-        max-height:calc(100vh - 180px);
-        max-height:calc(100dvh - 180px);
-        border-radius:22px;
-        padding:22px 18px 20px;
+        width:min(84vw, 380px);
+        max-height:calc(100vh - 200px);
+        max-height:calc(100dvh - 200px);
+        border-radius:20px;
+        padding:20px 16px 18px;
       }
 
       #chanelFloatingSection .cf-modal-head,
       #chanelFloatingSection .cf-privacy-head{
-        padding-right:44px;
-        margin-bottom:18px;
+        padding-right:40px;
+        margin-bottom:16px;
       }
 
       #chanelFloatingSection .cf-modal-close,
       #chanelFloatingSection .cf-privacy-close{
-        width:38px;
-        height:38px;
-        right:14px;
-        top:14px;
+        width:34px;
+        height:34px;
+        right:12px;
+        top:12px;
       }
 
       #chanelFloatingSection .cf-modal-close svg,
       #chanelFloatingSection .cf-privacy-close svg{
-        width:18px;
-        height:18px;
+        width:16px;
+        height:16px;
       }
 
       #chanelFloatingSection .cf-modal-title{
-        font-size:25px;
-      }
-
-      #chanelFloatingSection .cf-privacy-title{
         font-size:22px;
       }
 
+      #chanelFloatingSection .cf-privacy-title{
+        font-size:20px;
+      }
+
       #chanelFloatingSection .cf-modal-desc{
-        font-size:13.5px;
-        line-height:1.6;
-        margin-top:10px;
+        font-size:12.5px;
+        line-height:1.55;
+        margin-top:8px;
+      }
+
+      #chanelFloatingSection .cf-label{
+        margin-bottom:6px;
+        font-size:11px;
       }
 
       #chanelFloatingSection .cf-field{
-        margin-bottom:12px;
+        margin-bottom:10px;
       }
 
       #chanelFloatingSection .cf-field input,
       #chanelFloatingSection .cf-field select{
-        height:52px;
-        border-radius:12px;
+        height:48px;
+        border-radius:11px;
         font-size:14px;
+        padding:0 14px;
+      }
+
+      #chanelFloatingSection .cf-check{
+        margin-top:8px;
+        gap:8px;
+      }
+
+      #chanelFloatingSection .cf-check-box{
+        width:20px;
+        height:20px;
+        flex:0 0 20px;
       }
 
       #chanelFloatingSection .cf-check-text{
-        font-size:13.5px;
+        font-size:12.5px;
+      }
+
+      #chanelFloatingSection .cf-privacy-link{
+        font-size:12px;
+        margin-top:8px;
       }
 
       #chanelFloatingSection .cf-submit-btn{
-        height:54px;
-        margin-top:22px;
-        border-radius:14px;
-        font-size:16px;
+        height:50px;
+        margin-top:18px;
+        border-radius:12px;
+        font-size:15px;
+      }
+
+      #chanelFloatingSection .cf-submit-btn.is-incomplete{
+        font-size:13.5px;
       }
 
       #chanelFloatingSection .cf-privacy-item{
-        padding:14px 14px;
-        border-radius:14px;
+        padding:12px 12px;
+        border-radius:12px;
       }
 
       #chanelFloatingSection .cf-privacy-item h4{
-        font-size:14px;
+        font-size:13.5px;
       }
 
       #chanelFloatingSection .cf-privacy-item p{
-        font-size:13px;
+        font-size:12.5px;
+        line-height:1.6;
       }
     }
 
@@ -10294,8 +10343,8 @@
     @media (max-width: 768px) and (max-height: 720px){
       #chanelFloatingSection .cf-modal-dialog,
       #chanelFloatingSection .cf-privacy-dialog{
-        max-height:calc(100vh - 100px);
-        max-height:calc(100dvh - 100px);
+        max-height:calc(100vh - 90px);
+        max-height:calc(100dvh - 90px);
       }
     }
   </style>
@@ -10327,12 +10376,40 @@
 
       let submitted = false;
 
+      /* ============================================================
+         ✅ 미입력/미체크 항목을 버튼 텍스트로 안내
+         - 위에서부터 순서대로 첫 번째 미완료 항목을 표시
+         - 모두 완료되면 "신청하기"로 전환
+         ============================================================ */
+      function getMissingLabel(){
+        if(!nameInput.value.trim())      return '성함을 입력해 주세요';
+        if(!phoneInput.value.trim())     return '연락처를 입력해 주세요';
+        if(!categoryInput.value)         return '상담 분야를 선택해 주세요';
+        if(!agreeCall.checked)           return '상담 연락 동의가 필요해요';
+        if(!agreePrivacy.checked)        return '개인정보 동의가 필요해요';
+        return null;
+      }
+
+      function updateSubmitState(){
+        if(submitted) return;
+
+        const missing = getMissingLabel();
+        if(missing){
+          submitBtn.textContent = missing;
+          submitBtn.classList.add('is-incomplete');
+        }else{
+          submitBtn.textContent = '신청하기';
+          submitBtn.classList.remove('is-incomplete');
+        }
+      }
+
       function openModal(){
         modal.classList.add('is-open');
         modal.setAttribute('aria-hidden', 'false');
         document.documentElement.style.overflow = 'hidden';
         document.body.style.overflow = 'hidden';
         floating.classList.remove('open');
+        updateSubmitState();
         setTimeout(function(){
           nameInput.focus();
         }, 50);
@@ -10458,56 +10535,71 @@
         }
       });
 
+      /* ✅ 각 항목이 바뀔 때마다 버튼 상태 갱신 */
+      [nameInput, phoneInput].forEach(function(el){
+        el.addEventListener('input', updateSubmitState);
+      });
+      categoryInput.addEventListener('change', updateSubmitState);
+      agreeCall.addEventListener('change', updateSubmitState);
+      agreePrivacy.addEventListener('change', updateSubmitState);
+
       form.addEventListener('submit', function(e){
         if(submitted){
           e.preventDefault();
           return;
         }
 
+        /* 미완료 항목이 있으면 제출 막고 해당 위치로 포커스 */
         if(!nameInput.value.trim()){
           e.preventDefault();
-          alert('성함을 입력해주세요.');
+          updateSubmitState();
           nameInput.focus();
           return;
         }
 
         if(!phoneInput.value.trim()){
           e.preventDefault();
-          alert('연락처를 입력해주세요.');
+          updateSubmitState();
           phoneInput.focus();
           return;
         }
 
         if(!categoryInput.value){
           e.preventDefault();
-          alert('상담 분야를 선택해주세요.');
+          updateSubmitState();
           categoryInput.focus();
           return;
         }
 
         if(!agreeCall.checked){
           e.preventDefault();
-          alert('상담 연락 및 예약 진행 동의가 필요합니다.');
+          updateSubmitState();
           return;
         }
 
         if(!agreePrivacy.checked){
           e.preventDefault();
-          alert('개인정보 수집 및 이용 동의가 필요합니다.');
+          updateSubmitState();
           return;
         }
 
         submitted = true;
         submitBtn.disabled = true;
+        submitBtn.classList.remove('is-incomplete');
+        submitBtn.textContent = '신청 중...';
 
         setTimeout(function(){
           alert('신청이 접수되었습니다.');
           form.reset();
           submitBtn.disabled = false;
           submitted = false;
+          updateSubmitState();
           closeModal();
         }, 900);
       });
+
+      /* 초기 버튼 상태 */
+      updateSubmitState();
     })();
   </script>
 </section>
