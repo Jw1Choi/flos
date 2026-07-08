@@ -704,6 +704,8 @@
    Scope: #bgScrollWrap ONLY
    - 다른 코드와 충돌 방지
    - 외부 의존: 없음 (순수 Vanilla JS + Vimeo API)
+   - ✅ 섹션 높이 픽셀 고정: 스크롤 중 어떤 효과가 일어나도
+     문서 전체 높이가 변하지 않아 위치 튕김이 발생하지 않음
    =============================== -->
 
   <style>
@@ -741,8 +743,9 @@
       position: relative;
     }
 
+    /* ✅ min-height 100vh 제거 — JS가 픽셀로 고정한 높이만 사용
+       (100vh는 모바일 주소창 변동 시 값이 바뀌어 섹션 높이를 흔듦) */
     #bgScrollWrap .sec_visual {
-      min-height: 100vh;
       position: relative;
       overflow: hidden;
       background: #000;
@@ -758,11 +761,13 @@
       background: #000;
     }
 
+    /* ✅ 비디오 크기도 vh/vw 대신 부모(고정 픽셀) 기준 %로 —
+       주소창 변동에 반응하지 않음 */
     #bgScrollWrap .video_wrap video,
     #bgScrollWrap .video_wrap iframe {
-      width: 100vw;
-      min-width: 177.77vh;
-      height: 100vh;
+      width: 100%;
+      height: 100%;
+      min-width: calc(var(--bgf-vh, 100vh) * 1.7777778);
       min-height: 56.25vw;
       position: absolute;
       top: 50%;
@@ -848,15 +853,18 @@
     }
 
     /* ====== Title Wrap ====== */
+    /* ✅ min-height: 100vh → 고정 픽셀 변수. sticky 컨테이너 안이라
+       레이아웃엔 영향 없지만 일관성 위해 잠긴 값 사용 */
     #bgScrollWrap .title_wrap {
       position: relative;
       z-index: 4;
       width: 100%;
-      min-height: 100vh;
+      min-height: var(--bgf-vh, 100vh);
       display: flex;
       align-items: center;
       justify-content: center;
       padding: clamp(44px, 8vh, 96px) var(--padX);
+      box-sizing: border-box;
     }
 
     #bgScrollWrap .title_inner {
@@ -1348,17 +1356,32 @@
       const videoWrap = root.querySelector('[data-bgf-video]');
       const titleWrapEl = root.querySelector('.title_wrap');
 
+      /* ============================================================
+         ✅ 핵심 수정: viewport 높이를 최초 1회 픽셀로 잠금
+         - 모바일 주소창이 나타나거나 사라져도 innerHeight 변화를 무시
+         - 섹션(pin-spacer) 높이가 절대 변하지 않음
+           → 아래 내용을 읽는 중 문서 높이가 바뀌어 위치가 튕기는 현상 차단
+         ============================================================ */
+      let lockedVh = window.innerHeight;
+      let lastWidth = window.innerWidth;
+
+      function lockViewportHeight() {
+        lockedVh = window.innerHeight;
+        root.style.setProperty('--bgf-vh', lockedVh + 'px');
+      }
+
+      /* ✅ 높이를 100vh가 아닌 잠긴 픽셀값으로 고정 */
       function setupPin() {
-        const vh = window.innerHeight;
-        pinSpacer.style.cssText = 'position:relative;height:' + (vh * 4) + 'px;';
+        pinSpacer.style.cssText = 'position:relative;height:' + (lockedVh * 4) + 'px;';
         secVisual.style.cssText =
-          'position:sticky;top:0;width:100%;height:100vh;' +
+          'position:sticky;top:0;width:100%;height:' + lockedVh + 'px;' +
           'max-height:none;max-width:none;box-sizing:border-box;overflow:hidden;';
       }
 
+      /* ✅ window.innerHeight 대신 잠긴 값 사용 → 진행도 jitter 차단 */
       function getProgress() {
         const scrolled = -pinSpacer.getBoundingClientRect().top;
-        return Math.max(0, Math.min(1, scrolled / (window.innerHeight * 3)));
+        return Math.max(0, Math.min(1, scrolled / (lockedVh * 3)));
       }
 
       function remap(v, i0, i1, o0, o1) {
@@ -1668,6 +1691,7 @@
       }
 
       function boot() {
+        lockViewportHeight();
         setupPin();
         revealTitle();
         watchSectionTitle();
@@ -1685,13 +1709,36 @@
 
       window.addEventListener('scroll', scheduleUpdate, { passive: true });
 
+      /* ============================================================
+         ✅ resize 처리 변경
+         - 기존: 모든 resize에서 setupPin 재실행
+           → 모바일 주소창 토글마다 innerHeight가 바뀌어
+             섹션 높이가 재계산되고 문서 전체가 튕김
+         - 변경: 가로폭이 실제로 바뀐 경우(기기 회전, 데스크톱 창 조절)에만
+           높이를 다시 잠그고 재계산.
+           주소창 토글은 width가 그대로이므로 완전히 무시됨.
+         ============================================================ */
       let resizeRaf = 0;
       window.addEventListener('resize', function () {
+        if (window.innerWidth === lastWidth) return;
+
+        lastWidth = window.innerWidth;
         cancelAnimationFrame(resizeRaf);
         resizeRaf = requestAnimationFrame(function () {
+          lockViewportHeight();
           setupPin();
           update();
         });
+      }, { passive: true });
+
+      /* ✅ 화면 회전 시에만 명시적으로 재계산 (안정화 딜레이 포함) */
+      window.addEventListener('orientationchange', function () {
+        setTimeout(function () {
+          lastWidth = window.innerWidth;
+          lockViewportHeight();
+          setupPin();
+          update();
+        }, 250);
       });
 
     })();
