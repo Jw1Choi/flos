@@ -2956,6 +2956,8 @@
       perspective:1800px;
       perspective-origin:50% 50%;
       overflow:hidden;
+      /* ✅ 상하 여백 확보 — 카드가 화면 끝에 딱 붙지 않도록 */
+      padding:16px;
     }
 
     #flipScrollSection .fss-inner{
@@ -2978,6 +2980,8 @@
       box-shadow:
         0 24px 70px rgba(0,0,0,0.14),
         0 10px 30px rgba(0,0,0,0.08);
+      /* ✅ 뷰포트 맞춤 축소: JS가 --fss-fit을 조절해 카드 전체가 항상 보이게 함 */
+      transform:scale(var(--fss-fit, 1));
       transform-origin:center center;
       backface-visibility:hidden;
     }
@@ -3037,6 +3041,10 @@
     @media (max-width: 768px){
       #flipScrollSection{
         height:300vh;
+      }
+
+      #flipScrollSection .fss-stage{
+        padding:12px;
       }
 
       #flipScrollSection .fss-inner{
@@ -3183,38 +3191,43 @@
             }
 
             @media (max-width:768px){
+              /* ✅ 모바일 여백 축소 — 카드 전체 높이를 낮춰 맞춤 축소율을 완화 */
               #forestBenefitSection{
-                padding:74px 0;
+                padding:40px 0;
               }
 
               #forestBenefitSection .fbs-grid{
                 grid-template-columns:1fr;
-                gap:16px;
-                margin-top:34px;
+                gap:12px;
+                margin-top:26px;
               }
 
               #forestBenefitSection .fbs-title{
-                font-size:clamp(26px, 7vw, 38px);
+                font-size:clamp(24px, 6.4vw, 34px);
+                margin:0 0 14px;
               }
 
               #forestBenefitSection .fbs-card{
-                padding:24px 20px;
-                border-radius:22px;
+                padding:20px 18px;
+                border-radius:20px;
               }
 
               #forestBenefitSection .fbs-icon{
-                width:50px;
-                height:50px;
-                font-size:22px;
-                border-radius:16px;
+                width:46px;
+                height:46px;
+                font-size:20px;
+                border-radius:14px;
+                margin-bottom:14px;
               }
 
               #forestBenefitSection .fbs-card h3{
-                font-size:20px;
+                font-size:19px;
+                margin:0 0 8px;
               }
 
               #forestBenefitSection .fbs-card p{
                 font-size:14px;
+                line-height:1.55;
               }
             }
           </style>
@@ -3231,7 +3244,9 @@
       const section = document.getElementById('flipScrollSection');
       if(!section) return;
 
+      const stage = section.querySelector('.fss-stage');
       const inner = section.querySelector('.fss-inner');
+      const card = section.querySelector('.fss-card');
       const floatingBadge = section.querySelector('.fss-badge-float');
       const afterBadge = section.querySelector('.fss-after');
       const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -3254,6 +3269,41 @@
           : 1 - Math.pow(-2 * t + 2, 3) / 2;
       }
 
+      /* ============================================================
+         ✅ 뷰포트 맞춤 축소 (윗부분 잘림 해결의 핵심)
+         - 카드 내용이 화면 높이보다 크면, 세로 가운데 정렬 특성상
+           위·아래가 잘려 제목(윗부분)이 사라짐.
+         - 카드의 실제(레이아웃) 높이를 재서, 화면 안에 들어오도록
+           scale 값을 계산해 --fss-fit 으로 적용.
+         - transform은 레이아웃 높이에 영향이 없고, 원점이 center라
+           축소해도 카드는 화면 정중앙에 그대로 유지되어 전체가 보임.
+         ============================================================ */
+      let fitScale = 1;
+
+      function fitCardToViewport(){
+        const vh = window.innerHeight || document.documentElement.clientHeight;
+
+        /* 측정 정확도를 위해 잠시 맞춤 축소를 해제하고 실제 높이 측정 */
+        const prev = card.style.getPropertyValue('--fss-fit');
+        section.style.setProperty('--fss-fit', '1');
+
+        const naturalH = card.offsetHeight; /* transform 영향 없는 레이아웃 높이 */
+
+        /* 스테이지 패딩(상하)만큼 뺀 가용 높이의 92%를 목표로 */
+        const stagePadY = 2 * (parseFloat(getComputedStyle(stage).paddingTop) || 0);
+        const available = (vh - stagePadY) * 0.94;
+
+        fitScale = naturalH > 0 ? clamp(available / naturalH, 0.45, 1) : 1;
+
+        section.style.setProperty('--fss-fit', fitScale.toFixed(4));
+
+        /* 축소가 반영된 상태로 다시 씬 갱신 */
+        updateScene();
+
+        /* prev 복원은 불필요 — 방금 새 값으로 덮음 */
+        void prev;
+      }
+
       function updateScene(){
         const rect = section.getBoundingClientRect();
         const vh = window.innerHeight || document.documentElement.clientHeight;
@@ -3262,6 +3312,9 @@
         const currentY = window.scrollY;
         const total = Math.max(end - start, 1);
         const progress = clamp((currentY - start) / total, 0, 1);
+
+        /* 맞춤 축소값을 flip scale에 곱해 항상 함께 유지 */
+        const F = fitScale;
 
         if(prefersReduced){
           inner.style.opacity = '1';
@@ -3333,9 +3386,38 @@
         });
       }
 
+      /* ✅ 리사이즈/회전 시 맞춤 축소 재계산 */
+      let fitRaf = 0;
+      let lastW = window.innerWidth;
+      function requestFit(){
+        cancelAnimationFrame(fitRaf);
+        fitRaf = requestAnimationFrame(fitCardToViewport);
+      }
+
       window.addEventListener('scroll', requestTick, { passive:true });
-      window.addEventListener('resize', requestTick);
-      window.addEventListener('load', requestTick);
+
+      window.addEventListener('resize', function(){
+        /* 모바일 주소창 토글(높이만 변함)로도 카드 크기가 달라질 수 있으니
+           맞춤 축소는 다시 계산하되, 스크롤 위치는 건드리지 않음 */
+        requestFit();
+      });
+
+      window.addEventListener('orientationchange', function(){
+        setTimeout(requestFit, 250);
+      });
+
+      window.addEventListener('load', function(){
+        fitCardToViewport();
+        requestTick();
+      });
+
+      /* 폰트 로딩 후 높이가 바뀔 수 있으므로 한 번 더 보정 */
+      if(document.fonts && document.fonts.ready){
+        document.fonts.ready.then(fitCardToViewport).catch(function(){});
+      }
+
+      /* 초기 실행 */
+      fitCardToViewport();
       requestTick();
     })();
   </script>
@@ -5367,22 +5449,15 @@
     </div>
 
     <h2 class="jp-intro-title">
-      비즈니스에 바로 적용되고<br>
+      비즈니스에 활용되고<br>
       신뢰 형성을 만들어주는<br>
       흐름을 설계합니다
     </h2>
 
-    <p class="jp-intro-desc">
-      우리는 단순히 페이지를 만드는 것이 아니라,<br>
-      고객이 머물고, 이해하고, 결국 행동하게 되는 흐름을 설계합니다.<br><br>
-
-      광고를 돌려도 전환이 일어나지 않는 이유는 대부분 비슷합니다.<br>
-      고객의 문제와 심리, 설득 흐름 없이 랜딩페이지가 만들어졌기 때문입니다.
-    </p>
 
     <p class="jp-intro-quote">
-      전환이 일어나는 랜딩페이지는<br>
-      디자인이 아니라 흐름으로 완성됩니다.
+         우리는 단순한 홈페이지를 만드는 것이 아니라,<br>
+      첫 접속만으로도 신규 고객에게 신뢰를 주는 흐름을 설계합니다.<br><br>
     </p>
   </div>
 </div>
