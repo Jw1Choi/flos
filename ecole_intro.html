@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<style>
+  @font-face { font-family:'Pretendard'; src:url('assets/pretendard/public/static/Pretendard-Regular.otf'); font-weight:400; }
+  @font-face { font-family:'Pretendard'; src:url('assets/pretendard/public/static/Pretendard-Medium.otf'); font-weight:500; }
+  @font-face { font-family:'Pretendard'; src:url('assets/pretendard/public/static/Pretendard-SemiBold.otf'); font-weight:600; }
+  @font-face { font-family:'Pretendard'; src:url('assets/pretendard/public/static/Pretendard-Bold.otf'); font-weight:700; }
+  @font-face { font-family:'Pretendard'; src:url('assets/pretendard/public/static/Pretendard-ExtraBold.otf'); font-weight:800; }
+  @font-face { font-family:'Pretendard'; src:url('assets/pretendard/public/static/Pretendard-Black.otf'); font-weight:900; }
+
+  :root{
+    --ink:#14181F;
+    --steel:#5C6470;
+    --line:#DCDFDA;
+    --panel:#F4F5F2;
+    --accent:#F04E00;
+    --accent-dark:#C23F00;
+  }
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  @page{ size:A4; margin:0; }
+  body{ font-family:'Pretendard',sans-serif; color:var(--ink); }
+  .page{
+    width:210mm; height:297mm;
+    padding:12mm 14mm 10mm;
+    page-break-after:always;
+    position:relative;
+    background:#fff;
+    display:flex; flex-direction:column;
+  }
+  .page:last-child{ page-break-after:auto; }
+
+  /* ── header ── */
+  .head{ display:flex; justify-content:space-between; align-items:flex-end; padding-bottom:4mm; }
+  /* 로고: ecole-logo.png 파일을 교체하면 문서 전체에 반영됩니다 */
+  .brand img.logo{ height:12.6mm; display:block; }
+  .brand small{ display:block; font-size:6.4pt; font-weight:600; letter-spacing:.34em; color:var(--steel); margin-top:1.6mm; }
+  .doc-meta{ text-align:right; font-size:7.4pt; color:var(--steel); font-weight:500; line-height:1.55; }
+  .doc-meta b{ color:var(--ink); font-weight:700; }
+  .hazard{
+    height:2.6mm; border-radius:0.6mm;
+    background:repeating-linear-gradient(-55deg, var(--accent) 0 4.2mm, var(--ink) 4.2mm 8.4mm);
+    margin-bottom:6mm;
+  }
+
+  .eyebrow{ font-size:7pt; font-weight:800; letter-spacing:.3em; color:var(--accent); margin-bottom:2.4mm; }
+
+  /* ── page1 hero ── */
+  .hero h1{ font-size:19.5pt; font-weight:900; line-height:1.28; letter-spacing:-0.035em; }
+  .hero h1 em{ font-style:normal; color:var(--accent); }
+  .hero p{ font-size:8.6pt; line-height:1.6; color:var(--steel); margin-top:3mm; max-width:170mm; font-weight:500; }
+  .hero p b{ color:var(--ink); font-weight:700; }
+
+  .stats{ display:flex; gap:4mm; margin-top:4.5mm; }
+  .stat{
+    flex:1; border:0.45mm solid var(--ink); border-radius:2mm;
+    padding:3.4mm 4.2mm 3mm;
+  }
+  .stat .n{ font-size:11.5pt; font-weight:900; letter-spacing:-0.03em; line-height:1.3; }
+  .stat .n i{ font-style:normal; color:var(--accent); }
+  .stat .l{ font-size:6.9pt; font-weight:600; color:var(--steel); margin-top:1.2mm; line-height:1.4; }
+
+  /* ── portfolio: 2열 그리드 + 썸네일 ── */
+  .section{ margin-top:5mm; }
+  .sec-head{ display:flex; align-items:baseline; gap:3mm; margin-bottom:3mm; }
+  .sec-head h2{ font-size:12.5pt; font-weight:800; letter-spacing:-0.02em; }
+  .sec-head .en{ font-size:6.6pt; font-weight:700; letter-spacing:.26em; color:var(--steel); }
+
+  .ports{ display:flex; gap:3.5mm; }      /* 한 행 = 카드 2개 */
+  .ports + .ports{ margin-top:3.5mm; }
+  .port{
+    flex:1;                                /* 행 안에서 2등분 */
+    display:flex; gap:3.2mm; align-items:center;
+    background:var(--panel); border-radius:2mm; padding:3.2mm;
+  }
+  /* 영상 썸네일: thumb1.jpg ~ thumb4.jpg 파일을 각 영상 스틸컷으로 교체하세요 */
+  .port img.thumb{
+    width:31mm; height:17.5mm; object-fit:cover;
+    border-radius:1.2mm; flex-shrink:0; display:block;
+  }
+  .port img.qr{
+    width:16.5mm; height:16.5mm; background:#fff; padding:1.1mm;
+    border-radius:1.2mm; flex-shrink:0; display:block;
+  }
+  .port .t{ flex:1; min-width:0; }
+  .port .t .brand{ font-size:6.4pt; font-weight:800; color:var(--accent-dark); letter-spacing:.05em; }
+  .port .t h3{ font-size:8.6pt; font-weight:800; margin:0.9mm 0 1mm; letter-spacing:-0.02em; line-height:1.32; }
+  .port .t p{ font-size:6.7pt; color:var(--steel); font-weight:500; line-height:1.42; }
+  .port .t .scan{ font-size:6.2pt; font-weight:700; color:var(--ink); margin-top:1.2mm; }
+  .port .t .scan::before{ content:'▶'; color:var(--accent); margin-right:1.1mm; font-size:5.6pt; }
+
+  /* ── compare table ── */
+  table{ width:100%; border-collapse:collapse; }
+  th,td{ padding:2.3mm 4mm; font-size:8.3pt; text-align:left; vertical-align:middle; }
+  thead th{ font-size:7.8pt; font-weight:800; border-bottom:0.55mm solid var(--ink); }
+  thead th.ai{ color:var(--accent); }
+  tbody tr{ border-bottom:0.25mm solid var(--line); }
+  tbody th{ font-weight:700; color:var(--steel); width:26mm; font-size:7.8pt; }
+  td.old{ color:var(--steel); font-weight:500; }
+  td.new{ font-weight:800; }
+  td.new i{ font-style:normal; color:var(--accent); }
+  .tbl-note{ font-size:6.8pt; color:var(--steel); margin-top:1.8mm; font-weight:500; }
+
+  /* ── page2 features ── */
+  .feats{ display:flex; gap:4mm; }
+  .feat{
+    flex:1; border-radius:2mm; padding:5.5mm 5.5mm 5mm;
+    background:var(--ink); color:#fff;
+  }
+  .feat .tag{ font-size:6.8pt; font-weight:800; letter-spacing:.24em; color:var(--accent); margin-bottom:2.6mm; }
+  .feat h3{ font-size:12.5pt; font-weight:800; letter-spacing:-0.02em; line-height:1.3; }
+  .feat p{ font-size:8.2pt; line-height:1.68; margin-top:2.6mm; color:#C6CBD3; font-weight:500; }
+  .feat p b{ color:#fff; font-weight:700; }
+
+  /* ── previz band (before/after) ── */
+  .previz{
+    margin-top:4mm; border:0.5mm solid var(--ink); border-radius:2mm;
+    padding:4.5mm 5mm; position:relative; overflow:hidden;
+  }
+  .previz::before{
+    content:''; position:absolute; left:0; top:0; bottom:0; width:2.2mm;
+    background:repeating-linear-gradient(-55deg, var(--accent) 0 3.4mm, var(--ink) 3.4mm 6.8mm);
+  }
+  .previz .top{ display:flex; align-items:baseline; gap:4mm; padding-left:2.5mm; margin-bottom:3.4mm; }
+  .previz .tag{ font-size:6.8pt; font-weight:800; letter-spacing:.24em; color:var(--accent); }
+  .previz h3{ font-size:11.5pt; font-weight:900; letter-spacing:-0.025em; }
+  .previz .top p{ font-size:7.4pt; color:var(--steel); font-weight:500; margin-left:auto; text-align:right; line-height:1.45; }
+  .previz .strip{ display:flex; gap:0; align-items:stretch; padding-left:2.5mm; }
+  .previz .cell{ flex:1; }
+  .previz .cell .lab{ font-size:6.6pt; font-weight:900; letter-spacing:.18em; margin-bottom:1.4mm; }
+  .previz .cell .lab.b{ color:var(--steel); }
+  .previz .cell .lab.a{ color:var(--accent); }
+  .previz .cell img{ width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:1.4mm; display:block; }
+  .previz .cell .cap{ font-size:6.9pt; color:var(--steel); font-weight:600; line-height:1.45; margin-top:1.6mm; }
+  .previz .cell .cap b{ color:var(--ink); }
+  .previz .arrow{
+    flex:0 0 8mm; display:flex; align-items:center; justify-content:center;
+    font-size:12pt; font-weight:900; color:var(--accent);
+  }
+  .previz .foot-line{ font-size:7.4pt; font-weight:700; margin-top:3mm; padding-left:2.5mm; }
+  .previz .foot-line i{ font-style:normal; color:var(--accent); }
+
+  .cases{ display:flex; gap:3.5mm; margin-top:4mm; }
+  .case{ flex:1; background:var(--panel); border-radius:2mm; padding:4mm 4.2mm; }
+  .case h4{ font-size:8.8pt; font-weight:800; letter-spacing:-0.01em; }
+  .case h4::before{ content:''; display:inline-block; width:2mm; height:2mm; background:var(--accent); border-radius:0.4mm; margin-right:1.8mm; }
+  .case p{ font-size:7.3pt; color:var(--steel); line-height:1.58; margin-top:1.6mm; font-weight:500; }
+
+  /* ── process ── */
+  .rail{ display:flex; margin-top:2mm; }
+  .step{ flex:1; position:relative; padding-top:4.6mm; }
+  .step::before{ content:''; position:absolute; top:1.1mm; left:0; right:0; height:0.5mm; background:var(--line); }
+  .step::after{ content:''; position:absolute; top:0; left:0; width:2.4mm; height:2.4mm; background:var(--ink); border-radius:50%; }
+  .step.hot::after{ background:var(--accent); }
+  .step .d{ font-size:7pt; font-weight:900; color:var(--accent-dark); }
+  .step h5{ font-size:8.6pt; font-weight:800; margin-top:0.8mm; }
+  .step p{ font-size:6.9pt; color:var(--steel); margin-top:0.8mm; line-height:1.5; padding-right:3mm; font-weight:500; }
+  .proc-note{ font-size:7.6pt; font-weight:700; margin-top:3.4mm; }
+  .proc-note::before{ content:'✓'; color:var(--accent); font-weight:900; margin-right:1.6mm; }
+
+  /* ── CTA ── */
+  .cta{
+    margin-top:auto;
+    background:var(--ink); border-radius:2.4mm; color:#fff;
+    padding:6mm 7mm; display:flex; justify-content:space-between; align-items:center;
+  }
+  .cta .l1{ font-size:6.8pt; font-weight:800; letter-spacing:.26em; color:var(--accent); }
+  .cta h3{ font-size:13.5pt; font-weight:900; letter-spacing:-0.025em; margin-top:1.6mm; }
+  .cta p{ font-size:8pt; color:#C6CBD3; margin-top:1.6mm; font-weight:500; }
+  .cta .contact{ text-align:right; font-size:8.2pt; line-height:1.7; font-weight:600; }
+  .cta .contact b{ font-size:9.5pt; font-weight:800; }
+
+  .foot{ display:flex; justify-content:space-between; font-size:6.6pt; color:var(--steel); font-weight:600; letter-spacing:.08em; padding-top:3mm; }
+  .p1-foot{ margin-top:auto; }
+
+  /* ── PDF 다운로드 버튼 (인쇄/PDF 출력 시 숨김) ── */
+  .pdf-btn{
+    position:fixed; right:22px; bottom:22px; z-index:999;
+    display:flex; align-items:center; gap:9px;
+    background:var(--accent); color:#fff; border:none; cursor:pointer;
+    font-family:'Pretendard',sans-serif; font-size:15px; font-weight:800; letter-spacing:-0.01em;
+    padding:15px 24px; border-radius:14px;
+    box-shadow:0 8px 24px rgba(240,78,0,.35);
+    transition:transform .15s ease, box-shadow .15s ease, background .15s ease;
+  }
+  .pdf-btn:hover{ transform:translateY(-2px); box-shadow:0 12px 30px rgba(240,78,0,.45); }
+  .pdf-btn:active{ transform:translateY(0); }
+  .pdf-btn:disabled{ background:#9AA1AB; box-shadow:none; cursor:wait; }
+  .pdf-btn svg{ width:18px; height:18px; }
+  @media print{
+    .pdf-btn{ display:none !important; }
+    body{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  }
+  @media screen{
+    body{ background:#E8EAE6; }
+    .page{ margin:10mm auto; box-shadow:0 4px 24px rgba(20,24,31,.14); }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════ PAGE 1 ═══════════ -->
+<div class="page">
+  <div class="head">
+    <div class="brand"><img class="logo" src="./ecole-logo.png" alt="ECOLE 로고"></div>
+    <div class="doc-meta"><b>건설 행사·교육 AI 영상 제안서</b><br>포스코 건설</div>
+  </div>
+  <div class="hazard"></div>
+
+  <div class="hero">
+    <div class="eyebrow">건설 AI 영상 제작</div>
+    <h1>건설 행사·교육 영상,<br>AI를 통해 <em>촬영팀이 없이 사진만 있어도<br>더 빠르고 높은 퀄리티의 영상</em>을 만듭니다.</h1>
+    <p>에꼴은 급격히 발전 중인 AI 영상 기술을 적용하여, 기존의 방식보다 더 적은 예산으로 빠르게 커뮤니티 시설·행사 안내 영상을 제작하고 있습니다.
+    촬영팀·장비·섭외에 묶여 있던 기존 오프라인 제작 및 표현의 한계를 벗어나,
+    <b>AI 영상을 통해 고객에게 더 편한 이해와 누릴 수 있는 혜택을</b> 전달하고 있습니다.</p>
+    <div class="stats">
+      <div class="stat"><div class="n">사진만 있어도<br><i>제작 가능</i></div><div class="l">아직 공사 현장이라도 최종 컨디션으로 AI 구현</div></div>
+      <div class="stat"><div class="n">빠르면 7일 이내<br><i>제작 가능</i></div><div class="l">기획부터 최종 납품까지 D+7</div></div>
+      <div class="stat"><div class="n">촬영 장비, 섭외, 장치 X<br><i>30~40% 비용 절감</i></div><div class="l">기존 오프라인 제작비 대비</div></div>
+    </div>
+  </div>
+<br>
+  <div class="section">
+    <div class="sec-head"><h2>제작 포트폴리오</h2><div class="en">— QR 코드로 바로 시청</div></div>
+
+    <div class="ports">
+      <div class="port">
+        <img class="thumb" src="./p0.png" alt="더샵 영상 썸네일">
+        <div class="t">
+          <div class="brand">포스코 건설 · THE SHARP</div>
+          <h3>단지 행사 제안 영상</h3>
+          <div class="scan">영상 재생 방법 : QR 스캔</div>
+        </div>
+        <img class="qr" src="./qr1.png" alt="더샵 QR">
+      </div>
+      <div class="port">
+        <img class="thumb" src="./p1.png" alt="자이 영상 썸네일">
+        <div class="t">
+          <div class="brand">GS 건설 · XI</div>
+          <h3>단지 행사 안내 영상</h3>
+          <div class="scan">영상 재생 방법 : QR 스캔</div>
+        </div>
+        <img class="qr" src="./qr2.png" alt="자이 QR">
+      </div>
+    </div>
+
+    <div class="ports">
+      <div class="port">
+        <img class="thumb" src="./p2.png" alt="자이 영상 썸네일">
+        <div class="t">
+          <div class="brand">GS 건설 · XI</div>
+          <h3>커뮤니티 시설 안내 영상</h3>
+          
+          <div class="scan">영상 재생 방법 : QR 스캔</div>
+        </div>
+        <img class="qr" src="./qr3.png" alt="자이 QR">
+      </div>
+      <div class="port">
+        <!-- <img class="thumb" src="./thumb4.jpg" alt="자이 영상 썸네일"> -->
+        <div class="t">
+          <div class="brand">포스코 건설 · THE SHARP</div>
+          <h3>전주 서신더샵비발디 AI 안내 영상</h3>
+          <p>클럽더샵 및 조경 가이드 영상 제작 예정</p>
+          
+        </div>
+        <!-- <img class="qr" src="./qr2.png" alt="자이 QR"> -->
+      </div>
+    </div>
+  </div>
+<br>
+  <div class="section">
+    <div class="sec-head"><h2>기존 오프라인 제작 vs ECOLE AI 영상</h2><div class="en">COST &amp; RISK</div></div>
+    <table>
+      <thead><tr><th></th><th>기존 오프라인 촬영 제작</th><th class="ai">ECOLE AI 영상</th></tr></thead>
+      <tbody>
+        <tr><th>제작 비용</th><td class="old">촬영팀 · 장비 · 배우 섭외 비용 포함</td><td class="new">최대 <i>40% 이상 절감</i> — 섭외·장비 비용 ZERO</td></tr>
+        <tr><th>제작 기간</th><td class="old">4 ~ 8주</td><td class="new"><i>1 ~ 2주</i></td></tr>
+        <tr><th>현장 촬영</th><td class="old">촬영팀 출입 — 안전관리·보안 부담 발생</td><td class="new">무촬영 혹은 간단한 사진 쵤영— <i>안전 리스크 ZERO</i></td></tr>
+        <tr><th>촬영 구도</th><td class="old">장비, 기술, 인력에 의해 제한</td><td class="new"><i>구도 제한이 없음</i></td></tr>
+        <tr><th>다국어</th><td class="old">언어별 별도 재제작</td><td class="new">동일 영상 <i>다국어 전환 가능</i></td></tr>
+      </tbody>
+    </table>
+    <div class="tbl-note">※ 비용·기간은 영상 길이 및 스타일에 따라 달라질 수 있으며, 상담 시 정확한 견적을 제공합니다.</div>
+  </div>
+
+  <div class="foot p1-foot"><span>ECOLE — AI VIDEO</span><span>PAGE 1 / 2</span></div>
+</div>
+
+<!-- ═══════════ PAGE 2 ═══════════ -->
+<div class="page">
+  <div class="head">
+    <div class="brand"><img class="logo" src="./ecole-logo.png" alt="ECOLE 로고"></div>
+    <div class="doc-meta"><b>현장 안전 · 다국어 영상으로의 확장</b><br>SAFETY &amp; MULTILINGUAL</div>
+  </div>
+  <div class="hazard"></div>
+
+  <div class="eyebrow">AI 영상의 장점</div>
+  <div class="sec-head" style="margin-bottom:4mm"><h2>오프라인 촬영으로 어려운 영상을 만들기에 적합합니다.</h2></div>
+
+  <div class="feats">
+    <div class="feat">
+      <div class="tag">SAFETY VIDEO</div>
+      <h3>안전 영상 —<br>사고 상황까지 디테일하게 재현</h3>
+      <p>실제 촬영으로는 구현이 불가능한 <b>추락·협착·화재 등 사고 상황을 AI로 정밀 재현 가능</b>합니다.
+      정기 안전교육의 전달력과 몰입도를 높일 수 있을 것으로 파악</p>
+    </div>
+    <div class="feat">
+      <div class="tag">MULTILINGUAL</div>
+      <h3>다국어 영상 —<br>한 번 제작, 모든 언어로</h3>
+      <p>외국인 근로자 비중이 높아진 현장을 위해, 한 편의 영상을
+      <b>베트남어·중국어·태국어 등 다국어 버전으로 즉시 전환</b>합니다.
+      언어별 재촬영 없이 <b>동일 퀄리티의 교육 영상</b>제작이 가능합니다.</p>
+    </div>
+  </div>
+
+  <div class="previz">
+    <div class="top">
+      <div>
+        <div class="tag">PRE-VISUALIZATION — 실제 프로젝트</div>
+        <h3>공사 중인 현장이라도, 완성된 공간의 영상이 만들어집니다.</h3>
+      </div>
+      <p>실제 진행 사례 - 현장 사진·도면·장비 정보만으로 제작</p>
+    </div>
+    <div class="strip">
+      <div class="cell">
+        <div class="lab b">BEFORE — 실제 현장</div>
+        <img src="./h1.png" alt="공사 중인 커뮤니티 시설 실제 현장">
+        <div class="cap">장비 반입 전, 바닥 보양 상태의 공사 중 현장 사진</div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="cell">
+        <div class="lab a">AFTER — AI 공간 구현</div>
+        <img src="./h2.png" alt="AI로 운동기구가 배치된 완성 공간">
+        <div class="cap"><b>기구 배치·조명·이용자까지</b> AI로 구현한 완성 공간</div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="cell">
+        <div class="lab a">AFTER — AI 재현 영상</div>
+        <img src="./h4.png" alt="다양한 구도의 AI 공간 체험 영상">
+        <div class="cap">고객 관점에 맞는 <b>다양한 구도로 연출한 체험 영상</b></div>
+      </div>
+    </div>
+    <div class="foot-line">기존 영상 제작 예산으로는 표현할 수 없었던 장면을 AI로 구성하여 실제 체험하듯이 영상 제작 가능</div>
+  </div>
+
+
+  <div class="section">
+    <div class="sec-head"><h2>진행 프로세스</h2><div class="en">PROCESS</div></div>
+    <div class="rail">
+      <div class="step"><div class="d">1</div><h5>초기 기획</h5><p>현장 니즈와 영상 목적 정의</p></div>
+      <div class="step"><div class="d">2</div><h5>시나리오 확정</h5><p>영상 목적에 맞는 구도 및 시나리오 정리</p></div>
+      <div class="step"><div class="d">3</div><h5>AI 제작</h5><p>무촬영 영상 생성 및 편집</p></div>
+      <div class="step hot"><div class="d">4</div><h5>시안 확인</h5><p>결과물 확인 후 진행 결정</p></div>
+      <div class="step"><div class="d">5</div><h5>수정 반영</h5><p>당일 수정, 재촬영 불필요</p></div>
+      <div class="step"><div class="d">6</div><h5>최종 납품</h5></div>
+    </div>
+    <!-- <div class="proc-note">시안 확인 후 진행 — 결과물 확인 전 비용 부담이 없습니다.</div> -->
+  </div>
+<br><br>
+   <div class="section">
+    <div class="sec-head"><h2>적용 가능한 영상 컨셉</h2><div class="en"></div></div>
+   
+  </div>
+
+  <div class="cases">
+    <div class="case"><h4>안전교육 · 시뮬레이션</h4><p>건설 안전 교육 및 시뮬레이션 콘텐츠로 활용</p></div>
+    <div class="case"><h4>행사 · 커뮤니티 안내</h4><p>입주 행사, 커뮤니티 시설 안내</p></div>
+    <div class="case"><h4>결산 · 보고</h4><p>결산 내용 및 영상으로 표현이 필요한 영상 제작</p></div>
+    <!-- <div class="case"><h4>민원 · 주민 안내</h4><p>소음·분진·통행 안내 영상으로 선제적 민원 대응</p></div> -->
+  </div>
+
+  <div class="cta">
+    <div>
+      <div class="l1">에꼴 AI 영상</div>
+      <h3>AI 영상 제작 문의</h3>
+      <p>기존 방식으로는 구현이 어려웠던 영상을 더 멋지게 구현할 수 있도록 도와드립니다.</p>
+    </div>
+    <div class="contact">
+      <b>에꼴 AI 마케팅 팀장 최지웅</b><br>
+      02-3143-2744<br>
+      ecolecomm@daum.net
+    </div>
+  </div>
+
+  <div class="foot"><span>ECOLE — AI VIDEO</span><span>PAGE 2 / 2</span></div>
+</div>
+
+<button class="pdf-btn" id="pdfBtn" onclick="downloadPDF()">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+  </svg>
+  PDF 다운로드
+</button>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+async function downloadPDF(){
+  const btn = document.getElementById('pdfBtn');
+  const label = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = 'PDF 생성 중…';
+  try{
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF({ orientation:'portrait', unit:'mm', format:'a4', compress:true });
+    const pages = document.querySelectorAll('.page');
+    for(let i = 0; i < pages.length; i++){
+      const canvas = await html2canvas(pages[i], {
+        scale: 3,
+        useCORS: true,
+        backgroundColor: '#ffffff',
+        windowWidth: pages[i].scrollWidth
+      });
+      const img = canvas.toDataURL('image/jpeg', 0.95);
+      if(i > 0) pdf.addPage();
+      pdf.addImage(img, 'JPEG', 0, 0, 210, 297);
+    }
+    pdf.save('ECOLE_AI영상_소개서.pdf');
+  }catch(e){
+    console.error(e);
+    alert('PDF 생성에 실패했습니다. 브라우저 인쇄(Ctrl/Cmd+P) → "PDF로 저장"을 이용해 주세요.');
+    window.print();
+  }finally{
+    btn.disabled = false;
+    btn.innerHTML = label;
+  }
+}
+</script>
+
+</body>
+</html>
