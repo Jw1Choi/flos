@@ -466,13 +466,11 @@
         return totalPanels - 1;
       }
 
+      /* ✅ dot도 텍스트와 동일한 rawIndex 기준으로 판정 —
+         가장 또렷하게 보이는 패널(반올림)을 active로 → 순서 일치 */
       function getActivePanel(progress) {
-        for (var i = 0; i < totalPanels; i++) {
-          if (progress >= panelStops[i] && progress <= panelStops[i + 1]) {
-            return i + 1;
-          }
-        }
-        return totalPanels;
+        var rawIndex = getSegmentedRawIndex(progress);
+        return clamp(Math.round(rawIndex), 0, totalPanels - 1) + 1;
       }
 
       function getBackgroundOpacity(distance) {
