@@ -77,16 +77,21 @@
       background: #111;
     }
 
+    /* ✅ JS가 --iaan-vh를 픽셀로 잠금 → 모바일 주소창 변동에도 진행도 안정 */
     #HeroScroll .iaan-stage {
       position: sticky;
       top: 0;
-      height: 100vh;
+      height: 100vh; /* fallback */
+      height: var(--iaan-vh, 100vh);
       overflow: hidden;
       z-index: 1;
+      contain: layout paint;
     }
 
+    /* ✅ spacer도 픽셀 기반 — 모바일 리사이즈 jitter 차단 */
     #HeroScroll .iaan-scroll-spacer {
-      height: 620vh;
+      height: 620vh; /* fallback */
+      height: calc(var(--iaan-vh-raw, 1vh) * 620);
       pointer-events: none;
     }
 
@@ -289,8 +294,11 @@
     }
 
     @media (max-width: 768px) {
+      /* ✅ 모바일: 텍스트 세로 이동/트랜지션 제거 → 떨림 원천 차단 (제자리 페이드만) */
       #HeroScroll .iaan-content-layer {
         padding: 0 24px;
+        transform: none !important;
+        transition: opacity 0.42s cubic-bezier(0.22, 1, 0.36, 1);
       }
 
       #HeroScroll .iaan-progress {
@@ -414,6 +422,19 @@
       var ticking = false;
       var panelStops = [0, 0.24, 0.50, 0.72, 1];
 
+      /* ✅ 뷰포트 높이를 픽셀로 잠금 → 모바일 주소창 토글에도 진행도가 흔들리지 않음 */
+      var lockedVh = window.innerHeight;
+      var lastWidth = window.innerWidth;
+      var isMobile = window.innerWidth <= 768;
+
+      function lockViewportHeight() {
+        lockedVh = window.innerHeight;
+        section.style.setProperty('--iaan-vh', lockedVh + 'px');
+        section.style.setProperty('--iaan-vh-raw', (lockedVh / 100) + 'px');
+      }
+
+      lockViewportHeight();
+
       function clamp(val, min, max) {
         return Math.max(min, Math.min(max, val));
       }
@@ -423,10 +444,11 @@
         return t * t * (3 - 2 * t);
       }
 
+      /* ✅ window.innerHeight 대신 잠긴 값 사용 → 진행도 jitter 차단 */
       function getScrollProgress() {
         var rect = section.getBoundingClientRect();
         var sectionTop = -rect.top;
-        var sectionHeight = section.offsetHeight - window.innerHeight;
+        var sectionHeight = section.offsetHeight - lockedVh;
         if (sectionHeight <= 0) return 0;
         return clamp(sectionTop / sectionHeight, 0, 1);
       }
@@ -509,15 +531,23 @@
           var distance = Math.abs(signedDistance);
           var opacity = getContentOpacity(distance) * exitFade;
 
-          var translateY = signedDistance * -78;
-          var safeTranslate = clamp(translateY, -78, 78);
+          content.style.opacity = opacity.toFixed(4);
 
-          if (progress > 0.94) {
-            safeTranslate -= smoothstep(0.94, 1.00, progress) * 36;
+          /* ✅ 모바일: 세로 이동 없이 제자리 페이드만 (떨림 제거)
+             데스크톱: 기존 패럴럭스 세로 이동 유지 */
+          if (isMobile) {
+            content.style.transform = 'none';
+          } else {
+            var translateY = signedDistance * -78;
+            var safeTranslate = clamp(translateY, -78, 78);
+
+            if (progress > 0.94) {
+              safeTranslate -= smoothstep(0.94, 1.00, progress) * 36;
+            }
+
+            content.style.transform = 'translate3d(0,' + safeTranslate.toFixed(2) + 'px,0)';
           }
 
-          content.style.opacity = opacity.toFixed(4);
-          content.style.transform = 'translate3d(0,' + safeTranslate.toFixed(2) + 'px,0)';
           content.classList.toggle('active', opacity > 0.12);
         });
 
@@ -539,7 +569,7 @@
           var target = parseInt(this.dataset.target, 10);
           var sectionRect = section.getBoundingClientRect();
           var sectionTop = window.pageYOffset + sectionRect.top;
-          var sectionHeight = section.offsetHeight - window.innerHeight;
+          var sectionHeight = section.offsetHeight - lockedVh;
           var targetProgress = panelStops[target - 1];
           var targetScroll = sectionTop + targetProgress * sectionHeight;
 
@@ -551,8 +581,28 @@
       });
 
       window.addEventListener('scroll', onScroll, { passive: true });
+
+      /* ✅ 아이폰 모멘텀 스크롤 중에도 프레임 유지 */
+      window.addEventListener('touchmove', onScroll, { passive: true });
+
+      /* ✅ 회전 시에만 재계산 (주소창 변동에는 반응 X) */
+      window.addEventListener('orientationchange', function() {
+        setTimeout(function() {
+          lockViewportHeight();
+          isMobile = window.innerWidth <= 768;
+          requestAnimationFrame(updatePanels);
+        }, 200);
+      });
+
+      /* ✅ 가로폭이 실제로 바뀐 경우(데스크톱 리사이즈)에만 재계산 —
+         모바일 주소창 토글은 width가 그대로라 무시됨 */
       window.addEventListener('resize', function() {
-        requestAnimationFrame(updatePanels);
+        if (window.innerWidth !== lastWidth) {
+          lastWidth = window.innerWidth;
+          lockViewportHeight();
+          isMobile = window.innerWidth <= 768;
+          requestAnimationFrame(updatePanels);
+        }
       }, { passive: true });
 
       requestAnimationFrame(updatePanels);
