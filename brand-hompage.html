@@ -72,6 +72,7 @@
     <!-- 메뉴(외부 로드) -->
     <div id="menu"></div>
 
+
 <section id="HeroScroll">
   <style>
     #HeroScroll {
@@ -89,7 +90,7 @@
       background: #111;
     }
 
-    /* ✅ JS가 --iaan-vh를 픽셀값으로 잠그면 모바일 주소창 변동에도 흔들리지 않음 */
+    /* ✅ JS가 --iaan-vh를 픽셀로 잠금 → 모바일 주소창 변동에도 진행도 안정 */
     #HeroScroll .iaan-stage {
       position: sticky;
       top: 0;
@@ -97,29 +98,29 @@
       height: var(--iaan-vh, 100vh);
       overflow: hidden;
       z-index: 1;
-      background: #111;
       contain: layout paint;
     }
 
-    /* ✅ spacer도 픽셀 기반 계산 — 모바일 리사이즈 jitter 차단 */
+    /* ✅ spacer도 픽셀 기반 — 모바일 리사이즈 jitter 차단 */
     #HeroScroll .iaan-scroll-spacer {
-      height: 340vh; /* fallback */
-      height: calc(var(--iaan-vh-raw, 1vh) * 340);
+      height: 620vh; /* fallback */
+      height: calc(var(--iaan-vh-raw, 1vh) * 620);
       pointer-events: none;
     }
 
-    /* ✅ CSS transition 제거 — JS lerp 보간이 매 프레임 직접 제어 */
     #HeroScroll .iaan-panel-bg {
       position: absolute;
       inset: 0;
       width: 100%;
       height: 100%;
       opacity: 0;
-      transform: scale(1.05) translateZ(0);
+      transform: scale(1.06);
       will-change: opacity, transform;
       pointer-events: none;
       z-index: 1;
-      transition: none;
+      transition:
+        opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
       backface-visibility: hidden;
       -webkit-backface-visibility: hidden;
     }
@@ -153,7 +154,6 @@
       z-index: 4;
     }
 
-    /* ✅ 텍스트: Y 이동 없이 제자리 페이드만 — 떨림 원천 차단, 전 패널 가운데 정렬 */
     #HeroScroll .iaan-content-layer {
       position: absolute;
       inset: 0;
@@ -164,13 +164,15 @@
       align-items: center;
       text-align: center;
       opacity: 0;
-      transform: translateZ(0);
-      will-change: opacity;
+      transform: translate3d(0, 54px, 0);
+      will-change: opacity, transform;
       pointer-events: none;
       z-index: 10;
       box-sizing: border-box;
       padding: 0 40px;
-      transition: none;
+      transition:
+        opacity 0.42s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.72s cubic-bezier(0.22, 1, 0.36, 1);
       backface-visibility: hidden;
       -webkit-backface-visibility: hidden;
     }
@@ -214,7 +216,6 @@
       margin: 0;
     }
 
-    /* Scroll Indicator */
     #HeroScroll .iaan-scroll-indicator {
       position: absolute;
       bottom: 40px;
@@ -260,7 +261,6 @@
       animation: iaanScrollPulse 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
     }
 
-    /* Progress Dots */
     #HeroScroll .iaan-progress {
       position: absolute;
       right: 32px;
@@ -284,18 +284,11 @@
       height: 8px;
       border-radius: 50%;
       background: rgba(255,255,255,0.25);
-      transition: background 0.35s ease, transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease;
+      transition: background 0.4s ease, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
       cursor: pointer;
       border: none;
       outline: none;
       padding: 0;
-      position: relative;
-    }
-
-    #HeroScroll .iaan-dot::before {
-      content: '';
-      position: absolute;
-      inset: -10px;
     }
 
     #HeroScroll .iaan-dot:hover {
@@ -313,151 +306,43 @@
       100% { transform: translateY(100%); }
     }
 
-    /* ============================================================
-       ✅ 모바일 전용: 스크롤 크로스페이드 대신 4개 패널을
-          세로로 쌓아 전부 보여주는 스택 레이아웃
-       ============================================================ */
-    #HeroScroll .iaan-mobile-stack {
-      display: none;
-    }
-
     @media (max-width: 768px) {
-      /* 데스크톱용 sticky 스테이지 + spacer 완전 비활성화 */
-      #HeroScroll .iaan-stage,
-      #HeroScroll .iaan-scroll-spacer {
-        display: none;
+      /* ✅ 모바일: 텍스트 세로 이동/트랜지션 제거 → 떨림 원천 차단 (제자리 페이드만) */
+      #HeroScroll .iaan-content-layer {
+        padding: 0 24px;
+        transform: none !important;
+        transition: opacity 0.42s cubic-bezier(0.22, 1, 0.36, 1);
       }
 
-      #HeroScroll .iaan-mobile-stack {
-        display: block;
-      }
-
-      #HeroScroll .iaan-m-panel {
-        position: relative;
-        width: 100%;
-        min-height: 100vh;   /* fallback */
-        min-height: 100svh;  /* ✅ 주소창 변동 무관한 안정 높이 */
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        box-sizing: border-box;
-        padding: 80px 24px;
-        overflow: hidden;
-      }
-
-      /* 배경: 데스크톱과 동일한 그라디언트/이미지 재사용 */
-      #HeroScroll .iaan-m-bg-1 {
-        background:
-          linear-gradient(135deg, rgba(15,15,15,0.35) 0%, rgba(15,15,15,0.2) 45%, rgba(15,15,15,0.5) 100%),
-          linear-gradient(to bottom, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.35) 100%),
-          url('./img/l-intro2.jpg') center/cover no-repeat;
-      }
-
-      #HeroScroll .iaan-m-bg-2 {
-        background:
-          linear-gradient(135deg, rgba(10,10,10,0.68) 0%, rgba(10,10,10,0.38) 50%, rgba(10,10,10,0.15) 100%),
-          url('./img/l-intro1.jpg') center/cover no-repeat;
-      }
-
-      #HeroScroll .iaan-m-bg-3 {
-        background:
-          linear-gradient(135deg, rgba(18,18,18,0.72) 0%, rgba(18,18,18,0.36) 50%, rgba(18,18,18,0.12) 100%),
-          url('./img/l-intro3.jpg') center/cover no-repeat;
-      }
-
-      #HeroScroll .iaan-m-bg-4 {
-        background:
-          linear-gradient(135deg, rgba(5,5,5,0.78) 0%, rgba(5,5,5,0.42) 50%, rgba(5,5,5,0.14) 100%),
-          url('./img/intro4.jpg') center/cover no-repeat;
-      }
-
-      #HeroScroll .iaan-m-inner {
-        width: 100%;
-        max-width: 860px;
-        margin: 0 auto;
-        opacity: 0;
-        transform: translateY(28px);
-        transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
-      }
-
-      #HeroScroll .iaan-m-panel.iaan-m-visible .iaan-m-inner {
-        opacity: 1;
-        transform: translateY(0);
-      }
-
-      #HeroScroll .iaan-m-title {
-        font-size: clamp(28px, 8vw, 40px);
-        font-weight: 800;
-        color: var(--iaan-white);
-        line-height: 1.18;
-        margin: 0 0 16px 0;
-        letter-spacing: -0.04em;
-        text-shadow: 0 2px 30px rgba(0,0,0,0.28);
-      }
-
-      #HeroScroll .iaan-m-sub {
-        font-size: 14px;
-        color: var(--iaan-text-sub);
-        line-height: 1.68;
-        font-weight: 700;
-        text-shadow: 0 1px 15px rgba(0,0,0,0.22);
-        margin: 0;
-      }
-
-      /* 첫 패널에만 스크롤 인디케이터 */
-      #HeroScroll .iaan-m-scroll-indicator {
-        position: absolute;
-        bottom: 28px;
-        left: 50%;
-        transform: translateX(-50%);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+      #HeroScroll .iaan-progress {
+        right: 16px;
         gap: 10px;
-        pointer-events: none;
       }
 
-      #HeroScroll .iaan-m-scroll-indicator .iaan-scroll-text {
-        font-size: 11px;
-        color: rgba(255,255,255,0.5);
-        letter-spacing: 0.15em;
-        text-transform: uppercase;
-        font-weight: 300;
+      #HeroScroll .iaan-dot {
+        width: 6px;
+        height: 6px;
       }
 
-      #HeroScroll .iaan-m-scroll-indicator .iaan-scroll-line {
-        width: 1px;
-        height: 44px;
-        background: rgba(255,255,255,0.2);
-        position: relative;
-        overflow: hidden;
-        border-radius: 1px;
+      #HeroScroll .iaan-p1-title,
+      #HeroScroll .iaan-p2-title,
+      #HeroScroll .iaan-p3-title,
+      #HeroScroll .iaan-p4-title {
+        font-size: clamp(28px, 8vw, 40px);
+        line-height: 1.18;
+        margin-bottom: 16px;
       }
 
-      #HeroScroll .iaan-m-scroll-indicator .iaan-scroll-line::after {
-        content: '';
-        display: block;
-        width: 1px;
-        height: 100%;
-        background: rgba(255,255,255,0.7);
-        animation: iaanScrollPulse 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      #HeroScroll .iaan-scroll-line::after {
-        animation: none;
-      }
-      #HeroScroll .iaan-m-inner {
-        transition: none;
-        opacity: 1;
-        transform: none;
+      #HeroScroll .iaan-p1-sub,
+      #HeroScroll .iaan-p2-sub,
+      #HeroScroll .iaan-p3-sub,
+      #HeroScroll .iaan-p4-sub {
+        font-size: 14px;
+        line-height: 1.68;
       }
     }
   </style>
 
-  <!-- ================= 데스크톱: sticky 크로스페이드 ================= -->
   <div class="iaan-stage">
     <div class="iaan-panel-bg iaan-bg-1" data-panel="1"></div>
     <div class="iaan-panel-bg iaan-bg-2" data-panel="2"></div>
@@ -468,12 +353,12 @@
       <div class="iaan-p1-inner">
         <h2 class="iaan-p1-title">
           신뢰 확보 후<br>
-          상품의 구매 혹은<br>신청을 일으키려면<br>
-          어떻게 해야 할까요?
+      상품의 구매 혹은<br>신청을 일으키려면<br>
+      어떻게 해야 할까요? 
         </h2>
         <p class="iaan-p1-sub">
           신뢰를 만들었으면<br>
-          이제 고객이 알아서 행동할 거라고 생각합니다.
+      이제 고객이 알아서 행동할 거라고 생각합니다.
         </p>
       </div>
     </div>
@@ -482,11 +367,11 @@
       <div class="iaan-p2-inner">
         <h2 class="iaan-p2-title">
           고객은 신뢰만으로<br>
-          신청하거나<br>구매하지 않습니다.
+      신청하거나<br>구매하지 않습니다.
         </h2>
         <p class="iaan-p2-sub">
           ‘믿을 수 있겠다’고 느끼는 것과<br>
-          ‘행동하는 것’은 완전히 다른 영역입니다.
+      ‘행동하는 것’은 완전히 다른 영역입니다.
         </p>
       </div>
     </div>
@@ -498,9 +383,9 @@
         </h2>
         <p class="iaan-p3-sub">
           고객의 문제부터 더 깊게 봐야하며,<br>
-          왜 신청 및 구매를 해야 하는지,<br>
-          무엇을 기대할 수 있는지 느껴져야<br><br>
-          고객은 비로소 움직입니다.
+      왜 신청 및 구매를 해야 하는지,<br>
+      무엇을 기대할 수 있는지 느껴져야<br><br>
+      고객은 비로소 움직입니다.
         </p>
       </div>
     </div>
@@ -534,68 +419,6 @@
 
   <div class="iaan-scroll-spacer"></div>
 
-  <!-- ================= 모바일: 4개 슬라이드 세로 스택 (전부 표시) ================= -->
-  <div class="iaan-mobile-stack">
-    <div class="iaan-m-panel iaan-m-bg-1">
-      <div class="iaan-m-inner">
-        <h2 class="iaan-m-title">
-          신뢰 확보 후<br>
-          상품의 구매 혹은<br>신청을 일으키려면<br>
-          어떻게 해야 할까요?
-        </h2>
-        <p class="iaan-m-sub">
-          신뢰를 만들었으면<br>
-          이제 고객이 알아서 행동할 거라고 생각합니다.
-        </p>
-      </div>
-      <div class="iaan-m-scroll-indicator">
-        <span class="iaan-scroll-text">Scroll</span>
-        <div class="iaan-scroll-line"></div>
-      </div>
-    </div>
-
-    <div class="iaan-m-panel iaan-m-bg-2">
-      <div class="iaan-m-inner">
-        <h2 class="iaan-m-title">
-          고객은 신뢰만으로<br>
-          신청하거나<br>구매하지 않습니다.
-        </h2>
-        <p class="iaan-m-sub">
-          ‘믿을 수 있겠다’고 느끼는 것과<br>
-          ‘행동하는 것’은 완전히 다른 영역입니다.
-        </p>
-      </div>
-    </div>
-
-    <div class="iaan-m-panel iaan-m-bg-3">
-      <div class="iaan-m-inner">
-        <h2 class="iaan-m-title">
-          구매 혹은 신청은<br>반드시 설계되어야 합니다
-        </h2>
-        <p class="iaan-m-sub">
-          고객의 문제부터 더 깊게 봐야하며,<br>
-          왜 신청 및 구매를 해야 하는지,<br>
-          무엇을 기대할 수 있는지 느껴져야<br><br>
-          고객은 비로소 움직입니다.
-        </p>
-      </div>
-    </div>
-
-    <div class="iaan-m-panel iaan-m-bg-4">
-      <div class="iaan-m-inner">
-        <h2 class="iaan-m-title">
-          신뢰를 바탕으로<br>
-          행동을 설계하고<br>
-          온라인으로 지속적인<br>
-          참여를 이끌어내는 구조
-        </h2>
-        <p class="iaan-m-sub">
-          바로 랜딩페이지입니다.
-        </p>
-      </div>
-    </div>
-  </div>
-
   <script>
     (function() {
       'use strict';
@@ -603,331 +426,197 @@
       var section = document.getElementById('HeroScroll');
       if (!section) return;
 
-      var MOBILE_BP = 768;
-      var mql = null;
-      try {
-        mql = window.matchMedia('(max-width: ' + MOBILE_BP + 'px)');
-      } catch (e) {}
+      var backgrounds = section.querySelectorAll('.iaan-panel-bg');
+      var contents = section.querySelectorAll('.iaan-content-layer');
+      var dots = section.querySelectorAll('.iaan-dot');
+      var scrollIndicator = section.querySelector('#iaanScrollIndicator');
+      var progressNav = section.querySelector('#iaanProgress');
+      var totalPanels = 4;
+      var ticking = false;
+      var panelStops = [0, 0.24, 0.50, 0.72, 1];
 
-      function isMobile() {
-        return mql ? mql.matches : window.innerWidth <= MOBILE_BP;
+      /* ✅ 뷰포트 높이를 픽셀로 잠금 → 모바일 주소창 토글에도 진행도가 흔들리지 않음 */
+      var lockedVh = window.innerHeight;
+      var lastWidth = window.innerWidth;
+      var isMobile = window.innerWidth <= 768;
+
+      function lockViewportHeight() {
+        lockedVh = window.innerHeight;
+        section.style.setProperty('--iaan-vh', lockedVh + 'px');
+        section.style.setProperty('--iaan-vh-raw', (lockedVh / 100) + 'px');
       }
 
-      /* ✅ 배경 이미지 사전 로드 + 디코딩 — 양쪽 모드 공통 (랜딩 버전 이미지) */
-      var imageUrls = [
-        './img/l-intro2.jpg',
-        './img/l-intro1.jpg',
-        './img/l-intro3.jpg',
-        './img/intro4.jpg'
-      ];
+      lockViewportHeight();
 
-      imageUrls.forEach(function(url) {
-        var img = new Image();
-        img.src = url;
-        if (img.decode) {
-          img.decode().catch(function(){});
-        }
-      });
-
-      /* ============================================================
-         ✅ 모바일 모드: IntersectionObserver 등장 애니메이션만
-         ============================================================ */
-      var mobileInited = false;
-
-      function initMobile() {
-        if (mobileInited) return;
-        mobileInited = true;
-
-        var panels = section.querySelectorAll('.iaan-m-panel');
-
-        if (!('IntersectionObserver' in window)) {
-          panels.forEach(function(p) { p.classList.add('iaan-m-visible'); });
-          return;
-        }
-
-        var io = new IntersectionObserver(function(entries) {
-          entries.forEach(function(entry) {
-            if (entry.isIntersecting) {
-              entry.target.classList.add('iaan-m-visible');
-              io.unobserve(entry.target);
-            }
-          });
-        }, { threshold: 0.25 });
-
-        panels.forEach(function(p) { io.observe(p); });
+      function clamp(val, min, max) {
+        return Math.max(min, Math.min(max, val));
       }
 
-      /* ============================================================
-         ✅ 데스크톱 모드: sticky + lerp 크로스페이드 (기존 로직)
-         ============================================================ */
-      var desktopInited = false;
+      function smoothstep(edge0, edge1, x) {
+        var t = clamp((x - edge0) / (edge1 - edge0), 0, 1);
+        return t * t * (3 - 2 * t);
+      }
 
-      function initDesktop() {
-        if (desktopInited) return;
-        desktopInited = true;
+      /* ✅ window.innerHeight 대신 잠긴 값 사용 → 진행도 jitter 차단 */
+      function getScrollProgress() {
+        var rect = section.getBoundingClientRect();
+        var sectionTop = -rect.top;
+        var sectionHeight = section.offsetHeight - lockedVh;
+        if (sectionHeight <= 0) return 0;
+        return clamp(sectionTop / sectionHeight, 0, 1);
+      }
 
-        var backgrounds = section.querySelectorAll('.iaan-panel-bg');
-        var contents = section.querySelectorAll('.iaan-content-layer');
-        var dots = section.querySelectorAll('.iaan-dot');
-        var scrollIndicator = section.querySelector('#iaanScrollIndicator');
-        var progressNav = section.querySelector('#iaanProgress');
-        var totalPanels = 4;
+      function getSegmentedRawIndex(progress) {
+        for (var i = 0; i < panelStops.length - 1; i++) {
+          var start = panelStops[i];
+          var end = panelStops[i + 1];
 
-        var panelStops = [0, 0.25, 0.50, 0.75, 1];
-
-        /* ✅ 초기 viewport 높이를 픽셀로 고정 → 주소창 변동 무시 */
-        var lockedVh = window.innerHeight;
-        var lastWidth = window.innerWidth;
-
-        function lockViewportHeight() {
-          lockedVh = window.innerHeight;
-          section.style.setProperty('--iaan-vh', lockedVh + 'px');
-          section.style.setProperty('--iaan-vh-raw', (lockedVh / 100) + 'px');
-        }
-
-        lockViewportHeight();
-
-        function clamp(val, min, max) {
-          return Math.max(min, Math.min(max, val));
-        }
-
-        function smoothstep(edge0, edge1, x) {
-          var t = clamp((x - edge0) / (edge1 - edge0), 0, 1);
-          return t * t * (3 - 2 * t);
-        }
-
-        function getScrollProgress() {
-          var rect = section.getBoundingClientRect();
-          var sectionTop = -rect.top;
-          var sectionHeight = section.offsetHeight - lockedVh;
-          if (sectionHeight <= 0) return 0;
-          return clamp(sectionTop / sectionHeight, 0, 1);
-        }
-
-        function getSegmentedRawIndex(progress) {
-          for (var i = 0; i < panelStops.length - 1; i++) {
-            var start = panelStops[i];
-            var end = panelStops[i + 1];
-            if (progress >= start && progress <= end) {
-              var local = (progress - start) / (end - start);
-              return i + local;
-            }
+          if (progress >= start && progress <= end) {
+            var local = (progress - start) / (end - start);
+            return i + local;
           }
-          return totalPanels - 1;
+        }
+        return totalPanels - 1;
+      }
+
+      /* ✅ dot도 텍스트와 동일한 rawIndex 기준으로 판정 —
+         가장 또렷하게 보이는 패널(반올림)을 active로 → 순서 일치 */
+      function getActivePanel(progress) {
+        var rawIndex = getSegmentedRawIndex(progress);
+        return clamp(Math.round(rawIndex), 0, totalPanels - 1) + 1;
+      }
+
+      function getBackgroundOpacity(distance) {
+        if (distance >= 0.92) return 0;
+        return 1 - smoothstep(0.18, 0.92, distance);
+      }
+
+      function getContentOpacity(distance) {
+        if (distance >= 0.62) return 0;
+        return 1 - smoothstep(0.06, 0.62, distance);
+      }
+
+      function updatePanels() {
+        ticking = false;
+
+        var progress = getScrollProgress();
+        var rawIndex = getSegmentedRawIndex(progress);
+        var activePanel = getActivePanel(progress);
+
+        var exitFade = 1;
+        if (progress > 0.94) {
+          exitFade = 1 - smoothstep(0.94, 1.00, progress);
         }
 
-        /* ✅ dot도 텍스트와 동일한 rawIndex 기준으로 판정 —
-           가장 또렷하게 보이는 패널(반올림)을 active로 → 순서 어긋남 해결 */
-        function getActivePanel(progress) {
-          var rawIndex = getSegmentedRawIndex(progress);
-          return clamp(Math.round(rawIndex), 0, totalPanels - 1) + 1;
+        if (progressNav) {
+          progressNav.classList.toggle('visible', progress > 0.02 && exitFade > 0.05);
+          progressNav.style.opacity = Math.max(0, exitFade).toFixed(4);
         }
 
-        function getBackgroundOpacity(distance) {
-          if (distance >= 1.0) return 0;
-          return 1 - smoothstep(0.15, 1.0, distance);
+        if (scrollIndicator) {
+          scrollIndicator.classList.toggle('hidden', progress > 0.025 || exitFade < 0.98);
+          scrollIndicator.style.opacity = (progress <= 0.025 ? exitFade : 0).toFixed(4);
         }
 
-        function getContentOpacity(distance) {
-          if (distance >= 0.72) return 0;
-          return 1 - smoothstep(0.22, 0.72, distance);
-        }
+        backgrounds.forEach(function(bg) {
+          var p = parseInt(bg.dataset.panel, 10);
+          var panelIndex = p - 1;
+          var distance = Math.abs(rawIndex - panelIndex);
+          var opacity = getBackgroundOpacity(distance) * exitFade;
 
-        var targetProgress = 0;
-        var smoothedProgress = 0;
-        var rafId = null;
-        var running = false;
+          var localT = clamp(1 - distance, 0, 1);
+          var scale = 1.015 + (1 - smoothstep(0, 1, localT)) * 0.045;
 
-        var reduceMotion = false;
-        try {
-          reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        } catch (e) {}
-
-        var LERP = reduceMotion ? 0.5 : 0.12;
-
-        var bgCache = [];
-        var ctCache = [];
-        backgrounds.forEach(function(){ bgCache.push({op: -1, sc: -1}); });
-        contents.forEach(function(){ ctCache.push({op: -1}); });
-
-        function renderPanels(progress) {
-          var rawIndex = getSegmentedRawIndex(progress);
-          var activePanel = getActivePanel(progress);
-
-          var exitFade = 1;
-          if (progress > 0.95) {
-            exitFade = 1 - smoothstep(0.95, 1.00, progress);
+          if (progress > 0.94) {
+            scale += smoothstep(0.94, 1.00, progress) * 0.03;
           }
 
-          if (progressNav) {
-            progressNav.classList.toggle('visible', progress > 0.02);
-          }
+          bg.style.opacity = opacity.toFixed(4);
+          bg.style.transform = 'scale(' + scale.toFixed(4) + ')';
+        });
 
-          if (scrollIndicator) {
-            scrollIndicator.classList.toggle('hidden', progress > 0.025);
-          }
+        contents.forEach(function(content) {
+          var p = parseInt(content.dataset.panel, 10);
+          var panelIndex = p - 1;
+          var signedDistance = rawIndex - panelIndex;
+          var distance = Math.abs(signedDistance);
+          var opacity = getContentOpacity(distance) * exitFade;
 
-          backgrounds.forEach(function(bg, bi) {
-            var p = parseInt(bg.dataset.panel, 10);
-            var panelIndex = p - 1;
-            var distance = Math.abs(rawIndex - panelIndex);
-            var opacity, scale;
+          content.style.opacity = opacity.toFixed(4);
 
-            if (p === totalPanels && progress >= panelStops[totalPanels - 1]) {
-              opacity = 1;
-              scale = 1.012;
-            } else {
-              var panelFade = (p === totalPanels) ? 1 : exitFade;
-              opacity = getBackgroundOpacity(distance) * panelFade;
+          /* ✅ 모바일: 세로 이동 없이 제자리 페이드만 (떨림 제거)
+             데스크톱: 기존 패럴럭스 세로 이동 유지 */
+          if (isMobile) {
+            content.style.transform = 'none';
+          } else {
+            var translateY = signedDistance * -78;
+            var safeTranslate = clamp(translateY, -78, 78);
 
-              var localT = clamp(1 - distance, 0, 1);
-              scale = 1.012 + (1 - smoothstep(0, 1, localT)) * 0.035;
-
-              if (progress > 0.95 && p !== totalPanels) {
-                scale += smoothstep(0.95, 1.00, progress) * 0.025;
-              }
+            if (progress > 0.94) {
+              safeTranslate -= smoothstep(0.94, 1.00, progress) * 36;
             }
 
-            var cache = bgCache[bi];
-            if (Math.abs(cache.op - opacity) > 0.002) {
-              bg.style.opacity = opacity.toFixed(3);
-              cache.op = opacity;
-            }
-            if (Math.abs(cache.sc - scale) > 0.0006) {
-              bg.style.transform = 'scale(' + scale.toFixed(4) + ') translateZ(0)';
-              cache.sc = scale;
-            }
-          });
-
-          contents.forEach(function(content, ci) {
-            var p = parseInt(content.dataset.panel, 10);
-            var panelIndex = p - 1;
-            var distance = Math.abs(rawIndex - panelIndex);
-            var opacity;
-
-            if (p === totalPanels && progress >= panelStops[totalPanels - 1]) {
-              opacity = 1;
-            } else {
-              var panelFade = (p === totalPanels) ? 1 : exitFade;
-              opacity = getContentOpacity(distance) * panelFade;
-            }
-
-            var cache = ctCache[ci];
-            if (Math.abs(cache.op - opacity) > 0.002) {
-              content.style.opacity = opacity.toFixed(3);
-              cache.op = opacity;
-              content.classList.toggle('active', opacity > 0.15);
-            }
-          });
-
-          dots.forEach(function(dot) {
-            var t = parseInt(dot.dataset.target, 10);
-            dot.classList.toggle('active', t === activePanel);
-          });
-        }
-
-        function tick() {
-          /* ✅ 모바일로 전환된 경우 루프 정지 */
-          if (isMobile()) {
-            running = false;
-            rafId = null;
-            return;
+            content.style.transform = 'translate3d(0,' + safeTranslate.toFixed(2) + 'px,0)';
           }
 
-          targetProgress = getScrollProgress();
-
-          var diff = targetProgress - smoothedProgress;
-
-          if (Math.abs(diff) < 0.0004) {
-            smoothedProgress = targetProgress;
-            renderPanels(smoothedProgress);
-            running = false;
-            rafId = null;
-            return;
-          }
-
-          smoothedProgress += diff * LERP;
-          renderPanels(smoothedProgress);
-          rafId = requestAnimationFrame(tick);
-        }
-
-        function startLoop() {
-          if (!running && !isMobile()) {
-            running = true;
-            rafId = requestAnimationFrame(tick);
-          }
-        }
-
-        function onScroll() {
-          startLoop();
-        }
+          content.classList.toggle('active', opacity > 0.12);
+        });
 
         dots.forEach(function(dot) {
-          dot.addEventListener('click', function() {
-            var target = parseInt(this.dataset.target, 10);
-            var sectionRect = section.getBoundingClientRect();
-            var sectionTop = window.pageYOffset + sectionRect.top;
-            var sectionHeight = section.offsetHeight - lockedVh;
-            var targetP = (panelStops[target - 1] + panelStops[target]) / 2;
-            var targetScroll = sectionTop + targetP * sectionHeight;
+          var t = parseInt(dot.dataset.target, 10);
+          dot.classList.toggle('active', t === activePanel && exitFade > 0.15);
+        });
+      }
 
-            window.scrollTo({
-              top: targetScroll,
-              behavior: 'smooth'
-            });
-            startLoop();
+      function onScroll() {
+        if (!ticking) {
+          ticking = true;
+          requestAnimationFrame(updatePanels);
+        }
+      }
+
+      dots.forEach(function(dot) {
+        dot.addEventListener('click', function() {
+          var target = parseInt(this.dataset.target, 10);
+          var sectionRect = section.getBoundingClientRect();
+          var sectionTop = window.pageYOffset + sectionRect.top;
+          var sectionHeight = section.offsetHeight - lockedVh;
+          var targetProgress = panelStops[target - 1];
+          var targetScroll = sectionTop + targetProgress * sectionHeight;
+
+          window.scrollTo({
+            top: targetScroll,
+            behavior: 'smooth'
           });
         });
+      });
 
-        window.addEventListener('scroll', onScroll, { passive: true });
-        window.addEventListener('touchmove', onScroll, { passive: true });
+      window.addEventListener('scroll', onScroll, { passive: true });
 
-        window.addEventListener('orientationchange', function() {
-          setTimeout(function() {
-            if (isMobile()) return;
-            lockViewportHeight();
-            smoothedProgress = getScrollProgress();
-            startLoop();
-          }, 200);
-        });
+      /* ✅ 아이폰 모멘텀 스크롤 중에도 프레임 유지 */
+      window.addEventListener('touchmove', onScroll, { passive: true });
 
-        window.addEventListener('resize', function() {
-          if (isMobile()) return;
-          if (window.innerWidth !== lastWidth) {
-            lastWidth = window.innerWidth;
-            lockViewportHeight();
-            smoothedProgress = getScrollProgress();
-            startLoop();
-          }
-        }, { passive: true });
+      /* ✅ 회전 시에만 재계산 (주소창 변동에는 반응 X) */
+      window.addEventListener('orientationchange', function() {
+        setTimeout(function() {
+          lockViewportHeight();
+          isMobile = window.innerWidth <= 768;
+          requestAnimationFrame(updatePanels);
+        }, 200);
+      });
 
-        /* 초기 렌더 */
-        smoothedProgress = getScrollProgress();
-        targetProgress = smoothedProgress;
-        renderPanels(smoothedProgress);
-      }
-
-      /* ============================================================
-         ✅ 모드 분기 + 브레이크포인트 교차 시 반대 모드 지연 초기화
-         ============================================================ */
-      function initByMode() {
-        if (isMobile()) {
-          initMobile();
-        } else {
-          initDesktop();
+      /* ✅ 가로폭이 실제로 바뀐 경우(데스크톱 리사이즈)에만 재계산 —
+         모바일 주소창 토글은 width가 그대로라 무시됨 */
+      window.addEventListener('resize', function() {
+        if (window.innerWidth !== lastWidth) {
+          lastWidth = window.innerWidth;
+          lockViewportHeight();
+          isMobile = window.innerWidth <= 768;
+          requestAnimationFrame(updatePanels);
         }
-      }
+      }, { passive: true });
 
-      initByMode();
-
-      if (mql) {
-        var onChange = function() { initByMode(); };
-        if (mql.addEventListener) {
-          mql.addEventListener('change', onChange);
-        } else if (mql.addListener) {
-          mql.addListener(onChange);
-        }
-      }
+      requestAnimationFrame(updatePanels);
     })();
   </script>
 </section>
