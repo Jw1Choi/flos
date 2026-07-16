@@ -177,7 +177,7 @@
           <img src="./img/logo-w.png" alt="FLOS 로고" style="width:130px;">
         </div>
         <p class="slogan">
-          브랜드의 가치를 더 선명하게 전달하는<br>
+          고객과의 인연을 만드는 온라인 비즈니스 기반을 만듭니다.<br>
           브랜드 홈페이지 · 랜딩페이지 · AI 영상 제작
         </p>
       </div>
@@ -226,19 +226,21 @@
           <span class="corpName" id="corpName">FLOS</span>
           <span class="corpMeta">
             <span class="sep">·</span>
-            <span class="meta">대표 : <b id="corpCEO">대표자명</b></span>
+            <span class="meta">대표 : <b id="corpCEO">최지웅</b></span>
+            <span class="meta">주소 : <b id="corpCEO">서울특별시 영등포구 선유로 53길 22 502호</b></span>
+            <span class="meta">사업자번호 : <b id="corpCEO">643-77-00532</b></span>
           </span>
         </div>
 
-        <div class="policies">
+       <!-- <div class="policies">
           <a href="#">개인정보처리방침</a>
           <a href="#">이용약관</a>
           <a href="#">법적고지</a>
           <a href="#">사이트맵</a>
-        </div>
+        </div> -->
 
         <div class="copy">
-          COPYRIGHT © 2026 FLOS<br>
+          COPYRIGHT © FLOS 
           ALL RIGHTS RESERVED
         </div>
       </div>

@@ -7099,6 +7099,16 @@
       color:#fff;
     }
 
+    #flosLuxuryApplyForm .gc-button:disabled{
+      opacity:0.45;
+      cursor:not-allowed;
+    }
+
+    #flosLuxuryApplyForm .gc-button:disabled:hover{
+      background:#efefef;
+      color:#000;
+    }
+
     #flosLuxuryApplyForm .flos-note{
       margin-top:16px;
       text-align:center;
@@ -7307,8 +7317,8 @@
       </p>
     </div>
 
-     <form id="form_e11" name="frm_phonecall_web" action="" method="post" target="hidden_iframe11" onsubmit="dll(); submitted=true;"  class="gc-form" novalidate>
-      <input type="hidden" name="entry.981041205" value="본문 신청폼">
+    <form id="form_e11" name="frm_phonecall_web" class="gc-form" novalidate>
+      <input type="hidden" name="source" value="본문 신청폼">
 
       <div class="gc-row">
         <label for="name">
@@ -7316,7 +7326,7 @@
           <input
             type="text"
             id="name"
-            name="entry.1262294308"
+            name="name"
             placeholder="성함을 입력해주세요."
             maxlength="4"
             required
@@ -7329,7 +7339,7 @@
           <input
             type="tel"
             id="phone"
-            name="entry.197602348"
+            name="phone"
             placeholder="연락처를 입력해주세요."
             maxlength="11"
             required
@@ -7345,7 +7355,7 @@
           <input
             type="text"
             id="company"
-            name="entry.1663513519"
+            name="company"
             placeholder="회사명 또는 브랜드명을 입력해주세요."
             maxlength="30"
             autocomplete="organization"
@@ -7355,7 +7365,7 @@
         <label for="intro_select">
           <span>신청 프로그램 종류<span class="req">*</span></span>
           <div class="custom-select-wrap">
-            <select name="entry.273651770" id="intro_select" class="custom-select" required>
+            <select name="program_type" id="intro_select" class="custom-select" required>
               <option value="" selected disabled>신청 프로그램 종류</option>
               <option value="브랜딩 홈페이지">브랜딩 홈페이지</option>
               <option value="랜딩페이지">랜딩페이지</option>
@@ -7371,7 +7381,7 @@
         <label for="message">
           <span>문의 사항</span>
           <textarea
-            name="entry.1913381675"
+            name="message"
             id="message"
             placeholder="현재 고민하고 있는 내용이나 문의하실 내용을 자유롭게 작성해 주세요."
             maxlength="1000"
@@ -7394,7 +7404,7 @@
           </div>
         </label>
 
-        <input type="submit" id="send_message" class="gc-button" value="Submit" disabled>
+        <input type="submit" id="send_message" class="gc-button" value="Submit">
       </div>
 
       <p class="flos-note">
@@ -7465,20 +7475,132 @@
     </div>
   </div>
 
-  <script type="text/javascript">
-    var submitted = false;
-  </script>
-  <iframe name="hidden_iframe11" id="hidden_iframe11" style="display:none;" onload=""></iframe>
+  <script>
+    (function(){
+      /* ============================================================
+         Supabase 연결 설정 — 이 두 값만 프로젝트에 맞게 교체하세요
+         (Settings > API 에서 확인: Project URL / anon public key)
+      ============================================================ */
+      const SUPABASE_URL = 'https://YOUR_PROJECT_REF.supabase.co';
+      const SUPABASE_ANON_KEY = 'YOUR_ANON_PUBLIC_KEY';
 
-  <script type="text/javascript">
-    var submitted2 = false;
-  </script>
-  <iframe name="hidden_iframe12" id="hidden_iframe12" style="display:none;" onload=""></iframe>
+      const form = document.getElementById('form_e11');
+      const submitBtn = document.getElementById('send_message');
+      const agreeChk = document.getElementById('agree11');
+      const nameInput = document.getElementById('name');
+      const phoneInput = document.getElementById('phone');
+      const companyInput = document.getElementById('company');
+      const programSelect = document.getElementById('intro_select');
+      const messageInput = document.getElementById('message');
 
-  <script type="text/javascript">
-    var submitted3 = false;
+      let isSending = false;
+
+      /* 전화번호: 숫자만 입력 허용 */
+      phoneInput.addEventListener('input', function(){
+        this.value = this.value.replace(/[^0-9]/g, '');
+      });
+
+      /* 동의 체크 여부에 따라 제출 버튼 활성화 */
+      function syncButtonState(){
+        submitBtn.disabled = isSending || !agreeChk.checked;
+      }
+      agreeChk.addEventListener('change', syncButtonState);
+      syncButtonState();
+
+      /* 유효성 검사 — DB CHECK 제약(^01[016789][0-9]{7,8}$)과 동일 규칙 */
+      function validate(){
+        const name = nameInput.value.trim();
+        const phone = phoneInput.value.trim();
+        const program = programSelect.value;
+
+        if(!name){
+          alert('성함을 입력해주세요.');
+          nameInput.focus();
+          return false;
+        }
+
+        if(!/^01[016789][0-9]{7,8}$/.test(phone)){
+          alert('올바른 휴대폰 번호를 입력해주세요.\n(예: 01012345678, 숫자만 입력)');
+          phoneInput.focus();
+          return false;
+        }
+
+        if(!program){
+          alert('신청 프로그램 종류를 선택해주세요.');
+          programSelect.focus();
+          return false;
+        }
+
+        if(!agreeChk.checked){
+          alert('개인정보 수집 및 이용에 동의해주세요.');
+          return false;
+        }
+
+        return true;
+      }
+
+      /* Supabase REST API로 전송 */
+      form.addEventListener('submit', async function(e){
+        e.preventDefault();
+
+        if(isSending) return;
+        if(!validate()) return;
+
+        const payload = {
+          name: nameInput.value.trim(),
+          phone: phoneInput.value.trim(),
+          company: companyInput.value.trim() || null,
+          program_type: programSelect.value,
+          message: messageInput.value.trim() || null,
+          source: form.querySelector('input[name="source"]').value
+        };
+
+        isSending = true;
+        const originalLabel = submitBtn.value;
+        submitBtn.value = '전송 중...';
+        syncButtonState();
+
+        try{
+          const res = await fetch(SUPABASE_URL + '/rest/v1/flos_consultations', {
+            method: 'POST',
+            headers: {
+              'apikey': SUPABASE_ANON_KEY,
+              'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+              'Content-Type': 'application/json',
+              'Prefer': 'return=minimal'
+            },
+            body: JSON.stringify(payload)
+          });
+
+          if(res.ok){
+            alert('상담 신청이 정상적으로 접수되었습니다.\n확인 후 순차적으로 연락드리겠습니다.');
+            form.reset();
+            agreeChk.checked = true; /* 초기 상태(체크됨) 유지 */
+          }else{
+            let errMsg = '';
+            try{
+              const errData = await res.json();
+              errMsg = (errData && (errData.message || errData.details)) || '';
+            }catch(_){ /* JSON 파싱 실패 시 무시 */ }
+
+            if(errMsg.indexOf('Too many requests') !== -1 || errMsg.indexOf('P0001') !== -1){
+              alert('잠시 후 다시 시도해주세요.\n동일한 번호로 짧은 시간 내 중복 신청은 제한됩니다.');
+            }else if(errMsg.indexOf('phone') !== -1 && errMsg.indexOf('check') !== -1){
+              alert('올바른 휴대폰 번호 형식이 아닙니다.\n숫자만 입력해주세요. (예: 01012345678)');
+            }else{
+              alert('접수 중 오류가 발생했습니다.\n잠시 후 다시 시도해주세요.');
+            }
+          }
+        }catch(err){
+          alert('네트워크 오류가 발생했습니다.\n연결 상태를 확인한 뒤 다시 시도해주세요.');
+        }finally{
+          isSending = false;
+          submitBtn.value = originalLabel;
+          syncButtonState();
+        }
+      });
+    })();
   </script>
-  <iframe name="hidden_iframe13" id="hidden_iframe13" style="display:none;" onload=""></iframe>
 
   <script>
     (function(){
@@ -7521,8 +7643,6 @@
           closeModal();
         }
       });
-
-   
 
     })();
   </script>

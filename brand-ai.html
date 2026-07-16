@@ -6039,9 +6039,6 @@
 	// ]]>
 </script>
 
-<!-- ================================
-     QUICK MENU + RESERVATION POPUP
-================================ -->
 <section id="chanelFloatingSection">
   <!-- 우측 하단 플로팅 -->
   <div class="cf-floating" id="cfFloating">
@@ -6273,6 +6270,14 @@
       flex-direction:column;
       align-items:flex-end;
       gap:14px;
+      transition:transform .35s ease, opacity .3s ease;
+    }
+
+    /* 아래로 스크롤 시 오른쪽으로 숨김 */
+    #chanelFloatingSection .cf-floating.hide-right{
+      transform:translateX(140px);
+      opacity:0;
+      pointer-events:none;
     }
 
     #chanelFloatingSection .cf-btn{
@@ -6503,7 +6508,7 @@
     #chanelFloatingSection .cf-modal-dialog{
       position:absolute;
       left:50%;
-      top:50%;
+      top:56%;
       transform:translate(-50%,-50%);
       width:min(92vw, 560px);
       max-height:calc(100vh - 40px);
@@ -6891,9 +6896,14 @@
         gap:10px;
       }
 
+      /* 모바일 숨김 이동 거리 */
+      #chanelFloatingSection .cf-floating.hide-right{
+        transform:translateX(100px);
+      }
+
       #chanelFloatingSection .cf-btn{
-        width:72px;
-        height:72px;
+        width:52px;
+        height:52px;
         border-radius:16px;
         gap:7px;
       }
@@ -6905,14 +6915,14 @@
       }
 
       #chanelFloatingSection .cf-btn-label{
-        font-size:10px;
+        font-size:7px;
         letter-spacing:.12em;
       }
 
       #chanelFloatingSection .cf-quick-panel{
         right:0;
         top:auto;
-        bottom:242px;
+        bottom:192px;
         width:74px;
         max-width:none;
         min-width:unset;
@@ -6945,42 +6955,70 @@
         font-size:11px;
       }
 
+      /* ✅ 모바일 팝업 크기 축소 — 화면을 꽉 채우지 않고
+         상단 고정 헤더와 겹치지 않도록 상하 여백 확보 */
       #chanelFloatingSection .cf-modal-dialog,
       #chanelFloatingSection .cf-privacy-dialog{
-        width:min(94vw, 560px);
-        max-height:calc(100vh - 24px);
+        width:min(88vw, 440px);
+        /* 상하로 넉넉한 여백을 두어 헤더/하단바와 겹침 방지 (dvh 우선) */
+        max-height:calc(100vh - 180px);
+        max-height:calc(100dvh - 180px);
         border-radius:22px;
-        padding:24px 18px 20px;
+        padding:22px 18px 20px;
       }
 
       #chanelFloatingSection .cf-modal-head,
       #chanelFloatingSection .cf-privacy-head{
-        padding-right:42px;
-        margin-bottom:20px;
+        padding-right:44px;
+        margin-bottom:18px;
+      }
+
+      #chanelFloatingSection .cf-modal-close,
+      #chanelFloatingSection .cf-privacy-close{
+        width:38px;
+        height:38px;
+        right:14px;
+        top:14px;
+      }
+
+      #chanelFloatingSection .cf-modal-close svg,
+      #chanelFloatingSection .cf-privacy-close svg{
+        width:18px;
+        height:18px;
       }
 
       #chanelFloatingSection .cf-modal-title{
-        font-size:27px;
+        font-size:25px;
       }
 
       #chanelFloatingSection .cf-privacy-title{
-        font-size:24px;
+        font-size:22px;
       }
 
       #chanelFloatingSection .cf-modal-desc{
-        font-size:14px;
+        font-size:13.5px;
         line-height:1.6;
+        margin-top:10px;
+      }
+
+      #chanelFloatingSection .cf-field{
+        margin-bottom:12px;
       }
 
       #chanelFloatingSection .cf-field input,
       #chanelFloatingSection .cf-field select{
-        height:56px;
+        height:52px;
         border-radius:12px;
         font-size:14px;
       }
 
+      #chanelFloatingSection .cf-check-text{
+        font-size:13.5px;
+      }
+
       #chanelFloatingSection .cf-submit-btn{
-        height:58px;
+        height:54px;
+        margin-top:22px;
         border-radius:14px;
         font-size:16px;
       }
@@ -6996,6 +7034,15 @@
 
       #chanelFloatingSection .cf-privacy-item p{
         font-size:13px;
+      }
+    }
+
+    /* 세로로 아주 짧은 화면(가로 모드 등) 대응 */
+    @media (max-width: 768px) and (max-height: 720px){
+      #chanelFloatingSection .cf-modal-dialog,
+      #chanelFloatingSection .cf-privacy-dialog{
+        max-height:calc(100vh - 100px);
+        max-height:calc(110dvh - 100px);
       }
     }
   </style>
@@ -7111,13 +7158,32 @@
         }
       });
 
+      /* 스크롤 방향 감지: 아래로 → 오른쪽 숨김 / 위로 → 표시 */
+      let lastScrollY = window.scrollY;
+
       window.addEventListener('scroll', function(){
-        if(window.scrollY > 220){
+        const currentY = window.scrollY;
+
+        // TOP 버튼 표시 여부
+        if(currentY > 220){
           floating.classList.add('show-top');
         }else{
           floating.classList.remove('show-top');
         }
-      });
+
+        // 미세한 흔들림 무시: 8px 이상 이동 시에만 반응
+        if(Math.abs(currentY - lastScrollY) > 8){
+          if(currentY > lastScrollY && currentY > 120){
+            // 아래로 스크롤 → 숨김
+            floating.classList.add('hide-right');
+            floating.classList.remove('open');
+          }else{
+            // 위로 스크롤 → 표시
+            floating.classList.remove('hide-right');
+          }
+          lastScrollY = currentY;
+        }
+      }, { passive: true });
 
       topBtn.addEventListener('click', function(){
         window.scrollTo({
