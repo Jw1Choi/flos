@@ -73,6 +73,8 @@
     <div id="menu"></div>
 
 
+    
+
 <section id="HeroScroll">
   <style>
     #HeroScroll {
@@ -129,34 +131,30 @@
       background:
         linear-gradient(135deg, rgba(15,15,15,0.35) 0%, rgba(15,15,15,0.2) 45%, rgba(15,15,15,0.5) 100%),
         linear-gradient(to bottom, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.35) 100%),
-        url('./img/ld (1).jpg') center/cover no-repeat;
+        url('./img/l-intro2.jpg') center/cover no-repeat;
       z-index: 1;
     }
 
     #HeroScroll .iaan-bg-2 {
       background:
         linear-gradient(135deg, rgba(10,10,10,0.68) 0%, rgba(10,10,10,0.38) 50%, rgba(10,10,10,0.15) 100%),
-        url('./img/ld (2).jpg') center/cover no-repeat;
+        url('./img/l-intro1.jpg') center/cover no-repeat;
       z-index: 2;
     }
 
     #HeroScroll .iaan-bg-3 {
       background:
         linear-gradient(135deg, rgba(18,18,18,0.72) 0%, rgba(18,18,18,0.36) 50%, rgba(18,18,18,0.12) 100%),
-        url('./img/ld (3).jpg') center/cover no-repeat;
+        url('./img/l-intro3.jpg') center/cover no-repeat;
       z-index: 3;
     }
 
     #HeroScroll .iaan-bg-4 {
       background:
         linear-gradient(135deg, rgba(5,5,5,0.78) 0%, rgba(5,5,5,0.42) 50%, rgba(5,5,5,0.14) 100%),
-        url('./img/ld (4).jpg') center/cover no-repeat;
+        url('./img/intro4.jpg') center/cover no-repeat;
       z-index: 4;
     }
-
-
-    
-
 
     #HeroScroll .iaan-content-layer {
       position: absolute;
@@ -356,17 +354,27 @@
     <div class="iaan-content-layer iaan-p1-content" data-panel="1">
       <div class="iaan-p1-inner">
         <h2 class="iaan-p1-title">
-          고객에게 구매를<br>유도하고 싶은데<br><br>도무지 매출이<br>발생하지 않는다면?
+          신뢰 확보 후<br>
+      상품의 구매 혹은<br>신청을 일으키려면<br>
+      어떻게 해야 할까요? 
         </h2>
+        <p class="iaan-p1-sub">
+          신뢰를 만들었으면<br>
+      이제 고객이 알아서 행동할 거라고 생각합니다.
+        </p>
       </div>
     </div>
 
     <div class="iaan-content-layer iaan-p2-content" data-panel="2">
       <div class="iaan-p2-inner">
         <h2 class="iaan-p2-title">
-          고객은 설명만으로<br>
-          신청하거나<br>구매하지 않습니다.
+          고객은 신뢰만으로<br>
+      신청하거나<br>구매하지 않습니다.
         </h2>
+        <p class="iaan-p2-sub">
+          ‘믿을 수 있겠다’고 느끼는 것과<br>
+      ‘행동하는 것’은 완전히 다른 영역입니다.
+        </p>
       </div>
     </div>
 
@@ -377,9 +385,9 @@
         </h2>
         <p class="iaan-p3-sub">
           고객의 문제부터 더 깊게 봐야하며,<br>
-          왜 신청 및 구매를 해야 하는지,<br>
-          무엇을 기대할 수 있는지 느껴져야<br><br>
-          고객은 비로소 움직입니다.
+      왜 신청 및 구매를 해야 하는지,<br>
+      무엇을 기대할 수 있는지 느껴져야<br><br>
+      고객은 비로소 움직입니다.
         </p>
       </div>
     </div>
@@ -387,6 +395,8 @@
     <div class="iaan-content-layer iaan-p4-content" data-panel="4">
       <div class="iaan-p4-inner">
         <h2 class="iaan-p4-title">
+          신뢰를 바탕으로<br>
+          행동을 설계하고<br>
           온라인으로 지속적인<br>
           참여를 이끌어내는 구조
         </h2>
@@ -7849,11 +7859,11 @@
         </div>
 
         <div class="cf-checks">
-          <label class="cf-check">
+          <!-- <label class="cf-check">
             <input type="checkbox" id="cfAgreeCall" required>
             <span class="cf-check-box"></span>
             <span class="cf-check-text">상담 연락 및 예약 진행에 동의합니다.</span>
-          </label>
+          </label> -->
 
           <div class="cf-check-line">
             <label class="cf-check">
@@ -7931,14 +7941,6 @@
       flex-direction:column;
       align-items:flex-end;
       gap:14px;
-      transition:transform .35s ease, opacity .3s ease;
-    }
-
-    /* 아래로 스크롤 시 오른쪽으로 숨김 */
-    #chanelFloatingSection .cf-floating.hide-right{
-      transform:translateX(140px);
-      opacity:0;
-      pointer-events:none;
     }
 
     #chanelFloatingSection .cf-btn{
@@ -8169,7 +8171,7 @@
     #chanelFloatingSection .cf-modal-dialog{
       position:absolute;
       left:50%;
-      top:56%;
+      top:50%;
       transform:translate(-50%,-50%);
       width:min(92vw, 560px);
       max-height:calc(100vh - 40px);
@@ -8557,14 +8559,9 @@
         gap:10px;
       }
 
-      /* 모바일 숨김 이동 거리 */
-      #chanelFloatingSection .cf-floating.hide-right{
-        transform:translateX(100px);
-      }
-
       #chanelFloatingSection .cf-btn{
-        width:52px;
-        height:52px;
+        width:72px;
+        height:72px;
         border-radius:16px;
         gap:7px;
       }
@@ -8576,14 +8573,14 @@
       }
 
       #chanelFloatingSection .cf-btn-label{
-        font-size:7px;
+        font-size:10px;
         letter-spacing:.12em;
       }
 
       #chanelFloatingSection .cf-quick-panel{
         right:0;
         top:auto;
-        bottom:192px;
+        bottom:242px;
         width:74px;
         max-width:none;
         min-width:unset;
@@ -8616,70 +8613,42 @@
         font-size:11px;
       }
 
-      /* ✅ 모바일 팝업 크기 축소 — 화면을 꽉 채우지 않고
-         상단 고정 헤더와 겹치지 않도록 상하 여백 확보 */
       #chanelFloatingSection .cf-modal-dialog,
       #chanelFloatingSection .cf-privacy-dialog{
-        width:min(88vw, 440px);
-        /* 상하로 넉넉한 여백을 두어 헤더/하단바와 겹침 방지 (dvh 우선) */
-        max-height:calc(100vh - 180px);
-        max-height:calc(100dvh - 180px);
+        width:min(94vw, 560px);
+        max-height:calc(100vh - 24px);
         border-radius:22px;
-        padding:22px 18px 20px;
+        padding:24px 18px 20px;
       }
 
       #chanelFloatingSection .cf-modal-head,
       #chanelFloatingSection .cf-privacy-head{
-        padding-right:44px;
-        margin-bottom:18px;
-      }
-
-      #chanelFloatingSection .cf-modal-close,
-      #chanelFloatingSection .cf-privacy-close{
-        width:38px;
-        height:38px;
-        right:14px;
-        top:14px;
-      }
-
-      #chanelFloatingSection .cf-modal-close svg,
-      #chanelFloatingSection .cf-privacy-close svg{
-        width:18px;
-        height:18px;
+        padding-right:42px;
+        margin-bottom:20px;
       }
 
       #chanelFloatingSection .cf-modal-title{
-        font-size:25px;
+        font-size:27px;
       }
 
       #chanelFloatingSection .cf-privacy-title{
-        font-size:22px;
+        font-size:24px;
       }
 
       #chanelFloatingSection .cf-modal-desc{
-        font-size:13.5px;
+        font-size:14px;
         line-height:1.6;
-        margin-top:10px;
-      }
-
-      #chanelFloatingSection .cf-field{
-        margin-bottom:12px;
       }
 
       #chanelFloatingSection .cf-field input,
       #chanelFloatingSection .cf-field select{
-        height:52px;
+        height:56px;
         border-radius:12px;
         font-size:14px;
       }
 
-      #chanelFloatingSection .cf-check-text{
-        font-size:13.5px;
-      }
-
       #chanelFloatingSection .cf-submit-btn{
-        height:54px;
-        margin-top:22px;
+        height:58px;
         border-radius:14px;
         font-size:16px;
       }
@@ -8697,226 +8666,240 @@
         font-size:13px;
       }
     }
-
-    /* 세로로 아주 짧은 화면(가로 모드 등) 대응 */
-    @media (max-width: 768px) and (max-height: 720px){
-      #chanelFloatingSection .cf-modal-dialog,
-      #chanelFloatingSection .cf-privacy-dialog{
-        max-height:calc(100vh - 100px);
-        max-height:calc(110dvh - 100px);
-      }
-    }
   </style>
 
   <script>
-    (function(){
-      const floating = document.getElementById('cfFloating');
-      const quickBtn = document.getElementById('cfQuickBtn');
-      const reserveBtn = document.getElementById('cfReserveBtn');
-      const topBtn = document.getElementById('cfTopBtn');
+   (function(){
+  /**
+   * FLOS 간편 신청 모달 스크립트 (Supabase 전송)
+   *
+   * ★ 설정: 아래 두 줄만 본인 값으로 변경하세요
+   */
+  var SUPABASE_URL  = 'https://yiuioprceyuybwkgxmrm.supabase.co';
+  var SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlpdWlvcHJjZXl1eWJ3a2d4bXJtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg3NDM1MDIsImV4cCI6MjA5NDMxOTUwMn0.SkkBCH9avPMZu-LeBtdOh5zsppcRMvbnilj38CkHEZs';
 
-      const modal = document.getElementById('cfModal');
-      const modalClose = document.getElementById('cfModalClose');
-      const modalDim = modal.querySelector('.cf-modal-dim');
+  var floating = document.getElementById('cfFloating');
+  var quickBtn = document.getElementById('cfQuickBtn');
+  var reserveBtn = document.getElementById('cfReserveBtn');
+  var topBtn = document.getElementById('cfTopBtn');
 
-      const privacyLink = document.getElementById('cfPrivacyLink');
-      const privacyModal = document.getElementById('cfPrivacyModal');
-      const privacyClose = document.getElementById('cfPrivacyClose');
-      const privacyDim = document.getElementById('cfPrivacyDim');
+  var modal = document.getElementById('cfModal');
+  var modalClose = document.getElementById('cfModalClose');
+  var modalDim = modal.querySelector('.cf-modal-dim');
 
-      const form = document.getElementById('cfReserveForm');
-      const submitBtn = document.getElementById('cfSubmitBtn');
+  var privacyLink = document.getElementById('cfPrivacyLink');
+  var privacyModal = document.getElementById('cfPrivacyModal');
+  var privacyClose = document.getElementById('cfPrivacyClose');
+  var privacyDim = document.getElementById('cfPrivacyDim');
 
-      const nameInput = document.getElementById('cfName');
-      const phoneInput = document.getElementById('cfPhone');
-      const categoryInput = document.getElementById('cfCategory');
-      const agreeCall = document.getElementById('cfAgreeCall');
-      const agreePrivacy = document.getElementById('cfAgreePrivacy');
+  var form = document.getElementById('cfReserveForm');
+  var submitBtn = document.getElementById('cfSubmitBtn');
 
-      let submitted = false;
+  var nameInput = document.getElementById('cfName');
+  var phoneInput = document.getElementById('cfPhone');
+  var categoryInput = document.getElementById('cfCategory');
+  var agreePrivacy = document.getElementById('cfAgreePrivacy');
 
-      function openModal(){
-        modal.classList.add('is-open');
-        modal.setAttribute('aria-hidden', 'false');
-        document.documentElement.style.overflow = 'hidden';
-        document.body.style.overflow = 'hidden';
-        floating.classList.remove('open');
-        setTimeout(function(){
-          nameInput.focus();
-        }, 50);
+  var submitted = false;
+
+  // ================================================================
+  //  모달 열기 / 닫기
+  // ================================================================
+  function openModal(){
+    modal.classList.add('is-open');
+    modal.setAttribute('aria-hidden', 'false');
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
+    floating.classList.remove('open');
+    setTimeout(function(){
+      nameInput.focus();
+    }, 50);
+  }
+
+  function closeModal(){
+    modal.classList.remove('is-open');
+    modal.setAttribute('aria-hidden', 'true');
+    if(!privacyModal.classList.contains('is-open')){
+      document.documentElement.style.overflow = '';
+      document.body.style.overflow = '';
+    }
+  }
+
+  function openPrivacyModal(){
+    privacyModal.classList.add('is-open');
+    privacyModal.setAttribute('aria-hidden', 'false');
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closePrivacyModal(){
+    privacyModal.classList.remove('is-open');
+    privacyModal.setAttribute('aria-hidden', 'true');
+    if(!modal.classList.contains('is-open')){
+      document.documentElement.style.overflow = '';
+      document.body.style.overflow = '';
+    }
+  }
+
+  // ================================================================
+  //  이벤트 바인딩
+  // ================================================================
+  quickBtn.addEventListener('click', function(e){
+    e.stopPropagation();
+    floating.classList.toggle('open');
+  });
+
+  document.addEventListener('click', function(e){
+    if(!floating.contains(e.target)){
+      floating.classList.remove('open');
+    }
+  });
+
+  reserveBtn.addEventListener('click', function(){
+    openModal();
+  });
+
+  modalClose.addEventListener('click', closeModal);
+  modalDim.addEventListener('click', closeModal);
+
+  if(privacyLink){
+    privacyLink.addEventListener('click', function(e){
+      e.preventDefault();
+      openPrivacyModal();
+    });
+  }
+
+  if(privacyClose){
+    privacyClose.addEventListener('click', closePrivacyModal);
+  }
+
+  if(privacyDim){
+    privacyDim.addEventListener('click', closePrivacyModal);
+  }
+
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape'){
+      if(privacyModal.classList.contains('is-open')){
+        closePrivacyModal();
+        return;
       }
-
-      function closeModal(){
-        modal.classList.remove('is-open');
-        modal.setAttribute('aria-hidden', 'true');
-
-        if(!privacyModal.classList.contains('is-open')){
-          document.documentElement.style.overflow = '';
-          document.body.style.overflow = '';
-        }
+      if(modal.classList.contains('is-open')){
+        closeModal();
       }
+    }
+  });
 
-      function openPrivacyModal(){
-        privacyModal.classList.add('is-open');
-        privacyModal.setAttribute('aria-hidden', 'false');
-        document.documentElement.style.overflow = 'hidden';
-        document.body.style.overflow = 'hidden';
-      }
+  window.addEventListener('scroll', function(){
+    if(window.scrollY > 220){
+      floating.classList.add('show-top');
+    } else {
+      floating.classList.remove('show-top');
+    }
+  });
 
-      function closePrivacyModal(){
-        privacyModal.classList.remove('is-open');
-        privacyModal.setAttribute('aria-hidden', 'true');
+  topBtn.addEventListener('click', function(){
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
 
-        if(!modal.classList.contains('is-open')){
-          document.documentElement.style.overflow = '';
-          document.body.style.overflow = '';
+  // ================================================================
+  //  전화번호 자동 하이픈
+  // ================================================================
+  phoneInput.addEventListener('input', function(e){
+    var value = e.target.value.replace(/[^0-9]/g, '');
+    if(value.length > 11) value = value.slice(0, 11);
+
+    if(value.length < 4){
+      e.target.value = value;
+    } else if(value.length < 8){
+      e.target.value = value.slice(0,3) + '-' + value.slice(3);
+    } else {
+      e.target.value = value.slice(0,3) + '-' + value.slice(3,7) + '-' + value.slice(7);
+    }
+  });
+
+  // ================================================================
+  //  폼 제출 → Supabase 전송
+  // ================================================================
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+
+    if(submitted) return;
+
+    // 유효성 검사
+    if(!nameInput.value.trim()){
+      alert('성함을 입력해주세요.');
+      nameInput.focus();
+      return;
+    }
+
+    var rawPhone = phoneInput.value.replace(/[^0-9]/g, '');
+    if(!rawPhone || rawPhone.substr(0,3) !== '010' || rawPhone.length !== 11){
+      alert('연락처를 정확히 입력해주세요.');
+      phoneInput.focus();
+      return;
+    }
+
+    if(!categoryInput.value){
+      alert('상담 분야를 선택해주세요.');
+      categoryInput.focus();
+      return;
+    }
+
+    if(!agreePrivacy.checked){
+      alert('개인정보 수집 및 이용 동의가 필요합니다.');
+      return;
+    }
+
+    // 전송 시작
+    submitted = true;
+    submitBtn.disabled = true;
+    submitBtn.textContent = '전송 중...';
+
+    var payload = {
+      name:         nameInput.value.trim(),
+      phone:        rawPhone,
+      company:      null,
+      program_type: categoryInput.value,
+      message:      null,
+      source:       '간편 신청'
+    };
+
+    fetch(SUPABASE_URL + '/rest/v1/flos_consultations', {
+      method: 'POST',
+      headers: {
+        'Content-Type':  'application/json',
+        'apikey':        SUPABASE_ANON,
+        'Authorization': 'Bearer ' + SUPABASE_ANON,
+        'Prefer':        'return=minimal'
+      },
+      body: JSON.stringify(payload)
+    })
+    .then(function(res){
+      if(!res.ok) throw new Error('저장 실패');
+
+      try {
+        if(window.karrotPixel && window.karrotPixel.track){
+          window.karrotPixel.track('SubmitApplication');
         }
-      }
+      } catch(err){}
 
-      quickBtn.addEventListener('click', function(e){
-        e.stopPropagation();
-        floating.classList.toggle('open');
-      });
-
-      document.addEventListener('click', function(e){
-        if(!floating.contains(e.target)){
-          floating.classList.remove('open');
-        }
-      });
-
-      reserveBtn.addEventListener('click', function(){
-        openModal();
-      });
-
-      modalClose.addEventListener('click', closeModal);
-      modalDim.addEventListener('click', closeModal);
-
-      if(privacyLink){
-        privacyLink.addEventListener('click', function(e){
-          e.preventDefault();
-          openPrivacyModal();
-        });
-      }
-
-      if(privacyClose){
-        privacyClose.addEventListener('click', closePrivacyModal);
-      }
-
-      if(privacyDim){
-        privacyDim.addEventListener('click', closePrivacyModal);
-      }
-
-      document.addEventListener('keydown', function(e){
-        if(e.key === 'Escape'){
-          if(privacyModal.classList.contains('is-open')){
-            closePrivacyModal();
-            return;
-          }
-
-          if(modal.classList.contains('is-open')){
-            closeModal();
-          }
-        }
-      });
-
-      /* 스크롤 방향 감지: 아래로 → 오른쪽 숨김 / 위로 → 표시 */
-      let lastScrollY = window.scrollY;
-
-      window.addEventListener('scroll', function(){
-        const currentY = window.scrollY;
-
-        // TOP 버튼 표시 여부
-        if(currentY > 220){
-          floating.classList.add('show-top');
-        }else{
-          floating.classList.remove('show-top');
-        }
-
-        // 미세한 흔들림 무시: 8px 이상 이동 시에만 반응
-        if(Math.abs(currentY - lastScrollY) > 8){
-          if(currentY > lastScrollY && currentY > 120){
-            // 아래로 스크롤 → 숨김
-            floating.classList.add('hide-right');
-            floating.classList.remove('open');
-          }else{
-            // 위로 스크롤 → 표시
-            floating.classList.remove('hide-right');
-          }
-          lastScrollY = currentY;
-        }
-      }, { passive: true });
-
-      topBtn.addEventListener('click', function(){
-        window.scrollTo({
-          top: 0,
-          behavior: 'smooth'
-        });
-      });
-
-      phoneInput.addEventListener('input', function(e){
-        let value = e.target.value.replace(/[^0-9]/g, '');
-        if(value.length > 11) value = value.slice(0, 11);
-
-        if(value.length < 4){
-          e.target.value = value;
-        }else if(value.length < 8){
-          e.target.value = value.slice(0,3) + '-' + value.slice(3);
-        }else{
-          e.target.value = value.slice(0,3) + '-' + value.slice(3,7) + '-' + value.slice(7);
-        }
-      });
-
-      form.addEventListener('submit', function(e){
-        if(submitted){
-          e.preventDefault();
-          return;
-        }
-
-        if(!nameInput.value.trim()){
-          e.preventDefault();
-          alert('성함을 입력해주세요.');
-          nameInput.focus();
-          return;
-        }
-
-        if(!phoneInput.value.trim()){
-          e.preventDefault();
-          alert('연락처를 입력해주세요.');
-          phoneInput.focus();
-          return;
-        }
-
-        if(!categoryInput.value){
-          e.preventDefault();
-          alert('상담 분야를 선택해주세요.');
-          categoryInput.focus();
-          return;
-        }
-
-        if(!agreeCall.checked){
-          e.preventDefault();
-          alert('상담 연락 및 예약 진행 동의가 필요합니다.');
-          return;
-        }
-
-        if(!agreePrivacy.checked){
-          e.preventDefault();
-          alert('개인정보 수집 및 이용 동의가 필요합니다.');
-          return;
-        }
-
-        submitted = true;
-        submitBtn.disabled = true;
-
-        setTimeout(function(){
-          alert('신청이 접수되었습니다.');
-          form.reset();
-          submitBtn.disabled = false;
-          submitted = false;
-          closeModal();
-        }, 900);
-      });
-    })();
+      setTimeout(function(){
+        alert('신청이 접수되었습니다.');
+        form.reset();
+        submitBtn.disabled = false;
+        submitBtn.textContent = '신청하기';
+        submitted = false;
+        closeModal();
+      }, 900);
+    })
+    .catch(function(err){
+      alert('오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+      submitBtn.disabled = false;
+      submitBtn.textContent = '신청하기';
+      submitted = false;
+    });
+  });
+})();
   </script>
 </section>
 
