@@ -4774,6 +4774,21 @@
         </div>
       </article>
 
+           <article class="sfs-project-card" data-sfs-color="purple-blue" data-image="./img/la6.jpg">
+        <a class="sfs-card-link" href="https://thenhome.co.kr/dg-event2.html" target="_blank" rel="noopener noreferrer" aria-label="HANAM 페이지 열기">
+          <div class="sfs-card-image">
+            <img class="sfs-card-photo" alt="" loading="lazy">
+            <canvas></canvas>
+          </div>
+        </a>
+        <div class="sfs-card-label">
+          <div class="sfs-card-label-dot"></div>
+          <span class="sfs-card-label-text">스마트홈가전케어 랜딩페이지</span>
+        </div>
+      </article>
+
+      
+
       <article class="sfs-project-card" data-sfs-color="pink-magenta" data-image="./img/pinder.jpg">
         <a class="sfs-card-link" href="https://pinder.co.kr" target="_blank" rel="noopener noreferrer" aria-label="SUWON 페이지 열기">
           <div class="sfs-card-image">
@@ -5078,7 +5093,6 @@
 
 
 
-
 <section id="chanelReviewSection">
   <style>
     #chanelReviewSection{
@@ -5094,6 +5108,12 @@
       --shadow:0 30px 80px rgba(0,0,0,0.38);
       --radius:28px;
       --max:1280px;
+
+      /* highlight tokens - champagne gold, 다크 럭셔리 톤 전용 */
+      --hl-tint:rgba(255,224,166,0.16);
+      --hl-tint-strong:rgba(255,224,166,0.24);
+      --hl-text:#ffffff;
+      --hl-text-strong:#ffe6b8;
 
       position:relative;
       overflow:hidden;
@@ -5231,15 +5251,98 @@
       letter-spacing:-0.01em;
     }
 
+    /* ============================================
+       REVIEW PHOTO - 제목(조건 영역)과 후기 본문 사이
+       이미지 src가 비어있거나 로드 실패 시 자동 숨김
+       ============================================ */
+    #chanelReviewSection .review-photo{
+      margin:0 0 26px;
+      border-radius:18px;
+      overflow:hidden;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,0.03);
+      box-shadow:0 14px 40px rgba(0,0,0,0.35);
+    }
+
+    #chanelReviewSection .review-photo img{
+      display:block;
+      width:100%;
+      height:auto;
+      object-fit:cover;
+    }
+
+    #chanelReviewSection .review-photo.is-empty{
+      display:none;
+    }
+
+    /* ============================================
+       HIGHLIGHT - 샴페인 골드 마커
+       각 하이라이트가 "화면에 드러나는 순간"
+       형광펜을 긋듯 왼쪽 → 오른쪽으로 그려짐
+       (개별 IntersectionObserver로 .hl-on 부여)
+       ============================================ */
+    #chanelReviewSection .hl{
+      position:relative;
+      color:rgba(255,255,255,0.9);
+      font-weight:500;
+      padding:0 2px;
+      background-image:linear-gradient(180deg,
+        transparent 58%,
+        var(--hl-tint) 58%,
+        var(--hl-tint) 96%,
+        transparent 96%);
+      background-repeat:no-repeat;
+      background-size:0% 100%;
+      background-position:left center;   /* 왼쪽 고정 → 좌에서 우로 확장 */
+      transition:
+        background-size 1s cubic-bezier(.22,1,.36,1),
+        color .8s ease,
+        text-shadow .8s ease;
+      -webkit-box-decoration-break:clone;
+      box-decoration-break:clone;
+    }
+
+    /* 핵심 성과 수치용 - 샴페인 골드 텍스트 + 은은한 글로우 */
+    #chanelReviewSection .hl.hl-strong{
+      background-image:linear-gradient(180deg,
+        transparent 58%,
+        var(--hl-tint-strong) 58%,
+        var(--hl-tint-strong) 96%,
+        transparent 96%);
+    }
+
+    /* 화면에 드러난 순간 발동 */
+    #chanelReviewSection .hl.hl-on{
+      color:var(--hl-text);
+      background-size:100% 100%;
+    }
+
+    #chanelReviewSection .hl.hl-strong.hl-on{
+      color:var(--hl-text-strong);
+      text-shadow:0 0 22px rgba(255,220,160,0.28);
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      #chanelReviewSection .hl{
+        transition:none;
+        background-size:100% 100%;
+        color:var(--hl-text);
+      }
+      #chanelReviewSection .hl.hl-strong{
+        color:var(--hl-text-strong);
+      }
+    }
+
     #chanelReviewSection .review-bottom{
-      margin-top:34px;
-      padding-top:22px;
-      border-top:1px solid rgba(255,255,255,0.1);
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:14px;
-      flex-wrap:wrap;
+    margin-bottom: 34px;
+    padding-bottom: 22px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 14px;
+    flex-wrap: wrap;
+    flex-direction: column-reverse;
     }
 
     #chanelReviewSection .review-user{
@@ -5263,9 +5366,9 @@
     }
 
     #chanelReviewSection .review-star{
-      color:#fff;
+      color:#ffeb3b;
       letter-spacing:.18em;
-      font-size:.8rem;
+      font-size:1rem;
       opacity:.9;
       white-space:nowrap;
     }
@@ -5373,6 +5476,11 @@
         font-size:.97rem;
         line-height:1.85;
       }
+
+      #chanelReviewSection .review-photo{
+        border-radius:14px;
+        margin-bottom:22px;
+      }
     }
   </style>
 
@@ -5392,55 +5500,74 @@
     </div>
 
     <div class="review-list">
+
+      <!-- ============ 후기 1 : 정책자금 DB 확보 후기 ============ -->
       <article class="review-card reveal delay-1">
-        <div class="quote-mark">“</div>
-        <p class="review-text">
-          짧은 일정 속에서도 50주년 기념 홈페이지 제작 및 중요한 기념 행사의 랜딩 페이지를 함께 만들어주신 덕분에 제작과 동시에 랜딩페이지로 만든 모든 행사가 1000명 이상 온라인을 통해 참석하는 바람에 서둘러 조기 마감을 하고, 총장님도 놀라실 정도로 뜨거운 반응을 받아냈습니다. 정말 감사합니다.
-        </p>
         <div class="review-bottom">
           <div class="review-user">
-            <span class="review-name">정동숙 선생님</span>
-            <span class="review-meta">아주대학교 대학발전팀</span>
+            <span class="review-name">새로운 시장에 진출하며<br>대량의 질 좋은 DB가 필요했던<br><br>OOO 대표님 실제 후기</span>
+            <!-- <span class="review-meta">Brand Strategy</span> -->
           </div>
           <div class="review-star">★★★★★</div>
         </div>
+
+        <!-- 이미지 슬롯 : src에 경로를 넣으면 표시, 비워두면 자동 숨김 -->
+        <div class="review-photo">
+          <img src="" alt="후기 이미지" loading="lazy">
+        </div>
+
+        <p class="review-text">
+          <span class="hl hl-strong">디비 질에 크게 만족했습니다.</span><br><br>
+          소상공인 정책자금 시장에 진출을 해보고 싶어서, 기존의 메타 잠재고객 광고를 벗어나 직접 랜딩페이지와 홈페이지를 만들어서 고객을 확보하고 싶었던 차에, 연결이 되어 프로젝트를 진행해보았습니다.<br><br>
+          TM 인원이 많다보니, 많은 수량의 DB가 필요한 상황이었는데 그러기 위해서는 필연적으로 <span class="hl hl-strong">효율 높은 랜딩페이지가 필요했고 직접 제작을 해주셔서 1주일 제작 이후에 테스트를 진행</span>하였습니다.<br><br>
+          한 달이 조금 지난 상황에서 <span class="hl hl-strong">170개 정도의 테스트 DB를 확보</span>했고, <span class="hl hl-strong">직접 통화 테스트를 해보면서 질이 높다는 결과</span>를 얻을 수 있었습니다.<br><br>
+          당근마켓이랑 메타를 기반으로 진행하면서 효율을 더 잡아가는 형태로 가면 매출을 낼 수 있지 않을까 보고 있습니다.
+        </p>
       </article>
 
+      <!-- ============ 후기 2 : 한국위드케어협회 전정운 대표 ============ -->
       <article class="review-card reveal delay-2">
-        <div class="quote-mark">“</div>
-        <p class="review-text">
-        당사는 자격과정 모집을 위한 랜딩페이지가 절실한 상황이었고, 여러 고민 끝에 최 대표님과 상담을 진행하게 되었습니다.<br><Br>
-3시간의 전화 상담과 2번의 오프라인 미팅을 통해 단순한 제작이 아닌, 비즈니스 방향성과 고객 흐름까지 함께 설계해준다는 점에서 깊은 신뢰를 느꼈습니다. 특히 당사의 상황을 정확히 이해하고 현실적인 제안을 해주신 부분이 인상적이었습니다.<br><br>
-
-한 달이 지난 현재, 2개의 랜딩페이지에서 꾸준히 접수가 발생하고 있으며 광고 역시 안정적으로 운영되고 있습니다. 이전에는 광고를 집행해도 뚜렷한 반응이 없었지만, 지금은 실제 문의로 이어지는 흐름이 만들어졌다는 점에서 큰 변화를 체감하고 있습니다.<br><br>
-
-이번 경험을 통해 단순한 디자인이 아닌, ‘결과를 만드는 구조’가 얼마나 중요한지 깨닫게 되었습니다. 이 기회를 기반으로 더욱 성장해 나가겠습니다.
-        </p>
         <div class="review-bottom">
           <div class="review-user">
-            <span class="review-name">전정운 대표</span>
+            <span class="review-name">그 어떤 고객 확보 기반이 없어<br>온라인으로 고객을 찾고 싶어했던<br><br>전OO 대표님 실제 후기</span>
             <span class="review-meta">한국위드케어협회</span>
           </div>
           <div class="review-star">★★★★★</div>
         </div>
+
+        <!-- 이미지 슬롯 : src에 경로를 넣으면 표시, 비워두면 자동 숨김 -->
+        <div class="review-photo">
+          <img src="" alt="후기 이미지" loading="lazy">
+        </div>
+
+        <p class="review-text">
+          당사는 자격과정 모집을 위한 랜딩페이지가 절실한 상황이었고, 여러 고민 끝에 최 대표님과 상담을 진행하게 되었습니다.<br><br>
+          3시간의 전화 상담과 2번의 오프라인 미팅을 통해 <span class="hl hl-strong">단순한 제작이 아닌, 비즈니스 방향성과 고객 흐름까지 함께 설계해준다는 점에서 깊은 신뢰를 느꼈습니다.</span> 특히 당사의 상황을 정확히 이해하고 현실적인 제안을 해주신 부분이 인상적이었습니다.<br><br>
+          한 달이 지난 현재, <span class="hl hl-strong">2개의 랜딩페이지에서 꾸준히 접수가 발생하고 있으며 광고 역시 안정적으로 운영되고 있습니다.</span> 이전에는 광고를 집행해도 뚜렷한 반응이 없었지만, <span class="hl hl-strong">지금은 실제 문의로 이어지는 흐름이 만들어졌다</span>는 점에서 큰 변화를 체감하고 있습니다.<br><br>
+          이번 경험을 통해 단순한 디자인이 아닌, <span class="hl hl-strong">'결과를 만드는 구조'가 얼마나 중요한지 깨닫게 되었습니다.</span> 이 기회를 기반으로 더욱 성장해 나가겠습니다.
+        </p>
       </article>
 
+      <!-- ============ 후기 3 : XXX협동조합 김OO 사무국장님 ============ -->
       <article class="review-card reveal delay-3">
-        <div class="quote-mark">“</div>
-        <p class="review-text">
-         서울시 지원 서비스를 운영하는 과정에서 가장 큰 고민은 ‘모객’이었습니다. 제대로 된 홈페이지나 랜딩페이지가 구축되어 있지 않았고, 마케팅을 어떻게 시작해야 할지조차 막막한 상황이었습니다. 문의 전화는 들어오지만 안내 과정이 매끄럽지 않아 오히려 불편하다는 클레임이 발생하는 등, 구조적인 문제를 해결할 필요성을 절실히 느끼고 있었습니다.<br><Br>
-
-그러던 중 지인의 소개로 FLOS를 알게 되었고, 대표님께서 직접 현장에 방문해 현재 비즈니스 상황을 꼼꼼히 분석하고 고객 흐름을 함께 정리해주셨습니다. 단순 제작이 아닌, 실제 고객이 이해하고 신청까지 이어질 수 있는 구조로 기존 사이트를 보완하고 랜딩페이지를 빠르게 개선해주셨습니다.<br><Br>
-
-그 결과, 단 3일 만에 서비스 예약 건수가 2배 이상 증가했으며, 현재까지도 안정적으로 유지되고 있습니다. 막막했던 상황에서 실질적인 변화를 만들어주신 점에 깊이 감사드립니다.
-        </p>
         <div class="review-bottom">
           <div class="review-user">
-            <span class="review-name">김OO 사무국장님</span>
+            <span class="review-name">제대로 된 랜딩페이지가 없어<br>모객은 막막하고<br>문의가 와도 클레임으로 이어졌던<br><br>김OO 사무국장님 실제 후기</span>
             <span class="review-meta">XXX협동조합</span>
           </div>
           <div class="review-star">★★★★★</div>
         </div>
+
+        <!-- 이미지 슬롯 : src에 경로를 넣으면 표시, 비워두면 자동 숨김 -->
+        <div class="review-photo">
+          <img src="" alt="후기 이미지" loading="lazy">
+        </div>
+
+        <p class="review-text">
+          서울시 지원 서비스를 운영하는 과정에서 가장 큰 고민은 '모객'이었습니다. 제대로 된 홈페이지나 랜딩페이지가 구축되어 있지 않았고, 마케팅을 어떻게 시작해야 할지조차 막막한 상황이었습니다. 문의 전화는 들어오지만 안내 과정이 매끄럽지 않아 오히려 불편하다는 클레임이 발생하는 등, 구조적인 문제를 해결할 필요성을 절실히 느끼고 있었습니다.<br><br>
+          그러던 중 지인의 소개로 FLOS를 알게 되었고, <span class="hl hl-strong">대표님께서 직접 현장에 방문해 현재 비즈니스 상황을 꼼꼼히 분석하고 고객 흐름을 함께 정리해주셨습니다.</span> 단순 제작이 아닌, <span class="hl hl-strong">실제 고객이 이해하고 신청까지 이어질 수 있는 구조로 기존 사이트를 보완하고 랜딩페이지를 빠르게 개선</span>해주셨습니다.<br><br>
+          그 결과, <span class="hl hl-strong">단 3일 만에 서비스 예약 건수가 2배 이상 증가</span>했으며, 현재까지도 안정적으로 유지되고 있습니다. 막막했던 상황에서 실질적인 변화를 만들어주신 점에 깊이 감사드립니다.
+        </p>
       </article>
     </div>
 
@@ -5452,6 +5579,7 @@
       const section = document.querySelector('#chanelReviewSection');
       if(!section) return;
 
+      /* 카드 등장 애니메이션 */
       const items = section.querySelectorAll('.reveal');
 
       const io = new IntersectionObserver((entries)=>{
@@ -5470,6 +5598,55 @@
           io.observe(item);
         }
       });
+
+      /* ============================================
+         이미지 슬롯 처리
+         - src가 비어있으면 슬롯 자체를 숨김
+         - src가 있어도 로드에 실패하면 숨김
+         ============================================ */
+      const photos = section.querySelectorAll('.review-photo');
+
+      photos.forEach(box=>{
+        const img = box.querySelector('img');
+        const src = img ? (img.getAttribute('src') || '').trim() : '';
+
+        if(!img || !src){
+          box.classList.add('is-empty');
+          return;
+        }
+
+        img.addEventListener('error', ()=>{
+          box.classList.add('is-empty');
+        });
+      });
+
+      /* ============================================
+         하이라이트 개별 트리거
+         - 각 .hl 이 화면에 드러나는 순간 좌→우로 그려짐
+         - 같은 화면에 동시에 들어온 하이라이트는
+           0.15초 간격으로 순차적으로 그려짐
+         ============================================ */
+      const highlights = section.querySelectorAll('.hl');
+
+      const hlIo = new IntersectionObserver((entries)=>{
+        const entered = entries.filter(e => e.isIntersecting);
+
+        /* 화면 위쪽에 있는 하이라이트부터 순서대로 */
+        entered.sort((a, b) =>
+          a.boundingClientRect.top - b.boundingClientRect.top
+        );
+
+        entered.forEach((entry, i)=>{
+          entry.target.style.transitionDelay = (i * 0.15) + 's';
+          entry.target.classList.add('hl-on');
+          hlIo.unobserve(entry.target);
+        });
+      },{
+        threshold:0.7,
+        rootMargin:'0px 0px -6% 0px'
+      });
+
+      highlights.forEach(hl => hlIo.observe(hl));
     })();
   </script>
 </section>
