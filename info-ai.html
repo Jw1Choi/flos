@@ -3281,8 +3281,11 @@
       position: relative;
       background: var(--sfs-bg);
       color: var(--sfs-text);
-      overflow: clip;
+      /* overflow: clip이 iOS Safari의 sticky 합성 레이어를 재배치시키는
+         경우가 있어 세로 스크롤 구간은 완전히 열린 상태로 유지합니다. */
+      overflow: visible;
       overflow-anchor: none;
+      touch-action: pan-y;
       font-family: 'Bebas Neue', sans-serif;
       isolation: isolate;
     }
@@ -3314,7 +3317,12 @@
       pointer-events: none;
       mix-blend-mode: difference;
       /* padding-inline: 20px; */
-      will-change: auto;
+      /* sticky + mix-blend-mode 조합의 모바일 합성 레이어 떨림 방지 */
+      will-change: transform;
+      transform: translate3d(0, 0, 0);
+      -webkit-transform: translate3d(0, 0, 0);
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
     }
 
     #ProjectSection .sfs-fixed-label {
@@ -3432,6 +3440,8 @@
         opacity 1s var(--sfs-ease),
         transform 1s var(--sfs-ease);
       will-change: transform, opacity;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
     }
 
     #ProjectSection .sfs-project-card.sfs-visible {
@@ -3619,7 +3629,7 @@
       z-index: 2;
       width: min(92vw, 1080px);
       aspect-ratio: 16 / 9;
-      max-height: calc(100vh - 120px);
+      max-height: calc((var(--sfs-vh) * 100) - 120px);
       background: #000;
       border-radius: 10px;
       overflow: hidden;
@@ -3895,33 +3905,43 @@
       section.dataset.sfsInitialized = 'true';
 
       const scrollHint = section.querySelector('[data-sfs-scroll-hint]');
-      const fixedText = section.querySelector('[data-sfs-fixed-text]');
       const projectCards = Array.from(section.querySelectorAll('.sfs-project-card'));
 
       /* ===== 모바일 고정 뷰포트 높이 =====
          주소창/하단바가 접히고 펼쳐질 때 발생하는 height-only resize는 무시합니다.
          실제 화면 회전 또는 가로 폭 변경 때만 새 기준 높이를 적용합니다. */
+      /* visualViewport는 주소창, 키보드, 확대/축소에도 수치가 계속 달라집니다.
+         레이아웃 기준에는 변동이 적은 layout viewport만 사용합니다. */
       const getViewportWidth = () =>
-        Math.round((window.visualViewport && window.visualViewport.width)
+        Math.round(document.documentElement.clientWidth
           || window.innerWidth
-          || document.documentElement.clientWidth
           || 1);
 
       const getViewportHeight = () =>
-        Math.round((window.visualViewport && window.visualViewport.height)
-          || window.innerHeight
+        Math.round(window.innerHeight
           || document.documentElement.clientHeight
           || 1);
 
       let stableViewportWidth = getViewportWidth();
       let stableViewportHeight = Math.max(320, getViewportHeight());
-      let stableOrientation = stableViewportWidth > stableViewportHeight ? 'landscape' : 'portrait';
+      let sectionHeightLocked = false;
 
       function applyStableViewportHeight() {
         section.style.setProperty('--sfs-vh', (stableViewportHeight / 100) + 'px');
       }
 
       applyStableViewportHeight();
+
+      /* 이 섹션이 화면에 한 번이라도 닿은 뒤에는 --sfs-vh를 다시 쓰지 않습니다.
+         스크롤 도중 CSS 높이가 바뀌는 원인을 원천 차단합니다. */
+      function lockSectionViewportHeight() {
+        if (sectionHeightLocked) return;
+        const rect = section.getBoundingClientRect();
+        if (rect.top <= stableViewportHeight && rect.bottom >= 0) {
+          sectionHeightLocked = true;
+          section.setAttribute('data-sfs-height-locked', 'true');
+        }
+      }
 
       const palettes = {
         'purple-blue': ['#6B3FA0', '#3A1F6F', '#8B5FCF', '#2A1050', '#C4A0FF', '#1A0A3A', '#9070D0', '#4020A0'],
@@ -4055,7 +4075,69 @@
 
       let modalOpen = false;
       let lastFocusedEl = null;
-      let bodyOverflowBackup = '';
+      let lockedScrollY = 0;
+      let bodyLockBackup = null;
+
+      function focusWithoutScroll(el) {
+        if (!el || typeof el.focus !== 'function') return;
+        const beforeY = window.scrollY || window.pageYOffset || 0;
+        try {
+          el.focus({ preventScroll: true });
+        } catch (err) {
+          el.focus();
+          const afterY = window.scrollY || window.pageYOffset || 0;
+          if (Math.abs(afterY - beforeY) > 1) window.scrollTo(0, beforeY);
+        }
+      }
+
+      function lockPageScroll() {
+        lockedScrollY = window.scrollY || window.pageYOffset || 0;
+        const body = document.body;
+        const html = document.documentElement;
+        const scrollbarGap = Math.max(0, window.innerWidth - html.clientWidth);
+
+        bodyLockBackup = {
+          position: body.style.position,
+          top: body.style.top,
+          left: body.style.left,
+          right: body.style.right,
+          width: body.style.width,
+          overflow: body.style.overflow,
+          paddingRight: body.style.paddingRight,
+          htmlScrollBehavior: html.style.scrollBehavior
+        };
+
+        body.style.position = 'fixed';
+        body.style.top = (-lockedScrollY) + 'px';
+        body.style.left = '0';
+        body.style.right = '0';
+        body.style.width = '100%';
+        body.style.overflow = 'hidden';
+        if (scrollbarGap > 0) body.style.paddingRight = scrollbarGap + 'px';
+      }
+
+      function unlockPageScroll() {
+        if (!bodyLockBackup) return;
+
+        const body = document.body;
+        const html = document.documentElement;
+        const restoreY = lockedScrollY;
+
+        body.style.position = bodyLockBackup.position;
+        body.style.top = bodyLockBackup.top;
+        body.style.left = bodyLockBackup.left;
+        body.style.right = bodyLockBackup.right;
+        body.style.width = bodyLockBackup.width;
+        body.style.overflow = bodyLockBackup.overflow;
+        body.style.paddingRight = bodyLockBackup.paddingRight;
+
+        /* 사이트 전역에 smooth scroll이 있어도 복원 순간에는 즉시 같은 위치로 돌아갑니다. */
+        html.style.scrollBehavior = 'auto';
+        window.scrollTo(0, restoreY);
+        html.style.scrollBehavior = bodyLockBackup.htmlScrollBehavior;
+
+        bodyLockBackup = null;
+      }
 
       // 유튜브 / 비메오 링크를 임베드용 주소로 변환 (아니면 null)
       function getVideoEmbedUrl(rawUrl) {
@@ -4107,14 +4189,13 @@
         videoDialog.appendChild(iframe);
 
         lastFocusedEl = document.activeElement;
-        bodyOverflowBackup = document.body.style.overflow;
-        document.body.style.overflow = 'hidden';
+        lockPageScroll();
 
         videoModal.classList.add('sfs-open');
         videoModal.setAttribute('aria-hidden', 'false');
         modalOpen = true;
 
-        if (videoCloseBtn) videoCloseBtn.focus();
+        focusWithoutScroll(videoCloseBtn);
       }
 
       function closeVideoModal() {
@@ -4127,12 +4208,12 @@
         // iframe 제거로 재생 완전 중지
         if (videoDialog) videoDialog.innerHTML = '';
 
-        document.body.style.overflow = bodyOverflowBackup;
+        unlockPageScroll();
 
-        if (lastFocusedEl && typeof lastFocusedEl.focus === 'function') {
-          lastFocusedEl.focus();
-        }
+        /* 일반 focus()는 iOS/Android에서 해당 카드로 자동 스크롤할 수 있습니다. */
+        focusWithoutScroll(lastFocusedEl);
         lastFocusedEl = null;
+        requestTick();
       }
 
       if (videoBackdrop) videoBackdrop.addEventListener('click', closeVideoModal);
@@ -4172,11 +4253,12 @@
       const cardObserver = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add('sfs-visible');
-            } else {
-              entry.target.classList.remove('sfs-visible');
-            }
+            if (!entry.isIntersecting) return;
+
+            /* 한 번 등장한 카드는 다시 숨기지 않습니다.
+               경계에서 위아래로 왕복할 때 transform 전환이 반복되는 시각적 튕김을 제거합니다. */
+            entry.target.classList.add('sfs-visible');
+            cardObserver.unobserve(entry.target);
           });
         },
         {
@@ -4192,6 +4274,8 @@
 
       function updateOnScroll() {
         ticking = false;
+        lockSectionViewportHeight();
+
         const sy = window.scrollY || window.pageYOffset || 0;
         const sectionRect = section.getBoundingClientRect();
         const sectionTop = sy + sectionRect.top;
@@ -4204,10 +4288,8 @@
           hintHidden = false;
         }
 
-        if (fixedText) {
-          fixedText.style.opacity = '1';
-          fixedText.style.transform = 'translate3d(0,0,0)';
-        }
+        /* fixedText의 동일한 transform/opacity 값을 매 프레임 다시 쓰지 않습니다.
+           sticky 합성 레이어의 불필요한 재생성과 Safari의 미세 위치 보정을 방지합니다. */
       }
 
       function requestTick() {
@@ -4224,21 +4306,23 @@
       function handleStableViewportResize() {
         const nextWidth = getViewportWidth();
         const nextHeight = Math.max(320, getViewportHeight());
-        const nextOrientation = nextWidth > nextHeight ? 'landscape' : 'portrait';
-
-        const orientationChanged = nextOrientation !== stableOrientation;
         const widthChanged = Math.abs(nextWidth - stableViewportWidth) > 40;
 
-        /* 모바일 주소창/하단바는 주로 높이만 바꾸므로 레이아웃을 다시 계산하지 않음 */
-        if (!orientationChanged && !widthChanged) {
+        /* 주소창/하단바/키보드처럼 높이만 달라지는 resize는 항상 무시합니다. */
+        if (!widthChanged) {
           requestTick();
           return;
         }
 
         stableViewportWidth = nextWidth;
-        stableViewportHeight = nextHeight;
-        stableOrientation = nextOrientation;
-        applyStableViewportHeight();
+
+        /* 아직 섹션에 도달하기 전의 실제 반응형 폭 변경만 높이에 반영합니다.
+           섹션 진입 후에는 PC·모바일 모두 높이를 끝까지 고정합니다. */
+        if (!sectionHeightLocked && section.getBoundingClientRect().top > stableViewportHeight) {
+          stableViewportHeight = nextHeight;
+          applyStableViewportHeight();
+        }
+
         requestTick();
       }
 
@@ -4252,6 +4336,7 @@
 
       window.addEventListener('resize', queueStableViewportResize, { passive: true });
       window.addEventListener('orientationchange', queueStableViewportResize, { passive: true });
+      window.addEventListener('pageshow', requestTick, { passive: true });
 
       updateOnScroll();
     })();
