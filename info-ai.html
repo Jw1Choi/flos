@@ -81,6 +81,7 @@
    - 외부 의존: 없음 (순수 Vanilla JS + Vimeo/YouTube API 자동 로드)
    - ✅ 사용법: 아래 <script> 최상단 VIDEO_URL 에
      Vimeo 또는 YouTube 공유 링크만 넣으면 자동 인식
+   - ✅ 재생버튼 / 자막 / 로딩 시 오버레이 UI 전부 비표시
   =============================== -->
 
   <style>
@@ -147,25 +148,37 @@
       transform: translate(-50%, -50%);
       display: block;
       background: #000;
-      pointer-events: none;
+      pointer-events: none; /* ✅ 클릭 불가 → 컨트롤 노출 원천 차단 */
       border: 0;
+      z-index: 1;
+
+      /* ✅ 핵심: 영상은 투명 상태로 시작 → 재생 확정 후에만 페이드인
+         (로딩 중 유튜브 재생/이전/다음 오버레이가 절대 보이지 않음) */
+      opacity: 0;
+      transition: opacity 1.2s ease;
+    }
+
+    /* ✅ 재생이 실제 시작되고 오버레이가 사라진 뒤 JS가 이 클래스를 부여 */
+    #bgScrollWrap .video_wrap iframe.bgf-ready {
+      opacity: 1;
     }
 
     /* ✅ YouTube는 배경모드가 없어 UI가 살짝 보일 수 있으므로
-       화면보다 약간 크게 확대해 상/하단 UI를 화면 밖으로 밀어냄 */
+       화면보다 크게 확대해 상/하단 UI(제목·워터마크·자막영역)를 화면 밖으로 밀어냄 */
     #bgScrollWrap .video_wrap.is-youtube iframe {
-      width: 120vw;
-      min-width: 213.32vh;
-      height: 120vh;
-      min-height: 67.5vw;
+      width: 130vw;
+      min-width: 231.1vh;
+      height: 130vh;
+      min-height: 73.12vw;
     }
 
-    /* ✅ 핵심: 이미지가 먼저 자연스럽게 보이다가 영상 재생 시 부드럽게 사라짐 */
+    /* ✅ 핵심: 플레이스홀더가 영상 "위"에 위치 (z-index: 2)
+       → 로딩 중 영상/오버레이가 전부 이미지 뒤에 가려짐 */
     #bgScrollWrap .video-placeholder {
       position: absolute;
       inset: 0;
       background: #000 url('./img/model.png') center center / cover no-repeat;
-      z-index: 1;
+      z-index: 2;
       opacity: 1;
       transition: opacity 1.2s ease;
       will-change: opacity;
@@ -638,14 +651,14 @@
       <div class="pin-spacer">
         <div class="sec sec_visual" data-bgf-hero="">
           <div class="video_wrap" data-bgf-video="">
-            <!-- ✅ 미리보기 이미지 -->
-            <div class="video-placeholder" data-video-placeholder></div>
-
             <!-- ✅ 아주 약한 안전 레이어 -->
             <div class="video-fade-guard" data-video-fade-guard></div>
 
             <!-- ✅ 영상은 JS가 VIDEO_URL을 보고 자동 생성 (Vimeo/YouTube 공용 마운트 지점) -->
             <div id="bgf-video-mount" data-bgf-video-mount></div>
+
+            <!-- ✅ 미리보기 이미지: 영상 "위"에 위치 → 로딩 중 오버레이 완전 차단 -->
+            <div class="video-placeholder" data-video-placeholder></div>
           </div>
 
           <div class="dim" data-bgf-dim=""></div>
@@ -716,7 +729,11 @@
          - https://www.youtube.com/shorts/XXXXXXXXXXX
          - https://www.youtube.com/embed/XXXXXXXXXXX
       ===================================================== */
-      const VIDEO_URL = 'https://vimeo.com/1174411177';
+      const VIDEO_URL = 'https://vimeo.com/1211120445';
+
+      /* ✅ 재생 시작 후 영상을 노출하기까지 기다리는 시간(ms)
+         유튜브 초기 오버레이(재생/이전/다음)가 자동으로 사라지는 시간을 벌어줌 */
+      const YT_REVEAL_DELAY = 1600;
 
       const root = document.getElementById('bgScrollWrap');
       if (!root) return;
@@ -761,26 +778,37 @@
       }
 
       /* =====================================================
-       ✅ 플레이스홀더 페이드 (공통)
+       ✅ 플레이스홀더 & 영상 노출 (공통)
+       순서: 영상 opacity 0 (숨김) → 재생 확정 → 딜레이 →
+             iframe 페이드인 + 플레이스홀더 페이드아웃 (교차 페이드)
       ===================================================== */
       const placeholder = root.querySelector('[data-video-placeholder]');
       const fadeGuard = root.querySelector('[data-video-fade-guard]');
 
-      function hidePlaceholderSmoothly() {
-        if (!placeholder) return;
-        if (placeholder.dataset.hidden === '1') return;
-        placeholder.dataset.hidden = '1';
-
-        placeholder.style.opacity = '0';
+      function revealVideo(delayMs) {
+        if (placeholder && placeholder.dataset.hidden === '1') return;
+        if (placeholder) placeholder.dataset.hidden = '1';
 
         setTimeout(function () {
-          placeholder.style.display = 'none';
-          if (fadeGuard) fadeGuard.style.opacity = '0';
-        }, 1200);
+          /* iframe 페이드인 */
+          const iframe = videoWrap ? videoWrap.querySelector('iframe') : null;
+          if (iframe) iframe.classList.add('bgf-ready');
+
+          /* 플레이스홀더 페이드아웃 (교차 페이드로 블랙아웃 없음) */
+          if (placeholder) {
+            placeholder.style.opacity = '0';
+            setTimeout(function () {
+              placeholder.style.display = 'none';
+              if (fadeGuard) fadeGuard.style.opacity = '0';
+            }, 1200);
+          }
+        }, delayMs || 0);
       }
 
       /* =====================================================
-       ✅ Vimeo 초기화 (기존 로직 그대로)
+       ✅ Vimeo 초기화
+       - background=1 → 컨트롤/재생버튼 완전 비표시
+       - texttrack 강제 해제 → 자막 비표시
       ===================================================== */
       function initVimeo(videoId) {
         const mount = root.querySelector('[data-bgf-video-mount]');
@@ -789,7 +817,8 @@
         const iframe = document.createElement('iframe');
         iframe.id = 'bgf-vimeo-iframe';
         iframe.src = 'https://player.vimeo.com/video/' + videoId +
-          '?background=1&muted=1&autoplay=1&loop=1&playsinline=1&autopause=0';
+          '?background=1&muted=1&autoplay=1&loop=1&playsinline=1&autopause=0' +
+          '&controls=0&title=0&byline=0&portrait=0&texttrack=false';
         iframe.setAttribute('allow', 'autoplay; fullscreen');
         iframe.setAttribute('title', '배경 영상');
         iframe.setAttribute('frameborder', '0');
@@ -822,16 +851,20 @@
           const player = new Vimeo.Player(iframe);
           let hasStarted = false;
 
+          /* ✅ 자막 강제 비활성화 */
+          player.disableTextTrack().catch(function () {});
+
           player.on('play', function () {
+            player.disableTextTrack().catch(function () {});
             if (hasStarted) return;
             hasStarted = true;
-            hidePlaceholderSmoothly();
+            revealVideo(0); /* Vimeo background 모드는 오버레이가 없어 즉시 노출 */
           });
 
           player.on('playing', function () {
             if (hasStarted) return;
             hasStarted = true;
-            hidePlaceholderSmoothly();
+            revealVideo(0);
           });
 
           /* 혹시 특정 환경에서 play 이벤트가 늦는 경우 대비 */
@@ -840,7 +873,7 @@
               player.getPaused().then(function (paused) {
                 if (paused === false) {
                   hasStarted = true;
-                  hidePlaceholderSmoothly();
+                  revealVideo(0);
                 }
               }).catch(function () {});
             }
@@ -849,7 +882,7 @@
           /* 매우 느린 환경용 최종 안전장치 */
           setTimeout(function () {
             if (!hasStarted) {
-              hidePlaceholderSmoothly();
+              revealVideo(0);
             }
           }, 4500);
         });
@@ -859,7 +892,9 @@
        ✅ YouTube 초기화 (Vimeo와 동일한 UX)
        - 음소거 + playsinline → 모바일 자동재생 보장
        - loop + playlist → 끊김 없는 무한 반복
-       - PLAYING 이벤트 → 플레이스홀더 페이드
+       - 재생 확정 후 YT_REVEAL_DELAY 만큼 기다렸다가 노출
+         → 초기 재생/이전/다음 오버레이가 사라진 뒤에만 화면에 보임
+       - unloadModule('captions') → 자막 모듈 자체를 제거
       ===================================================== */
       function initYouTube(videoId) {
         const mount = root.querySelector('[data-bgf-video-mount]');
@@ -869,6 +904,20 @@
         if (placeholder) placeholder.style.opacity = '1';
 
         let hasStarted = false;
+
+        /* ✅ 자막 모듈 완전 제거 */
+        function killCaptions(target) {
+          try {
+            if (typeof target.unloadModule === 'function') {
+              target.unloadModule('captions'); // HTML5 플레이어
+              target.unloadModule('cc');       // 구형 플레이어
+            }
+            if (typeof target.setOption === 'function') {
+              target.setOption('captions', 'track', {});
+              target.setOption('cc', 'track', {});
+            }
+          } catch (err) {}
+        }
 
         function loadYouTubeApi(callback) {
           if (window.YT && window.YT.Player) {
@@ -902,29 +951,38 @@
               mute: 1,
               loop: 1,
               playlist: videoId,       // loop 필수 조건
-              controls: 0,
+              controls: 0,             // ✅ 컨트롤바/재생버튼 비표시
               playsinline: 1,          // iOS 모바일 인라인 자동재생
               rel: 0,
               fs: 0,
-              disablekb: 1,
-              iv_load_policy: 3,
+              disablekb: 1,            // ✅ 키보드 조작 차단
+              iv_load_policy: 3,       // ✅ 카드/주석 비표시
+              cc_lang_pref: 'zz',      // ✅ 존재하지 않는 언어 지정 → 자막 매칭 실패 유도
               modestbranding: 1,
               origin: window.location.origin
             },
             events: {
               onReady: function (e) {
                 e.target.mute();
+                killCaptions(e.target); // ✅ 자막 제거
                 e.target.playVideo();
               },
               onStateChange: function (e) {
-                if (e.data === YT.PlayerState.PLAYING && !hasStarted) {
-                  hasStarted = true;
-                  hidePlaceholderSmoothly();
+                if (e.data === YT.PlayerState.PLAYING) {
+                  killCaptions(e.target); // ✅ 재생 시작 시 한 번 더 제거
+                  if (!hasStarted) {
+                    hasStarted = true;
+                    /* ✅ 오버레이가 자동으로 사라질 시간을 확보한 뒤 노출 */
+                    revealVideo(YT_REVEAL_DELAY);
+                  }
                 }
                 /* 일부 환경에서 loop 재시작이 멈추는 경우 대비 */
                 if (e.data === YT.PlayerState.ENDED) {
                   e.target.playVideo();
                 }
+              },
+              onApiChange: function (e) {
+                killCaptions(e.target); // ✅ 자막 모듈이 뒤늦게 로드돼도 즉시 제거
               }
             }
           });
@@ -938,7 +996,7 @@
               try {
                 if (player.getPlayerState() === YT.PlayerState.PLAYING) {
                   hasStarted = true;
-                  hidePlaceholderSmoothly();
+                  revealVideo(YT_REVEAL_DELAY);
                 }
               } catch (err) {}
             }
@@ -947,7 +1005,7 @@
           /* 매우 느린 환경용 최종 안전장치 */
           setTimeout(function () {
             if (!hasStarted) {
-              hidePlaceholderSmoothly();
+              revealVideo(YT_REVEAL_DELAY);
             }
           }, 4500);
         });
