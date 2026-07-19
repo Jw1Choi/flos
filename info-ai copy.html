@@ -4376,6 +4376,1169 @@
 
 
 
+<section id="flosValueStructure">
+  <style>
+    #flosValueStructure{
+      position:relative;
+      width:100%;
+      background:#ffffff;
+      color:#000000;
+      font-family:"Pretendard","Noto Sans KR",sans-serif;
+      overflow:hidden;
+    }
+
+    #flosValueStructure .jei-inner{
+      width:min(100%, 1440px);
+      margin:0 auto;
+      padding:42px 48px 72px;
+      box-sizing:border-box;
+    }
+
+    #flosValueStructure .jei-topline{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      margin-bottom:28px;
+    }
+
+    #flosValueStructure .jei-topline .dot{
+      width:8px;
+      height:8px;
+      border-radius:50%;
+      background:#000000;
+      flex:0 0 auto;
+    }
+
+    #flosValueStructure .jei-topline .line{
+      width:120px;
+      height:1px;
+      background:rgba(0,0,0,.2);
+      flex:0 0 auto;
+    }
+
+    #flosValueStructure .jei-topline .label{
+      font-size:12px;
+      font-weight:600;
+      letter-spacing:.22em;
+      text-transform:uppercase;
+      color:rgba(0,0,0,.5);
+      white-space:nowrap;
+    }
+
+    #flosValueStructure .jei-grid{
+      display:grid;
+      grid-template-columns:minmax(0, 1.2fr) minmax(320px, 520px);
+      gap:56px;
+      align-items:end;
+    }
+
+    #flosValueStructure .jei-title{
+      margin:0;
+      font-size:clamp(52px, 7vw, 78px);
+      line-height:.98;
+      letter-spacing:-0.055em;
+      font-weight:750;
+      color:#000000;
+    }
+
+    #flosValueStructure .jei-title .light{
+      display:block;
+      font-weight:620;
+      color:rgba(0,0,0,.7);
+    }
+
+    #flosValueStructure .jei-right{
+      padding-bottom:10px;
+    }
+
+    #flosValueStructure .jei-kicker{
+      margin:0 0 18px;
+      font-size:20px;
+      line-height:1.8;
+      font-weight:700;
+      letter-spacing:-0.02em;
+      color:#000000;
+      word-break:keep-all;
+    }
+
+    #flosValueStructure .jei-desc{
+      margin:0;
+      font-size:17px;
+      line-height:2.0;
+      letter-spacing:-0.01em;
+      color:rgba(0,0,0,.65);
+      word-break:keep-all;
+    }
+
+    #flosValueStructure::after{
+      content:"";
+      display:block;
+      width:100%;
+      height:56px;
+    }
+
+    @media (max-width:1200px){
+      #flosValueStructure .jei-inner{
+        padding:36px 28px 56px;
+      }
+
+      #flosValueStructure .jei-grid{
+        grid-template-columns:1fr;
+        gap:28px;
+      }
+
+      #flosValueStructure .jei-right{
+        max-width:760px;
+      }
+    }
+
+    @media (max-width:768px){
+      #flosValueStructure .jei-inner{
+        padding:28px 20px 42px;
+      }
+
+      #flosValueStructure .jei-topline{
+        margin-bottom:20px;
+      }
+
+      #flosValueStructure .jei-topline .line{
+        width:64px;
+      }
+
+      #flosValueStructure .jei-topline .label{
+        font-size:11px;
+        letter-spacing:.16em;
+      }
+
+      #flosValueStructure .jei-title{
+        font-size:clamp(38px, 12vw, 64px);
+        line-height:1.02;
+      }
+
+      #flosValueStructure .jei-kicker{
+        font-size:14px;
+        line-height:1.7;
+        margin-bottom:14px;
+      }
+
+      #flosValueStructure .jei-desc{
+        font-size:15px;
+        line-height:1.9;
+      }
+
+      #flosValueStructure::after{
+        height:28px;
+      }
+    }
+  </style>
+
+  <div class="jei-inner">
+    <div class="jei-topline">
+      <span class="dot"></span>
+      <span class="line"></span>
+      <span class="label">Branding AI VIDEO</span>
+    </div>
+
+    <div class="jei-grid">
+      <div class="jei-left">
+        <h1 class="jei-title">
+          품격을 전달하고<br>시선을 멈추게 하는<br>직관적인 영상 제작
+        </h1>
+      </div>
+
+      <div class="jei-right">
+        <p class="jei-kicker">
+          자연스럽게 시선이 가게 하고<br>
+          보는 것만으로도 신뢰와 품격을 느끼게 해줍니다.
+        </p>
+
+        <p class="jei-desc">
+          단순한 정보 전달이 아니라<br>
+          고급스러운 영상을 직접 제작하여<br>
+          회사가 추구하는 브랜딩의 느낌과<br>
+          특장점을 첫 영상만으로도 모두 느끼게 해줍니다.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section id="exordiumHero">
+  <style>
+    #exordiumHero {
+      --exo-black: #000000;
+      --exo-gold: #c9a96e;
+      --exo-white: #ffffff;
+      --exo-white-muted: rgba(255,255,255,0.65);
+      --exo-font-display: 'Playfair Display', 'Georgia', 'Times New Roman', serif;
+      --exo-font-body: 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+      display: block;
+      width: 100%;
+      height: 500vh;
+      background: var(--exo-black);
+      color: var(--exo-white);
+      overflow: visible;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: var(--exo-font-body);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      position: relative;
+    }
+
+    #exordiumHero .exo-viewport,
+    #exordiumHero .exo-slide,
+    #exordiumHero .exo-media,
+    #exordiumHero .exo-poster,
+    #exordiumHero .exo-video,
+    #exordiumHero .exo-video iframe,
+    #exordiumHero .exo-overlay,
+    #exordiumHero .exo-content,
+    #exordiumHero .exo-progress,
+    #exordiumHero .exo-scroll-indicator,
+    #exordiumHero .exo-dot,
+    #exordiumHero .exo-final-btn,
+    #exordiumHero .exo-scroll-line,
+    #exordiumHero .exo-final-divider,
+    #exordiumHero .exo-final-logo-wrap,
+    #exordiumHero .exo-final-logo,
+    #exordiumHero .exo-final-name,
+    #exordiumHero .exo-heading,
+    #exordiumHero .exo-heading-kr,
+    #exordiumHero .exo-subtext,
+    #exordiumHero .exo-brand-inline {
+      box-sizing: border-box;
+    }
+
+    #exordiumHero .exo-viewport {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+      background: var(--exo-black);
+    }
+
+    #exordiumHero .exo-slide {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      z-index: 0;
+      will-change: transform, opacity, clip-path;
+      background: var(--exo-black);
+    }
+
+    #exordiumHero .exo-slide.exo-active {
+      opacity: 1;
+      visibility: visible;
+      z-index: 2;
+    }
+
+    #exordiumHero .exo-slide.exo-prev {
+      opacity: 1;
+      visibility: visible;
+      z-index: 1;
+    }
+
+    #exordiumHero .exo-slide.exo-incoming {
+      opacity: 1;
+      visibility: visible;
+      z-index: 3;
+    }
+
+    #exordiumHero .exo-media {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      background: var(--exo-black);
+      transform: scale(1);
+      will-change: transform;
+    }
+
+    #exordiumHero .exo-poster,
+    #exordiumHero .exo-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      transform: scale(1.02);
+      will-change: transform, opacity;
+    }
+
+    #exordiumHero .exo-poster {
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-color: var(--exo-black);
+      opacity: 1;
+      transition: opacity 1.35s ease, transform 1.8s ease;
+      z-index: 2;
+    }
+
+    #exordiumHero .exo-video {
+      opacity: 0;
+      transition: opacity 1.35s ease, transform 1.8s ease;
+      z-index: 1;
+      background: var(--exo-black);
+      overflow: hidden;
+    }
+
+    #exordiumHero .exo-video iframe {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 177.77777778vh;
+      height: 56.25vw;
+      min-width: 100vw;
+      min-height: 100vh;
+      transform: translate(-50%, -50%);
+      border: 0;
+      pointer-events: none;
+      display: block;
+      background: transparent;
+    }
+
+    #exordiumHero .exo-slide.exo-video-ready .exo-video {
+      opacity: 1;
+      z-index: 2;
+    }
+
+    #exordiumHero .exo-slide.exo-video-ready .exo-poster {
+      opacity: 0.001;
+      transform: scale(1.035);
+      z-index: 1;
+    }
+
+    #exordiumHero .exo-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.15) 40%, rgba(0,0,0,0.45) 100%);
+      will-change: opacity;
+      z-index: 3;
+    }
+
+    #exordiumHero .exo-content {
+      position: absolute;
+      inset: 0;
+      z-index: 4;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      width: 100%;
+      height: 100%;
+      max-width: none;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    #exordiumHero .exo-heading,
+    #exordiumHero .exo-heading-kr,
+    #exordiumHero .exo-subtext,
+    #exordiumHero .exo-brand-inline,
+    #exordiumHero .exo-final-logo-wrap,
+    #exordiumHero .exo-final-name,
+    #exordiumHero .exo-final-btn,
+    #exordiumHero .exo-final-divider {
+      will-change: transform, opacity;
+      text-align: center;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    #exordiumHero .exo-heading {
+      font-family: var(--exo-font-display);
+      font-size: clamp(32px, 5vw, 56px);
+      font-weight: 400;
+      letter-spacing: 0.02em;
+      line-height: 1.25;
+      color: var(--exo-white);
+      margin-bottom: 28px;
+      opacity: 0;
+      transform: translate3d(0, 42px, 0);
+    }
+
+    #exordiumHero .exo-heading .exo-bold { font-weight: 700; }
+
+    #exordiumHero .exo-heading-kr {
+      font-family: var(--exo-font-body);
+      font-size: clamp(26px, 3.8vw, 44px);
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      line-height: 1.3;
+      color: var(--exo-white);
+      margin-bottom: 28px;
+      opacity: 0;
+      transform: translate3d(0, 42px, 0);
+    }
+
+    #exordiumHero .exo-subtext {
+      font-family: var(--exo-font-body);
+      font-size: clamp(13px, 1.6vw, 16px);
+      font-weight: 300;
+      line-height: 1.9;
+      color: var(--exo-white-muted);
+      opacity: 0;
+      transform: translate3d(0, 42px, 0);
+    }
+
+    #exordiumHero .exo-brand-inline {
+      font-family: var(--exo-font-display);
+      font-size: clamp(28px, 4.5vw, 52px);
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      color: var(--exo-gold);
+      margin-top: 44px;
+      opacity: 0;
+      transform: translate3d(0, 42px, 0);
+      text-transform: uppercase;
+    }
+
+    #exordiumHero .exo-brand-inline span.exo-sm {
+      font-size: 0.72em;
+      letter-spacing: 0.22em;
+    }
+
+    #exordiumHero .exo-final-logo-wrap {
+      margin-bottom: 8px;
+      opacity: 0;
+      transform: translate3d(0, 30px, 0) scale(0.96);
+    }
+
+    #exordiumHero .exo-final-logo {
+      width: clamp(80px, 12vw, 130px);
+      height: auto;
+    }
+
+    #exordiumHero .exo-final-name {
+      font-family: var(--exo-font-display);
+      font-size: clamp(36px, 6vw, 64px);
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      color: var(--exo-white);
+      text-transform: uppercase;
+      opacity: 0;
+      transform: translate3d(0, 30px, 0) scale(0.96);
+    }
+
+    #exordiumHero .exo-final-divider {
+      width: clamp(200px, 30vw, 400px);
+      height: 1px;
+      background: rgba(255,255,255,0.35);
+      margin: 8px auto 0;
+      opacity: 0;
+      transform: translate3d(0, 24px, 0);
+    }
+
+    #exordiumHero .exo-final-btn {
+      display: inline-block;
+      margin-top: 48px;
+      padding: 15px 48px;
+      border: 1px solid rgba(255,255,255,0.45);
+      background: transparent;
+      color: var(--exo-white);
+      font-family: var(--exo-font-body);
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      opacity: 0;
+      transform: translate3d(0, 30px, 0) scale(0.96);
+      transition: background 0.35s ease, color 0.35s ease;
+      text-decoration: none;
+    }
+
+    #exordiumHero .exo-final-btn:hover {
+      background: var(--exo-white);
+      color: var(--exo-black);
+    }
+
+    #exordiumHero .exo-scroll-indicator {
+      position: absolute;
+      bottom: 36px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      opacity: 0.6;
+      transition: opacity 0.6s ease;
+    }
+
+    #exordiumHero .exo-scroll-indicator.exo-hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    #exordiumHero .exo-scroll-line {
+      width: 1px;
+      height: 44px;
+      background: linear-gradient(to bottom, var(--exo-white), transparent);
+      animation: exoScrollPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes exoScrollPulse {
+      0%, 100% { opacity: 0.25; transform: scaleY(0.5); transform-origin: top; }
+      50% { opacity: 1; transform: scaleY(1); transform-origin: top; }
+    }
+
+    #exordiumHero .exo-progress {
+      position: absolute;
+      right: 36px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    #exordiumHero .exo-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.2);
+      transition: background 0.5s ease, transform 0.5s ease, box-shadow 0.5s ease;
+    }
+
+    #exordiumHero .exo-dot.exo-dot-active {
+      background: var(--exo-white);
+      transform: scale(1.4);
+      box-shadow: 0 0 8px rgba(255,255,255,0.3);
+    }
+
+    @media (max-width: 768px) {
+      /*
+       * 모바일 안정화
+       * - 주소창/하단바 변화와 무관한 최초 고정 높이를 JS가 px로 주입
+       * - sticky/absolute 스크롤 슬라이드를 해제하고 모든 슬라이드를 세로로 노출
+       */
+      #exordiumHero {
+        height: auto !important;
+        min-height: 0 !important;
+        overflow: visible;
+        overflow-anchor: none;
+      }
+
+      #exordiumHero .exo-viewport {
+        position: relative;
+        top: auto;
+        width: 100%;
+        height: auto !important;
+        min-height: 0;
+        overflow: visible;
+        overflow-anchor: none;
+      }
+
+      #exordiumHero .exo-slide,
+      #exordiumHero .exo-slide.exo-active,
+      #exordiumHero .exo-slide.exo-prev,
+      #exordiumHero .exo-slide.exo-incoming {
+        position: relative;
+        inset: auto;
+        width: 100%;
+        height: var(--exo-mobile-slide-height, 720px);
+        min-height: var(--exo-mobile-slide-height, 720px);
+        max-height: var(--exo-mobile-slide-height, 720px);
+        display: flex;
+        flex: 0 0 var(--exo-mobile-slide-height, 720px);
+        opacity: 1 !important;
+        visibility: visible !important;
+        z-index: 1 !important;
+        transform: none !important;
+        clip-path: none !important;
+        will-change: auto;
+        overflow: hidden;
+      }
+
+      #exordiumHero .exo-media,
+      #exordiumHero .exo-poster,
+      #exordiumHero .exo-video,
+      #exordiumHero .exo-overlay,
+      #exordiumHero .exo-content {
+        height: 100%;
+        min-height: 100%;
+        max-height: 100%;
+      }
+
+      #exordiumHero .exo-media,
+      #exordiumHero .exo-poster,
+      #exordiumHero .exo-video {
+        transform: none !important;
+        will-change: auto;
+      }
+
+      #exordiumHero .exo-video iframe {
+        width: calc(var(--exo-mobile-slide-height, 720px) * 1.77778);
+        height: var(--exo-mobile-slide-height, 720px);
+        min-width: 100%;
+        min-height: 100%;
+      }
+
+      #exordiumHero .exo-overlay {
+        opacity: 1 !important;
+        will-change: auto;
+      }
+
+      #exordiumHero .exo-heading,
+      #exordiumHero .exo-heading-kr,
+      #exordiumHero .exo-subtext,
+      #exordiumHero .exo-brand-inline,
+      #exordiumHero .exo-final-logo-wrap,
+      #exordiumHero .exo-final-name,
+      #exordiumHero .exo-final-btn,
+      #exordiumHero .exo-final-divider {
+        opacity: 1 !important;
+        transform: none !important;
+        will-change: auto;
+      }
+
+      #exordiumHero .exo-progress,
+      #exordiumHero .exo-scroll-indicator {
+        display: none !important;
+      }
+
+      #exordiumHero .exo-heading-kr {
+        font-size: clamp(25px, 8vw, 38px);
+        padding: 0 8px;
+      }
+
+      #exordiumHero .exo-subtext {
+        font-size: 14px;
+        padding: 0 12px;
+      }
+
+      #exordiumHero .exo-final-btn {
+        padding: 12px 32px;
+        font-size: 13px;
+      }
+    }
+  </style>
+
+  <div class="exo-viewport">
+    <div class="exo-slide exo-active" data-slide="0" data-vimeo-id="1184975429">
+      <div class="exo-media">
+        <div class="exo-poster" style="background-image:url('./img/index-3.jpg'); background-position:center;"></div>
+        <div class="exo-video"></div>
+      </div>
+      <div class="exo-overlay"></div>
+      <div class="exo-content">
+        <div class="exo-heading-kr">프리미엄 상품 영상</div>
+        <div class="exo-subtext">제품의 특징과 효과를<br>고급스럽게 표현합니다.</div>
+      </div>
+    </div>
+
+    <div class="exo-slide" data-slide="1" data-vimeo-id="1184975255">
+      <div class="exo-media">
+        <div class="exo-poster" style="background-image:url('./img/index-1.jpg'); background-position:center;"></div>
+        <div class="exo-video"></div>
+      </div>
+      <div class="exo-overlay"></div>
+      <div class="exo-content">
+       <div class="exo-heading-kr">제품 컨셉 영상</div>
+        <div class="exo-subtext">제품이 품고 있는 컨셉과 품격을<br>표현하는데 집중합니다.</div>
+      </div>
+    </div>
+
+    <div class="exo-slide" data-slide="2" data-vimeo-id="1172820402">
+      <div class="exo-media">
+        <div class="exo-poster" style="background-image:url('./img/forum1.jpg'); background-position:center;"></div>
+        <div class="exo-video"></div>
+      </div>
+      <div class="exo-overlay"></div>
+       <div class="exo-content">
+       <div class="exo-heading-kr">회사 브랜드 영상</div>
+        <div class="exo-subtext">회사의 활동과<br>공식적인 느낌을<br>직관적으로 표현합니다.</div>
+      </div>
+    </div>
+
+    <div class="exo-slide" data-slide="3" data-vimeo-id="1178268551">
+      <div class="exo-media">
+        <div class="exo-poster" style="background-image:url('./img/b19.jpg'); background-position:center 60%;"></div>
+        <div class="exo-video"></div>
+      </div>
+      <div class="exo-overlay" style="background:rgba(0,0,0,0.5);"></div>
+ <div class="exo-content">
+       <div class="exo-heading-kr">프로그램 컨셉 영상</div>
+        <div class="exo-subtext">프로그램의 활동과<br>컨셉을 이해하기 쉽고<br>직관적으로 표현합니다.</div>
+      </div>
+    </div>
+
+    <div class="exo-progress">
+      <div class="exo-dot exo-dot-active" data-dot="0"></div>
+      <div class="exo-dot" data-dot="1"></div>
+      <div class="exo-dot" data-dot="2"></div>
+      <div class="exo-dot" data-dot="3"></div>
+    </div>
+
+    <div class="exo-scroll-indicator"><div class="exo-scroll-line"></div></div>
+  </div>
+
+  <script>
+    (function() {
+      'use strict';
+
+      var section = document.getElementById('exordiumHero');
+      if (!section) return;
+
+      var slides = Array.prototype.slice.call(section.querySelectorAll('.exo-slide'));
+      var dots = Array.prototype.slice.call(section.querySelectorAll('.exo-dot'));
+      var scrollIndicator = section.querySelector('.exo-scroll-indicator');
+      var totalSlides = slides.length;
+      var currentSlide = -1;
+      var targetProgress = 0;
+      var renderProgress = 0;
+      var rafId = null;
+      var players = [];
+      var vimeoScriptReady = false;
+
+      /*
+       * 모바일 고정 높이
+       * 최초 진입 시 한 번 정한 px 높이를 주소창 표시/숨김 중에는 변경하지 않음.
+       * 실제 화면 회전 또는 가로 폭이 크게 바뀐 경우에만 새 기준 높이를 적용.
+       */
+      var mobileQuery = window.matchMedia('(max-width: 768px)');
+      var mobileStableHeight = 0;
+      var mobileStableWidth = window.innerWidth || document.documentElement.clientWidth || 0;
+
+      function readMobileViewportHeight() {
+        return Math.max(
+          320,
+          Math.round(window.innerHeight || document.documentElement.clientHeight || 720)
+        );
+      }
+
+      function applyStableMobileHeight(force) {
+        if (!mobileQuery.matches) return;
+
+        if (!mobileStableHeight || force) {
+          mobileStableHeight = readMobileViewportHeight();
+        }
+
+        section.style.setProperty('--exo-mobile-slide-height', mobileStableHeight + 'px');
+      }
+
+      applyStableMobileHeight(true);
+
+      window.addEventListener('resize', function() {
+        if (!mobileQuery.matches) return;
+
+        var nextWidth = window.innerWidth || document.documentElement.clientWidth || 0;
+        var widthChanged = Math.abs(nextWidth - mobileStableWidth) > 80;
+
+        /*
+         * 모바일 주소창 변화는 대부분 높이만 바뀌므로 무시.
+         * 가로 폭이 크게 달라진 실제 회전 상황에서만 높이를 갱신.
+         */
+        if (widthChanged) {
+          mobileStableWidth = nextWidth;
+          applyStableMobileHeight(true);
+        }
+      }, { passive: true });
+
+      window.addEventListener('orientationchange', function() {
+        if (!mobileQuery.matches) return;
+        window.setTimeout(function() {
+          mobileStableWidth = window.innerWidth || document.documentElement.clientWidth || mobileStableWidth;
+          applyStableMobileHeight(true);
+        }, 260);
+      }, { passive: true });
+
+      function clamp(v, min, max) {
+        return Math.max(min, Math.min(max, v));
+      }
+
+      function lerp(start, end, amt) {
+        return start + (end - start) * amt;
+      }
+
+      function easeOutCubic(t) {
+        return 1 - Math.pow(1 - t, 3);
+      }
+
+      function getRawProgress() {
+        var rect = section.getBoundingClientRect();
+        var sectionTop = -rect.top;
+        var scrollableHeight = section.offsetHeight - window.innerHeight;
+        if (scrollableHeight <= 0) return 0;
+        return clamp(sectionTop / scrollableHeight, 0, 1);
+      }
+
+      function getTextNodes(slide) {
+        return {
+          heading: slide.querySelector('.exo-heading'),
+          headingKr: slide.querySelector('.exo-heading-kr'),
+          subtext: slide.querySelector('.exo-subtext'),
+          brand: slide.querySelector('.exo-brand-inline'),
+          logoWrap: slide.querySelector('.exo-final-logo-wrap'),
+          finalName: slide.querySelector('.exo-final-name'),
+          divider: slide.querySelector('.exo-final-divider'),
+          btn: slide.querySelector('.exo-final-btn')
+        };
+      }
+
+      function setTextState(slide, mode, t) {
+        var nodes = getTextNodes(slide);
+        var enterY = 42;
+        var exitY = -34;
+        var enterOpacity = t;
+        var exitOpacity = 1 - t;
+
+        if (nodes.heading) {
+          if (mode === 'enter') {
+            nodes.heading.style.opacity = String(enterOpacity);
+            nodes.heading.style.transform = 'translate3d(0,' + ((1 - t) * enterY) + 'px,0)';
+          } else if (mode === 'exit') {
+            nodes.heading.style.opacity = String(exitOpacity);
+            nodes.heading.style.transform = 'translate3d(0,' + (t * exitY) + 'px,0)';
+          } else {
+            nodes.heading.style.opacity = '1';
+            nodes.heading.style.transform = 'translate3d(0,0,0)';
+          }
+        }
+
+        if (nodes.headingKr) {
+          if (mode === 'enter') {
+            nodes.headingKr.style.opacity = String(enterOpacity);
+            nodes.headingKr.style.transform = 'translate3d(0,' + ((1 - t) * enterY) + 'px,0)';
+          } else if (mode === 'exit') {
+            nodes.headingKr.style.opacity = String(exitOpacity);
+            nodes.headingKr.style.transform = 'translate3d(0,' + (t * exitY) + 'px,0)';
+          } else {
+            nodes.headingKr.style.opacity = '1';
+            nodes.headingKr.style.transform = 'translate3d(0,0,0)';
+          }
+        }
+
+        if (nodes.subtext) {
+          var subEnterT = clamp((t - 0.08) / 0.92, 0, 1);
+          var subExitT = clamp(t / 0.92, 0, 1);
+          if (mode === 'enter') {
+            nodes.subtext.style.opacity = String(subEnterT);
+            nodes.subtext.style.transform = 'translate3d(0,' + ((1 - subEnterT) * 38) + 'px,0)';
+          } else if (mode === 'exit') {
+            nodes.subtext.style.opacity = String(1 - subExitT);
+            nodes.subtext.style.transform = 'translate3d(0,' + (subExitT * -26) + 'px,0)';
+          } else {
+            nodes.subtext.style.opacity = '1';
+            nodes.subtext.style.transform = 'translate3d(0,0,0)';
+          }
+        }
+
+        if (nodes.logoWrap) {
+          if (mode === 'enter') {
+            nodes.logoWrap.style.opacity = String(t);
+            nodes.logoWrap.style.transform = 'translate3d(0,' + ((1 - t) * 28) + 'px,0) scale(' + (0.96 + t * 0.04) + ')';
+          } else if (mode === 'exit') {
+            nodes.logoWrap.style.opacity = String(1 - t);
+            nodes.logoWrap.style.transform = 'translate3d(0,' + (t * -22) + 'px,0) scale(' + (1 - t * 0.04) + ')';
+          } else {
+            nodes.logoWrap.style.opacity = '1';
+            nodes.logoWrap.style.transform = 'translate3d(0,0,0) scale(1)';
+          }
+        }
+
+        if (nodes.finalName) {
+          if (mode === 'enter') {
+            nodes.finalName.style.opacity = String(t);
+            nodes.finalName.style.transform = 'translate3d(0,' + ((1 - t) * 28) + 'px,0) scale(' + (0.96 + t * 0.04) + ')';
+          } else if (mode === 'exit') {
+            nodes.finalName.style.opacity = String(1 - t);
+            nodes.finalName.style.transform = 'translate3d(0,' + (t * -22) + 'px,0) scale(' + (1 - t * 0.04) + ')';
+          } else {
+            nodes.finalName.style.opacity = '1';
+            nodes.finalName.style.transform = 'translate3d(0,0,0) scale(1)';
+          }
+        }
+
+        if (nodes.divider) {
+          var dividerT = clamp((t - 0.08) / 0.92, 0, 1);
+          if (mode === 'enter') {
+            nodes.divider.style.opacity = String(dividerT);
+            nodes.divider.style.transform = 'translate3d(0,' + ((1 - dividerT) * 22) + 'px,0)';
+          } else if (mode === 'exit') {
+            nodes.divider.style.opacity = String(1 - dividerT);
+            nodes.divider.style.transform = 'translate3d(0,' + (dividerT * -18) + 'px,0)';
+          } else {
+            nodes.divider.style.opacity = '1';
+            nodes.divider.style.transform = 'translate3d(0,0,0)';
+          }
+        }
+
+        if (nodes.btn) {
+          var btnT = clamp((t - 0.14) / 0.86, 0, 1);
+          if (mode === 'enter') {
+            nodes.btn.style.opacity = String(btnT);
+            nodes.btn.style.transform = 'translate3d(0,' + ((1 - btnT) * 28) + 'px,0) scale(' + (0.96 + btnT * 0.04) + ')';
+          } else if (mode === 'exit') {
+            nodes.btn.style.opacity = String(1 - btnT);
+            nodes.btn.style.transform = 'translate3d(0,' + (btnT * -20) + 'px,0) scale(' + (1 - btnT * 0.04) + ')';
+          } else {
+            nodes.btn.style.opacity = '1';
+            nodes.btn.style.transform = 'translate3d(0,0,0) scale(1)';
+          }
+        }
+      }
+
+      function resetSlide(slide) {
+        slide.classList.remove('exo-active', 'exo-prev', 'exo-incoming');
+        slide.style.opacity = '0';
+        slide.style.visibility = 'hidden';
+        slide.style.zIndex = '0';
+        slide.style.transform = 'translate3d(0,0,0)';
+        slide.style.clipPath = 'inset(100% 0 0 0)';
+
+        var media = slide.querySelector('.exo-media');
+        var poster = slide.querySelector('.exo-poster');
+        var video = slide.querySelector('.exo-video');
+        var overlay = slide.querySelector('.exo-overlay');
+
+        if (media) media.style.transform = 'scale(1)';
+        if (poster) poster.style.transform = 'scale(1.02)';
+        if (video) video.style.transform = 'scale(1.02)';
+        if (overlay) overlay.style.opacity = '1';
+
+        setTextState(slide, 'enter', 0);
+      }
+
+      function setBaseStates(activeIndex) {
+        slides.forEach(function(slide, i) {
+          resetSlide(slide);
+          if (i === activeIndex) {
+            slide.classList.add('exo-active');
+            slide.style.opacity = '1';
+            slide.style.visibility = 'visible';
+            slide.style.zIndex = '2';
+            slide.style.clipPath = 'inset(0 0 0 0)';
+            setTextState(slide, 'static', 1);
+          } else if (i === activeIndex - 1) {
+            slide.classList.add('exo-prev');
+            slide.style.opacity = '1';
+            slide.style.visibility = 'visible';
+            slide.style.zIndex = '1';
+            slide.style.clipPath = 'inset(0 0 0 0)';
+          }
+        });
+      }
+
+      function updateDots(activeIndex) {
+        dots.forEach(function(dot, i) {
+          dot.classList.toggle('exo-dot-active', i === activeIndex);
+        });
+      }
+
+      function buildVimeoFrame(vimeoId) {
+        return 'https://player.vimeo.com/video/' + vimeoId + '?background=1&autoplay=1&loop=1&muted=1&autopause=0&byline=0&title=0&portrait=0&controls=0&quality=auto&playsinline=1&dnt=1';
+      }
+
+      function revealVideo(slide) {
+        if (!slide || slide.classList.contains('exo-video-ready')) return;
+        slide.classList.add('exo-video-ready');
+      }
+
+      function initVimeoSlides() {
+        if (!window.Vimeo || !window.Vimeo.Player) return;
+
+        slides.forEach(function(slide) {
+          var vimeoId = slide.getAttribute('data-vimeo-id');
+          var videoWrap = slide.querySelector('.exo-video');
+          if (!vimeoId || !videoWrap) return;
+          if (videoWrap.getAttribute('data-init') === '1') return;
+          videoWrap.setAttribute('data-init', '1');
+
+          var iframe = document.createElement('iframe');
+          iframe.src = buildVimeoFrame(vimeoId);
+          iframe.setAttribute('allow', 'autoplay; fullscreen; picture-in-picture');
+          iframe.setAttribute('allowfullscreen', '');
+          iframe.setAttribute('title', 'Background Vimeo Video');
+          videoWrap.appendChild(iframe);
+
+          var player = new window.Vimeo.Player(iframe);
+          players.push(player);
+
+          player.ready().then(function() {
+            player.setMuted(true).catch(function() {});
+            player.setVolume(0).catch(function() {});
+            player.play().catch(function() {});
+          }).catch(function() {});
+
+          player.on('playing', function() {
+            setTimeout(function() { revealVideo(slide); }, 120);
+          });
+
+          player.on('timeupdate', function(data) {
+            if (data && data.seconds >= 0.12) {
+              revealVideo(slide);
+            }
+          });
+
+          setTimeout(function() {
+            player.play().catch(function() {});
+          }, 800);
+        });
+      }
+
+      function loadVimeoScript(callback) {
+        if (window.Vimeo && window.Vimeo.Player) {
+          callback();
+          return;
+        }
+
+        var existing = document.querySelector('script[data-vimeo-player="1"]');
+        if (existing) {
+          existing.addEventListener('load', callback, { once: true });
+          return;
+        }
+
+        var script = document.createElement('script');
+        script.src = 'https://player.vimeo.com/api/player.js';
+        script.async = true;
+        script.setAttribute('data-vimeo-player', '1');
+        script.onload = callback;
+        document.head.appendChild(script);
+      }
+
+      function render(progress) {
+        var slideFloat = progress * totalSlides;
+        var activeIndex = Math.min(Math.floor(slideFloat), totalSlides - 1);
+        var localProgress = slideFloat - activeIndex;
+
+        if (activeIndex !== currentSlide) {
+          currentSlide = activeIndex;
+          setBaseStates(activeIndex);
+          updateDots(activeIndex);
+        }
+
+        var activeSlide = slides[activeIndex];
+        var activeMedia = activeSlide.querySelector('.exo-media');
+        var activePoster = activeSlide.querySelector('.exo-poster');
+        var activeVideo = activeSlide.querySelector('.exo-video');
+        var activeOverlay = activeSlide.querySelector('.exo-overlay');
+
+        var zoomFactor = 1 + (localProgress * 0.028);
+        if (activeMedia) activeMedia.style.transform = 'scale(' + zoomFactor + ')';
+        if (activePoster) activePoster.style.transform = 'scale(' + (1.02 + localProgress * 0.03) + ')';
+        if (activeVideo) activeVideo.style.transform = 'scale(' + (1.02 + localProgress * 0.02) + ')';
+        if (activeOverlay) activeOverlay.style.opacity = String(1 - localProgress * 0.06);
+
+        setTextState(activeSlide, 'static', 1);
+
+        var incomingStart = 0.58;
+        var incomingEnd = 0.97;
+
+        if (activeIndex < totalSlides - 1 && localProgress >= incomingStart) {
+          var nextIndex = activeIndex + 1;
+          var nextSlide = slides[nextIndex];
+          var nextMedia = nextSlide.querySelector('.exo-media');
+          var nextPoster = nextSlide.querySelector('.exo-poster');
+          var nextVideo = nextSlide.querySelector('.exo-video');
+          var nextOverlay = nextSlide.querySelector('.exo-overlay');
+          var t = (localProgress - incomingStart) / (incomingEnd - incomingStart);
+          t = clamp(t, 0, 1);
+          var eased = easeOutCubic(t);
+          var revealT = eased * 0.88;
+
+          nextSlide.classList.add('exo-incoming');
+          nextSlide.style.visibility = 'visible';
+          nextSlide.style.opacity = '1';
+          nextSlide.style.zIndex = '3';
+          nextSlide.style.clipPath = 'inset(' + ((1 - revealT) * 100) + '% 0 0 0)';
+
+          if (nextMedia) nextMedia.style.transform = 'scale(' + (1.025 - eased * 0.025) + ')';
+          if (nextPoster) nextPoster.style.transform = 'scale(' + (1.04 - eased * 0.02) + ')';
+          if (nextVideo) nextVideo.style.transform = 'scale(' + (1.03 - eased * 0.015) + ')';
+          if (nextOverlay) nextOverlay.style.opacity = String(0.94 + eased * 0.06);
+
+          activeSlide.style.opacity = '1';
+          activeSlide.style.zIndex = '2';
+          if (activeMedia) activeMedia.style.transform = 'scale(' + (zoomFactor + eased * 0.005) + ')';
+          if (activeOverlay) activeOverlay.style.opacity = String(1 - eased * 0.08);
+
+          setTextState(activeSlide, 'exit', eased);
+          setTextState(nextSlide, 'enter', eased);
+        } else {
+          setTextState(activeSlide, 'static', 1);
+          slides.forEach(function(slide, i) {
+            if (i !== activeIndex && i !== activeIndex - 1) {
+              if (!slide.classList.contains('exo-incoming')) return;
+              slide.classList.remove('exo-incoming');
+              slide.style.opacity = '0';
+              slide.style.visibility = 'hidden';
+              slide.style.zIndex = '0';
+              slide.style.clipPath = 'inset(100% 0 0 0)';
+              setTextState(slide, 'enter', 0);
+            }
+          });
+        }
+
+        if (progress > 0.04) {
+          scrollIndicator.classList.add('exo-hidden');
+        } else {
+          scrollIndicator.classList.remove('exo-hidden');
+        }
+      }
+
+      function animate() {
+        targetProgress = getRawProgress();
+        renderProgress = lerp(renderProgress, targetProgress, 0.085);
+        if (Math.abs(targetProgress - renderProgress) < 0.0006) {
+          renderProgress = targetProgress;
+        }
+        render(renderProgress);
+        rafId = requestAnimationFrame(animate);
+      }
+
+      if (!document.querySelector('link[href*="Playfair+Display"]')) {
+        var fontLink = document.createElement('link');
+        fontLink.rel = 'stylesheet';
+        fontLink.href = 'https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Noto+Sans+KR:wght@300;400;700&display=swap';
+        document.head.appendChild(fontLink);
+      }
+
+      /*
+       * 모바일에서는 스크롤 진행률 기반 전환을 실행하지 않음.
+       * CSS에서 모든 슬라이드를 고정 높이로 세로 배치하므로
+       * 주소창 변화나 애니메이션 상태가 section 높이에 영향을 주지 않음.
+       */
+      if (mobileQuery.matches) {
+        applyStableMobileHeight(false);
+
+        slides.forEach(function(slide) {
+          slide.classList.remove('exo-prev', 'exo-incoming');
+          slide.style.removeProperty('opacity');
+          slide.style.removeProperty('visibility');
+          slide.style.removeProperty('z-index');
+          slide.style.removeProperty('transform');
+          slide.style.removeProperty('clip-path');
+        });
+
+        loadVimeoScript(initVimeoSlides);
+        return;
+      }
+
+      window.addEventListener('scroll', function() {
+        targetProgress = getRawProgress();
+      }, { passive: true });
+
+      targetProgress = getRawProgress();
+      renderProgress = targetProgress;
+      render(renderProgress);
+      loadVimeoScript(initVimeoSlides);
+      rafId = requestAnimationFrame(animate);
+    })();
+  </script>
+</section>
+
 
 
 
@@ -5002,160 +6165,106 @@
   'use strict';
 
    var process1Data = [
-  {
-    num: '01',
-
-    nav: '초기 시나리오 기획',
-
-    title: '영상의 목적과 전체 시나리오 방향을 설계합니다.',
-
-    lead: '무엇을 보여줄지보다 먼저, 영상이 어떤 역할을 해야 하는지 정리합니다.',
-
-    desc: '브랜드와 서비스의 핵심 가치를 분석하고, 영상을 통해 고객에게 전달해야 할 메시지와 감정을 정의합니다. 이를 바탕으로 전체 영상의 방향과 기본적인 시나리오 구조를 설계합니다.',
-
-    bullets: [
-      '업종 / 서비스 / 핵심 가치 분석',
-      '영상의 목적 및 핵심 메시지 정의',
-      '전체 시나리오와 장면 흐름 구성'
-    ],
-
-    image: './img/analytics.jpg',
-
-    point: '좋은 영상은 명확한 시나리오 설계에서 시작됩니다.'
-  },
-
-  {
-    num: '02',
-
-    nav: '현장 점검 및 촬영',
-
-    title: '현장을 점검하고 AI 제작에 필요한 사진을 촬영합니다.',
-
-    lead: '현장의 구조와 특징을 정확히 파악해야 자연스러운 AI 영상을 만들 수 있습니다.',
-
-    desc: '실제 현장을 방문해 공간의 구조, 조명, 이동 동선, 주요 시설과 촬영 가능 구도를 확인합니다. 이후 AI 영상 제작에 활용할 수 있도록 다양한 위치와 각도에서 현장 사진을 촬영합니다.',
-
-    bullets: [
-      '현장 구조 / 조명 / 공간 컨디션 점검',
-      '주요 장면과 카메라 이동 구도 확인',
-      'AI 제작용 현장 사진 및 참고 자료 촬영'
-    ],
-
-    image: './img/adventage2.jpg',
-
-    point: '정확한 현장 자료가 자연스러운 AI 영상의 기반이 됩니다.'
-  },
-
-  {
-    num: '03',
-
-    nav: '현장 AI 설계 및 테스트',
-
-    title: '촬영한 현장을 AI로 재구성하고 제작 가능성을 테스트합니다.',
-
-    lead: '현장 자료를 바탕으로 원하는 장면을 실제로 구현할 수 있는지 먼저 확인합니다.',
-
-    desc: '촬영된 사진과 현장 정보를 AI 환경에 적용하여 공간의 재구성 가능 여부를 확인합니다. 카메라 이동, 인물 배치, 공간 확장, 조명 변화 등을 테스트하며 최종 영상 제작에 적합한 구현 방식을 선정합니다.',
-
-    bullets: [
-      '현장 사진 기반 AI 공간 재구성',
-      '카메라 이동 및 장면 생성 테스트',
-      '영상 구현 가능 범위와 제작 방식 확인'
-    ],
-
-    image: './img/index-4.jpg',
-
-    point: '본 제작 전에 가능성을 검증해 결과의 완성도를 높입니다.'
-  },
-
-  {
-    num: '04',
-
-    nav: '초기 기획안',
-
-    title: '현장 자료와 테스트 결과를 바탕으로 초기 기획안을 제작합니다.',
-
-    lead: '촬영 구도와 AI 구현 가능 범위를 연결해 구체적인 영상 흐름을 만듭니다.',
-
-    desc: '현장 촬영 자료와 AI 테스트 결과를 종합하여 장면별 구성, 카메라 움직임, 영상의 순서와 연출 방향을 정리합니다. 최종 제작 전에 영상의 전체 모습을 확인할 수 있도록 초기 기획안을 구성합니다.',
-
-    bullets: [
-      '장면별 구성 및 영상 순서 정리',
-      '카메라 구도와 이동 방향 설계',
-      '영상 톤 / 무드 / 연출 방향 제안'
-    ],
-
-    image: './img/customer.jpg',
-
-    point: '초기 기획안은 아이디어를 실제 영상 구조로 전환하는 단계입니다.'
-  },
-
-  {
-    num: '05',
-
-    nav: '캐릭터 & 배경 설정 및 최종 기획안 정리',
-
-    title: 'AI 캐릭터와 배경을 선정하고 최종 기획안을 확정합니다.',
-
-    lead: '영상 전체에서 일관되게 유지될 인물과 공간의 기준을 설정합니다.',
-
-    desc: '브랜드 이미지와 시나리오에 맞는 AI 캐릭터의 외형, 의상, 표정과 행동을 설정합니다. 현장 배경의 색감과 조명, 공간 분위기까지 구체화한 후 장면별 연출 내용을 반영해 최종 기획안을 확정합니다.',
-
-    bullets: [
-      'AI 캐릭터 외형 / 의상 / 행동 설정',
-      '배경 공간 / 조명 / 색감 최종 선정',
-      '장면별 연출안 및 최종 기획안 확정'
-    ],
-
-    image: './img/adventage5.jpg',
-
-    point: '캐릭터와 배경의 일관성이 영상의 신뢰도를 결정합니다.'
-  },
-
-  {
-    num: '06',
-
-    nav: '영상 AI 개발',
-
-    title: '확정된 기획안에 맞춰 AI 영상을 구현합니다.',
-
-    lead: '장면별 설계를 실제 움직임과 영상으로 전환합니다.',
-
-    desc: '최종 기획안을 기준으로 각 장면을 AI 영상으로 제작합니다. 캐릭터의 동작, 카메라 이동, 공간 변화와 장면 연결을 반복적으로 테스트하며 하나의 자연스러운 영상으로 완성합니다.',
-
-    bullets: [
-      '장면별 AI 영상 생성 및 개발',
-      '캐릭터 동작과 카메라 무빙 구현',
-      '장면 연결 및 반복 테스트를 통한 품질 개선'
-    ],
-
-    image: './img/adventage3.jpg',
-
-    point: '기획의 디테일을 실제 움직이는 영상으로 구현합니다.'
-  },
-
-  {
-    num: '07',
-
+    {
+      num: '01',
+      nav: '브랜드 분석',
+      title: '브랜드와 비즈니스를 먼저 이해합니다.',
+      lead: '영상 제작 전에 이 브랜드가 어떤 방향을 가져야 하는지부터 정리합니다.',
+      desc: '',
+      bullets: [
+        '업종 / 서비스 / 핵심 가치 분석',
+        '현재 고객에게 전달되는 첫인상 점검',
+        '영상이 해결해야 할 역할 정의'
+      ],
+      image: './img/analytics.jpg',
+      point: '영상 제작이 아니라 브랜드 설계부터 시작합니다.'
+    },
+    {
+      num: '02',
+      nav: '타겟 & 첫인상',
+      title: '고객이 느끼는 첫인상을 설계합니다.',
+      lead: '누가 이 영상을 보는지에 따라 연출과 흐름이 달라집니다.',
+      desc: '',
+      bullets: [
+        '핵심 타겟 정의',
+        '고객의 감정 / 기대 / 불안 요소 분석',
+        '첫 3초 안에 전달할 인상 설계'
+      ],
+      image: './img/adventage2.jpg',
+      point: '첫인상은 영상의 시작이 아니라 전략입니다.'
+    },
+    {
+      num: '03',
+      nav: '영상 컨셉',
+      title: '브랜드 영상의 컨셉과 흐름을 설계합니다.',
+      lead: '단순한 영상이 아니라 메시지가 전달되는 구조를 만듭니다.',
+      desc: '영상은 예쁘게 만드는 것이 아니라 전달하는 것입니다. 어떤 감정을 먼저 보여주고, 어떤 메시지를 이어갈지 흐름을 설계해야 고객이 자연스럽게 몰입하게 됩니다.',
+      bullets: [
+        '브랜드 영상 컨셉 기획',
+        '감정 → 이해 → 신뢰 흐름 설계',
+        '영상 스토리라인 구성'
+      ],
+      image: './img/index-4.jpg',
+      point: '영상의 흐름이 곧 설득의 구조입니다.'
+    },
+       {
+      num: '04',
+      nav: '연출 & 디테일',
+      title: '영상의 분위기와 디테일을 완성합니다.',
+      lead: '프리미엄은 작은 차이에서 만들어집니다.',
+      desc: '색감, 속도, 장면 전환, 리듬까지 전체적인 완성도를 높여 브랜드의 수준이 자연스럽게 느껴지도록 만듭니다.',
+      bullets: [
+        '영상 톤 & 무드 정리',
+        '장면 전환 및 속도 조정',
+        '디테일 완성도 보정'
+      ],
+      image: './img/customer.jpg',
+      point: '느낌만으로도 신뢰가 전달됩니다.'
+    },
+    {
+      num: '05',
+      nav: 'AI 영상 제작',
+      title: 'AI 기반으로 브랜드 영상을 제작합니다.',
+      lead: '브랜드의 방향에 맞는 영상으로 실제 구현합니다.',
+      desc: 'AI를 활용하여 빠르게 제작하면서도 브랜드의 무드와 흐름을 유지합니다. 다양한 버전 테스트를 통해 최적의 결과를 만들어냅니다.',
+      bullets: [
+        '브랜드 맞춤 영상 제작',
+        '빠른 수정 및 반복 테스트',
+        '프리미엄 영상 퀄리티 구현'
+      ],
+      image: './img/adventage5.jpg',
+      point: '속도와 퀄리티를 동시에 확보합니다.'
+    },
+    {
+      num: '06',
+      nav: '메시지 최적화',
+      title: '영상 속 메시지를 정리하고 강화합니다.',
+      lead: '영상 안에 담기는 문장 하나까지 설계합니다.',
+      desc: '영상은 감성만으로 끝나지 않습니다. 고객이 이해하고 납득할 수 있도록 메시지를 정리하고 핵심만 남깁니다.',
+      bullets: [
+        '핵심 메시지 정리',
+        '불필요한 요소 제거',
+        '전달력 중심 카피 구성'
+      ],
+      image: './img/adventage3.jpg',
+      point: '영상도 결국 전달력입니다.'
+    },
+  
+    {
+      num: '07',
     nav: '자막 · 사운드 · 후처리',
-
-    title: '자막과 사운드, 후처리를 통해 영상의 완성도를 높입니다.',
-
-    lead: '영상의 최종 인상은 마지막 디테일에서 결정됩니다.',
-
-    desc: '완성된 AI 영상에 브랜드 메시지를 효과적으로 전달할 수 있는 자막을 구성하고, 배경음악과 효과음을 적용합니다. 장면별 색감과 속도, 전환 타이밍과 전체 리듬을 정교하게 조정하여 최종 영상을 완성합니다.',
-
+    title: '자막, 사운드 및 후처리로 완성도를 높입니다.',
+    lead: '영상의 인상은 마지막 디테일에서 완성됩니다.',
+    desc: '장면만 좋은 영상으로는 충분하지 않습니다. 자막의 흐름, 배경음악의 분위기, 효과음의 타이밍, 전체 색감과 마무리 보정까지 정교하게 다듬어야 브랜드의 수준이 자연스럽게 전달됩니다.',
     bullets: [
-      '브랜드 메시지에 맞는 자막 구성',
-      '배경음악 및 효과음 적용과 보정',
-      '색감 / 속도 / 장면 전환 등 최종 후처리'
+      '브랜드 톤에 맞는 자막 구성',
+      '배경음악 및 사운드 디테일 보정',
+      '색감, 속도, 리듬 등 최종 후처리'
     ],
-
     image: './img/ai-intro.jpg',
-
-    point: '완성도는 보이지 않는 후반 작업의 차이에서 만들어집니다.'
-  }
-];
+    point: '완성도는 후반 디테일에서 결정됩니다.'
+    }
+  ];
 
   var root = document.getElementById('process1');
   if (!root) return;
