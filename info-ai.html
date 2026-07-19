@@ -177,7 +177,7 @@
     #bgScrollWrap .video-placeholder {
       position: absolute;
       inset: 0;
-      background: #000 url('./img/model.png') center center / cover no-repeat;
+      background: #000 url('./img/ai1.jpg') center center / cover no-repeat;
       z-index: 2;
       opacity: 1;
       transition: opacity 1.2s ease;
@@ -1300,6 +1300,7 @@
   </script>
 </section>
 
+
 <section id="mainSliderPack" aria-label="Main Slider Pack">
   <style>
     /* =========================
@@ -1371,9 +1372,10 @@
       transform: translateY(-70px);
     }
 
+    /* 슬라이드 1개당 190vh 구간 (JS에서 실제 px 높이로 자동 설정) */
     #main-slider-root .main-slider-section2 {
       position: relative;
-      height: 300vh;
+      height: 570vh;
       z-index: 1;
     }
 
@@ -1386,7 +1388,7 @@
       z-index: 0;
       pointer-events: none;
       transition: opacity .5s;
-      filter: brightness(0.5);
+      filter: none;
     }
 
     #main-slider-root .main-slider-bg::after {
@@ -1433,44 +1435,83 @@
       filter: none !important;
     }
 
+    /* =========================
+       Vimeo 배경 영상 레이어
+       - 3번째 배경 이미지 위에서 페이드인 (블랙아웃 방지:
+         영상 재생 확인 전까지 이미지가 아래에 그대로 유지됨)
+    ========================== */
+    #main-slider-root .main-slider-video {
+      position: absolute;
+      inset: 0;
+      z-index: 15;                     /* permanent-active(10) 이미지보다 위 */
+      opacity: 0;
+      pointer-events: none;
+      overflow: hidden;
+      transition: opacity 1.1s ease;   /* 이미지 → 영상 크로스페이드 속도 */
+      filter: none;                   /* Vimeo 원본 밝기와 색감 유지 */
+    }
+
+    #main-slider-root.video-live .main-slider-video {
+      opacity: 1;
+    }
+
+    #main-slider-root .main-slider-video iframe {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 100vw;
+      height: 56.25vw;                 /* 16:9 cover */
+      min-height: 100vh;
+      min-width: 177.78vh;
+      transform: translate(-50%, -50%);
+      border: 0;
+    }
+
+    /* =========================
+       슬라이드 텍스트 오버레이 (fixed 고정)
+       - 텍스트가 화면 가운데에서 떨림 없이 정지하도록
+         스크롤 흐름에서 분리하고 JS가 위치를 제어
+    ========================== */
     #main-slider-root .main-slider-list {
-      position: relative;
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      height: 100svh; /* 모바일: 주소창이 나타나거나 사라져도 중앙 위치 고정 */
       margin: 0;
       padding: 0;
       list-style: none;
-      width: 100vw;
-      max-width: 680px;
-      margin-left: auto;
-      margin-right: 8vw;
-      right: 0;
-      top: 18vh;
       z-index: 3;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
+      pointer-events: none;
     }
 
     #main-slider-root .main-slider-list li {
-      min-height: 90vh;
+      position: absolute;
+      inset: 0;
       display: flex;
       align-items: center;
       justify-content: flex-end;
-      transition: transform .7s;
-      position: relative;
+      padding-right: 8vw;
       width: 100%;
       z-index: 3;
+      pointer-events: none;
+    }
+
+    #main-slider-root .main-slider-list li.active {
+      pointer-events: auto;
     }
 
     #main-slider-root .main-slider-list li .slide-text {
       color: #fff;
       max-width: 520px;
-      transition: opacity .18s, transform .22s cubic-bezier(.22, .61, .36, 1);
       padding: 2.5rem 2.3rem 2.2rem 2.3rem;
       will-change: opacity, transform;
       text-align: left;
       margin-bottom: 40px;
       margin-right: 200px;
       border-radius: 12px;
+      opacity: 0;
     }
 
     @media screen and (max-width:1200px) {
@@ -1530,11 +1571,8 @@
         font-size: 2rem;
       }
 
-      #main-slider-root .main-slider-list {
-        max-width: 95vw;
-        margin-right: 2vw;
-        top: 11vw;
-        align-items: flex-end;
+      #main-slider-root .main-slider-list li {
+        padding-right: 2vw;
       }
 
       #main-slider-root .main-slider-list li .slide-text {
@@ -1567,6 +1605,18 @@
       opacity: 1;
     }
 
+    /* 텍스트 오버레이도 배경과 같은 방식으로 표시/숨김 */
+    #main-slider-root .main-slider-list {
+      display: none;
+      opacity: 0;
+      transition: opacity .45s;
+    }
+
+    #main-slider-root.inview .main-slider-list {
+      display: block;
+      opacity: 1;
+    }
+
     #main-slider-root.clip {
       overflow: hidden;
       position: relative;
@@ -1576,6 +1626,14 @@
       position: absolute;
       height: 120vh;
       top: -10vh;
+    }
+
+    /* clip 전환 시 텍스트가 튀지 않도록 위치 연속성 유지
+       (JS의 clipThreshold = 기준높이*0.8 과 동일한 값을 --msClipOffset 으로 주입) */
+    #main-slider-root.clip .main-slider-list {
+      position: absolute;
+      top: calc(100% - var(--msClipOffset, 80vh));
+      bottom: auto;
     }
 
     #main-slider-root .fade-target {
@@ -2166,60 +2224,80 @@
   <div class="main-slider-section1 fade-target">
     <dl>
       <dt>
-        브랜드 AI 영상은<br>단순한 콘텐츠가 아닌<br>
-        고객의 첫인상과 신뢰를 결정짓는<br>
-        강력한 설계 요소입니다
+        장소, 사람, 사운드, 목소리<br>섭외 전부 필요 X<br><br>기존 촬영보다<br>적은 예산으로도<br><br>더 높은 자유도와<br>
+        다양한 효과를 적용하면서도<br>더 빠르게 만들 수 있습니다.
       </dt>
     </dl>
   </div>
 
   <div class="main-slider-section2">
     <div class="main-slider-bg">
+      <!-- ★ 배경 이미지 목록: 여기에 <img>를 자유롭게 추가하면 됩니다.
+           아래 슬라이드 li의 data-bg / data-bg-mid 에 같은 src 경로를 적으면 사용됩니다. -->
       <img src="./img/ai-1.jpg" alt="첫인상 설계" class="active">
       <img src="./img/ai-2.jpg" alt="신뢰 형성">
       <img src="./img/premium.png" alt="감정 설득">
+
+      <!-- ★ Vimeo 배경 영상 (autoplay=1: 로드되면 즉시 재생 시작) -->
+      <div class="main-slider-video" id="mainSliderVideo" aria-hidden="true">
+        <iframe id="mainSliderVimeoFrame"
+          data-vimeo-src="https://player.vimeo.com/video/1211142109?background=1&autoplay=1&muted=1&loop=1&autopause=0&dnt=1"
+          src=""
+          frameborder="0"
+          allow="autoplay; fullscreen; picture-in-picture"
+          allowfullscreen
+          title="AI 영상 배경"></iframe>
+      </div>
     </div>
 
     <ul class="main-slider-list fade-target">
-  
-      <li>
+
+      <!-- ★ 슬라이드별 배경 이미지 지정 방법 (이미지 경로 그대로 적으면 됩니다)
+           data-bg     : 이 슬라이드 텍스트가 등장~정지해 있는 동안 보여줄 이미지
+           data-bg-mid : 텍스트가 가운데 멈춘 상태에서 "중간 교체" 후 보여줄 이미지
+           - 위 .main-slider-bg 안의 <img src>와 같은 경로를 적으면 그 이미지 사용
+           - 목록에 없는 새 경로나 외부 URL(https://...)을 적으면 자동으로 추가됨
+             (미리 로딩해 두려면 .main-slider-bg 에 <img>로 넣어두는 것을 권장)
+           - data-bg 와 data-bg-mid 가 같으면 그 슬라이드에서는 배경이 바뀌지 않음 -->
+
+      <li data-bg="./img/bf1.jpg" data-bg-mid="./img/ai1.jpg">
         <div class="slide-text">
           <h4>
-            고객이 보는 순간<br>
-            이미 결정되는 첫인상
+            값비싼 장비 없이<br>
+            사진만으로도 제작가능!
           </h4>
           <p>
-            고객은 글을 읽기 전에 영상의 분위기와 흐름으로<br>
-            신뢰 여부를 판단합니다.<br>
-            브랜드 AI 영상은 그 첫 순간을 설계합니다.
+            사람이 없어도, 비싼 촬영장비가 없어도<br>
+            적절한 사진만 있다면<br>
+            AI를 활용하여 구도와 사람을 설계합니다.
           </p>
         </div>
       </li>
 
-      <li>
+      <li data-bg="./img/bf2.jpg" data-bg-mid="./img/af2.jpg">
         <div class="slide-text">
           <h4>
-            말하지 않아도 전달되는<br>
-            브랜드의 수준과 가치
+            장소가 아직 완벽치 않아도<br>
+            최상의 퀄리티를 재현합니다
           </h4>
           <p>
-            설명 없이도 색감, 연출, 흐름만으로<br>
-            회사의 방향성과 신뢰도가 전달됩니다.<br>
-            고객은 자연스럽게 “다르다”고 느끼게 됩니다.
+            현재 사진이 공사 중이더라도<br>
+            적절한 설계도와 자료가 있다면<br>
+            구현된 상황을 AI로 최대한 구현합니다.
           </p>
         </div>
       </li>
 
-      <li>
+      <li data-bg="./img/bf3.jpg" data-bg-mid="./img/bf3.jpg">
         <div class="slide-text">
           <h4>
-            감정과 논리를 동시에 자극하는<br>
-            강력한 설득 구조
+            다양한 구도와 효과를 통해<br>
+            더 몰입력 있는 영상을 제작
           </h4>
           <p>
-            감성적인 몰입과 논리적인 메시지가 결합되어<br>
-            고객이 신뢰하고 행동으로 이어지는 흐름을 만듭니다.<br>
-            결국 영상 하나가 전환의 시작점이 됩니다.
+            하나의 구도만을 사용하는 것이 아닌<br>
+            다양한 구도로 다채롭게 만들어<br>
+            몰입도 있는 영상을 만드는데 집중합니다.
           </p>
         </div>
       </li>
@@ -2229,7 +2307,7 @@
 </section>
 
   <div id="permanent-bg-layer" style="filter:brightness(0.5);">
-    <img src="./img/premium.png" alt="영구 배경">
+    <img src="./img/bf3.jpg" alt="영구 배경">
   </div>
 
   <div class="family-site-modal" id="familySiteModal" aria-hidden="true">
@@ -2271,28 +2349,111 @@
 
       const s1 = root.querySelector('.main-slider-section1');
       const s2 = root.querySelector('.main-slider-section2');
-      const bgImgs = root.querySelectorAll('.main-slider-bg img');
+      const bgWrap = root.querySelector('.main-slider-bg');
+      const videoLayer = document.getElementById('mainSliderVideo');
       const slides = root.querySelectorAll('.main-slider-list li');
       const texts = root.querySelectorAll('.slide-text');
       const fades = [...root.querySelectorAll('.fade-target')];
       const total = slides.length;
 
+      /* ── 슬라이드별 배경 이미지 매핑 (li의 data-bg / data-bg-mid) ──
+         data-bg     : 슬라이드 전반(텍스트 등장~정지)에 보여줄 이미지 경로
+         data-bg-mid : 중간 교체 시점(P_BG) 이후 보여줄 이미지 경로
+         - .main-slider-bg 안의 <img src>와 동일한 경로를 적으면 그 이미지 사용
+         - 목록에 없는 새 경로/외부 URL을 적으면 <img>가 자동으로 생성됨
+         - 속성이 없으면 기존 동작(현재 순서 → 다음 순서)으로 폴백       */
+      const bgList = () => [...bgWrap.querySelectorAll('img')];
+
+      function resolveBg(value, fallbackIndex) {
+        const arr = bgList();
+        if (value === undefined || value === '') {
+          return arr[Math.min(fallbackIndex, arr.length - 1)];
+        }
+        let img = arr.find(im => im.getAttribute('src') === value);
+        if (!img) {
+          img = document.createElement('img');
+          img.src = value;
+          img.alt = '';
+          bgWrap.insertBefore(img, videoLayer); // 영상 레이어보다 아래에 삽입
+        }
+        return img;
+      }
+
+      const bgBefore = [...slides].map((li, i) => resolveBg(li.dataset.bg, i));
+      const bgMid = [...slides].map((li, i) =>
+        resolveBg(li.dataset.bgMid, Math.min(i + 1, bgList().length - 1)));
+      const FINAL_BG = bgMid[total - 1]; // 마지막에 유지되는 이미지 (영구 배경 대상)
+      const bgImgs = bgList();           // 자동 생성분까지 포함한 전체 배경 이미지
+
       let lastSlideReached = false;
       let permanentBackgroundActive = false;
       let prevScrollY = 0;
 
-      const MAX_Y = 40, FADE_START = .65, FADE_END = 0, SCALE_MIN = .86, SCALE_MAX = 1;
+      /* ── 슬라이드 구간/타이밍 설정 ─────────────────────────
+         SEG_VH : 슬라이드 1개당 스크롤 구간(화면 높이 배수, 1.9 = 190vh)
+         구간 내 진행률 p (0~1) 기준:
+         0        ~ P_ENTER : 텍스트가 화면 하단에서 위로 상승
+         P_ENTER  ~ P_BG    : 텍스트 화면 가운데 정지 (배경 = 현재 이미지)
+         P_BG               : 배경 이미지가 다음 이미지로 크로스페이드
+         P_BG     ~ P_EXIT  : 텍스트 계속 가운데 정지 — 읽기 구간
+                              (0.40→0.80 = 화면 높이 1배 정도 스크롤해도 안 움직임)
+         P_EXIT   ~ 1       : 텍스트가 멈춰있던 자리에서 화면 상단까지 상승 퇴장
+         * 마지막 슬라이드는 퇴장 없이 정지 유지 → Vimeo 페이드인
+      ────────────────────────────────────────────────── */
+      const SEG_VH = 1.9;
+      const LEAD = 0.25;
+      const P_ENTER = 0.22;
+      const P_BG = 0.40;
+      const P_EXIT = 0.80;
+      const ENTER_FROM = 0.6; // 등장 시작 위치 (화면 높이 대비 비율, 0.6 = 화면 하단 아래에서 시작)
+      const EXIT_TO = 0.6;    // 퇴장 이동 거리 (화면 높이 대비 비율, 0.6 = 가운데 → 상단 통과)
+
+      const SCALE_MIN = .86, SCALE_MAX = 1;
       let curScale = SCALE_MIN, trgScale = SCALE_MIN, rafId = null, active = false;
-      const states = Array.from({ length: total }, () => ({ op: 1, y: MAX_Y }));
+
+      /* ── 모바일 주소창 대응: 기준 화면 높이(stableVh) 고정 ──
+         모바일에서 스크롤 중 주소창이 나타나거나 사라지면 innerHeight가
+         수십 px씩 변해 전환이 덜컹거림. 화면 회전이나 실제 창 크기 변경
+         (150px 초과)일 때만 기준 높이를 갱신해 모든 계산을 안정화 */
+      let stableW = innerWidth;
+      let stableVh = innerHeight;
+      const vh = () => stableVh;
+
+      function applyViewportSizes() {
+        // 섹션 높이를 px로 고정해 JS 계산과 완전히 일치시킴
+        s2.style.height = (total * SEG_VH * stableVh) + 'px';
+        // clip 전환 시 텍스트 위치 연속성용 오프셋 (clipThreshold와 동일 기준)
+        root.style.setProperty('--msClipOffset', (stableVh * 0.8) + 'px');
+      }
+
+      function refreshViewport() {
+        const wChanged = innerWidth !== stableW;
+        if (wChanged || Math.abs(innerHeight - stableVh) > 150) {
+          stableW = innerWidth;
+          stableVh = innerHeight;
+          applyViewportSizes();
+        }
+      }
+
+      applyViewportSizes();
+      addEventListener('resize', refreshViewport);
+
+      const states = Array.from({ length: total }, () => ({ op: 0, y: stableVh * ENTER_FROM }));
 
       function initializeImages() {
-        bgImgs.forEach((img, i) => {
+        bgImgs.forEach((img) => {
           img.classList.remove('active');
           img.classList.remove('permanent-active');
-          if (i === 0) {
+          if (img === bgBefore[0]) {
             img.classList.add('active');
             img.style.transform = `scale(${curScale})`;
           }
+        });
+        texts.forEach(el => {
+          const startY = vh() * ENTER_FROM;
+          el.style.opacity = 0;
+          el.style.transform = `translate3d(0, ${startY}px, 0)`;
+          el.style.setProperty('--ty', startY);
         });
       }
 
@@ -2302,7 +2463,6 @@
       permanentBgLayer.classList.remove('permanent');
 
       const lerp = (a, b, t) => a + (b - a) * t;
-      const vh = () => innerHeight;
 
       function animate() {
         curScale = lerp(curScale, trgScale, .18);
@@ -2315,15 +2475,123 @@
 
         texts.forEach((el, i) => {
           const st = states[i];
-          el.style.opacity = lerp(+el.style.opacity || 1, st.op, .25);
+          const curOp = el.style.opacity === '' ? 0 : +el.style.opacity;
+          let no = lerp(curOp, st.op, .25);
+          if (Math.abs(no - st.op) < 0.005) no = st.op;      // 목표 도달 시 스냅
+          el.style.opacity = no;
           const prev = +el.style.getPropertyValue('--ty') || 0;
-          const ny = lerp(prev, st.y, .2);
-          el.style.transform = `translateY(${ny}px)`;
+          let ny = lerp(prev, st.y, .2);
+          if (Math.abs(ny - st.y) < 0.15) ny = st.y;          // 정지 상태 미세 떨림 제거
+          el.style.transform = `translate3d(0, ${ny}px, 0)`;  // GPU 합성 (모바일 부드러움)
           el.style.setProperty('--ty', ny);
         });
 
         rafId = requestAnimationFrame(animate);
       }
+
+      /* ── Vimeo 배경 영상 제어 ───────────────────────────── */
+      const videoFrame = document.getElementById('mainSliderVimeoFrame');
+      let vimeoPlayer = null;
+      let vimeoSdkPromise = null;
+      let videoArmed = false;      // 3번째 슬라이드에서 페이드인 허용 여부
+      let videoLive = false;       // 영상이 실제 재생 중 + 화면에 표시 중
+      let videoRequested = false;  // play() 요청 완료 여부
+
+      function loadVimeoSdk() {
+        if (window.Vimeo && window.Vimeo.Player) return Promise.resolve();
+        if (vimeoSdkPromise) return vimeoSdkPromise;
+        vimeoSdkPromise = new Promise(function (resolve, reject) {
+          const s = document.createElement('script');
+          s.src = 'https://player.vimeo.com/api/player.js';
+          s.onload = resolve;
+          s.onerror = reject;
+          document.head.appendChild(s);
+        });
+        return vimeoSdkPromise;
+      }
+
+      function goLiveIfArmed() {
+        // 재생이 "실제로 확인된 이후"에만 페이드인 → 블랙아웃 없음
+        if (!videoArmed || videoLive) return;
+        videoLive = true;
+        root.classList.add('video-live');
+      }
+
+      let videoFallbackTimer = null;
+
+      function ensureVimeoLoaded() {
+        if (!videoFrame || videoFrame.dataset.loaded === '1') return;
+        const src = videoFrame.getAttribute('data-vimeo-src') || '';
+        if (src.indexOf('VIMEO_VIDEO_ID') !== -1) return; // ID 미설정 시 동작 안 함
+        videoFrame.dataset.loaded = '1';
+        videoFrame.src = src; // autoplay=1&background=1 → 로드되면 스스로 재생 시작
+
+        loadVimeoSdk().then(function () {
+          vimeoPlayer = new Vimeo.Player(videoFrame);
+          vimeoPlayer.on('playing', goLiveIfArmed);
+          vimeoPlayer.on('timeupdate', function (d) {
+            if (d && d.seconds > 0.05) goLiveIfArmed();
+          });
+          vimeoPlayer.ready().then(function () {
+            if (videoArmed) tryPlayVideo();
+          }).catch(function () { });
+        }).catch(function () {
+          // SDK 로드 실패 시 최후 수단: autoplay=1이라 재생 중일 가능성이 높으므로 페이드인
+          setTimeout(goLiveIfArmed, 1600);
+        });
+      }
+
+      function tryPlayVideo() {
+        if (!vimeoPlayer || !videoArmed) return;
+        const pr = vimeoPlayer.play();
+        if (pr && pr.catch) pr.catch(function () {
+          // 아직 로딩 전이라 재생이 거부된 경우 잠시 후 재시도
+          setTimeout(tryPlayVideo, 600);
+        });
+      }
+
+      function startSliderVideo() {
+        const firstArm = !videoArmed;
+        videoArmed = true;
+        ensureVimeoLoaded();
+
+        if (vimeoPlayer && !videoLive && !videoRequested) {
+          videoRequested = true;
+          if (firstArm) {
+            const seek = vimeoPlayer.setCurrentTime(0); // 처음부터 재생 (실패해도 무시)
+            if (seek && seek.catch) seek.catch(function () { });
+          }
+          tryPlayVideo();
+        }
+
+        // 이벤트를 놓치거나 환경 문제로 재생 확인 신호가 안 오는 경우 대비:
+        // 도달 후 2.5초가 지나도 페이드인이 안 됐으면 강제로 영상 표시
+        if (firstArm && !videoFallbackTimer) {
+          videoFallbackTimer = setTimeout(function () {
+            videoFallbackTimer = null;
+            if (videoArmed) {
+              tryPlayVideo();
+              goLiveIfArmed();
+            }
+          }, 2500);
+        }
+      }
+
+      function stopSliderVideo() {
+        videoArmed = false;
+        videoRequested = false;
+        videoLive = false;
+        if (videoFallbackTimer) {
+          clearTimeout(videoFallbackTimer);
+          videoFallbackTimer = null;
+        }
+        root.classList.remove('video-live');
+        if (vimeoPlayer) {
+          const pr = vimeoPlayer.pause();
+          if (pr && pr.catch) pr.catch(function () { });
+        }
+      }
+      /* ──────────────────────────────────────────────────── */
 
       function updateStates() {
         const viewH = vh(), y = scrollY;
@@ -2337,11 +2605,23 @@
         trgScale = (y < start) ? SCALE_MIN : (y > end) ? SCALE_MAX
           : SCALE_MIN + (SCALE_MAX - SCALE_MIN) * ((y - start) / (end - start));
 
+        // ── 현재 슬라이드 구간(idx)과 구간 내 진행률(p) 계산 ──
+        const segH = viewH * SEG_VH;
+        const totalSegH = segH * total;
+        const relRaw = (y - s2Top) + viewH * LEAD;
+        const rel = Math.min(Math.max(relRaw, 0), totalSegH - 1);
+        const idx = Math.min(total - 1, Math.floor(rel / segH));
+        const p = (rel - idx * segH) / segH;
+
+        // 텍스트 정지 중 배경 먼저 교체: P_BG 이후 data-bg-mid 이미지로
+        const curBg = (p >= P_BG) ? bgMid[idx] : bgBefore[idx];
+
         const rootRect = root.getBoundingClientRect();
         if (rootRect.top < viewH && rootRect.bottom > 0) {
-          const idx = Math.min(total - 1, Math.max(0,
-            Math.floor((y - s2Top + viewH / 2) / viewH)));
 
+          slides.forEach((li, i) => li.classList.toggle('active', i === idx));
+
+          // 마지막 슬라이드 도달 → 영구 배경 활성화
           if (idx === total - 1) {
             if (!lastSlideReached) {
               lastSlideReached = true;
@@ -2349,46 +2629,28 @@
               permanentBgLayer.classList.add('active');
               permanentBgLayer.classList.add('permanent');
             }
-          } else {
-            if (scrollDirection === 'up' && lastSlideReached) {
-              lastSlideReached = false;
-              permanentBackgroundActive = false;
-              permanentBgLayer.classList.remove('active');
-              permanentBgLayer.classList.remove('permanent');
-            }
+          } else if (scrollDirection === 'up' && lastSlideReached) {
+            lastSlideReached = false;
+            permanentBackgroundActive = false;
+            permanentBgLayer.classList.remove('active');
+            permanentBgLayer.classList.remove('permanent');
           }
 
-          slides.forEach((li, i) => li.classList.toggle('active', i === idx));
+          bgImgs.forEach((img) => {
+            img.classList.toggle('active', img === curBg);
+            img.classList.toggle('permanent-active', permanentBackgroundActive && img === FINAL_BG);
+          });
 
-          if (!permanentBackgroundActive) {
-            bgImgs.forEach((img, i) => {
-              img.classList.toggle('active', i === idx);
-              img.classList.remove('permanent-active');
-            });
-          } else {
-            if (idx === total - 1) {
-              bgImgs.forEach((img, i) => {
-                img.classList.remove('active');
-                if (i === total - 1) {
-                  img.classList.add('permanent-active');
-                }
-              });
-            } else {
-              if (scrollDirection === 'up') {
-                bgImgs.forEach((img, i) => {
-                  img.classList.toggle('active', i === idx);
-                  img.classList.remove('permanent-active');
-                });
-              } else {
-                bgImgs.forEach((img, i) => {
-                  if (i === total - 1) {
-                    img.classList.add('permanent-active');
-                  } else {
-                    img.classList.remove('active');
-                  }
-                });
-              }
-            }
+          // ── Vimeo 흐름 제어 ──
+          // 2번째 슬라이드 후반(배경이 3번째 이미지로 바뀐 시점)부터 미리 로드
+          if (idx === total - 1 || (idx === total - 2 && p >= P_BG)) {
+            ensureVimeoLoaded();
+          }
+          // 3번째 텍스트가 가운데 정착한 뒤 재생 → 재생 확인되면 이미지 위로 페이드인
+          if (idx === total - 1 && p >= P_ENTER + 0.05) {
+            startSliderVideo();
+          } else if (videoLive && idx < total - 1 && scrollDirection === 'up') {
+            stopSliderVideo(); // 위로 스크롤해 3번째를 벗어나면 이미지로 복귀
           }
         }
 
@@ -2400,24 +2662,34 @@
           if (!permanentBackgroundActive) {
             permanentBackgroundActive = true;
             permanentBgLayer.classList.add('permanent');
-            bgImgs.forEach((img, i) => {
-              if (i === total - 1) {
+            bgImgs.forEach((img) => {
+              if (img === FINAL_BG) {
                 img.classList.add('permanent-active');
               }
             });
           }
         }
 
-        texts.forEach((_, i) => {
-          const center = s2Top + viewH * i + viewH / 2;
-          const dist = ((y + viewH / 2) - center) / viewH;
-          if (dist < -FADE_START) {
-            states[i] = { op: 0, y: MAX_Y };
-          } else if (dist < -FADE_END) {
-            const p = (dist + FADE_START) / (FADE_START - FADE_END);
-            states[i] = { op: p, y: MAX_Y * (1 - p) };
+        // ── 텍스트 상태: 하단에서 상승 → 가운데 정지 → (배경 교체) → 화면 상단까지 상승 퇴장 ──
+        const enterDist = viewH * ENTER_FROM; // 화면 하단 아래에서 가운데까지의 거리
+        const exitDist = viewH * EXIT_TO;     // 가운데에서 화면 상단을 통과하는 거리
+
+        texts.forEach((el, i) => {
+          if (i < idx) { states[i] = { op: 0, y: -exitDist }; return; }   // 이미 퇴장
+          if (i > idx) { states[i] = { op: 0, y: enterDist }; return; }   // 대기(화면 하단 아래)
+
+          if (p < P_ENTER) {
+            const t = p / P_ENTER;
+            // 하단에서 올라오는 동안 잘 보이도록, 초반(45%까지)에만 페이드인
+            const fade = t > 0.45 ? 1 : t / 0.45;
+            states[i] = { op: fade, y: enterDist * (1 - t) };             // 화면 하단에서 상승 등장
+          } else if (i === total - 1 || p < P_EXIT) {
+            states[i] = { op: 1, y: 0 };                                  // 가운데 정지 (떨림 없음)
           } else {
-            states[i] = { op: 1, y: 0 };
+            const t = (p - P_EXIT) / (1 - P_EXIT);
+            // 상단까지 이동하는 동안 잘 보이도록, 상단 근처(55% 이후)에서만 페이드아웃
+            const fade = t < 0.55 ? 1 : 1 - (t - 0.55) / 0.45;
+            states[i] = { op: fade, y: -exitDist * t };                   // 화면 상단까지 상승 퇴장
           }
         });
 
@@ -2465,6 +2737,19 @@
 
         const clipThreshold = v * 0.8;
         root.classList.toggle('clip', r.bottom <= clipThreshold);
+
+        // ── 섹션이 화면에서 완전히 벗어나면 ──
+        // 1) 영구 배경이 다른 섹션 뒤에 비치지 않도록 숨김
+        // 2) 영상도 일시정지 (다시 돌아오면 자동 재개)
+        if (r.bottom <= 0) {
+          permanentBgLayer.classList.remove('active');
+          permanentBgLayer.classList.remove('permanent');
+          if (videoArmed || videoLive) stopSliderVideo();
+        } else if (permanentBackgroundActive) {
+          // 섹션 하단 전환 구간으로 다시 들어오면 영구 배경 복원 (부드러운 연결용)
+          permanentBgLayer.classList.add('active');
+          permanentBgLayer.classList.add('permanent');
+        }
 
         applyFade(r, v);
       }
@@ -2744,6 +3029,1172 @@
     })();
   </script>
 </section>
+
+
+<section id="aiCompanyBrandingSection" aria-label="대한민국 대표 기업 AI 행사 영상">
+  <style>
+    #aiCompanyBrandingSection {
+      position: relative;
+      width: 100%;
+      min-height: 659px;
+      margin: 0;
+      padding: 196px 24px 104px;
+      box-sizing: border-box;
+      background: #ffffff;
+      overflow: hidden;
+      font-family: "Pretendard", "Noto Sans KR", "Apple SD Gothic Neo", Arial, sans-serif;
+    }
+
+    #aiCompanyBrandingSection .acbs-inner {
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
+      box-sizing: border-box;
+      text-align: center;
+    }
+
+    #aiCompanyBrandingSection .acbs-content {
+      margin: 0;
+      padding: 0;
+    }
+
+    #aiCompanyBrandingSection .acbs-content dt {
+      margin: 0;
+      padding: 0;
+    }
+
+    #aiCompanyBrandingSection .acbs-logo-wrap {
+      width: 100%;
+      margin: 0 auto 80px;
+      text-align: center;
+      animation: acbsFadeInUp 0.9s cubic-bezier(.22, 1, .36, 1) both;
+    }
+
+    #aiCompanyBrandingSection .acbs-logo {
+      display: block;
+      width: 100%;
+      max-width: 620px;
+      height: auto;
+      margin: 0 auto;
+      border: 0;
+      object-fit: contain;
+    }
+
+    #aiCompanyBrandingSection .acbs-title {
+      display: block;
+      margin: 0 auto;
+      color: #000000;
+      font-size: clamp(32px, 3.15vw, 40px);
+      font-weight: 800;
+      line-height: 1.3;
+      letter-spacing: -2.2px;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+      animation: acbsFadeInUp 0.9s 0.18s cubic-bezier(.22, 1, .36, 1) both;
+    }
+
+    #aiCompanyBrandingSection .acbs-mobile-break {
+      display: none;
+    }
+
+    @keyframes acbsFadeInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(28px);
+      }
+
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media screen and (max-width: 767px) {
+      #aiCompanyBrandingSection {
+        min-height: auto;
+        padding: 100px 20px 92px;
+      }
+
+      #aiCompanyBrandingSection .acbs-inner {
+        max-width: 560px;
+      }
+
+      #aiCompanyBrandingSection .acbs-logo-wrap {
+        margin-bottom: 52px;
+      }
+
+      #aiCompanyBrandingSection .acbs-logo {
+        max-width: 440px;
+      }
+
+      #aiCompanyBrandingSection .acbs-title {
+        font-size: clamp(27px, 7.4vw, 34px);
+        line-height: 1.38;
+        letter-spacing: -1.6px;
+      }
+
+      #aiCompanyBrandingSection .acbs-mobile-break {
+        display: block;
+      }
+    }
+
+    @media screen and (max-width: 480px) {
+      #aiCompanyBrandingSection {
+        padding: 78px 18px 76px;
+      }
+
+      #aiCompanyBrandingSection .acbs-logo-wrap {
+        margin-bottom: 42px;
+      }
+
+      #aiCompanyBrandingSection .acbs-logo {
+        width: 94%;
+      }
+
+      #aiCompanyBrandingSection .acbs-title {
+        font-size: clamp(24px, 7.3vw, 30px);
+        line-height: 1.42;
+        letter-spacing: -1.3px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #aiCompanyBrandingSection .acbs-logo-wrap,
+      #aiCompanyBrandingSection .acbs-title {
+        animation: none;
+      }
+    }
+  </style>
+
+  <div class="acbs-inner">
+    <dl class="acbs-content">
+      <dt>
+        <div class="acbs-logo-wrap">
+          <img
+            class="acbs-logo"
+            src="./img/logo-con.png"
+            alt="포스코건설과 GS건설"
+          >
+        </div>
+
+        <span class="acbs-title">
+          대한민국 대표 기업들과 함께<br>
+          AI 행사 영상을 통해 브랜딩과<br>
+          고객의 안내를 돕고 있습니다.
+        </span>
+      </dt>
+    </dl>
+  </div>
+</section>
+
+
+
+<section id="ProjectSection" aria-label="Project Scroll Section">
+  <style>
+    #ProjectSection {
+      --sfs-bg: #ffffff;
+      --sfs-text: #000000;
+      --sfs-muted: #777777;
+      --sfs-muted-2: #555555;
+      --sfs-muted-3: #333333;
+      --sfs-dot: #e02020;
+      --sfs-card-radius: 4px;
+      --sfs-ease: cubic-bezier(0.22, 1, 0.36, 1);
+      position: relative;
+      background: var(--sfs-bg);
+      color: var(--sfs-text);
+      overflow: clip;
+      font-family: 'Bebas Neue', sans-serif;
+      isolation: isolate;
+    }
+
+    #ProjectSection .sfs-google-fonts {
+      position: absolute;
+      width: 0;
+      height: 0;
+      overflow: hidden;
+    }
+
+    #ProjectSection .sfs-stage {
+      position: relative;
+      min-height: 100vh;
+      background: var(--sfs-bg);
+      isolation: isolate;
+    }
+
+    #ProjectSection .sfs-fixed-text-container {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      pointer-events: none;
+      mix-blend-mode: difference;
+      /* padding-inline: 20px; */
+      will-change: auto;
+    }
+
+    #ProjectSection .sfs-fixed-label {
+      font-size: 14px;
+      letter-spacing: 8px;
+      text-transform: uppercase;
+            color: var(--sfs-text);
+      margin-bottom: 10px;
+      line-height: 1;
+    }
+
+    #ProjectSection .sfs-fixed-title {
+      font-size: clamp(70px, 14vw, 220px);
+      letter-spacing: 10px;
+      line-height: 0.85;
+      color: #fff;
+      text-align: center;
+      font-weight: 400;
+      white-space: nowrap;
+    }
+
+    #ProjectSection .sfs-radial-lines {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: min(600px, 74vw);
+      height: min(600px, 74vw);
+      transform: translate(-50%, -50%);
+      z-index: 5;
+      pointer-events: none;
+      opacity: 0.6;
+      transition: opacity 0.5s ease;
+      will-change: opacity, transform;
+    }
+
+    #ProjectSection .sfs-radial-lines canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      transform-origin: 50% 50%;
+    }
+
+    #ProjectSection .sfs-scroll-hint {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 20;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      transition: opacity 0.6s ease;
+      pointer-events: none;
+      will-change: opacity;
+    }
+
+    #ProjectSection .sfs-scroll-hint.sfs-hidden {
+      opacity: 0;
+    }
+
+    #ProjectSection .sfs-scroll-hint span {
+      font-size: 10px;
+      letter-spacing: 4px;
+      color: var(--sfs-muted-2);
+      font-family: 'Noto Sans KR', sans-serif;
+      line-height: 1;
+    }
+
+    #ProjectSection .sfs-scroll-line {
+      width: 1px;
+      height: 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #ProjectSection .sfs-scroll-line::after {
+      content: '';
+      position: absolute;
+      top: -100%;
+      left: 0;
+      width: 1px;
+      height: 100%;
+      background: linear-gradient(to bottom, transparent, #888888);
+      animation: sfsScrollDown 1.8s ease-in-out infinite;
+    }
+
+    @keyframes sfsScrollDown {
+      0% { top: -100%; }
+      100% { top: 100%; }
+    }
+
+    #ProjectSection .sfs-hero {
+      position: relative;
+      height: 0;
+      z-index: 1;
+    }
+
+    #ProjectSection .sfs-tagline {
+      position: relative;
+      z-index: 6;
+      text-align: center;
+      padding: 0 20px 0;
+      height: 50vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 18px;
+      color: var(--sfs-muted);
+      letter-spacing: 2px;
+      line-height: 2;
+    }
+
+    #ProjectSection .sfs-tagline strong {
+      color: #fff;
+      font-weight: 700;
+      font-size: 22px;
+    }
+
+    #ProjectSection .sfs-scroll-content {
+      position: relative;
+      z-index: 6;
+      padding: 10vh 0 15vh;
+    }
+
+    #ProjectSection .sfs-project-card {
+      position: relative;
+      margin: 0 auto 0;
+      width: 55%;
+      max-width: 750px;
+      opacity: 0;
+      transform: translateY(150px) scale(0.95);
+      transition:
+        opacity 1s var(--sfs-ease),
+        transform 1s var(--sfs-ease);
+      will-change: transform, opacity;
+    }
+
+    #ProjectSection .sfs-project-card.sfs-visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    #ProjectSection .sfs-card-link {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      border-radius: var(--sfs-card-radius);
+    }
+
+    #ProjectSection .sfs-card-link:focus-visible {
+      outline: 2px solid rgba(255,255,255,0.9);
+      outline-offset: 6px;
+      border-radius: 8px;
+    }
+
+    #ProjectSection .sfs-card-link:hover .sfs-card-image,
+    #ProjectSection .sfs-card-link:focus-visible .sfs-card-image {
+      transform: translateY(-4px);
+      box-shadow: 0 38px 90px rgba(0, 0, 0, 0.34);
+    }
+
+    #ProjectSection .sfs-card-image {
+      width: 100%;
+      aspect-ratio: 3 / 2;
+      border-radius: var(--sfs-card-radius);
+      overflow: hidden;
+      position: relative;
+      background: #070707;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.28);
+      transition: transform 0.45s var(--sfs-ease), box-shadow 0.45s var(--sfs-ease);
+      cursor: pointer;
+    }
+
+    #ProjectSection .sfs-card-image canvas,
+    #ProjectSection .sfs-card-image img {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    #ProjectSection .sfs-card-image canvas {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+    }
+
+    #ProjectSection .sfs-card-photo {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      object-fit: contain;
+      object-position: center;
+      opacity: 0;
+      transition: opacity 0.45s ease;
+      background: #070707;
+    }
+
+    #ProjectSection .sfs-card-photo.sfs-loaded {
+      opacity: 1;
+    }
+
+    /* 영상 카드 표시 — 가운데 재생 버튼 오버레이 */
+    #ProjectSection .sfs-play-badge {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(1);
+      z-index: 5;
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.45);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      border: 1.5px solid rgba(255, 255, 255, 0.55);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      transition: transform 0.35s var(--sfs-ease), background-color 0.3s ease;
+    }
+
+    #ProjectSection .sfs-project-card.sfs-is-video .sfs-play-badge {
+      display: flex;
+    }
+
+    #ProjectSection .sfs-play-badge::after {
+      content: '';
+      display: block;
+      width: 0;
+      height: 0;
+      margin-left: 5px;
+      border-style: solid;
+      border-width: 13px 0 13px 22px;
+      border-color: transparent transparent transparent #ffffff;
+    }
+
+    #ProjectSection .sfs-card-link:hover .sfs-play-badge,
+    #ProjectSection .sfs-card-link:focus-visible .sfs-play-badge {
+      transform: translate(-50%, -50%) scale(1.1);
+      background: rgba(224, 32, 32, 0.75);
+    }
+
+    #ProjectSection .sfs-card-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 24px 0 100px 0;
+    }
+
+    #ProjectSection .sfs-card-label-dot {
+      width: 10px;
+      height: 10px;
+      background: var(--sfs-dot);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    #ProjectSection .sfs-card-label-text {
+      font-size: 15px;
+      letter-spacing: 3px;
+      color: #000000;
+      font-weight:700;
+      line-height: 1.4;
+      word-break: break-word;
+    }
+
+    #ProjectSection .sfs-project-card:nth-child(1) { margin-left: 8%; width: 50%; }
+    #ProjectSection .sfs-project-card:nth-child(2) { margin-left: auto; margin-right: 8%; width: 45%; }
+    #ProjectSection .sfs-project-card:nth-child(3) { margin: 0 auto; width: 60%; }
+    #ProjectSection .sfs-project-card:nth-child(4) { margin-left: 12%; width: 40%; }
+    #ProjectSection .sfs-project-card:nth-child(5) { margin-left: auto; margin-right: 5%; width: 55%; }
+    #ProjectSection .sfs-project-card:nth-child(6) { margin: 0 auto; width: 50%; }
+    #ProjectSection .sfs-project-card:nth-child(7) { margin-left: 6%; width: 48%; }
+
+    #ProjectSection .sfs-footer {
+      position: relative;
+      z-index: 6;
+      text-align: center;
+      padding: 100px 20px;
+      font-size: 12px;
+      letter-spacing: 3px;
+      color: var(--sfs-muted-3);
+      font-family: 'Noto Sans KR', sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ===== 영상 팝업(라이트박스) ===== */
+    #ProjectSection .sfs-video-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 2147483000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(16px, 4vw, 48px);
+    }
+
+    #ProjectSection .sfs-video-modal.sfs-open {
+      display: flex;
+    }
+
+    #ProjectSection .sfs-video-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.9);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      opacity: 0;
+      transition: opacity 0.35s ease;
+      cursor: pointer;
+    }
+
+    #ProjectSection .sfs-video-modal.sfs-open .sfs-video-backdrop {
+      opacity: 1;
+    }
+
+    #ProjectSection .sfs-video-dialog {
+      position: relative;
+      z-index: 2;
+      width: min(92vw, 1080px);
+      aspect-ratio: 16 / 9;
+      max-height: calc(100vh - 120px);
+      background: #000;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 40px 120px rgba(0, 0, 0, 0.6);
+      opacity: 0;
+      transform: translateY(24px) scale(0.96);
+      transition:
+        opacity 0.4s var(--sfs-ease),
+        transform 0.45s var(--sfs-ease);
+    }
+
+    #ProjectSection .sfs-video-modal.sfs-open .sfs-video-dialog {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    #ProjectSection .sfs-video-dialog iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+      background: #000;
+    }
+
+    #ProjectSection .sfs-video-close {
+      position: absolute;
+      z-index: 3;
+      top: max(16px, env(safe-area-inset-top, 0px));
+      right: max(16px, env(safe-area-inset-right, 0px));
+      width: 48px;
+      height: 48px;
+      border: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      color: #fff;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      padding: 0;
+      transition: transform 0.3s var(--sfs-ease), background-color 0.3s ease;
+    }
+
+    #ProjectSection .sfs-video-close:hover {
+      transform: scale(1.1) rotate(90deg);
+      background: rgba(224, 32, 32, 0.8);
+    }
+
+    #ProjectSection .sfs-video-close svg {
+      width: 22px;
+      height: 22px;
+      stroke: currentColor;
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      fill: none;
+      display: block;
+    }
+
+    @media (max-width: 1024px) {
+      #ProjectSection .sfs-fixed-title {
+        letter-spacing: 6px;
+      }
+
+      #ProjectSection .sfs-project-card,
+      #ProjectSection .sfs-project-card:nth-child(1),
+      #ProjectSection .sfs-project-card:nth-child(2),
+      #ProjectSection .sfs-project-card:nth-child(3),
+      #ProjectSection .sfs-project-card:nth-child(4),
+      #ProjectSection .sfs-project-card:nth-child(5),
+      #ProjectSection .sfs-project-card:nth-child(6),
+      #ProjectSection .sfs-project-card:nth-child(7) {
+        width: min(86vw, 760px);
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      #ProjectSection .sfs-card-label {
+        padding-bottom: 76px;
+      }
+    }
+
+    @media (max-width: 767px) {
+      #ProjectSection .sfs-fixed-label {
+        font-size: 11px;
+        letter-spacing: 5px;
+        margin-bottom: 8px;
+      }
+
+      #ProjectSection .sfs-fixed-title {
+        font-size: clamp(42px, 14vw, 78px);
+        letter-spacing: 3px;
+      }
+
+      #ProjectSection .sfs-radial-lines {
+        width: min(360px, 80vw);
+        height: min(360px, 80vw);
+      }
+
+      #ProjectSection .sfs-tagline {
+        height: 42vh;
+        font-size: 14px;
+        letter-spacing: 1.2px;
+        line-height: 1.9;
+        padding-inline: 24px;
+      }
+
+      #ProjectSection .sfs-tagline strong {
+        font-size: 18px;
+      }
+
+      #ProjectSection .sfs-scroll-content {
+        padding: 5vh 0 12vh;
+      }
+
+      #ProjectSection .sfs-project-card,
+      #ProjectSection .sfs-project-card:nth-child(1),
+      #ProjectSection .sfs-project-card:nth-child(2),
+      #ProjectSection .sfs-project-card:nth-child(3),
+      #ProjectSection .sfs-project-card:nth-child(4),
+      #ProjectSection .sfs-project-card:nth-child(5),
+      #ProjectSection .sfs-project-card:nth-child(6),
+      #ProjectSection .sfs-project-card:nth-child(7) {
+        width: min(88vw, 680px);
+      }
+
+      #ProjectSection .sfs-card-label {
+        gap: 10px;
+        padding: 18px 0 56px 0;
+      }
+
+      #ProjectSection .sfs-card-label-text {
+        font-size: 12px;
+        letter-spacing: 2px;
+      }
+
+      #ProjectSection .sfs-scroll-hint {
+        bottom: 24px;
+      }
+
+      #ProjectSection .sfs-play-badge {
+        width: 56px;
+        height: 56px;
+      }
+
+      #ProjectSection .sfs-play-badge::after {
+        border-width: 10px 0 10px 17px;
+        margin-left: 4px;
+      }
+
+      #ProjectSection .sfs-video-dialog {
+        width: 100%;
+      }
+
+      #ProjectSection .sfs-video-close {
+        width: 42px;
+        height: 42px;
+        top: max(12px, env(safe-area-inset-top, 0px));
+        right: 12px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #ProjectSection .sfs-project-card,
+      #ProjectSection .sfs-scroll-hint,
+      #ProjectSection .sfs-radial-lines,
+      #ProjectSection .sfs-card-photo,
+      #ProjectSection .sfs-video-backdrop,
+      #ProjectSection .sfs-video-dialog,
+      #ProjectSection .sfs-video-close,
+      #ProjectSection .sfs-play-badge {
+        transition: none;
+      }
+
+      #ProjectSection .sfs-scroll-line::after {
+        animation: none;
+      }
+    }
+  </style>
+
+  <div class="sfs-google-fonts">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+  </div>
+
+  <div class="sfs-stage">
+    <div class="sfs-fixed-text-container" data-sfs-fixed-text>
+      <div class="sfs-fixed-label">FLOS</div>
+      <div class="sfs-fixed-title">Portfolio</div>
+    </div>
+
+    <div class="sfs-radial-lines" data-sfs-radial-lines>
+      <canvas data-sfs-radial-canvas width="600" height="600"></canvas>
+    </div>
+
+    <div class="sfs-scroll-hint" data-sfs-scroll-hint>
+      <span>SCROLL</span>
+      <div class="sfs-scroll-line"></div>
+    </div>
+
+    <div class="sfs-hero" aria-hidden="true"></div>
+
+    <div class="sfs-tagline">
+      <div></div>
+      <strong></strong>
+    </div>
+
+    <div class="sfs-scroll-content">
+      <!--
+        [카드 사용법]
+        - data-image : 카드 썸네일 이미지 주소
+        - 일반 웹사이트 링크 : href 에 주소를 넣으면 새 탭으로 이동
+        - 영상 팝업 : 아래 두 가지 중 하나면 자동으로 팝업 재생
+          1) data-video="유튜브 또는 비메오 링크" 를 카드(article)에 추가
+          2) href 자체가 youtube.com / youtu.be / vimeo.com 링크인 경우
+        - 지원 형식 : youtube.com/watch?v=, youtu.be/, youtube.com/shorts/, vimeo.com/숫자ID 등
+      -->
+    <article class="sfs-project-card" data-sfs-color="cyan-glass" data-image="./img/ai1.jpg"
+               data-video="https://www.youtube.com/watch?v=9UNtQEk_4FU">
+        <a class="sfs-card-link" href="javascript:void(0)" aria-label="포스코 건설 행사 안내 영상 재생">
+          <div class="sfs-card-image">
+            <img class="sfs-card-photo" alt="포스코 건설 행사 안내 영상 썸네일" loading="lazy">
+            <canvas></canvas>
+            <span class="sfs-play-badge" aria-hidden="true"></span>
+          </div>
+        </a>
+        <div class="sfs-card-label">
+          <div class="sfs-card-label-dot"></div>
+          <span class="sfs-card-label-text">XI 커뮤니티 시설 안내 영상</span>
+        </div>
+      </article>
+
+      <!-- 영상 카드 : data-video 에 유튜브/비메오 링크를 넣으면 클릭 시 팝업 재생 -->
+      <article class="sfs-project-card" data-sfs-color="cyan-glass" data-image="./img/xi.jpg"
+               data-video="https://www.youtube.com/watch?v=NT1OfZLTrI8">
+        <a class="sfs-card-link" href="javascript:void(0)" aria-label="GS 건설 XI 행사 안내 영상 재생">
+          <div class="sfs-card-image">
+            <img class="sfs-card-photo" alt="GS 건설 XI 행사 안내 영상 썸네일" loading="lazy">
+            <canvas></canvas>
+            <span class="sfs-play-badge" aria-hidden="true"></span>
+          </div>
+        </a>
+        <div class="sfs-card-label">
+          <div class="sfs-card-label-dot"></div>
+          <span class="sfs-card-label-text">GS 건설 XI 행사 안내 영상</span>
+        </div>
+      </article>
+
+      <!-- 영상 카드 : data-video 에 유튜브/비메오 링크를 넣으면 클릭 시 팝업 재생 -->
+      <article class="sfs-project-card" data-sfs-color="cyan-glass" data-image="./img/sharp.jpg"
+               data-video="https://www.youtube.com/watch?v=KBfdTUvbnQw">
+        <a class="sfs-card-link" href="javascript:void(0)" aria-label="포스코 건설 행사 안내 영상 재생">
+          <div class="sfs-card-image">
+            <img class="sfs-card-photo" alt="포스코 건설 행사 안내 영상 썸네일" loading="lazy">
+            <canvas></canvas>
+            <span class="sfs-play-badge" aria-hidden="true"></span>
+          </div>
+        </a>
+        <div class="sfs-card-label">
+          <div class="sfs-card-label-dot"></div>
+          <span class="sfs-card-label-text">포스코 건설 행사 안내 영상</span>
+        </div>
+      </article>
+    </div>
+  </div>
+
+  <!-- 영상 팝업 모달 -->
+  <div class="sfs-video-modal" data-sfs-video-modal role="dialog" aria-modal="true" aria-label="영상 재생 팝업" aria-hidden="true">
+    <div class="sfs-video-backdrop" data-sfs-video-backdrop></div>
+    <button class="sfs-video-close" type="button" data-sfs-video-close aria-label="영상 팝업 닫기">
+      <svg viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19"/></svg>
+    </button>
+    <div class="sfs-video-dialog" data-sfs-video-dialog></div>
+  </div>
+
+  <script>
+    (function () {
+      const section = document.getElementById('ProjectSection');
+      if (!section || section.dataset.sfsInitialized === 'true') return;
+      section.dataset.sfsInitialized = 'true';
+
+      const radialWrap = section.querySelector('[data-sfs-radial-lines]');
+      const radialCanvas = section.querySelector('[data-sfs-radial-canvas]');
+      const scrollHint = section.querySelector('[data-sfs-scroll-hint]');
+      const fixedText = section.querySelector('[data-sfs-fixed-text]');
+      const projectCards = Array.from(section.querySelectorAll('.sfs-project-card'));
+
+      const palettes = {
+        'purple-blue': ['#6B3FA0', '#3A1F6F', '#8B5FCF', '#2A1050', '#C4A0FF', '#1A0A3A', '#9070D0', '#4020A0'],
+        'warm-gold': ['#C89030', '#8B6520', '#F0C060', '#5A3A10', '#FFE090', '#3A2505', '#D4A040', '#6B4A15'],
+        'teal-green': ['#1A8060', '#0A5030', '#30C090', '#052A18', '#80FFD0', '#082820', '#20A070', '#0D6040'],
+        'pink-magenta': ['#C03070', '#801040', '#FF60A0', '#500828', '#FFB0D0', '#3A0518', '#D04080', '#901850'],
+        'rgb-led': ['#FF2020', '#20FF20', '#2020FF', '#FFFF00', '#FF00FF', '#00FFFF', '#FF8800', '#8800FF'],
+        'blue-cool': ['#2050A0', '#0A2060', '#4080E0', '#051540', '#80B0FF', '#0A1830', '#3060C0', '#1A3080'],
+        'cyan-glass': ['#20A0B0', '#0A6070', '#40D0E0', '#053040', '#80F0FF', '#082028', '#30B0C0', '#0C7080']
+      };
+
+      function drawRadialLines() {
+        if (!radialCanvas) return;
+        const ctx = radialCanvas.getContext('2d');
+        if (!ctx) return;
+
+        const size = 600;
+        radialCanvas.width = size;
+        radialCanvas.height = size;
+        ctx.clearRect(0, 0, size, size);
+
+        const cx = size / 2;
+        const cy = size / 2;
+        for (let i = 0; i < 72; i += 1) {
+          const angle = (i / 72) * Math.PI * 2 - Math.PI / 2;
+          const r1 = 160;
+          const r2 = 260;
+          ctx.beginPath();
+          ctx.moveTo(cx + Math.cos(angle) * r1, cy + Math.sin(angle) * r1);
+          ctx.lineTo(cx + Math.cos(angle) * r2, cy + Math.sin(angle) * r2);
+          ctx.strokeStyle = 'rgba(180, 30, 30, ' + (0.3 + Math.random() * 0.4).toFixed(3) + ')';
+          ctx.lineWidth = 1.5;
+          ctx.stroke();
+        }
+      }
+
+      function drawCanvas(canvas, colorKey) {
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return;
+
+        const colors = palettes[colorKey] || palettes['purple-blue'];
+        const width = 900;
+        const height = 600;
+        canvas.width = width;
+        canvas.height = height;
+        ctx.clearRect(0, 0, width, height);
+
+        const skyGrad = ctx.createLinearGradient(0, 0, 0, 200);
+        skyGrad.addColorStop(0, '#1A2540');
+        skyGrad.addColorStop(1, '#3060A0');
+        ctx.fillStyle = skyGrad;
+        ctx.fillRect(0, 0, width, 250);
+
+        const buildGrad = ctx.createLinearGradient(0, 150, 0, height);
+        buildGrad.addColorStop(0, colors[0]);
+        buildGrad.addColorStop(0.5, colors[1]);
+        buildGrad.addColorStop(1, colors[3]);
+        ctx.fillStyle = buildGrad;
+        ctx.fillRect(100, 150, 700, 450);
+
+        if (colorKey === 'rgb-led') {
+          for (let y = 160; y < 580; y += 18) {
+            for (let x = 120; x < 780; x += 18) {
+              const color = colors[Math.floor(Math.random() * colors.length)];
+              ctx.fillStyle = color;
+              ctx.globalAlpha = 0.5 + Math.random() * 0.5;
+              ctx.beginPath();
+              ctx.arc(x, y, 5, 0, Math.PI * 2);
+              ctx.fill();
+            }
+          }
+          ctx.globalAlpha = 1;
+        } else {
+          const spacing = 40;
+          ctx.strokeStyle = colors[4] || '#ffffff';
+          ctx.globalAlpha = 0.15;
+          ctx.lineWidth = 1;
+
+          for (let y = 160; y < 600; y += spacing) {
+            for (let x = 100; x < 800; x += spacing) {
+              ctx.beginPath();
+              ctx.moveTo(x, y);
+              ctx.lineTo(x + spacing / 2, y + spacing / 2);
+              ctx.lineTo(x + spacing, y);
+              ctx.stroke();
+
+              ctx.beginPath();
+              ctx.moveTo(x, y);
+              ctx.lineTo(x + spacing / 2, y - spacing / 2);
+              ctx.stroke();
+            }
+          }
+          ctx.globalAlpha = 1;
+
+          const glowGrad = ctx.createRadialGradient(450, 350, 50, 450, 350, 400);
+          glowGrad.addColorStop(0, (colors[4] ? colors[4] : '#ffffff') + '40');
+          glowGrad.addColorStop(1, 'transparent');
+          ctx.fillStyle = glowGrad;
+          ctx.fillRect(100, 150, 700, 450);
+        }
+
+        ctx.fillStyle = '#0A0A0A';
+        ctx.fillRect(0, 520, width, 80);
+
+        for (let i = 0; i < 5; i += 1) {
+          const tx = 150 + i * 150 + (Math.random() - 0.5) * 60;
+          ctx.fillStyle = '#0A1510';
+          ctx.beginPath();
+          ctx.arc(tx, 500, 25 + Math.random() * 15, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.fillRect(tx - 3, 500, 6, 30);
+        }
+
+        const vignette = ctx.createRadialGradient(width / 2, height / 2, 140, width / 2, height / 2, 560);
+        vignette.addColorStop(0, 'rgba(0,0,0,0)');
+        vignette.addColorStop(1, 'rgba(0,0,0,0.28)');
+        ctx.fillStyle = vignette;
+        ctx.fillRect(0, 0, width, height);
+      }
+
+      function applyCardImage(card) {
+        const imageUrl = (card.getAttribute('data-image') || '').trim();
+        const img = card.querySelector('.sfs-card-photo');
+        const canvas = card.querySelector('.sfs-card-image canvas');
+        const colorKey = card.getAttribute('data-sfs-color') || 'purple-blue';
+
+        if (!img || !canvas) return;
+
+        if (imageUrl) {
+          img.onload = function () {
+            img.classList.add('sfs-loaded');
+            canvas.style.display = 'none';
+          };
+
+          img.onerror = function () {
+            img.classList.remove('sfs-loaded');
+            canvas.style.display = 'block';
+            drawCanvas(canvas, colorKey);
+          };
+
+          img.src = imageUrl;
+        } else {
+          img.removeAttribute('src');
+          img.classList.remove('sfs-loaded');
+          canvas.style.display = 'block';
+          drawCanvas(canvas, colorKey);
+        }
+      }
+
+      /* ===== 영상 팝업 ===== */
+
+      const videoModal = section.querySelector('[data-sfs-video-modal]');
+      const videoDialog = section.querySelector('[data-sfs-video-dialog]');
+      const videoBackdrop = section.querySelector('[data-sfs-video-backdrop]');
+      const videoCloseBtn = section.querySelector('[data-sfs-video-close]');
+
+      let modalOpen = false;
+      let lastFocusedEl = null;
+      let bodyOverflowBackup = '';
+
+      // 유튜브 / 비메오 링크를 임베드용 주소로 변환 (아니면 null)
+      function getVideoEmbedUrl(rawUrl) {
+        if (!rawUrl) return null;
+        const url = String(rawUrl).trim();
+        if (!url || url === '#' || url.indexOf('javascript:') === 0) return null;
+
+        // YouTube
+        let m = url.match(/(?:youtube\.com\/(?:watch\?(?:.*&)?v=|shorts\/|embed\/|live\/)|youtu\.be\/)([A-Za-z0-9_-]{6,})/);
+        if (m && m[1]) {
+          return 'https://www.youtube.com/embed/' + m[1]
+            + '?autoplay=1&rel=0&modestbranding=1&playsinline=1';
+        }
+
+        // Vimeo
+        m = url.match(/(?:player\.)?vimeo\.com\/(?:video\/)?(\d{6,})/);
+        if (m && m[1]) {
+          return 'https://player.vimeo.com/video/' + m[1]
+            + '?autoplay=1&title=0&byline=0&portrait=0&dnt=1';
+        }
+
+        return null;
+      }
+
+      // 카드의 영상 링크 결정: data-video 우선, 없으면 href 자동 감지
+      function resolveCardVideo(card, link) {
+        const dataVideo = (card.getAttribute('data-video') || '').trim();
+        if (dataVideo) {
+          return { url: dataVideo, embed: getVideoEmbedUrl(dataVideo), declared: true };
+        }
+        const href = link ? (link.getAttribute('href') || '').trim() : '';
+        const embed = getVideoEmbedUrl(href);
+        if (embed) {
+          return { url: href, embed: embed, declared: true };
+        }
+        return { url: '', embed: null, declared: false };
+      }
+
+      function openVideoModal(embedUrl) {
+        if (!videoModal || !videoDialog || !embedUrl) return;
+
+        const iframe = document.createElement('iframe');
+        iframe.setAttribute('src', embedUrl);
+        iframe.setAttribute('allow', 'autoplay; fullscreen; picture-in-picture; encrypted-media');
+        iframe.setAttribute('allowfullscreen', '');
+        iframe.setAttribute('title', '프로젝트 영상');
+
+        videoDialog.innerHTML = '';
+        videoDialog.appendChild(iframe);
+
+        lastFocusedEl = document.activeElement;
+        bodyOverflowBackup = document.body.style.overflow;
+        document.body.style.overflow = 'hidden';
+
+        videoModal.classList.add('sfs-open');
+        videoModal.setAttribute('aria-hidden', 'false');
+        modalOpen = true;
+
+        if (videoCloseBtn) videoCloseBtn.focus();
+      }
+
+      function closeVideoModal() {
+        if (!videoModal || !modalOpen) return;
+
+        videoModal.classList.remove('sfs-open');
+        videoModal.setAttribute('aria-hidden', 'true');
+        modalOpen = false;
+
+        // iframe 제거로 재생 완전 중지
+        if (videoDialog) videoDialog.innerHTML = '';
+
+        document.body.style.overflow = bodyOverflowBackup;
+
+        if (lastFocusedEl && typeof lastFocusedEl.focus === 'function') {
+          lastFocusedEl.focus();
+        }
+        lastFocusedEl = null;
+      }
+
+      if (videoBackdrop) videoBackdrop.addEventListener('click', closeVideoModal);
+      if (videoCloseBtn) videoCloseBtn.addEventListener('click', closeVideoModal);
+
+      document.addEventListener('keydown', function (e) {
+        if (modalOpen && (e.key === 'Escape' || e.key === 'Esc')) {
+          closeVideoModal();
+        }
+      });
+
+      // 각 카드에 영상 여부 판정 + 클릭 핸들러 연결
+      projectCards.forEach(function (card) {
+        const link = card.querySelector('.sfs-card-link');
+        if (!link) return;
+
+        const video = resolveCardVideo(card, link);
+
+        if (video.declared || card.hasAttribute('data-video')) {
+          card.classList.add('sfs-is-video');
+
+          link.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            // 클릭 시점에 다시 판정 (data-video 를 나중에 바꿔도 반영)
+            const v = resolveCardVideo(card, link);
+            if (v.embed) {
+              openVideoModal(v.embed);
+            }
+            // 링크가 유효한 영상 주소가 아니면 아무 동작 안 함 (일반 이동 방지)
+          });
+        }
+      });
+
+      drawRadialLines();
+      projectCards.forEach(applyCardImage);
+
+      const cardObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('sfs-visible');
+            } else {
+              entry.target.classList.remove('sfs-visible');
+            }
+          });
+        },
+        {
+          threshold: 0.12,
+          rootMargin: '0px 0px -40px 0px'
+        }
+      );
+
+      projectCards.forEach((card) => cardObserver.observe(card));
+
+      let hintHidden = false;
+      let ticking = false;
+
+      function updateOnScroll() {
+        ticking = false;
+        const sy = window.scrollY || window.pageYOffset || 0;
+        const vh = window.innerHeight || 1;
+        const sectionRect = section.getBoundingClientRect();
+        const sectionTop = sy + sectionRect.top;
+        const localY = Math.max(0, sy - sectionTop);
+
+        if (!hintHidden && sy > sectionTop + 80) {
+          scrollHint && scrollHint.classList.add('sfs-hidden');
+          hintHidden = true;
+        } else if (hintHidden && sy <= sectionTop + 80) {
+          scrollHint && scrollHint.classList.remove('sfs-hidden');
+          hintHidden = false;
+        }
+
+        if (radialWrap) {
+          const radialFade = Math.max(0, 1 - localY / (vh * 0.6));
+          radialWrap.style.opacity = String(radialFade * 0.6);
+        }
+
+        if (radialCanvas) {
+          radialCanvas.style.transform = 'rotate(' + (localY * 0.02).toFixed(3) + 'deg)';
+        }
+
+        if (fixedText) {
+          fixedText.style.opacity = '1';
+          fixedText.style.transform = 'translate3d(0,0,0)';
+        }
+      }
+
+      function requestTick() {
+        if (!ticking) {
+          ticking = true;
+          window.requestAnimationFrame(updateOnScroll);
+        }
+      }
+
+      window.addEventListener('scroll', requestTick, { passive: true });
+      window.addEventListener('resize', function () {
+        drawRadialLines();
+        requestTick();
+      });
+
+      updateOnScroll();
+    })();
+  </script>
+</section>
+
+
 
 <section id="flosValueStructure">
   <style>
@@ -4322,12 +5773,12 @@
 <div class="jp-intro">
   <div class="jp-intro-inner">
        <div class="jp-intro-eyebrow">
-      <span>Brand AI Video Process</span>
+      <span>AI Video Process</span>
     </div>
 
     <h2 class="jp-intro-title">
-      고객의 첫인상에<br>신뢰를 주기 위한<br>
-      제작 프로세스
+      FLOS만의 특별한<br>
+      AI영상 제작 프로세스
     </h2>
 
     <!-- <p class="jp-intro-desc">
@@ -4337,8 +5788,8 @@
     </p> -->
 
     <p class="jp-intro-quote">
-      발표와 설명만으로는 전달하지 못하는<br>
-      품격과 신뢰를 영상을 통해<br>
+      말과 글만으로는 전달하기 힘든<br>
+      품격과 정보를 영상을 통해<br>
       직관적으로 전달할 수 있도록 제작합니다.
     </p>
   </div>
