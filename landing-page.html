@@ -356,7 +356,7 @@
     <div class="iaan-content-layer iaan-p1-content" data-panel="1">
       <div class="iaan-p1-inner">
         <h2 class="iaan-p1-title">
-          고객에게 구매를<br>유도하고 싶은데<br><br>도무지 매출이<br>발생하지 않는다면?
+          온라인 고객 확보<br>기반을 갖추고 싶거나<br><br>아무리 작업해도<br>고객 확보가 되지 않는다면?
         </h2>
       </div>
     </div>
@@ -3251,1094 +3251,7 @@
   </script>
 </section>
 
-<section id="process1" aria-label="랜딩페이지 제작 프로세스">
-<style>
-#process1 {
-  --jp-bg: #000000;
-  --jp-bg-dark: #000000;
-  --jp-white: #ffffff;
-  --jp-gray-light: rgba(255,255,255,0.58);
-  --jp-gray-dim: rgba(255,255,255,0.3);
-  --jp-gray-faint: rgba(255,255,255,0.12);
-  --jp-transition: 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
 
-  font-family: 'Noto Sans KR', 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  background-color: var(--jp-bg);
-  color: var(--jp-white);
-  position: relative;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-#process1 *,
-#process1 *::before,
-#process1 *::after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-/* ===== INTRO ===== */
-#process1 .jp-intro {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  padding: 120px 8% 120px;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
-}
-
-#process1 .jp-intro-inner {
-  max-width: 760px;
-}
-
-#process1 .jp-intro-eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 26px;
-}
-
-#process1 .jp-intro-eyebrow::before {
-  content: "";
-  width: 52px;
-  height: 1px;
-  background: rgba(255,255,255,0.32);
-  display: block;
-}
-
-#process1 .jp-intro-eyebrow span {
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.62);
-}
-
-#process1 .jp-intro-title {
-  font-size: clamp(34px, 5.5vw, 78px);
-  font-weight: 900;
-  line-height: 1.1;
-  letter-spacing: -0.055em;
-  margin-bottom: 30px;
-}
-
-#process1 .jp-intro-title .light {
-  display: block;
-  color: rgba(255,255,255,0.82);
-  font-weight: 700;
-}
-
-#process1 .jp-intro-desc {
-  font-size: clamp(15px, 1.12vw, 18px);
-  font-weight: 400;
-  line-height: 1.95;
-  color: var(--jp-gray-light);
-  max-width: 680px;
-  word-break: keep-all;
-}
-
-#process1 .jp-intro-quote {
-  margin-top: 28px;
-  padding-top: 24px;
-  border-top: 1px solid rgba(255,255,255,0.08);
-  font-size: clamp(17px, 1.2vw, 20px);
-  line-height: 1.8;
-  font-weight: 700;
-  color: rgba(255,255,255,0.88);
-  word-break: keep-all;
-}
-
-/* ===== MAIN ===== */
-#process1 .jp-main {
-  position: relative;
-}
-
-/* ===== DESKTOP NAV ===== */
-#process1 .jp-nav {
-  position: fixed;
-  top: 50%;
-  left: 8%;
-  transform: translateY(-50%);
-  width: 290px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  z-index: 100;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.35s ease, visibility 0.35s ease;
-  pointer-events: none;
-}
-
-#process1 .jp-nav[data-floating="true"] {
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
-}
-
-#process1 .jp-nav[data-stopped="true"] {
-  position: absolute;
-  left: 8%;
-  transform: none;
-  top: auto;
-  bottom: 0;
-}
-
-#process1 .jp-nav-track {
-  display: contents;
-}
-
-#process1 .jp-nav-item {
-  padding: 14px 0;
-  border-bottom: 1px solid var(--jp-gray-faint);
-  cursor: pointer;
-  transition: all var(--jp-transition);
-  position: relative;
-}
-
-#process1 .jp-nav-item::after {
-  content: '';
-  position: absolute;
-  bottom: -1px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: var(--jp-white);
-  transition: width var(--jp-transition);
-}
-
-#process1 .jp-nav-item[data-active="true"]::after {
-  width: 100%;
-}
-
-#process1 .jp-nav-num {
-  font-size: 13px;
-  font-weight: 500;
-  margin-bottom: 4px;
-  display: block;
-  transition: color var(--jp-transition);
-  color: var(--jp-gray-dim);
-}
-
-#process1 .jp-nav-label {
-  font-size: 16px;
-  font-weight: 500;
-  display: block;
-  transition: color var(--jp-transition), font-weight var(--jp-transition);
-  color: var(--jp-gray-dim);
-  word-break: keep-all;
-}
-
-#process1 .jp-nav-item[data-active="true"] .jp-nav-num,
-#process1 .jp-nav-item[data-active="true"] .jp-nav-label {
-  color: var(--jp-white);
-  font-weight: 700;
-}
-
-/* ===== CONTENT ===== */
-#process1 .jp-content {
-  margin-left: calc(8% + 340px);
-  padding-right: 8%;
-  min-width: 0;
-}
-
-#process1 .jp-content-item {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 100px 0;
-  position: relative;
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-}
-
-#process1 .jp-step-num {
-  display: inline-block;
-  margin-bottom: 18px;
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  color: rgba(255,255,255,0.36);
-}
-
-#process1 .jp-content-title {
-  font-size: clamp(30px, 3.4vw, 48px);
-  font-weight: 900;
-  line-height: 1.22;
-  letter-spacing: -0.035em;
-  margin-bottom: 22px;
-  opacity: 0;
-  transform: translateY(30px);
-  filter: blur(2px);
-  transition: opacity 0.7s ease, transform 0.7s ease, filter 0.7s ease;
-  word-break: keep-all;
-}
-
-#process1 .jp-content-lead {
-  font-size: clamp(19px, 1.15vw, 22px);
-  font-weight: 800;
-  line-height: 1.7;
-  color: rgba(255,255,255,0.78);
-  margin-bottom: 18px;
-  opacity: 0;
-  transform: translateY(25px);
-  filter: blur(2px);
-  transition: opacity 0.7s ease 0.08s, transform 0.7s ease 0.08s, filter 0.7s ease 0.08s;
-  word-break: keep-all;
-}
-
-#process1 .jp-content-desc {
-  font-size: clamp(16px, 1vw, 18px);
-  font-weight: 500;
-  line-height: 1.95;
-  color: var(--jp-gray-light);
-  max-width: 720px;
-  margin-bottom: 34px;
-  opacity: 0;
-  transform: translateY(20px);
-  filter: blur(2px);
-  transition: opacity 0.7s ease 0.15s, transform 0.7s ease 0.15s, filter 0.7s ease 0.15s;
-  word-break: keep-all;
-}
-
-#process1 .jp-bullets {
-  list-style: none;
-  display: grid;
-  gap: 12px;
-  max-width: 760px;
-  margin-bottom: 34px;
-  opacity: 0;
-  transform: translateY(18px);
-  filter: blur(2px);
-  transition: opacity 0.7s ease 0.18s, transform 0.7s ease 0.18s, filter 0.7s ease 0.18s;
-}
-
-#process1 .jp-bullets li {
-  position: relative;
-  padding-left: 18px;
-  font-size: clamp(15px, 1vw, 17px);
-  line-height: 1.9;
-  color: rgba(255,255,255,0.76);
-}
-
-#process1 .jp-bullets li::before {
-  content: "";
-  position: absolute;
-  top: 12px;
-  left: 0;
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.82);
-}
-
-#process1 .jp-content-visual {
-  width: 100%;
-  max-width: 920px;
-  margin-bottom: 28px;
-  opacity: 0;
-  transform: translateY(20px);
-  filter: blur(2px);
-  transition: opacity 0.8s ease 0.22s, transform 0.8s ease 0.22s, filter 0.8s ease 0.22s;
-}
-
-#process1 .jp-content-visual.is-empty {
-  display: none;
-}
-
-#process1 .jp-visual-frame {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  overflow: hidden;
-  border: 1px solid rgba(255,255,255,0.08);
-  background:
-    linear-gradient(180deg, rgba(255,255,255,0.035) 0%, rgba(255,255,255,0.015) 100%);
-}
-
-#process1 .jp-visual-frame::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(180deg, rgba(0,0,0,0.02) 0%, rgba(0,0,0,0.24) 100%);
-  pointer-events: none;
-}
-
-#process1 .jp-visual-frame img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  transform: scale(1.01);
-}
-
-#process1 .jp-point {
-  display: inline-flex;
-  align-items: center;
-  min-height: 52px;
-  padding: 16px 22px;
-  border: 1px solid rgba(255,255,255,0.1);
-  background: linear-gradient(180deg, rgba(255,255,255,0.045) 0%, rgba(255,255,255,0.02) 100%);
-  font-size: clamp(15px, 1vw, 17px);
-  font-weight: 700;
-  line-height: 1.8;
-  color: #ffffff;
-  opacity: 0;
-  transform: translateY(20px);
-  filter: blur(2px);
-  transition: opacity 0.8s ease 0.26s, transform 0.8s ease 0.26s, filter 0.8s ease 0.26s;
-  word-break: keep-all;
-}
-
-#process1 .jp-content-item[data-visible="true"] .jp-content-title,
-#process1 .jp-content-item[data-visible="true"] .jp-content-lead,
-#process1 .jp-content-item[data-visible="true"] .jp-content-desc,
-#process1 .jp-content-item[data-visible="true"] .jp-bullets,
-#process1 .jp-content-item[data-visible="true"] .jp-content-visual,
-#process1 .jp-content-item[data-visible="true"] .jp-point {
-  opacity: 1;
-  transform: translateY(0);
-  filter: blur(0);
-}
-
-@media (max-width: 1100px) {
-  #process1 .jp-nav {
-    width: 230px;
-    left: 5%;
-  }
-
-  #process1 .jp-nav[data-stopped="true"] {
-    left: 5%;
-  }
-
-  #process1 .jp-nav-label {
-    font-size: 14px;
-  }
-
-  #process1 .jp-content {
-    margin-left: calc(5% + 265px);
-    padding-right: 5%;
-  }
-
-  #process1 .jp-intro {
-    padding-left: 5%;
-    padding-right: 5%;
-  }
-}
-
-@media (max-width: 768px) {
-  #process1 {
-    padding-bottom: 92px;
-  }
-
-  #process1 .jp-intro {
-    min-height: auto;
-    padding: 84px 6% 64px;
-  }
-
-  #process1 .jp-intro-title {
-    margin-bottom: 22px;
-  }
-
-  #process1 .jp-intro-quote {
-    font-size: 16px;
-    line-height: 1.75;
-  }
-
-  #process1 .jp-nav {
-    position: fixed !important;
-    top: auto !important;
-    bottom: 0 !important;
-    left: 0 !important;
-    transform: none !important;
-    width: 100%;
-    height: 72px;
-    padding: 0;
-    display: block;
-    background: rgba(8,8,8,0.92);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border-top: 1px solid rgba(255,255,255,0.08);
-    border-bottom: none;
-    z-index: 300;
-    transition: opacity 0.35s ease, visibility 0.35s ease;
-    overflow: hidden;
-    touch-action: pan-y;
-  }
-
-  #process1 .jp-nav[data-stopped="true"] {
-    position: fixed !important;
-    top: auto !important;
-    bottom: 0 !important;
-    left: 0 !important;
-  }
-
-  #process1 .jp-nav::before,
-  #process1 .jp-nav::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    width: 40px;
-    height: 100%;
-    z-index: 2;
-    pointer-events: none;
-  }
-
-  #process1 .jp-nav::before {
-    left: 0;
-    background: linear-gradient(to right, rgba(8,8,8,0.96), rgba(8,8,8,0));
-  }
-
-  #process1 .jp-nav::after {
-    right: 0;
-    background: linear-gradient(to left, rgba(8,8,8,0.96), rgba(8,8,8,0));
-  }
-
-  #process1 .jp-nav-track {
-    position: absolute;
-    left: 0;
-    top: 50%;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    width: max-content;
-    min-width: max-content;
-    padding: 0 18px;
-    transform: translate3d(0, -50%, 0);
-    will-change: transform;
-    transition: transform 0.42s cubic-bezier(0.22, 1, 0.36, 1);
-    cursor: grab;
-  }
-
-  #process1 .jp-nav-track.jp-dragging {
-    cursor: grabbing;
-    transition: none !important;
-  }
-
-  #process1 .jp-nav-item {
-    flex: 0 0 auto;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    min-height: 40px;
-    padding: 10px 14px;
-    border: none;
-    border-radius: 999px;
-    background: rgba(255,255,255,0.04);
-    text-align: left;
-    white-space: nowrap;
-    user-select: none;
-    -webkit-user-select: none;
-  }
-
-  #process1 .jp-nav-item::after {
-    display: none;
-  }
-
-  #process1 .jp-nav-item[data-active="true"] {
-    background: rgba(255,255,255,0.14);
-    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08);
-  }
-
-  #process1 .jp-nav-num {
-    font-size: 11px;
-    margin-bottom: 0;
-    line-height: 1;
-  }
-
-  #process1 .jp-nav-label {
-    font-size: 13px;
-    line-height: 1;
-    white-space: nowrap;
-    overflow: visible;
-    text-overflow: clip;
-  }
-
-  #process1 .jp-content {
-    margin-left: 0;
-    padding: 0 6%;
-  }
-
-  #process1 .jp-content-item {
-    min-height: auto;
-    padding: 72px 0;
-  }
-
-  #process1 .jp-content-title {
-    font-size: clamp(28px, 8vw, 38px);
-    margin-bottom: 18px;
-  }
-
-  #process1 .jp-content-lead {
-    font-size: 18px;
-    margin-bottom: 14px;
-  }
-
-  #process1 .jp-content-desc {
-    font-size: 15px;
-    line-height: 1.9;
-    margin-bottom: 26px;
-  }
-
-  #process1 .jp-bullets {
-    gap: 10px;
-    margin-bottom: 26px;
-  }
-
-  #process1 .jp-bullets li {
-    font-size: 15px;
-    line-height: 1.8;
-  }
-
-  #process1 .jp-content-visual {
-    margin-bottom: 22px;
-  }
-
-  #process1 .jp-visual-frame {
-    aspect-ratio: 4 / 3;
-  }
-
-  #process1 .jp-point {
-    display: flex;
-    width: 100%;
-    padding: 15px 16px;
-    font-size: 15px;
-    line-height: 1.75;
-  }
-}
-
-@media (max-width: 480px) {
-  #process1 {
-    padding-bottom: 88px;
-  }
-
-  #process1 .jp-nav {
-    height: 68px;
-  }
-
-  #process1 .jp-nav-track {
-    gap: 10px;
-    padding: 0 14px;
-  }
-
-  #process1 .jp-nav-item {
-    padding: 9px 12px;
-  }
-
-  #process1 .jp-nav-label {
-    font-size: 12px;
-  }
-}
-</style>
-
-<div class="jp-intro">
-  <div class="jp-intro-inner">
-    <div class="jp-intro-eyebrow">
-      <span>Landing Page Process</span>
-    </div>
-
-    <h2 class="jp-intro-title">
-    유의미한 고객을<br>자동 확보하기 위한<br>FLOS만의 프로세스<br><br>
-  
-    </h2>
-
-    <p class="jp-intro-desc">
-      <b>깊은 비즈니스의 이해를 기반으로<br>
-      기획, 마케팅, 세일즈, 디자인, 개발, 카피라이팅이<br>
-      전부 다 맞아야 만들어지는 작품입니다.<br><br></b>
-
-    </p>
-
-    <p class="jp-intro-quote">
-      그렇기 때문에<br>눈에 보이지 않는 기획부터<br>철저하게 만들어갑니다.<br> 
-    </p>
-  </div>
-</div>
-
-<div class="jp-main">
-  <nav class="jp-nav" data-floating="false" data-stopped="false" aria-label="랜딩페이지 제작 프로세스 목록">
-    <div class="jp-nav-track"></div>
-  </nav>
-  <div class="jp-content" role="region" aria-label="랜딩페이지 제작 프로세스 상세 내용"></div>
-</div>
-
-<script>
-(function() {
-  'use strict';
-
-  var process1Data = [
-    {
-      num: '01',
-      nav: '비즈니스 이해 및 상품 기획',
-      title: '해당 비즈니스의 이해 및 상품 기획',
-      lead: '온라인 마케팅이 가능한 상품인지 파악하고, 비즈니스의 흐름을 이해합니다.',
-      desc: '랜딩의 성공여부를 판단짓는 가장 결정적인 흐름으로, 상품이 해결하는 문제의 깊이, 시장 규모, 구매 빈도 등을 판단하여 상품이 온라인에서 지속적으로 팔릴 수 있는 구조인지 판단하고 설계합니다.',
-      bullets: [
-        '온라인 비즈니스가 가능한 상품설계',
-        '해당 비즈니스의 흐름을 기반으로 한 자동화 영역 설정',
-        '고객이 느끼는 문제 해결 포인트 명확화'
-      ],
-      image: './img/analytics.jpg',
-      point: '랜딩페이지의 시작은 디자인이 아니라 상품 설계입니다.'
-    },
-    {
-      num: '02',
-      nav: '타겟 설정',
-      title: '누구를 위한 페이지인지 타겟을 구체적으로 설정합니다.',
-      lead: '타겟이 선명해야 메시지도 선명해집니다.',
-      desc: '모든 사람에게 말하는 랜딩페이지는 결국 아무에게도 강하게 닿지 못합니다. 어떤 고객을 데려올 것인지, 그 고객이 어떤 문제와 욕망을 가지고 있는지, 지금 어떤 심리 상태에 있는지를 구체적으로 정리해야 이후의 설득 구조가 정교해집니다.',
-      bullets: [
-        '핵심 타겟층 세분화',
-        '고객의 고민 / 욕망 / 망설임 분석',
-        '전환 가능성이 높은 고객층 우선 설정'
-      ],
-      image: './img/adventage2.jpg',
-      point: '타겟 설정이 정확해야 랜딩페이지의 반응도 달라집니다.'
-    },
-    {
-      num: '03',
-      nav: '컨셉 및 디자인',
-      title: '브랜드에 맞는 컨셉과 디자인 방향을 설정합니다.',
-      lead: '첫인상은 클릭 이후의 신뢰를 결정합니다.',
-      desc: '랜딩페이지는 정보를 담는 화면이기도 하지만, 동시에 브랜드의 분위기와 신뢰를 전달하는 첫 접점이기도 합니다. 업종과 상품 특성에 맞는 컨셉, 톤앤매너, 시각적 무드, 레이아웃 방향을 먼저 정리해야 고객이 보는 순간 이질감 없이 몰입할 수 있습니다.',
-      bullets: [
-        '브랜드 무드와 시각적 컨셉 설계',
-        '레이아웃 / 타이포 / 컬러 방향 설정',
-        '업종과 상품에 맞는 디자인 톤 정리'
-      ],
-      image: './img/l-6.jpg',
-      point: '좋은 디자인은 예쁨보다 신뢰와 몰입을 먼저 만듭니다.'
-    },
-    {
-      num: '04',
-      nav: '카피라이팅',
-      title: '고객이 행동하게 만드는 카피라이팅을 구성합니다.',
-      lead: '문장은 설명이 아니라 전환을 만드는 흐름이어야 합니다.',
-      desc: '헤드카피, 서브카피, 문제 제기, 해결 제안, 신뢰 근거, CTA 문구까지 모두 고객의 시선에서 다시 설계합니다. 고객이 읽는 순서에 맞춰 공감하고 이해하고 확신하도록 문장을 배열해야 랜딩페이지 전체가 하나의 설득 구조로 작동하게 됩니다.',
-      bullets: [
-        '헤드카피 / 서브카피 / CTA 설계',
-        '문제 공감 → 해결 제안 흐름 구성',
-        '고객의 행동을 유도하는 문장 정리'
-      ],
-      image: './img/adventage3.jpg',
-      point: '카피가 정리되어야 랜딩페이지가 비로소 살아납니다.'
-    },
-    {
-      num: '05',
-      nav: '개발',
-      title: '설계된 랜딩페이지를 실제 반응형 페이지로 개발합니다.',
-      lead: '좋은 기획과 디자인도 구현이 흔들리면 전환이 떨어집니다.',
-      desc: 'PC와 모바일 환경에서 모두 자연스럽게 보이도록 반응형으로 개발하고, 버튼, 섹션, 신청 폼, 애니메이션 등 주요 요소가 실제 운영 환경에서도 안정적으로 작동하도록 세부 구현을 진행합니다. 보여주기용 시안이 아니라 운영 가능한 결과물로 완성하는 단계입니다.',
-      bullets: [
-        '반응형 퍼블리싱',
-        '실제 운영 기준의 구조 구현',
-        '버튼 / 폼 / UI 요소 안정화'
-      ],
-      image: './img/adventage6.jpg',
-      point: '랜딩페이지는 화면이 아니라 실제 동작하는 자산이어야 합니다.'
-    },
-    {
-      num: '06',
-      nav: '추적 설정',
-      title: '전환을 측정할 수 있도록 추적 설정을 진행합니다.',
-      lead: '측정되지 않는 광고는 결국 감으로 운영될 수밖에 없습니다.',
-      desc: '랜딩페이지를 만든 뒤에는 단순 노출이 아니라 실제 신청, 문의, 클릭, 전환이 어떻게 일어나는지 확인할 수 있어야 합니다. 픽셀, 이벤트, 전환 추적 구조를 정리해야 어떤 광고가 효율적인지, 어떤 부분을 개선해야 하는지 데이터로 판단할 수 있습니다.',
-      bullets: [
-        '픽셀 및 전환 추적 구조 설정',
-        '버튼 클릭 / 신청 완료 이벤트 정리',
-        '광고 성과를 볼 수 있는 측정 기반 마련'
-      ],
-      image: './img/l-2.jpg',
-      point: '추적 설정은 광고비를 덜 낭비하게 만드는 핵심 장치입니다.'
-    },
-    {
-      num: '07',
-      nav: '배너 제작',
-      title: '광고 유입을 위한 배너와 소재를 제작합니다.',
-      lead: '광고 클릭은 랜딩페이지 이전에 이미 시작됩니다.',
-      desc: '좋은 랜딩페이지도 광고 소재가 약하면 유입 자체가 일어나지 않습니다. 타겟이 반응할 수 있는 핵심 문구와 비주얼을 반영해 배너를 제작하고, 랜딩페이지의 메시지와 끊기지 않도록 광고와 페이지 사이의 연결감을 맞춰줍니다.',
-      bullets: [
-        '광고용 배너 문구 및 비주얼 제작',
-        '타겟별 반응 포인트 반영',
-        '랜딩페이지와 이어지는 메시지 연결'
-      ],
-      image: './img/adventage5.jpg',
-      point: '배너는 클릭을 만들고, 랜딩페이지는 전환을 만듭니다.'
-    },
-    {
-      num: '08',
-      nav: '광고 세팅',
-      title: '실제 유입과 전환을 위한 광고 세팅을 진행합니다.',
-      lead: '랜딩페이지는 광고와 연결될 때 비로소 성과 구조가 완성됩니다.',
-      desc: '타겟, 예산, 소재, 캠페인 구조를 실제 운영 기준에 맞게 정리하여 광고 세팅을 진행합니다. 어떤 타겟에게 어떤 메시지와 배너를 보여줄지, 랜딩페이지와 어떻게 연결할지까지 포함해서 전체 퍼널이 하나의 구조로 작동하도록 설계합니다.',
-      bullets: [
-        '광고 캠페인 구조 설정',
-        '타겟 / 예산 / 소재 연결 세팅',
-        '랜딩페이지와 광고 퍼널 최종 연결'
-      ],
-      image: './img/l-11.jpg',
-      point: '광고 세팅까지 연결되어야 랜딩페이지가 실제 매출 구조가 됩니다.'
-    }
-  ];
-
-  var root = document.getElementById('process1');
-  if (!root) return;
-
-  var nav = root.querySelector('.jp-nav');
-  var navTrack = root.querySelector('.jp-nav-track');
-  var content = root.querySelector('.jp-content');
-  var jpMain = root.querySelector('.jp-main');
-
-  process1Data.forEach(function(item, i) {
-    var navEl = document.createElement('div');
-    navEl.className = 'jp-nav-item';
-    navEl.setAttribute('data-index', i);
-    navEl.setAttribute('data-active', i === 0 ? 'true' : 'false');
-    navEl.setAttribute('role', 'button');
-    navEl.setAttribute('aria-label', item.num + ' ' + item.nav);
-    navEl.setAttribute('tabindex', '0');
-    navEl.innerHTML =
-      '<span class="jp-nav-num">' + item.num + '.</span>' +
-      '<span class="jp-nav-label">' + item.nav + '</span>';
-    navTrack.appendChild(navEl);
-
-    var bulletsHtml = '';
-    if (item.bullets && item.bullets.length) {
-      bulletsHtml = '<ul class="jp-bullets">';
-      item.bullets.forEach(function(bullet) {
-        bulletsHtml += '<li>' + bullet + '</li>';
-      });
-      bulletsHtml += '</ul>';
-    }
-
-    var imageHtml = '';
-    if (item.image) {
-      imageHtml =
-        '<div class="jp-content-visual">' +
-          '<div class="jp-visual-frame">' +
-            '<img src="' + item.image + '" alt="' + item.title + ' 이미지" loading="lazy">' +
-          '</div>' +
-        '</div>';
-    } else {
-      imageHtml = '<div class="jp-content-visual is-empty"></div>';
-    }
-
-    var contentEl = document.createElement('article');
-    contentEl.className = 'jp-content-item';
-    contentEl.setAttribute('data-index', i);
-    contentEl.setAttribute('data-visible', 'false');
-    contentEl.setAttribute('aria-label', item.title);
-    contentEl.innerHTML =
-      '<span class="jp-step-num">STEP ' + item.num + '</span>' +
-      '<h3 class="jp-content-title">' + item.title + '</h3>' +
-      '<p class="jp-content-lead">' + item.lead + '</p>' +
-      '<p class="jp-content-desc">' + item.desc + '</p>' +
-      bulletsHtml +
-      imageHtml +
-      '<div class="jp-point">' + item.point + '</div>';
-    content.appendChild(contentEl);
-  });
-
-  var navItems = nav.querySelectorAll('.jp-nav-item');
-  var contentItems = content.querySelectorAll('.jp-content-item');
-
-  var ticking = false;
-  var currentActive = -1;
-  var isMobile = false;
-  var blockSyntheticClickOnce = false;
-
-  var dragState = {
-    isDown: false,
-    startX: 0,
-    startY: 0,
-    startShift: 0,
-    currentShift: 0,
-    movedEnough: false,
-    pointerId: null
-  };
-
-  function checkMobile() {
-    isMobile = window.innerWidth <= 768;
-  }
-
-  function getOffsetTopWithin(ancestor, el) {
-    var top = 0;
-    var node = el;
-    while (node && node !== ancestor) {
-      top += node.offsetTop;
-      node = node.offsetParent;
-    }
-    return top;
-  }
-
-  function getStopNavTopInMain() {
-    var lastItem = contentItems[contentItems.length - 1];
-    if (!lastItem) return 0;
-
-    var lastItemBottom = getOffsetTopWithin(jpMain, lastItem) + lastItem.offsetHeight;
-    var navHeight = nav.offsetHeight || 0;
-    return Math.max(0, lastItemBottom - navHeight);
-  }
-
-  function updateFloatingNavState() {
-    var viewportH = window.innerHeight;
-    var mainRect = jpMain.getBoundingClientRect();
-
-    if (isMobile) {
-      var mainInView = mainRect.top < viewportH && mainRect.bottom > 0;
-      nav.setAttribute('data-floating', mainInView ? 'true' : 'false');
-      nav.setAttribute('data-stopped', 'false');
-      nav.style.top = '';
-      nav.style.bottom = '0';
-      return;
-    }
-
-    var navHeight = nav.offsetHeight;
-    var fixedNavTopInViewport = (viewportH - navHeight) / 2;
-    var currentFixedTopInMain = fixedNavTopInViewport - mainRect.top;
-    var stopNavTopInMain = getStopNavTopInMain();
-
-    var isBeforeMain = mainRect.top >= viewportH * 0.3;
-
-    if (isBeforeMain) {
-      nav.setAttribute('data-floating', 'false');
-      nav.setAttribute('data-stopped', 'false');
-      nav.style.top = '';
-      return;
-    }
-
-    if (currentFixedTopInMain >= stopNavTopInMain) {
-      nav.setAttribute('data-floating', 'true');
-      nav.setAttribute('data-stopped', 'true');
-      nav.style.top = '';
-      return;
-    }
-
-    nav.setAttribute('data-floating', 'true');
-    nav.setAttribute('data-stopped', 'false');
-    nav.style.top = '';
-  }
-
-  function getMaxShift() {
-    var navWidth = nav.clientWidth || window.innerWidth;
-    var trackWidth = navTrack.scrollWidth || 0;
-    return Math.max(0, trackWidth - navWidth + 36);
-  }
-
-  function clampShift(value) {
-    var maxShift = getMaxShift();
-    if (value < 0) return 0;
-    if (value > maxShift) return maxShift;
-    return value;
-  }
-
-  function applyTrackShift(shift, withTransition) {
-    dragState.currentShift = clampShift(shift);
-
-    if (withTransition) {
-      navTrack.style.transition = 'transform 0.42s cubic-bezier(0.22, 1, 0.36, 1)';
-    } else {
-      navTrack.style.transition = 'none';
-    }
-
-    navTrack.style.transform = 'translate3d(' + (-dragState.currentShift) + 'px, -50%, 0)';
-  }
-
-  function moveActiveItemIntoView(activeIndex, withTransition) {
-    if (!isMobile) return;
-
-    var activeItem = navItems[activeIndex];
-    if (!activeItem) return;
-
-    var navWidth = nav.clientWidth;
-    var itemLeft = activeItem.offsetLeft;
-    var itemWidth = activeItem.offsetWidth;
-
-    var target = itemLeft - ((navWidth - itemWidth) / 2);
-    target = clampShift(target);
-
-    applyTrackShift(target, withTransition !== false);
-  }
-
-  function goToSection(idx) {
-    contentItems[idx].scrollIntoView({ behavior: 'smooth', block: 'center' });
-
-    if (isMobile) {
-      moveActiveItemIntoView(idx, true);
-    }
-  }
-
-  function getItemFromPoint(clientX, clientY) {
-    var el = document.elementFromPoint(clientX, clientY);
-    if (!el) return null;
-    return el.closest ? el.closest('#process1 .jp-nav-item') : null;
-  }
-
-  function beginDrag(e) {
-    dragState.isDown = true;
-    dragState.pointerId = e.pointerId || null;
-    dragState.startX = e.clientX;
-    dragState.startY = e.clientY;
-    dragState.startShift = dragState.currentShift;
-    dragState.movedEnough = false;
-    navTrack.classList.add('jp-dragging');
-
-    try {
-      if (dragState.pointerId != null && navTrack.setPointerCapture) {
-        navTrack.setPointerCapture(dragState.pointerId);
-      }
-    } catch (err) {}
-  }
-
-  function moveDrag(e) {
-    if (!dragState.isDown) return;
-
-    var deltaX = e.clientX - dragState.startX;
-    var deltaY = e.clientY - dragState.startY;
-
-    if (Math.abs(deltaX) > 8 && Math.abs(deltaX) > Math.abs(deltaY)) {
-      dragState.movedEnough = true;
-    }
-
-    if (dragState.movedEnough) {
-      var nextShift = dragState.startShift - deltaX;
-      applyTrackShift(nextShift, false);
-    }
-  }
-
-  function endDrag(e) {
-    if (!dragState.isDown) return;
-
-    var upTargetItem = getItemFromPoint(e.clientX, e.clientY);
-
-    navTrack.classList.remove('jp-dragging');
-    dragState.isDown = false;
-
-    if (dragState.movedEnough) {
-      blockSyntheticClickOnce = true;
-      return;
-    }
-
-    if (upTargetItem) {
-      var idx = parseInt(upTargetItem.getAttribute('data-index'), 10);
-      if (!isNaN(idx)) {
-        goToSection(idx);
-      }
-    }
-  }
-
-  function updateActiveState() {
-    var viewportH = window.innerHeight;
-    var triggerPoint = viewportH * 0.4;
-    var newActive = 0;
-
-    updateFloatingNavState();
-
-    for (var i = 0; i < contentItems.length; i++) {
-      var rect = contentItems[i].getBoundingClientRect();
-      if (rect.top <= triggerPoint) {
-        newActive = i;
-      }
-    }
-
-    if (newActive !== currentActive) {
-      currentActive = newActive;
-
-      for (var j = 0; j < navItems.length; j++) {
-        navItems[j].setAttribute('data-active', j === currentActive ? 'true' : 'false');
-      }
-
-      if (isMobile && !dragState.isDown) {
-        moveActiveItemIntoView(currentActive, true);
-      }
-    }
-
-    for (var k = 0; k < contentItems.length; k++) {
-      var r = contentItems[k].getBoundingClientRect();
-      var isVisible = r.top < viewportH * 0.75 && r.bottom > viewportH * 0.15;
-      contentItems[k].setAttribute('data-visible', isVisible ? 'true' : 'false');
-    }
-
-    ticking = false;
-  }
-
-  function onScroll() {
-    if (!ticking) {
-      requestAnimationFrame(updateActiveState);
-      ticking = true;
-    }
-  }
-
-  function fullRefresh() {
-    checkMobile();
-    nav.setAttribute('data-stopped', 'false');
-    nav.setAttribute('data-floating', 'false');
-    nav.style.top = '';
-
-    if (!isMobile) {
-      navTrack.style.transition = '';
-      navTrack.style.transform = '';
-    } else {
-      moveActiveItemIntoView(currentActive >= 0 ? currentActive : 0, false);
-    }
-
-    requestAnimationFrame(updateActiveState);
-  }
-
-  window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', fullRefresh, { passive: true });
-  window.addEventListener('load', fullRefresh);
-
-  navTrack.addEventListener('pointerdown', function(e) {
-    if (e.pointerType === 'mouse' && e.button !== 0) return;
-    beginDrag(e);
-  });
-
-  navTrack.addEventListener('pointermove', function(e) {
-    moveDrag(e);
-  });
-
-  navTrack.addEventListener('pointerup', function(e) {
-    endDrag(e);
-  });
-
-  navTrack.addEventListener('pointercancel', function() {
-    if (!dragState.isDown) return;
-    navTrack.classList.remove('jp-dragging');
-    dragState.isDown = false;
-  });
-
-  navTrack.addEventListener('lostpointercapture', function() {
-    if (dragState.isDown) {
-      navTrack.classList.remove('jp-dragging');
-      dragState.isDown = false;
-    }
-  });
-
-  navItems.forEach(function(navItem, idx) {
-    navItem.addEventListener('click', function(e) {
-      if (blockSyntheticClickOnce) {
-        e.preventDefault();
-        e.stopPropagation();
-        blockSyntheticClickOnce = false;
-        return;
-      }
-      goToSection(idx);
-    });
-
-    navItem.addEventListener('keydown', function(e) {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        goToSection(idx);
-      }
-    });
-  });
-
-  requestAnimationFrame(fullRefresh);
-})();
-</script>
-</section>
 
 
 <section id="ProjectSection" aria-label="Project Scroll Section">
@@ -5269,10 +4182,212 @@
       width:100%;
       height:auto;
       object-fit:cover;
+      cursor:zoom-in;
     }
 
     #chanelReviewSection .review-photo.is-empty{
       display:none;
+    }
+
+    /* ============================================
+       REVIEW STATS - 사진 아래 성과 표
+       신청자 수 / 신청당 금액을 한눈에
+       값(stat-value)을 비워두면 해당 칸 자동 숨김,
+       모두 비어있으면 표 전체 숨김
+       ============================================ */
+    #chanelReviewSection .review-stats{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      margin:0 0 26px;
+      border:1px solid var(--line);
+      border-radius:16px;
+      overflow:hidden;
+      background:linear-gradient(180deg, rgba(255,224,166,0.05) 0%, rgba(255,255,255,0.02) 100%);
+    }
+
+    #chanelReviewSection .review-stats .stat{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:6px;
+      padding:18px 12px 16px;
+      text-align:center;
+    }
+
+    #chanelReviewSection .review-stats .stat + .stat{
+      border-left:1px solid var(--line);
+    }
+
+    #chanelReviewSection .review-stats .stat-label{
+      font-size:.78rem;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      color:var(--muted-2);
+    }
+
+    #chanelReviewSection .review-stats .stat-value{
+      font-size:clamp(1.2rem, 1.8vw, 1.5rem);
+      font-weight:600;
+      letter-spacing:-0.02em;
+      color:var(--hl-text-strong);
+      text-shadow:0 0 18px rgba(255,220,160,0.22);
+      line-height:1.2;
+    }
+
+    #chanelReviewSection .review-stats .stat.is-empty{
+      display:none;
+    }
+
+    /* 한 칸만 남으면 좌우 전체 사용 */
+    #chanelReviewSection .review-stats .stat:only-child,
+    #chanelReviewSection .review-stats .stat.is-empty + .stat{
+      border-left:none;
+      grid-column:1 / -1;
+    }
+
+    #chanelReviewSection .review-stats.is-empty{
+      display:none;
+    }
+
+    /* ============================================
+       SCROLL FX - 사진 / 성과 표 등장 효과
+       화면에 보이는 순간 아래에서 떠오르며 나타남
+       (성과 표 숫자는 0부터 카운트업)
+       ============================================ */
+    #chanelReviewSection .review-photo,
+    #chanelReviewSection .review-stats{
+      opacity:0;
+      transform:translateY(28px) scale(.98);
+      transition:
+        opacity 1s cubic-bezier(.22,1,.36,1),
+        transform 1s cubic-bezier(.22,1,.36,1);
+      will-change:transform, opacity;
+    }
+
+    #chanelReviewSection .review-photo.fx-on,
+    #chanelReviewSection .review-stats.fx-on{
+      opacity:1;
+      transform:translateY(0) scale(1);
+    }
+
+    /* 표 안의 칸은 살짝 시차를 두고 */
+    #chanelReviewSection .review-stats .stat{
+      opacity:0;
+      transform:translateY(14px);
+      transition:
+        opacity .8s cubic-bezier(.22,1,.36,1),
+        transform .8s cubic-bezier(.22,1,.36,1);
+    }
+
+    #chanelReviewSection .review-stats.fx-on .stat:nth-child(1){
+      transition-delay:.15s;
+    }
+
+    #chanelReviewSection .review-stats.fx-on .stat:nth-child(2){
+      transition-delay:.3s;
+    }
+
+    #chanelReviewSection .review-stats.fx-on .stat{
+      opacity:1;
+      transform:translateY(0);
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      #chanelReviewSection .review-photo,
+      #chanelReviewSection .review-stats,
+      #chanelReviewSection .review-stats .stat{
+        transition:none;
+        opacity:1;
+        transform:none;
+      }
+    }
+
+    /* ============================================
+       LIGHTBOX - 이미지 클릭 시 팝업 확대
+       (JS가 body에 #chanelReviewLightbox 를 생성)
+       ============================================ */
+    #chanelReviewLightbox{
+      position:fixed;
+      inset:0;
+      z-index:9999;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:40px 20px;
+      background:rgba(0,0,0,0.88);
+      backdrop-filter:blur(10px);
+      -webkit-backdrop-filter:blur(10px);
+      opacity:0;
+      visibility:hidden;
+      transition:opacity .35s ease, visibility .35s ease;
+      cursor:zoom-out;
+    }
+
+    #chanelReviewLightbox.is-open{
+      opacity:1;
+      visibility:visible;
+    }
+
+    #chanelReviewLightbox img{
+      max-width:min(1100px, 92vw);
+      max-height:86vh;
+      width:auto;
+      height:auto;
+      display:block;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,0.16);
+      box-shadow:0 40px 120px rgba(0,0,0,0.6);
+      transform:scale(.94);
+      transition:transform .35s cubic-bezier(.22,1,.36,1);
+      cursor:default;
+    }
+
+    #chanelReviewLightbox.is-open img{
+      transform:scale(1);
+    }
+
+    #chanelReviewLightbox .lb-close{
+      position:absolute;
+      top:22px;
+      right:26px;
+      width:44px;
+      height:44px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border:1px solid rgba(255,255,255,0.25);
+      border-radius:50%;
+      background:rgba(255,255,255,0.06);
+      color:#fff;
+      font-size:20px;
+      line-height:1;
+      cursor:pointer;
+      transition:background .3s ease, border-color .3s ease, transform .3s ease;
+      font-family:inherit;
+      padding:0;
+    }
+
+    #chanelReviewLightbox .lb-close:hover{
+      background:rgba(255,255,255,0.14);
+      border-color:rgba(255,255,255,0.45);
+      transform:rotate(90deg);
+    }
+
+    @media (max-width:640px){
+      #chanelReviewLightbox{
+        padding:20px 12px;
+      }
+      #chanelReviewLightbox img{
+        max-width:96vw;
+        max-height:80vh;
+        border-radius:12px;
+      }
+      #chanelReviewLightbox .lb-close{
+        top:14px;
+        right:14px;
+        width:40px;
+        height:40px;
+      }
     }
 
     /* ============================================
@@ -5513,15 +4628,27 @@
 
         <!-- 이미지 슬롯 : src에 경로를 넣으면 표시, 비워두면 자동 숨김 -->
         <div class="review-photo">
-          <img src="" alt="후기 이미지" loading="lazy">
+          <img src="./img/a5.png" alt="후기 이미지" loading="lazy">
+        </div>
+
+        <!-- 성과 표 : stat-value를 비우면 자동 숨김 -->
+        <div class="review-stats">
+          <div class="stat">
+            <span class="stat-label">신청자 수</span>
+            <span class="stat-value">177건</span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">신청당 금액</span>
+            <span class="stat-value">28,158원</span>
+          </div>
         </div>
 
         <p class="review-text">
-          <span class="hl hl-strong">디비 질에 크게 만족했습니다.</span><br><br>
+          <span class="hl hl-strong">제작과 동시에 디비가 들어온 것도 신기하고<br>디비 질에 크게 만족했습니다.</span><br><br>
           소상공인 정책자금 시장에 진출을 해보고 싶어서, 기존의 메타 잠재고객 광고를 벗어나 직접 랜딩페이지와 홈페이지를 만들어서 고객을 확보하고 싶었던 차에, 연결이 되어 프로젝트를 진행해보았습니다.<br><br>
-          TM 인원이 많다보니, 많은 수량의 DB가 필요한 상황이었는데 그러기 위해서는 필연적으로 <span class="hl hl-strong">효율 높은 랜딩페이지가 필요했고 직접 제작을 해주셔서 1주일 제작 이후에 테스트를 진행</span>하였습니다.<br><br>
-          한 달이 조금 지난 상황에서 <span class="hl hl-strong">170개 정도의 테스트 DB를 확보</span>했고, <span class="hl hl-strong">직접 통화 테스트를 해보면서 질이 높다는 결과</span>를 얻을 수 있었습니다.<br><br>
-          당근마켓이랑 메타를 기반으로 진행하면서 효율을 더 잡아가는 형태로 가면 매출을 낼 수 있지 않을까 보고 있습니다.
+          TM 인원이 많다보니, 많은 수량의 DB가 필요한 상황이었는데 그러기 위해서는 필연적으로 효율 높은 랜딩페이지가 필요했고 전체 제작부터 광고까지 진행할 수 있어야 했습니다. 랜딩페이지를 제작해봐도 원하는 DB를 뽑히는 게 정말 어렵다는 걸 여러번 제작하면서 느낀 점이 있었는데, 2~3달 걸리면서 천천히 원하는 효율대로 고객이 확보될 줄 알았습니다. 근데 1주일만에 제작을 완료해주시고 광고를 돌리는 순간부터 바로 고객이 확보되어 전화로 안내할 수 있었습니다.<br><br>
+          테스트로 한 달이 조금 지난 상황에서 <span class="hl hl-strong">170개 정도의 테스트 DB를 확보</span>했고, <span class="hl hl-strong">직접 통화 테스트를 해보면서 질이 높다는 결과</span>를 얻을 수 있었습니다.<br><br>
+          소재를 더 늘려가면서 DB량을 늘릴 수 있다면 유의미한 매출을 낼 수 있지 않을까 보고 있습니다. 
         </p>
       </article>
 
@@ -5529,22 +4656,34 @@
       <article class="review-card reveal delay-2">
         <div class="review-bottom">
           <div class="review-user">
-            <span class="review-name">그 어떤 고객 확보 기반이 없어<br>온라인으로 고객을 찾고 싶어했던<br><br>전OO 대표님 실제 후기</span>
-            <span class="review-meta">한국위드케어협회</span>
+            <span class="review-name">오프라인 마케팅만 진행하면서<br>온라인 고객 확보가 절실했던<br><br>전정운 대표님 실제 후기</span>
+            <span class="review-meta">배관세척회사 대표</span>
           </div>
           <div class="review-star">★★★★★</div>
         </div>
 
         <!-- 이미지 슬롯 : src에 경로를 넣으면 표시, 비워두면 자동 숨김 -->
         <div class="review-photo">
-          <img src="" alt="후기 이미지" loading="lazy">
+          <img src="./img/a7.png" alt="후기 이미지" loading="lazy">
+        </div>
+
+        <!-- 성과 표 : stat-value를 비우면 자동 숨김 -->
+        <div class="review-stats">
+          <div class="stat">
+            <span class="stat-label">신청자 수</span>
+            <span class="stat-value">122명</span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">신청당 금액</span>
+            <span class="stat-value">5,500원</span>
+          </div>
         </div>
 
         <p class="review-text">
-          당사는 자격과정 모집을 위한 랜딩페이지가 절실한 상황이었고, 여러 고민 끝에 최 대표님과 상담을 진행하게 되었습니다.<br><br>
+          당사는 자격과정 모집을 위한 랜딩페이지가 절실한 상황이었고, 여러 고민 끝에 상담을 진행하게 되었습니다.<br><br>
           3시간의 전화 상담과 2번의 오프라인 미팅을 통해 <span class="hl hl-strong">단순한 제작이 아닌, 비즈니스 방향성과 고객 흐름까지 함께 설계해준다는 점에서 깊은 신뢰를 느꼈습니다.</span> 특히 당사의 상황을 정확히 이해하고 현실적인 제안을 해주신 부분이 인상적이었습니다.<br><br>
           한 달이 지난 현재, <span class="hl hl-strong">2개의 랜딩페이지에서 꾸준히 접수가 발생하고 있으며 광고 역시 안정적으로 운영되고 있습니다.</span> 이전에는 광고를 집행해도 뚜렷한 반응이 없었지만, <span class="hl hl-strong">지금은 실제 문의로 이어지는 흐름이 만들어졌다</span>는 점에서 큰 변화를 체감하고 있습니다.<br><br>
-          이번 경험을 통해 단순한 디자인이 아닌, <span class="hl hl-strong">'결과를 만드는 구조'가 얼마나 중요한지 깨닫게 되었습니다.</span> 이 기회를 기반으로 더욱 성장해 나가겠습니다.
+          온라인으로 24시간 동안<span class="hl hl-strong">알아서 모객이 되는 흐름이 얼마나 중요한지 깨닫게 되었습니다.</span> 이 기회를 기반으로 더욱 성장해 나가겠습니다.
         </p>
       </article>
 
@@ -5560,13 +4699,26 @@
 
         <!-- 이미지 슬롯 : src에 경로를 넣으면 표시, 비워두면 자동 숨김 -->
         <div class="review-photo">
-          <img src="" alt="후기 이미지" loading="lazy">
+          <img src="./img/a6.png" alt="후기 이미지" loading="lazy">
+        </div>
+
+        <!-- 성과 표 : stat-value를 비우면 자동 숨김 -->
+        <div class="review-stats">
+          <div class="stat">
+            <span class="stat-label">트래픽 수</span>
+            <span class="stat-value">5배 증가</span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">매출</span>
+            <span class="stat-value">5배 증가</span>
+          </div>
         </div>
 
         <p class="review-text">
-          서울시 지원 서비스를 운영하는 과정에서 가장 큰 고민은 '모객'이었습니다. 제대로 된 홈페이지나 랜딩페이지가 구축되어 있지 않았고, 마케팅을 어떻게 시작해야 할지조차 막막한 상황이었습니다. 문의 전화는 들어오지만 안내 과정이 매끄럽지 않아 오히려 불편하다는 클레임이 발생하는 등, 구조적인 문제를 해결할 필요성을 절실히 느끼고 있었습니다.<br><br>
-          그러던 중 지인의 소개로 FLOS를 알게 되었고, <span class="hl hl-strong">대표님께서 직접 현장에 방문해 현재 비즈니스 상황을 꼼꼼히 분석하고 고객 흐름을 함께 정리해주셨습니다.</span> 단순 제작이 아닌, <span class="hl hl-strong">실제 고객이 이해하고 신청까지 이어질 수 있는 구조로 기존 사이트를 보완하고 랜딩페이지를 빠르게 개선</span>해주셨습니다.<br><br>
-          그 결과, <span class="hl hl-strong">단 3일 만에 서비스 예약 건수가 2배 이상 증가</span>했으며, 현재까지도 안정적으로 유지되고 있습니다. 막막했던 상황에서 실질적인 변화를 만들어주신 점에 깊이 감사드립니다.
+          <span class="hl hl-strong">하루만에 제작해주신 랜딩으로 바로 예약이 5배가 늘어났습니다.</span><br><br>
+          서울시 지원 서비스를 운영하는 과정에서 가장 큰 고민은 '모객'이었습니다. 홈페이지는 있으나 구성도 없었고 랜딩페이지도 너무 조악하다보니 마케팅을 어떻게 시작해야 할지조차 막막한 상황이었습니다. 문의 전화는 들어오지만 안내 과정이 매끄럽지 않아 오히려 불편하다는 클레임이 발생하는 등, 구조적인 문제를 해결할 필요성을 절실히 느끼고 있었습니다.<br><br>
+          그러던 중 지인의 소개로 도움을 요청드렸고, <span class="hl hl-strong">대표님께서 직접 현장에 방문해 현재 비즈니스 상황을 꼼꼼히 분석하고 고객 흐름을 함께 정리해주셨습니다.</span> 단순 제작이 아닌, <span class="hl hl-strong">실제 고객이 이해하고 신청까지 이어질 수 있는 구조로 기존 사이트를 보완하고 랜딩페이지를 하루만에 빠르게 개선</span>해주셨습니다.<br><br>
+          그 결과, <span class="hl hl-strong">단 3일 만에 서비스 예약 건수가 5배 이상 증가</span>했으며, 현재까지도 안정적으로 유지되고 있습니다. 고객의 클레임을 기반으로 내용을 업데이트 하면서 클레임의 수 자체가 확 줄어들었고, 예약까지 고객들이 바로 진행되는 경우가 많으니 클레임에 소비되는 시간을 더 줄일 수 있게 되었고 매출을 늘리는 포인트에 더 시간을 집중할 수 있게 되었습니다. 막막했던 상황에서 실질적인 변화를 만들어주신 점에 깊이 감사드립니다.<br><br>이젠 공식 사이트 개편부터 추후 비즈니스도 함께 하는 상황이 되어서 정말 기쁘고 기대가 됩니다.  
         </p>
       </article>
     </div>
@@ -5621,6 +4773,176 @@
       });
 
       /* ============================================
+         성과 표 처리
+         - stat-value가 비어있으면 해당 칸 숨김
+         - 두 칸 모두 비어있으면 표 전체 숨김
+         ============================================ */
+      const statBoxes = section.querySelectorAll('.review-stats');
+
+      statBoxes.forEach(box=>{
+        const stats = box.querySelectorAll('.stat');
+        let visibleCount = 0;
+
+        stats.forEach(stat=>{
+          const value = stat.querySelector('.stat-value');
+          const text = value ? value.textContent.trim() : '';
+
+          if(!text){
+            stat.classList.add('is-empty');
+          }else{
+            visibleCount++;
+          }
+        });
+
+        if(visibleCount === 0){
+          box.classList.add('is-empty');
+        }
+      });
+
+      /* ============================================
+         스크롤 등장 효과 + 숫자 카운트업
+         - 사진 / 성과 표가 화면에 보이는 순간 떠오름
+         - 성과 표 숫자는 0부터 목표값까지 카운트업
+           (숫자 앞뒤의 단위/문자는 그대로 유지)
+         ============================================ */
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      function animateCount(el){
+        const original = el.textContent.trim();
+        const match = original.match(/[\d,]+/);
+        if(!match) return;
+
+        const target = parseInt(match[0].replace(/,/g, ''), 10);
+        if(isNaN(target) || target === 0) return;
+
+        const prefix = original.slice(0, match.index);
+        const suffix = original.slice(match.index + match[0].length);
+        const hasComma = match[0].includes(',');
+        const duration = 1400;
+        const start = performance.now();
+
+        function frame(now){
+          const t = Math.min((now - start) / duration, 1);
+          /* easeOutCubic */
+          const eased = 1 - Math.pow(1 - t, 3);
+          const current = Math.round(target * eased);
+          const num = hasComma ? current.toLocaleString('ko-KR') : String(current);
+          el.textContent = prefix + num + suffix;
+
+          if(t < 1){
+            requestAnimationFrame(frame);
+          }else{
+            el.textContent = original;
+          }
+        }
+
+        requestAnimationFrame(frame);
+      }
+
+      const fxTargets = section.querySelectorAll(
+        '.review-photo:not(.is-empty), .review-stats:not(.is-empty)'
+      );
+
+      if(reducedMotion){
+        /* 모션 최소화 환경 : 애니메이션 없이 즉시 표시 */
+        fxTargets.forEach(el => el.classList.add('fx-on'));
+      }else{
+        const fxIo = new IntersectionObserver((entries)=>{
+          entries.forEach(entry=>{
+            if(!entry.isIntersecting) return;
+
+            entry.target.classList.add('fx-on');
+
+            /* 성과 표라면 숫자 카운트업 시작 */
+            if(entry.target.classList.contains('review-stats')){
+              entry.target
+                .querySelectorAll('.stat:not(.is-empty) .stat-value')
+                .forEach(animateCount);
+            }
+
+            fxIo.unobserve(entry.target);
+          });
+        },{
+          threshold:0.35,
+          rootMargin:'0px 0px -6% 0px'
+        });
+
+        fxTargets.forEach(el => fxIo.observe(el));
+      }
+
+      /* ============================================
+         라이트박스 - 이미지 클릭 시 팝업 확대
+         - 배경 클릭 / X 버튼 / ESC 키로 닫기
+         - 열려있는 동안 배경 스크롤 잠금
+         ============================================ */
+      let lightbox = null;
+      let lightboxImg = null;
+
+      function buildLightbox(){
+        lightbox = document.createElement('div');
+        lightbox.id = 'chanelReviewLightbox';
+        lightbox.setAttribute('role', 'dialog');
+        lightbox.setAttribute('aria-modal', 'true');
+
+        lightboxImg = document.createElement('img');
+        lightboxImg.alt = '후기 이미지 확대 보기';
+
+        const closeBtn = document.createElement('button');
+        closeBtn.className = 'lb-close';
+        closeBtn.type = 'button';
+        closeBtn.setAttribute('aria-label', '닫기');
+        closeBtn.innerHTML = '&#10005;';
+
+        lightbox.appendChild(lightboxImg);
+        lightbox.appendChild(closeBtn);
+        document.body.appendChild(lightbox);
+
+        /* 이미지 자체 클릭은 닫히지 않도록 */
+        lightboxImg.addEventListener('click', (e)=> e.stopPropagation());
+
+        /* 배경 클릭 → 닫기 */
+        lightbox.addEventListener('click', closeLightbox);
+
+        /* X 버튼 → 닫기 */
+        closeBtn.addEventListener('click', (e)=>{
+          e.stopPropagation();
+          closeLightbox();
+        });
+
+        /* ESC 키 → 닫기 */
+        document.addEventListener('keydown', (e)=>{
+          if(e.key === 'Escape' && lightbox.classList.contains('is-open')){
+            closeLightbox();
+          }
+        });
+      }
+
+      function openLightbox(src, alt){
+        if(!lightbox) buildLightbox();
+        lightboxImg.src = src;
+        if(alt) lightboxImg.alt = alt;
+        lightbox.classList.add('is-open');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeLightbox(){
+        if(!lightbox) return;
+        lightbox.classList.remove('is-open');
+        document.body.style.overflow = '';
+      }
+
+      photos.forEach(box=>{
+        const img = box.querySelector('img');
+        if(!img) return;
+
+        img.addEventListener('click', ()=>{
+          const src = (img.getAttribute('src') || '').trim();
+          if(!src) return;
+          openLightbox(src, img.alt);
+        });
+      });
+
+      /* ============================================
          하이라이트 개별 트리거
          - 각 .hl 이 화면에 드러나는 순간 좌→우로 그려짐
          - 같은 화면에 동시에 들어온 하이라이트는
@@ -5649,6 +4971,1745 @@
       highlights.forEach(hl => hlIo.observe(hl));
     })();
   </script>
+</section>
+
+<section id="flosValue">
+  <style>
+    /* ========================================
+       FLOS VALUE STRUCTURE SECTION ONLY
+       ======================================== */
+    #flosValue {
+      position: relative;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background: #000000;
+      color: #ffffff;
+      font-family:
+        "Pretendard",
+        "Noto Sans KR",
+        "Apple SD Gothic Neo",
+        Arial,
+        sans-serif;
+    }
+
+    #flosValue,
+    #flosValue * {
+      box-sizing: border-box;
+    }
+
+    #flosValue button,
+    #flosValue img {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* 전체 내부 영역 */
+    #flosValue .jei-inner {
+      width: min(100%, 1780px);
+      margin: 0 auto;
+      padding: 42px 48px 72px;
+    }
+
+    /* 상단 라벨 */
+    #flosValue .jei-topline {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+
+    #flosValue .jei-topline .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #ffffff;
+      flex: 0 0 auto;
+    }
+
+    #flosValue .jei-topline .line {
+      width: 120px;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.25);
+      flex: 0 0 auto;
+    }
+
+    #flosValue .jei-topline .label {
+      color: rgba(255, 255, 255, 0.58);
+      font-size: 12px;
+      line-height: 1;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    /* 콘텐츠 폭 */
+    #flosValue .jei-content {
+      width: min(100%, 1360px);
+    }
+
+    /* 제목 */
+    #flosValue .jei-title {
+      margin: 0 0 58px;
+      color: #ffffff;
+      font-size: clamp(46px, 5.3vw, 76px);
+      line-height: 0.98;
+      font-weight: 800;
+      letter-spacing: -0.065em;
+      word-break: keep-all;
+    }
+
+    /* ========================================
+       이미지 영역
+       PC: 한 줄에 이미지 3개
+       ======================================== */
+    #flosValue .jei-gallery {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      align-items: stretch;
+      width: 100%;
+      margin: 0 0 48px;
+      gap:13px;
+    }
+
+    #flosValue .jei-image-button {
+      position: relative;
+      display: block;
+      width: 100%;
+      min-width: 0;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      border: 0;
+      border-radius: 0;
+      background: #ffffff;
+      cursor: zoom-in;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+    #flosValue .jei-image-button::after {
+      content: "확대보기";
+      position: absolute;
+      right: 16px;
+      bottom: 16px;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 70px;
+      height: 30px;
+      padding: 0 12px;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      border-radius: 30px;
+      background: rgba(0, 0, 0, 0.62);
+      color: #ffffff;
+      font-size: 11px;
+      line-height: 1;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      opacity: 0;
+      transform: translateY(6px);
+      transition:
+        opacity 0.3s ease,
+        transform 0.3s ease;
+      pointer-events: none;
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+
+    #flosValue .jei-image-button:hover::after,
+    #flosValue .jei-image-button:focus-visible::after {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    #flosValue .jei-image-button:focus-visible {
+      outline: 2px solid #ffffff;
+      outline-offset: 3px;
+      z-index: 2;
+    }
+
+    #flosValue .jei-image-button img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-height: 350px;
+      object-fit: contain;
+      background: #ffffff;
+      transition:
+        transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+        filter 0.4s ease;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
+    #flosValue .jei-image-button:hover img {
+      transform: scale(1.018);
+      filter: brightness(0.94);
+    }
+
+    /* 하단 설명 */
+    #flosValue .jei-text {
+      width: min(100%, 650px);
+    }
+
+    #flosValue .jei-kicker {
+      margin: 0 0 20px;
+      color: #ffffff;
+      font-size: 18px;
+      line-height: 1.8;
+      font-weight: 750;
+      letter-spacing: -0.035em;
+      word-break: keep-all;
+    }
+
+    #flosValue .jei-desc {
+      margin: 0;
+      color: rgba(255, 255, 255, 0.65);
+      font-size: 15px;
+      line-height: 2;
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      word-break: keep-all;
+    }
+
+    /* ========================================
+       이미지 확대 팝업
+       ======================================== */
+    #flosValue .jei-lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 999999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 54px;
+      background: rgba(0, 0, 0, 0.92);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition:
+        opacity 0.3s ease,
+        visibility 0.3s ease;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    #flosValue .jei-lightbox.is-open {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    #flosValue .jei-lightbox-content {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: min(100%, 1400px);
+      height: min(88vh, 1000px);
+      transform: scale(0.96);
+      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    #flosValue .jei-lightbox.is-open .jei-lightbox-content {
+      transform: scale(1);
+    }
+
+    #flosValue .jei-lightbox-image {
+      display: block;
+      width: auto;
+      max-width: 100%;
+      height: auto;
+      max-height: 88vh;
+      margin: auto;
+      object-fit: contain;
+      background: #ffffff;
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.5);
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
+    #flosValue .jei-lightbox-close {
+      position: fixed;
+      top: 22px;
+      right: 24px;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      margin: 0;
+      padding: 0;
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      border-radius: 50%;
+      background: rgba(20, 20, 20, 0.72);
+      color: #ffffff;
+      font-family: Arial, sans-serif;
+      font-size: 32px;
+      line-height: 1;
+      font-weight: 300;
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+      transition:
+        background 0.25s ease,
+        transform 0.25s ease;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    #flosValue .jei-lightbox-close:hover {
+      background: rgba(255, 255, 255, 0.18);
+      transform: rotate(90deg);
+    }
+
+    #flosValue .jei-lightbox-close:focus-visible {
+      outline: 2px solid #ffffff;
+      outline-offset: 3px;
+    }
+
+    /* 태블릿 */
+    @media (max-width: 1200px) {
+      #flosValue .jei-inner {
+        padding: 36px 28px 56px;
+      }
+
+      #flosValue .jei-content {
+        width: min(100%, 980px);
+      }
+
+      #flosValue .jei-title {
+        margin-bottom: 48px;
+      }
+
+      #flosValue .jei-image-button img {
+        min-height: 340px;
+      }
+    }
+
+    /* ========================================
+       모바일
+       이미지 width:90%
+       한 줄에 이미지 1개
+       ======================================== */
+    @media (max-width: 768px) {
+      #flosValue .jei-inner {
+        padding: 28px 20px 48px;
+      }
+
+      #flosValue .jei-topline {
+        gap: 10px;
+        margin-bottom: 24px;
+      }
+
+      #flosValue .jei-topline .dot {
+        width: 6px;
+        height: 6px;
+      }
+
+      #flosValue .jei-topline .line {
+        width: 64px;
+      }
+
+      #flosValue .jei-topline .label {
+        font-size: 10px;
+        letter-spacing: 0.16em;
+      }
+
+      #flosValue .jei-title {
+        margin-bottom: 40px;
+        font-size: clamp(38px, 12.8vw, 58px);
+        line-height: 1.02;
+        letter-spacing: -0.07em;
+      }
+
+      #flosValue .jei-gallery {
+        grid-template-columns: 1fr;
+        width: 90%;
+        margin: 0 auto 42px;
+        gap: 18px;
+      }
+
+      #flosValue .jei-image-button {
+        width: 100%;
+      }
+
+      #flosValue .jei-image-button img {
+        width: 100%;
+        height: auto;
+        min-height: 0;
+        object-fit: contain;
+      }
+
+      #flosValue .jei-image-button::after {
+        right: 10px;
+        bottom: 10px;
+        min-width: 62px;
+        height: 27px;
+        padding: 0 10px;
+        font-size: 10px;
+        opacity: 1;
+        transform: none;
+      }
+
+      #flosValue .jei-image-button:hover img {
+        transform: none;
+        filter: none;
+      }
+
+      #flosValue .jei-kicker {
+        margin-bottom: 16px;
+        font-size: 16px;
+        line-height: 1.75;
+      }
+
+      #flosValue .jei-desc {
+        font-size: 14px;
+        line-height: 1.9;
+      }
+
+      #flosValue .jei-lightbox {
+        padding: 58px 12px 24px;
+      }
+
+      #flosValue .jei-lightbox-content {
+        width: 100%;
+        height: auto;
+        max-height: calc(100vh - 82px);
+      }
+
+      #flosValue .jei-lightbox-image {
+        max-width: 100%;
+        max-height: calc(100vh - 90px);
+      }
+
+      #flosValue .jei-lightbox-close {
+        top: 12px;
+        right: 12px;
+        width: 42px;
+        height: 42px;
+        font-size: 28px;
+      }
+    }
+
+    @media (max-width: 420px) {
+      #flosValue .jei-inner {
+        padding-right: 16px;
+        padding-left: 16px;
+      }
+
+      #flosValue .jei-title {
+        font-size: clamp(35px, 12.2vw, 48px);
+      }
+
+      #flosValue .jei-gallery {
+        width: 90%;
+      }
+
+      #flosValue .jei-kicker {
+        font-size: 15px;
+      }
+
+      #flosValue .jei-desc {
+        font-size: 13px;
+      }
+    }
+  </style>
+
+  <div class="jei-inner">
+    <div class="jei-topline">
+      <span class="dot" aria-hidden="true"></span>
+      <span class="line" aria-hidden="true"></span>
+      <span class="label">Branding Homepage</span>
+    </div>
+
+    <div class="jei-content">
+      <h2 class="jei-title">
+        고객 확보에 있어서<br>
+        전문적일 수 밖에 없는<br>
+        FLOS만의 특장점
+      </h2><br><br>
+
+      <!-- 이미지 영역 -->
+      <div class="jei-gallery">
+        <button
+          type="button"
+          class="jei-image-button"
+          aria-label="광고 성과 이미지 크게 보기"
+        >
+          <img
+            src="./img/ad-after.jpg"
+            alt="광고 비용, 노출 수, 도달 수, 클릭 수 및 구매 수 성과"
+            loading="lazy"
+          >
+        </button>
+
+        <button
+          type="button"
+          class="jei-image-button"
+          aria-label="구글 및 메타 광고 성과 이미지 크게 보기"
+        >
+          <img
+            src="./img/ad-after3.jpg"
+            alt="구글 광고와 메타 광고 집행 성과"
+            loading="lazy"
+          >
+        </button>
+
+             <button
+          type="button"
+          class="jei-image-button"
+          aria-label="구글 및 메타 광고 성과 이미지 크게 보기"
+        >
+          <img
+            src="./img/a8.png"
+            alt="구글 광고와 메타 광고 집행 성과"
+            loading="lazy"
+          >
+        </button>
+      </div>
+
+      <!-- 설명 영역 -->
+      <div class="jei-text">
+        <p class="jei-kicker">
+          지금 이 순간에도 다양한 분야의 광고 및 모객을 진행
+        </p>
+
+        <p class="jei-desc">
+          실제 광고를 돌리고 모객을 하면서<br>
+          자동적으로 고객을 확보하는 시스템을 만들고<br>
+          현재 트렌드와 고객 확보의 흐름을 반영한<br>
+          랜딩페이지를 제작하고 있습니다.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 이미지 확대 팝업 -->
+  <div
+    class="jei-lightbox"
+    role="dialog"
+    aria-modal="true"
+    aria-label="확대 이미지"
+    aria-hidden="true"
+  >
+    <button
+      type="button"
+      class="jei-lightbox-close"
+      aria-label="확대 이미지 닫기"
+    >
+      &times;
+    </button>
+
+    <div class="jei-lightbox-content">
+      <img
+        class="jei-lightbox-image"
+        src=""
+        alt=""
+      >
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const section = document.getElementById("flosValue");
+
+      if (!section || section.dataset.lightboxInitialized === "true") {
+        return;
+      }
+
+      section.dataset.lightboxInitialized = "true";
+
+      const imageButtons = section.querySelectorAll(".jei-image-button");
+      const lightbox = section.querySelector(".jei-lightbox");
+      const lightboxImage = section.querySelector(".jei-lightbox-image");
+      const closeButton = section.querySelector(".jei-lightbox-close");
+
+      let lastFocusedElement = null;
+      let savedScrollY = 0;
+
+      function lockBodyScroll() {
+        savedScrollY = window.scrollY;
+
+        document.body.style.position = "fixed";
+        document.body.style.top = "-" + savedScrollY + "px";
+        document.body.style.left = "0";
+        document.body.style.right = "0";
+        document.body.style.width = "100%";
+      }
+
+      function unlockBodyScroll() {
+        document.body.style.position = "";
+        document.body.style.top = "";
+        document.body.style.left = "";
+        document.body.style.right = "";
+        document.body.style.width = "";
+
+        window.scrollTo(0, savedScrollY);
+      }
+
+      function openLightbox(image) {
+        if (!image || !image.getAttribute("src")) {
+          return;
+        }
+
+        lastFocusedElement = document.activeElement;
+
+        lightboxImage.src = image.currentSrc || image.src;
+        lightboxImage.alt = image.alt || "확대 이미지";
+
+        lightbox.classList.add("is-open");
+        lightbox.setAttribute("aria-hidden", "false");
+
+        lockBodyScroll();
+
+        window.requestAnimationFrame(function () {
+          closeButton.focus();
+        });
+      }
+
+      function closeLightbox() {
+        if (!lightbox.classList.contains("is-open")) {
+          return;
+        }
+
+        lightbox.classList.remove("is-open");
+        lightbox.setAttribute("aria-hidden", "true");
+
+        unlockBodyScroll();
+
+        window.setTimeout(function () {
+          lightboxImage.src = "";
+          lightboxImage.alt = "";
+
+          if (lastFocusedElement) {
+            lastFocusedElement.focus();
+          }
+        }, 300);
+      }
+
+      imageButtons.forEach(function (button) {
+        button.addEventListener("click", function () {
+          const image = button.querySelector("img");
+          openLightbox(image);
+        });
+      });
+
+      closeButton.addEventListener("click", closeLightbox);
+
+      lightbox.addEventListener("click", function (event) {
+        if (
+          event.target === lightbox ||
+          event.target.classList.contains("jei-lightbox-content")
+        ) {
+          closeLightbox();
+        }
+      });
+
+      document.addEventListener("keydown", function (event) {
+        if (
+          event.key === "Escape" &&
+          lightbox.classList.contains("is-open")
+        ) {
+          closeLightbox();
+        }
+      });
+    })();
+  </script>
+</section>
+
+<section id="process1" aria-label="랜딩페이지 제작 프로세스">
+<style>
+#process1 {
+  --jp-bg: #000000;
+  --jp-bg-dark: #000000;
+  --jp-white: #ffffff;
+  --jp-gray-light: rgba(255,255,255,0.58);
+  --jp-gray-dim: rgba(255,255,255,0.3);
+  --jp-gray-faint: rgba(255,255,255,0.12);
+  --jp-transition: 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
+
+  font-family: 'Noto Sans KR', 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background-color: var(--jp-bg);
+  color: var(--jp-white);
+  position: relative;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#process1 *,
+#process1 *::before,
+#process1 *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ===== INTRO ===== */
+#process1 .jp-intro {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 120px 8% 120px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+#process1 .jp-intro-inner {
+  max-width: 760px;
+}
+
+#process1 .jp-intro-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 26px;
+}
+
+#process1 .jp-intro-eyebrow::before {
+  content: "";
+  width: 52px;
+  height: 1px;
+  background: rgba(255,255,255,0.32);
+  display: block;
+}
+
+#process1 .jp-intro-eyebrow span {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.62);
+}
+
+#process1 .jp-intro-title {
+  font-size: clamp(34px, 5.5vw, 78px);
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: -0.055em;
+  margin-bottom: 30px;
+}
+
+#process1 .jp-intro-title .light {
+  display: block;
+  color: rgba(255,255,255,0.82);
+  font-weight: 700;
+}
+
+#process1 .jp-intro-desc {
+  font-size: clamp(15px, 1.12vw, 18px);
+  font-weight: 400;
+  line-height: 1.95;
+  color: var(--jp-gray-light);
+  max-width: 680px;
+  word-break: keep-all;
+}
+
+#process1 .jp-intro-quote {
+  margin-top: 28px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  font-size: clamp(17px, 1.2vw, 20px);
+  line-height: 1.8;
+  font-weight: 700;
+  color: rgba(255,255,255,0.88);
+  word-break: keep-all;
+}
+
+/* ===== MAIN ===== */
+#process1 .jp-main {
+  position: relative;
+}
+
+/* ===== DESKTOP NAV ===== */
+#process1 .jp-nav {
+  position: fixed;
+  top: 50%;
+  left: 8%;
+  transform: translateY(-50%);
+  width: 290px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  z-index: 100;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.35s ease, visibility 0.35s ease;
+  pointer-events: none;
+}
+
+#process1 .jp-nav[data-floating="true"] {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+#process1 .jp-nav[data-stopped="true"] {
+  position: absolute;
+  left: 8%;
+  transform: none;
+  top: auto;
+  bottom: 0;
+}
+
+#process1 .jp-nav-track {
+  display: contents;
+}
+
+#process1 .jp-nav-item {
+  padding: 14px 0;
+  border-bottom: 1px solid var(--jp-gray-faint);
+  cursor: pointer;
+  transition: all var(--jp-transition);
+  position: relative;
+}
+
+#process1 .jp-nav-item::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--jp-white);
+  transition: width var(--jp-transition);
+}
+
+#process1 .jp-nav-item[data-active="true"]::after {
+  width: 100%;
+}
+
+#process1 .jp-nav-num {
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 4px;
+  display: block;
+  transition: color var(--jp-transition);
+  color: var(--jp-gray-dim);
+}
+
+#process1 .jp-nav-label {
+  font-size: 16px;
+  font-weight: 500;
+  display: block;
+  transition: color var(--jp-transition), font-weight var(--jp-transition);
+  color: var(--jp-gray-dim);
+  word-break: keep-all;
+}
+
+#process1 .jp-nav-item[data-active="true"] .jp-nav-num,
+#process1 .jp-nav-item[data-active="true"] .jp-nav-label {
+  color: var(--jp-white);
+  font-weight: 700;
+}
+
+/* ===== CONTENT ===== */
+#process1 .jp-content {
+  margin-left: calc(8% + 340px);
+  padding-right: 8%;
+  min-width: 0;
+}
+
+#process1 .jp-content-item {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 100px 0;
+  position: relative;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+#process1 .jp-step-num {
+  display: inline-block;
+  margin-bottom: 18px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: rgba(255,255,255,0.36);
+}
+
+#process1 .jp-content-title {
+  font-size: clamp(30px, 3.4vw, 48px);
+  font-weight: 900;
+  line-height: 1.22;
+  letter-spacing: -0.035em;
+  margin-bottom: 22px;
+  opacity: 0;
+  transform: translateY(30px);
+  filter: blur(2px);
+  transition: opacity 0.7s ease, transform 0.7s ease, filter 0.7s ease;
+  word-break: keep-all;
+}
+
+#process1 .jp-content-lead {
+  font-size: clamp(19px, 1.15vw, 22px);
+  font-weight: 800;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.78);
+  margin-bottom: 18px;
+  opacity: 0;
+  transform: translateY(25px);
+  filter: blur(2px);
+  transition: opacity 0.7s ease 0.08s, transform 0.7s ease 0.08s, filter 0.7s ease 0.08s;
+  word-break: keep-all;
+}
+
+#process1 .jp-content-desc {
+  font-size: clamp(16px, 1vw, 18px);
+  font-weight: 500;
+  line-height: 1.95;
+  color: var(--jp-gray-light);
+  max-width: 720px;
+  margin-bottom: 34px;
+  opacity: 0;
+  transform: translateY(20px);
+  filter: blur(2px);
+  transition: opacity 0.7s ease 0.15s, transform 0.7s ease 0.15s, filter 0.7s ease 0.15s;
+  word-break: keep-all;
+}
+
+#process1 .jp-bullets {
+  list-style: none;
+  display: grid;
+  gap: 12px;
+  max-width: 760px;
+  margin-bottom: 34px;
+  opacity: 0;
+  transform: translateY(18px);
+  filter: blur(2px);
+  transition: opacity 0.7s ease 0.18s, transform 0.7s ease 0.18s, filter 0.7s ease 0.18s;
+}
+
+#process1 .jp-bullets li {
+  position: relative;
+  padding-left: 18px;
+  font-size: clamp(15px, 1vw, 17px);
+  line-height: 1.9;
+  color: rgba(255,255,255,0.76);
+}
+
+#process1 .jp-bullets li::before {
+  content: "";
+  position: absolute;
+  top: 12px;
+  left: 0;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.82);
+}
+
+#process1 .jp-content-visual {
+  width: 100%;
+  max-width: 920px;
+  margin-bottom: 28px;
+  opacity: 0;
+  transform: translateY(20px);
+  filter: blur(2px);
+  transition: opacity 0.8s ease 0.22s, transform 0.8s ease 0.22s, filter 0.8s ease 0.22s;
+}
+
+#process1 .jp-content-visual.is-empty {
+  display: none;
+}
+
+#process1 .jp-visual-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.08);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.035) 0%, rgba(255,255,255,0.015) 100%);
+}
+
+#process1 .jp-visual-frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(0,0,0,0.02) 0%, rgba(0,0,0,0.24) 100%);
+  pointer-events: none;
+}
+
+#process1 .jp-visual-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transform: scale(1.01);
+}
+
+#process1 .jp-point {
+  display: inline-flex;
+  align-items: center;
+  min-height: 52px;
+  padding: 16px 22px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: linear-gradient(180deg, rgba(255,255,255,0.045) 0%, rgba(255,255,255,0.02) 100%);
+  font-size: clamp(15px, 1vw, 17px);
+  font-weight: 700;
+  line-height: 1.8;
+  color: #ffffff;
+  opacity: 0;
+  transform: translateY(20px);
+  filter: blur(2px);
+  transition: opacity 0.8s ease 0.26s, transform 0.8s ease 0.26s, filter 0.8s ease 0.26s;
+  word-break: keep-all;
+}
+
+#process1 .jp-content-item[data-visible="true"] .jp-content-title,
+#process1 .jp-content-item[data-visible="true"] .jp-content-lead,
+#process1 .jp-content-item[data-visible="true"] .jp-content-desc,
+#process1 .jp-content-item[data-visible="true"] .jp-bullets,
+#process1 .jp-content-item[data-visible="true"] .jp-content-visual,
+#process1 .jp-content-item[data-visible="true"] .jp-point {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+
+@media (max-width: 1100px) {
+  #process1 .jp-nav {
+    width: 230px;
+    left: 5%;
+  }
+
+  #process1 .jp-nav[data-stopped="true"] {
+    left: 5%;
+  }
+
+  #process1 .jp-nav-label {
+    font-size: 14px;
+  }
+
+  #process1 .jp-content {
+    margin-left: calc(5% + 265px);
+    padding-right: 5%;
+  }
+
+  #process1 .jp-intro {
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+}
+
+@media (max-width: 768px) {
+  #process1 {
+    padding-bottom: 92px;
+  }
+
+  #process1 .jp-intro {
+    min-height: auto;
+    padding: 84px 6% 64px;
+  }
+
+  #process1 .jp-intro-title {
+    margin-bottom: 22px;
+  }
+
+  #process1 .jp-intro-quote {
+    font-size: 16px;
+    line-height: 1.75;
+  }
+
+  #process1 .jp-nav {
+    position: fixed !important;
+    top: auto !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    transform: none !important;
+    width: 100%;
+    height: 72px;
+    padding: 0;
+    display: block;
+    background: rgba(8,8,8,0.92);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(255,255,255,0.08);
+    border-bottom: none;
+    z-index: 300;
+    transition: opacity 0.35s ease, visibility 0.35s ease;
+    overflow: hidden;
+    touch-action: pan-y;
+  }
+
+  #process1 .jp-nav[data-stopped="true"] {
+    position: fixed !important;
+    top: auto !important;
+    bottom: 0 !important;
+    left: 0 !important;
+  }
+
+  #process1 .jp-nav::before,
+  #process1 .jp-nav::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 40px;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  #process1 .jp-nav::before {
+    left: 0;
+    background: linear-gradient(to right, rgba(8,8,8,0.96), rgba(8,8,8,0));
+  }
+
+  #process1 .jp-nav::after {
+    right: 0;
+    background: linear-gradient(to left, rgba(8,8,8,0.96), rgba(8,8,8,0));
+  }
+
+  #process1 .jp-nav-track {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: max-content;
+    min-width: max-content;
+    padding: 0 18px;
+    transform: translate3d(0, -50%, 0);
+    will-change: transform;
+    transition: transform 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+    cursor: grab;
+  }
+
+  #process1 .jp-nav-track.jp-dragging {
+    cursor: grabbing;
+    transition: none !important;
+  }
+
+  #process1 .jp-nav-item {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 40px;
+    padding: 10px 14px;
+    border: none;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.04);
+    text-align: left;
+    white-space: nowrap;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  #process1 .jp-nav-item::after {
+    display: none;
+  }
+
+  #process1 .jp-nav-item[data-active="true"] {
+    background: rgba(255,255,255,0.14);
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08);
+  }
+
+  #process1 .jp-nav-num {
+    font-size: 11px;
+    margin-bottom: 0;
+    line-height: 1;
+  }
+
+  #process1 .jp-nav-label {
+    font-size: 13px;
+    line-height: 1;
+    white-space: nowrap;
+    overflow: visible;
+    text-overflow: clip;
+  }
+
+  #process1 .jp-content {
+    margin-left: 0;
+    padding: 0 6%;
+  }
+
+  #process1 .jp-content-item {
+    min-height: auto;
+    padding: 72px 0;
+  }
+
+  #process1 .jp-content-title {
+    font-size: clamp(28px, 8vw, 38px);
+    margin-bottom: 18px;
+  }
+
+  #process1 .jp-content-lead {
+    font-size: 18px;
+    margin-bottom: 14px;
+  }
+
+  #process1 .jp-content-desc {
+    font-size: 15px;
+    line-height: 1.9;
+    margin-bottom: 26px;
+  }
+
+  #process1 .jp-bullets {
+    gap: 10px;
+    margin-bottom: 26px;
+  }
+
+  #process1 .jp-bullets li {
+    font-size: 15px;
+    line-height: 1.8;
+  }
+
+  #process1 .jp-content-visual {
+    margin-bottom: 22px;
+  }
+
+  #process1 .jp-visual-frame {
+    aspect-ratio: 4 / 3;
+  }
+
+  #process1 .jp-point {
+    display: flex;
+    width: 100%;
+    padding: 15px 16px;
+    font-size: 15px;
+    line-height: 1.75;
+  }
+}
+
+@media (max-width: 480px) {
+  #process1 {
+    padding-bottom: 88px;
+  }
+
+  #process1 .jp-nav {
+    height: 68px;
+  }
+
+  #process1 .jp-nav-track {
+    gap: 10px;
+    padding: 0 14px;
+  }
+
+  #process1 .jp-nav-item {
+    padding: 9px 12px;
+  }
+
+  #process1 .jp-nav-label {
+    font-size: 12px;
+  }
+}
+</style>
+
+<div class="jp-intro">
+  <div class="jp-intro-inner">
+    <div class="jp-intro-eyebrow">
+      <span>Landing Page Process</span>
+    </div>
+
+    <h2 class="jp-intro-title">
+    원하는 고객을<br>자동 확보하기 위한<br>FLOS만의 프로세스<br><br>
+  
+    </h2>
+
+    <p class="jp-intro-desc">
+      <b>깊은 비즈니스의 이해를 기반으로<br>
+      기획, 마케팅, 세일즈, 디자인, 개발, 카피라이팅이<br>
+      전부 다 맞아야 만들어지는 작품입니다.<br><br></b>
+
+    </p>
+
+    <p class="jp-intro-quote">
+      그렇기 때문에<br>눈에 보이지 않는 기획부터<br>철저하게 만들어갑니다.<br> 
+    </p>
+  </div>
+</div>
+
+<div class="jp-main">
+  <nav class="jp-nav" data-floating="false" data-stopped="false" aria-label="랜딩페이지 제작 프로세스 목록">
+    <div class="jp-nav-track"></div>
+  </nav>
+  <div class="jp-content" role="region" aria-label="랜딩페이지 제작 프로세스 상세 내용"></div>
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  var process1Data = [
+    {
+      num: '01',
+      nav: '비즈니스 이해 및 상품 기획',
+      title: '해당 비즈니스의 이해 및 상품 기획',
+      lead: '온라인 마케팅이 가능한 상품인지 파악하고, 비즈니스의 흐름을 이해합니다.',
+      desc: '랜딩의 성공여부를 판단짓는 가장 결정적인 흐름으로, 상품이 해결하는 문제의 깊이, 시장 규모, 구매 빈도 등을 판단하여 상품이 온라인에서 지속적으로 팔릴 수 있는 구조인지 판단하고 설계합니다.',
+      bullets: [
+        '온라인 비즈니스가 가능한 상품설계',
+        '해당 비즈니스의 흐름을 기반으로 한 자동화 영역 설정',
+        '고객이 느끼는 문제 해결 포인트 명확화'
+      ],
+      image: './img/analytics.jpg',
+      point: '랜딩페이지의 시작은 디자인이 아니라 상품 설계입니다.'
+    },
+    {
+      num: '02',
+      nav: '타겟 설정',
+      title: '누구를 위한 페이지인지 타겟을 구체적으로 설정합니다.',
+      lead: '타겟이 선명해야 메시지도 선명해집니다.',
+      desc: '모든 사람에게 말하는 랜딩페이지는 결국 아무에게도 강하게 닿지 못합니다. 어떤 고객을 데려올 것인지, 그 고객이 어떤 문제와 욕망을 가지고 있는지, 지금 어떤 심리 상태에 있는지를 구체적으로 정리해야 이후의 설득 구조가 정교해집니다.',
+      bullets: [
+        '핵심 타겟층 세분화',
+        '고객의 고민 / 욕망 / 망설임 분석',
+        '전환 가능성이 높은 고객층 우선 설정'
+      ],
+      image: './img/adventage2.jpg',
+      point: '타겟 설정이 정확해야 랜딩페이지의 반응도 달라집니다.'
+    },
+    {
+      num: '03',
+      nav: '컨셉 및 디자인',
+      title: '브랜드에 맞는 컨셉과 디자인 방향을 설정합니다.',
+      lead: '첫인상은 클릭 이후의 신뢰를 결정합니다.',
+      desc: '랜딩페이지는 정보를 담는 화면이기도 하지만, 동시에 브랜드의 분위기와 신뢰를 전달하는 첫 접점이기도 합니다. 업종과 상품 특성에 맞는 컨셉, 톤앤매너, 시각적 무드, 레이아웃 방향을 먼저 정리해야 고객이 보는 순간 이질감 없이 몰입할 수 있습니다.',
+      bullets: [
+        '브랜드 무드와 시각적 컨셉 설계',
+        '레이아웃 / 타이포 / 컬러 방향 설정',
+        '업종과 상품에 맞는 디자인 톤 정리'
+      ],
+      image: './img/l-6.jpg',
+      point: '좋은 디자인은 예쁨보다 신뢰와 몰입을 먼저 만듭니다.'
+    },
+    {
+      num: '04',
+      nav: '카피라이팅',
+      title: '고객이 행동하게 만드는 카피라이팅을 구성합니다.',
+      lead: '문장은 설명이 아니라 전환을 만드는 흐름이어야 합니다.',
+      desc: '헤드카피, 서브카피, 문제 제기, 해결 제안, 신뢰 근거, CTA 문구까지 모두 고객의 시선에서 다시 설계합니다. 고객이 읽는 순서에 맞춰 공감하고 이해하고 확신하도록 문장을 배열해야 랜딩페이지 전체가 하나의 설득 구조로 작동하게 됩니다.',
+      bullets: [
+        '헤드카피 / 서브카피 / CTA 설계',
+        '문제 공감 → 해결 제안 흐름 구성',
+        '고객의 행동을 유도하는 문장 정리'
+      ],
+      image: './img/adventage3.jpg',
+      point: '카피가 정리되어야 랜딩페이지가 비로소 살아납니다.'
+    },
+    {
+      num: '05',
+      nav: '개발',
+      title: '고객 관점에 맞게 개발합니다.',
+      lead: '좋은 기획과 디자인도 구현이 흔들리면 전환이 떨어집니다.',
+      desc: 'PC와 모바일 환경에서 모두 자연스럽게 보이도록 반응형으로 개발하고, 버튼, 섹션, 신청 폼, 애니메이션 등 주요 요소가 실제 운영 환경에서도 안정적으로 작동하도록 세부 구현을 진행합니다. 보여주기용 시안이 아니라 운영 가능한 결과물로 완성하는 단계입니다.',
+      bullets: [
+        '반응형 퍼블리싱',
+        '실제 운영 기준의 구조 구현',
+        '버튼 / 폼 / UI 요소 안정화',
+        '관리자 페이지 개발'
+      ],
+      image: './img/adventage6.jpg',
+      point: '랜딩페이지는 화면이 아니라 실제 동작하는 자산이어야 합니다.'
+    },
+    {
+      num: '06',
+      nav: '추적 설정',
+      title: '전환을 측정할 수 있도록 추적 설정을 진행합니다.',
+      lead: '측정되지 않는 광고는 결국 감으로 운영될 수밖에 없습니다.',
+      desc: '랜딩페이지를 만든 뒤에는 단순 노출이 아니라 실제 신청, 문의, 클릭, 전환이 어떻게 일어나는지 확인할 수 있어야 합니다. 픽셀, 이벤트, 전환 추적 구조를 정리해야 어떤 광고가 효율적인지, 어떤 부분을 개선해야 하는지 데이터로 판단할 수 있습니다.',
+      bullets: [
+        '픽셀 및 전환 추적 구조 설정',
+        '버튼 클릭 / 신청 완료 이벤트 정리',
+        '광고 성과를 볼 수 있는 측정 기반 마련'
+      ],
+      image: './img/l-2.jpg',
+      point: '추적 설정은 광고비를 덜 낭비하게 만드는 핵심 장치입니다.'
+    },
+    {
+      num: '07',
+      nav: '배너 제작',
+      title: '광고 유입을 위한 배너와 소재를 제작합니다.',
+      lead: '광고 클릭은 랜딩페이지 이전에 이미 시작됩니다.',
+      desc: '좋은 랜딩페이지도 광고 소재가 약하면 유입 자체가 일어나지 않습니다. 타겟이 반응할 수 있는 핵심 문구와 비주얼을 반영해 배너를 제작하고, 랜딩페이지의 메시지와 끊기지 않도록 광고와 페이지 사이의 연결감을 맞춰줍니다.',
+      bullets: [
+        '광고용 배너 문구 및 비주얼 제작',
+        '타겟별 반응 포인트 반영',
+        '랜딩페이지와 이어지는 메시지 연결'
+      ],
+      image: './img/adventage5.jpg',
+      point: '배너는 클릭을 만들고, 랜딩페이지는 전환을 만듭니다.'
+    },
+    {
+      num: '08',
+      nav: '광고 세팅',
+      title: '실제 유입과 전환을 위한 광고 세팅을 진행합니다.',
+      lead: '랜딩페이지는 광고와 연결될 때 비로소 성과 구조가 완성됩니다.',
+      desc: '타겟, 예산, 소재, 캠페인 구조를 실제 운영 기준에 맞게 정리하여 광고 세팅을 진행합니다. 어떤 타겟에게 어떤 메시지와 배너를 보여줄지, 랜딩페이지와 어떻게 연결할지까지 포함해서 전체 퍼널이 하나의 구조로 작동하도록 설계합니다.',
+      bullets: [
+        '광고 캠페인 구조 설정',
+        '타겟 / 예산 / 소재 연결 세팅',
+        '랜딩페이지와 광고 퍼널 최종 연결'
+      ],
+      image: './img/ads.png',
+      point: '광고 세팅까지 연결되어야 랜딩페이지가 실제 매출 구조가 됩니다.'
+    }
+  ];
+
+  var root = document.getElementById('process1');
+  if (!root) return;
+
+  var nav = root.querySelector('.jp-nav');
+  var navTrack = root.querySelector('.jp-nav-track');
+  var content = root.querySelector('.jp-content');
+  var jpMain = root.querySelector('.jp-main');
+
+  process1Data.forEach(function(item, i) {
+    var navEl = document.createElement('div');
+    navEl.className = 'jp-nav-item';
+    navEl.setAttribute('data-index', i);
+    navEl.setAttribute('data-active', i === 0 ? 'true' : 'false');
+    navEl.setAttribute('role', 'button');
+    navEl.setAttribute('aria-label', item.num + ' ' + item.nav);
+    navEl.setAttribute('tabindex', '0');
+    navEl.innerHTML =
+      '<span class="jp-nav-num">' + item.num + '.</span>' +
+      '<span class="jp-nav-label">' + item.nav + '</span>';
+    navTrack.appendChild(navEl);
+
+    var bulletsHtml = '';
+    if (item.bullets && item.bullets.length) {
+      bulletsHtml = '<ul class="jp-bullets">';
+      item.bullets.forEach(function(bullet) {
+        bulletsHtml += '<li>' + bullet + '</li>';
+      });
+      bulletsHtml += '</ul>';
+    }
+
+    var imageHtml = '';
+    if (item.image) {
+      imageHtml =
+        '<div class="jp-content-visual">' +
+          '<div class="jp-visual-frame">' +
+            '<img src="' + item.image + '" alt="' + item.title + ' 이미지" loading="lazy">' +
+          '</div>' +
+        '</div>';
+    } else {
+      imageHtml = '<div class="jp-content-visual is-empty"></div>';
+    }
+
+    var contentEl = document.createElement('article');
+    contentEl.className = 'jp-content-item';
+    contentEl.setAttribute('data-index', i);
+    contentEl.setAttribute('data-visible', 'false');
+    contentEl.setAttribute('aria-label', item.title);
+    contentEl.innerHTML =
+      '<span class="jp-step-num">STEP ' + item.num + '</span>' +
+      '<h3 class="jp-content-title">' + item.title + '</h3>' +
+      '<p class="jp-content-lead">' + item.lead + '</p>' +
+      '<p class="jp-content-desc">' + item.desc + '</p>' +
+      bulletsHtml +
+      imageHtml +
+      '<div class="jp-point">' + item.point + '</div>';
+    content.appendChild(contentEl);
+  });
+
+  var navItems = nav.querySelectorAll('.jp-nav-item');
+  var contentItems = content.querySelectorAll('.jp-content-item');
+
+  var ticking = false;
+  var currentActive = -1;
+  var isMobile = false;
+  var blockSyntheticClickOnce = false;
+
+  var dragState = {
+    isDown: false,
+    startX: 0,
+    startY: 0,
+    startShift: 0,
+    currentShift: 0,
+    movedEnough: false,
+    pointerId: null
+  };
+
+  function checkMobile() {
+    isMobile = window.innerWidth <= 768;
+  }
+
+  function getOffsetTopWithin(ancestor, el) {
+    var top = 0;
+    var node = el;
+    while (node && node !== ancestor) {
+      top += node.offsetTop;
+      node = node.offsetParent;
+    }
+    return top;
+  }
+
+  function getStopNavTopInMain() {
+    var lastItem = contentItems[contentItems.length - 1];
+    if (!lastItem) return 0;
+
+    var lastItemBottom = getOffsetTopWithin(jpMain, lastItem) + lastItem.offsetHeight;
+    var navHeight = nav.offsetHeight || 0;
+    return Math.max(0, lastItemBottom - navHeight);
+  }
+
+  function updateFloatingNavState() {
+    var viewportH = window.innerHeight;
+    var mainRect = jpMain.getBoundingClientRect();
+
+    if (isMobile) {
+      var mainInView = mainRect.top < viewportH && mainRect.bottom > 0;
+      nav.setAttribute('data-floating', mainInView ? 'true' : 'false');
+      nav.setAttribute('data-stopped', 'false');
+      nav.style.top = '';
+      nav.style.bottom = '0';
+      return;
+    }
+
+    var navHeight = nav.offsetHeight;
+    var fixedNavTopInViewport = (viewportH - navHeight) / 2;
+    var currentFixedTopInMain = fixedNavTopInViewport - mainRect.top;
+    var stopNavTopInMain = getStopNavTopInMain();
+
+    var isBeforeMain = mainRect.top >= viewportH * 0.3;
+
+    if (isBeforeMain) {
+      nav.setAttribute('data-floating', 'false');
+      nav.setAttribute('data-stopped', 'false');
+      nav.style.top = '';
+      return;
+    }
+
+    if (currentFixedTopInMain >= stopNavTopInMain) {
+      nav.setAttribute('data-floating', 'true');
+      nav.setAttribute('data-stopped', 'true');
+      nav.style.top = '';
+      return;
+    }
+
+    nav.setAttribute('data-floating', 'true');
+    nav.setAttribute('data-stopped', 'false');
+    nav.style.top = '';
+  }
+
+  function getMaxShift() {
+    var navWidth = nav.clientWidth || window.innerWidth;
+    var trackWidth = navTrack.scrollWidth || 0;
+    return Math.max(0, trackWidth - navWidth + 36);
+  }
+
+  function clampShift(value) {
+    var maxShift = getMaxShift();
+    if (value < 0) return 0;
+    if (value > maxShift) return maxShift;
+    return value;
+  }
+
+  function applyTrackShift(shift, withTransition) {
+    dragState.currentShift = clampShift(shift);
+
+    if (withTransition) {
+      navTrack.style.transition = 'transform 0.42s cubic-bezier(0.22, 1, 0.36, 1)';
+    } else {
+      navTrack.style.transition = 'none';
+    }
+
+    navTrack.style.transform = 'translate3d(' + (-dragState.currentShift) + 'px, -50%, 0)';
+  }
+
+  function moveActiveItemIntoView(activeIndex, withTransition) {
+    if (!isMobile) return;
+
+    var activeItem = navItems[activeIndex];
+    if (!activeItem) return;
+
+    var navWidth = nav.clientWidth;
+    var itemLeft = activeItem.offsetLeft;
+    var itemWidth = activeItem.offsetWidth;
+
+    var target = itemLeft - ((navWidth - itemWidth) / 2);
+    target = clampShift(target);
+
+    applyTrackShift(target, withTransition !== false);
+  }
+
+  function goToSection(idx) {
+    contentItems[idx].scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+    if (isMobile) {
+      moveActiveItemIntoView(idx, true);
+    }
+  }
+
+  function getItemFromPoint(clientX, clientY) {
+    var el = document.elementFromPoint(clientX, clientY);
+    if (!el) return null;
+    return el.closest ? el.closest('#process1 .jp-nav-item') : null;
+  }
+
+  function beginDrag(e) {
+    dragState.isDown = true;
+    dragState.pointerId = e.pointerId || null;
+    dragState.startX = e.clientX;
+    dragState.startY = e.clientY;
+    dragState.startShift = dragState.currentShift;
+    dragState.movedEnough = false;
+    navTrack.classList.add('jp-dragging');
+
+    try {
+      if (dragState.pointerId != null && navTrack.setPointerCapture) {
+        navTrack.setPointerCapture(dragState.pointerId);
+      }
+    } catch (err) {}
+  }
+
+  function moveDrag(e) {
+    if (!dragState.isDown) return;
+
+    var deltaX = e.clientX - dragState.startX;
+    var deltaY = e.clientY - dragState.startY;
+
+    if (Math.abs(deltaX) > 8 && Math.abs(deltaX) > Math.abs(deltaY)) {
+      dragState.movedEnough = true;
+    }
+
+    if (dragState.movedEnough) {
+      var nextShift = dragState.startShift - deltaX;
+      applyTrackShift(nextShift, false);
+    }
+  }
+
+  function endDrag(e) {
+    if (!dragState.isDown) return;
+
+    var upTargetItem = getItemFromPoint(e.clientX, e.clientY);
+
+    navTrack.classList.remove('jp-dragging');
+    dragState.isDown = false;
+
+    if (dragState.movedEnough) {
+      blockSyntheticClickOnce = true;
+      return;
+    }
+
+    if (upTargetItem) {
+      var idx = parseInt(upTargetItem.getAttribute('data-index'), 10);
+      if (!isNaN(idx)) {
+        goToSection(idx);
+      }
+    }
+  }
+
+  function updateActiveState() {
+    var viewportH = window.innerHeight;
+    var triggerPoint = viewportH * 0.4;
+    var newActive = 0;
+
+    updateFloatingNavState();
+
+    for (var i = 0; i < contentItems.length; i++) {
+      var rect = contentItems[i].getBoundingClientRect();
+      if (rect.top <= triggerPoint) {
+        newActive = i;
+      }
+    }
+
+    if (newActive !== currentActive) {
+      currentActive = newActive;
+
+      for (var j = 0; j < navItems.length; j++) {
+        navItems[j].setAttribute('data-active', j === currentActive ? 'true' : 'false');
+      }
+
+      if (isMobile && !dragState.isDown) {
+        moveActiveItemIntoView(currentActive, true);
+      }
+    }
+
+    for (var k = 0; k < contentItems.length; k++) {
+      var r = contentItems[k].getBoundingClientRect();
+      var isVisible = r.top < viewportH * 0.75 && r.bottom > viewportH * 0.15;
+      contentItems[k].setAttribute('data-visible', isVisible ? 'true' : 'false');
+    }
+
+    ticking = false;
+  }
+
+  function onScroll() {
+    if (!ticking) {
+      requestAnimationFrame(updateActiveState);
+      ticking = true;
+    }
+  }
+
+  function fullRefresh() {
+    checkMobile();
+    nav.setAttribute('data-stopped', 'false');
+    nav.setAttribute('data-floating', 'false');
+    nav.style.top = '';
+
+    if (!isMobile) {
+      navTrack.style.transition = '';
+      navTrack.style.transform = '';
+    } else {
+      moveActiveItemIntoView(currentActive >= 0 ? currentActive : 0, false);
+    }
+
+    requestAnimationFrame(updateActiveState);
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', fullRefresh, { passive: true });
+  window.addEventListener('load', fullRefresh);
+
+  navTrack.addEventListener('pointerdown', function(e) {
+    if (e.pointerType === 'mouse' && e.button !== 0) return;
+    beginDrag(e);
+  });
+
+  navTrack.addEventListener('pointermove', function(e) {
+    moveDrag(e);
+  });
+
+  navTrack.addEventListener('pointerup', function(e) {
+    endDrag(e);
+  });
+
+  navTrack.addEventListener('pointercancel', function() {
+    if (!dragState.isDown) return;
+    navTrack.classList.remove('jp-dragging');
+    dragState.isDown = false;
+  });
+
+  navTrack.addEventListener('lostpointercapture', function() {
+    if (dragState.isDown) {
+      navTrack.classList.remove('jp-dragging');
+      dragState.isDown = false;
+    }
+  });
+
+  navItems.forEach(function(navItem, idx) {
+    navItem.addEventListener('click', function(e) {
+      if (blockSyntheticClickOnce) {
+        e.preventDefault();
+        e.stopPropagation();
+        blockSyntheticClickOnce = false;
+        return;
+      }
+      goToSection(idx);
+    });
+
+    navItem.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        goToSection(idx);
+      }
+    });
+  });
+
+  requestAnimationFrame(fullRefresh);
+})();
+</script>
 </section>
 
 <section id="flosValueStructure1">
@@ -5821,7 +6882,7 @@
     <div class="jei-grid">
       <div class="jei-left">
         <h1 class="jei-title">
-          랜딩페이지는<br>조건이 갖춰져야<br>제작할 수 있습니다
+          단, 랜딩페이지는<br>조건이 갖춰져야<br>제작할 수 있습니다
         </h1>
       </div>
 

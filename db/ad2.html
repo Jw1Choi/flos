@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
+  >
+
+  <title>광고 성과 지표</title>
+
+  <style>
+    /* ==============================
+       기본 설정
+       ============================== */
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      background: #ffffff;
+    }
+
+    body {
+      font-family:
+        Pretendard,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Apple SD Gothic Neo",
+        "Noto Sans KR",
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    /* ==============================
+       전체 지표 영역
+       ============================== */
+    #adsMetricsReplica {
+      width: 100%;
+      overflow-x: auto;
+      overflow-y: hidden;
+      background: #ffffff;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+    }
+
+    #adsMetricsReplica .amr-table {
+      display: grid;
+
+      /* 첨부 이미지 기준 열 너비 */
+      grid-template-columns:
+        160px
+        148px
+        148px
+        148px
+        148px
+        164px
+        164px;
+
+      width: 1080px;
+      min-width: 1080px;
+      height: 118px;
+
+      border-top: 1px solid #dfe1e6;
+      border-bottom: 1px solid #dfe1e6;
+      background: #ffffff;
+    }
+
+    /* ==============================
+       개별 지표 열
+       ============================== */
+    #adsMetricsReplica .amr-column {
+      position: relative;
+      display: grid;
+      grid-template-rows: 45px 72px;
+
+      min-width: 0;
+      height: 117px;
+
+      border-right: 1px solid #d5d8df;
+      background: #ffffff;
+    }
+
+    #adsMetricsReplica .amr-column:last-child {
+      border-right: 0;
+    }
+
+    /* ==============================
+       상단 제목 영역
+       ============================== */
+    #adsMetricsReplica .amr-header {
+      position: relative;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      width: 100%;
+      height: 45px;
+      padding: 0 13px 0 25px;
+
+      color: #747b88;
+      background: #ffffff;
+      border-bottom: 1px solid #e5e7eb;
+
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1;
+      letter-spacing: -0.35px;
+      white-space: nowrap;
+    }
+
+    /* ==============================
+       왼쪽 점 아이콘
+       ============================== */
+    #adsMetricsReplica .amr-drag-icon {
+      position: absolute;
+      top: 50%;
+      left: 10px;
+
+      width: 10px;
+      height: 16px;
+
+      transform: translateY(-50%);
+
+      background-image:
+        radial-gradient(
+          circle,
+          #c8ccd4 1.2px,
+          transparent 1.35px
+        );
+
+      background-position: 0 0;
+      background-size: 5px 5px;
+      background-repeat: repeat;
+
+      opacity: 0.95;
+    }
+
+    /* ==============================
+       하단 숫자 영역
+       오른쪽 정렬 적용
+       ============================== */
+    #adsMetricsReplica .amr-body {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      justify-content: flex-start;
+
+      width: 100%;
+      height: 72px;
+      padding: 18px 14px 8px;
+
+      background: #f5f6f9;
+      text-align: right;
+    }
+
+    /* 숫자 데이터 */
+    #adsMetricsReplica .amr-value {
+      display: block;
+      width: 100%;
+
+      margin: 0;
+      padding: 0;
+
+      color: #292d35;
+      text-align: right;
+
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.45px;
+      white-space: nowrap;
+    }
+
+    /* 하단 설명 문구 */
+    #adsMetricsReplica .amr-description {
+      display: block;
+      width: 100%;
+
+      margin-top: 5px;
+
+      color: #8a909b;
+      text-align: right;
+
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 1.15;
+      letter-spacing: -0.25px;
+      white-space: nowrap;
+    }
+
+    /* ==============================
+       빨간색 강조 테두리
+       ============================== */
+    #adsMetricsReplica .amr-column.is-highlighted {
+      z-index: 2;
+
+      box-shadow:
+        inset 5px 0 0 #ff2600,
+        inset -5px 0 0 #ff2600,
+        inset 0 5px 0 #ff2600,
+        inset 0 -5px 0 #ff2600;
+    }
+
+    /* 빨간 테두리 안쪽 간격 보정 */
+    #adsMetricsReplica .amr-column.is-highlighted .amr-header {
+      padding-left: 27px;
+      padding-right: 15px;
+    }
+
+    #adsMetricsReplica .amr-column.is-highlighted .amr-body {
+      padding-right: 15px;
+    }
+
+    /* ==============================
+       모바일
+       원본 크기를 유지하며 좌우 스크롤
+       ============================== */
+    @media (max-width: 1080px) {
+      #adsMetricsReplica {
+        cursor: grab;
+      }
+
+      #adsMetricsReplica:active {
+        cursor: grabbing;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <section
+    id="adsMetricsReplica"
+    aria-label="광고 성과 지표"
+  >
+    <div class="amr-table">
+
+      <!-- 비용 -->
+      <article class="amr-column is-highlighted">
+        <div class="amr-header">
+          <span
+            class="amr-drag-icon"
+            aria-hidden="true"
+          ></span>
+
+          <span>비용 (VAT 포함)</span>
+        </div>
+
+        <div class="amr-body">
+          <strong class="amr-value">
+            671,000원
+          </strong>
+
+          <span class="amr-description">
+            총 비용
+          </span>
+        </div>
+      </article>
+
+      <!-- 노출 수 -->
+      <article class="amr-column">
+        <div class="amr-header">
+          <span
+            class="amr-drag-icon"
+            aria-hidden="true"
+          ></span>
+
+          <span>노출 수</span>
+        </div>
+
+        <div class="amr-body">
+          <strong class="amr-value">
+            76,633회
+          </strong>
+
+          <span class="amr-description">
+            총 노출 수
+          </span>
+        </div>
+      </article>
+
+      <!-- 도달 수 -->
+      <article class="amr-column">
+        <div class="amr-header">
+          <span
+            class="amr-drag-icon"
+            aria-hidden="true"
+          ></span>
+
+          <span>도달 수</span>
+        </div>
+
+        <div class="amr-body">
+          <strong class="amr-value">
+            23,829명
+          </strong>
+
+          <span class="amr-description">
+            총 도달 수
+          </span>
+        </div>
+      </article>
+
+      <!-- 클릭 수 -->
+      <article class="amr-column">
+        <div class="amr-header">
+          <span
+            class="amr-drag-icon"
+            aria-hidden="true"
+          ></span>
+
+          <span>클릭 수</span>
+        </div>
+
+        <div class="amr-body">
+          <strong class="amr-value">
+            102,512회
+          </strong>
+
+          <span class="amr-description">
+            총 클릭 수
+          </span>
+        </div>
+      </article>
+
+      <!-- 클릭률 -->
+      <article class="amr-column">
+        <div class="amr-header">
+          <span
+            class="amr-drag-icon"
+            aria-hidden="true"
+          ></span>
+
+          <span>클릭률</span>
+        </div>
+
+        <div class="amr-body">
+          <strong class="amr-value">
+            3.98%
+          </strong>
+
+          <span class="amr-description">
+            총 클릭률
+          </span>
+        </div>
+      </article>
+
+      <!-- 클릭당 비용 -->
+      <article class="amr-column">
+        <div class="amr-header">
+          <span
+            class="amr-drag-icon"
+            aria-hidden="true"
+          ></span>
+
+          <span>클릭당 비용(CPC)</span>
+        </div>
+
+        <div class="amr-body">
+          <strong class="amr-value">
+            220원
+          </strong>
+
+          <span class="amr-description">
+            총 클릭당 비용
+          </span>
+        </div>
+      </article>
+
+      <!-- 구매 수 -->
+      <article class="amr-column is-highlighted">
+        <div class="amr-header">
+          <span
+            class="amr-drag-icon"
+            aria-hidden="true"
+          ></span>
+
+          <span>구매 수</span>
+        </div>
+
+        <div class="amr-body">
+          <strong class="amr-value">
+            122회
+          </strong>
+
+          <span class="amr-description">
+            총 구매 수
+          </span>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+</body>
+</html>

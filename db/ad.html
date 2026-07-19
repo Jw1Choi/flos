@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes"
+  >
+
+  <meta
+    name="description"
+    content="메타 광고 캠페인 성과 테이블"
+  >
+
+  <title>메타 광고 캠페인 성과</title>
+
+  <style>
+    /* =====================================================
+       기본 초기화
+       ===================================================== */
+
+    html,
+    body {
+      width: 100%;
+      min-height: 100%;
+      margin: 0;
+      padding: 0;
+      background: #ffffff;
+    }
+
+    body {
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Apple SD Gothic Neo",
+        "Helvetica Neue",
+        Arial,
+        "Noto Sans KR",
+        sans-serif;
+
+      -webkit-font-smoothing: antialiased;
+      text-rendering: geometricPrecision;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    /* =====================================================
+       Scope: #metaCampaignMetricRow ONLY
+       첨부 이미지 기준 크기: 1155px × 122px
+       ===================================================== */
+
+    #metaCampaignMetricRow {
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background: #ffffff;
+
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Apple SD Gothic Neo",
+        "Helvetica Neue",
+        Arial,
+        "Noto Sans KR",
+        sans-serif;
+
+      -webkit-font-smoothing: antialiased;
+      text-rendering: geometricPrecision;
+    }
+
+    #metaCampaignMetricRow,
+    #metaCampaignMetricRow * {
+      box-sizing: border-box;
+    }
+
+    #metaCampaignMetricRow .mcmr-shell {
+      position: relative;
+      width: 100%;
+      max-width: 1155px;
+      height: 122px;
+      margin: 0 auto;
+      overflow: hidden;
+      background: #ffffff;
+    }
+
+    #metaCampaignMetricRow .mcmr-stage {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 1155px;
+      height: 122px;
+      overflow: hidden;
+      background: #ffffff;
+      transform-origin: left top;
+      will-change: transform;
+    }
+
+    /* =====================================================
+       공통 그리드
+       ===================================================== */
+
+    #metaCampaignMetricRow .mcmr-grid {
+      display: grid;
+
+      grid-template-columns:
+        432px
+        189px
+        179px
+        170px
+        185px;
+
+      width: 1155px;
+    }
+
+    /* =====================================================
+       헤더
+       ===================================================== */
+
+    #metaCampaignMetricRow .mcmr-header {
+      height: 62px;
+      border-top: 1px solid #c9cdd0;
+      border-bottom: 1px solid #d2d6d9;
+      background: #ffffff;
+    }
+
+    #metaCampaignMetricRow .mcmr-header-cell {
+      position: relative;
+      display: flex;
+      align-items: center;
+      height: 61px;
+      padding: 0 39px 0 13px;
+      overflow: hidden;
+      border-right: 1px solid #dfe3e7;
+      background: #ffffff;
+      color: #162229;
+
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: -0.45px;
+      white-space: nowrap;
+    }
+
+    #metaCampaignMetricRow .mcmr-header-cell:last-child {
+      border-right: 0;
+    }
+
+    #metaCampaignMetricRow .mcmr-header-content {
+      display: inline-flex;
+      align-items: center;
+      min-width: 0;
+    }
+
+    #metaCampaignMetricRow .mcmr-header-title {
+      display: inline-block;
+    }
+
+    /* =====================================================
+       상하 정렬 아이콘
+       ===================================================== */
+
+    #metaCampaignMetricRow .mcmr-sort-icon {
+      display: inline-flex;
+      flex: 0 0 auto;
+      width: 18px;
+      height: 18px;
+      margin-left: 5px;
+      color: #1c2b32;
+    }
+
+    #metaCampaignMetricRow .mcmr-sort-icon svg {
+      display: block;
+      width: 18px;
+      height: 18px;
+      overflow: visible;
+    }
+
+    #metaCampaignMetricRow .mcmr-sort-icon path {
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.45;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* =====================================================
+       우측 드롭다운 화살표
+       ===================================================== */
+
+    #metaCampaignMetricRow .mcmr-dropdown {
+      position: absolute;
+      top: 27px;
+      right: 13px;
+      width: 0;
+      height: 0;
+
+      border-top: 6px solid #26353c;
+      border-right: 5px solid transparent;
+      border-left: 5px solid transparent;
+    }
+
+    /* =====================================================
+       데이터 행
+       ===================================================== */
+
+    #metaCampaignMetricRow .mcmr-body {
+      height: 60px;
+      border-bottom: 1px solid #eff1f2;
+      background: #ffffff;
+    }
+
+    #metaCampaignMetricRow .mcmr-body-cell {
+      position: relative;
+      height: 60px;
+      overflow: hidden;
+      border-right: 1px solid #edf0f2;
+      background: #ffffff;
+    }
+
+    #metaCampaignMetricRow .mcmr-body-cell:last-child {
+      border-right: 0;
+    }
+
+    /* =====================================================
+       첫 번째 고정 열 느낌의 그림자
+       ===================================================== */
+
+    #metaCampaignMetricRow .mcmr-first-column {
+      z-index: 3;
+
+      box-shadow:
+        5px 0 7px rgba(22, 32, 38, 0.08),
+        1px 0 0 #dfe3e7;
+    }
+
+    /* =====================================================
+       캠페인명
+       ===================================================== */
+
+    #metaCampaignMetricRow .mcmr-campaign-cell {
+      display: flex;
+      align-items: flex-start;
+      padding: 7px 12px 0 10px;
+    }
+
+    #metaCampaignMetricRow .mcmr-campaign-name {
+      display: inline-block;
+      max-width: 100%;
+      overflow: hidden;
+
+      color: #0759c7;
+      font-size: 17px;
+      font-weight: 600;
+      line-height: 25px;
+      letter-spacing: -0.42px;
+      text-decoration: none;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    /* =====================================================
+       수치 셀
+       ===================================================== */
+
+    #metaCampaignMetricRow .mcmr-metric-cell {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      justify-content: flex-start;
+      padding: 8px 13px 4px 8px;
+      text-align: right;
+    }
+
+    #metaCampaignMetricRow .mcmr-main-value {
+      display: inline-flex;
+      align-items: center;
+      justify-content: flex-end;
+      min-height: 22px;
+      max-width: 100%;
+
+      color: #2c353a;
+
+      font-family:
+        "Helvetica Neue",
+        Arial,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Apple SD Gothic Neo",
+        sans-serif;
+
+      font-size: 17px;
+      font-weight: 500;
+      line-height: 22px;
+      letter-spacing: -0.25px;
+      white-space: nowrap;
+    }
+
+    #metaCampaignMetricRow .mcmr-main-value.mcmr-link-value {
+      color: #0878c9;
+    }
+
+    #metaCampaignMetricRow .mcmr-underlined-value {
+      display: inline-block;
+      height: 21px;
+      border-bottom: 1px dotted currentColor;
+      line-height: 20px;
+    }
+
+    #metaCampaignMetricRow .mcmr-sub-value {
+      display: block;
+      max-width: 100%;
+      margin-top: 1px;
+      overflow: hidden;
+
+      color: #898f93;
+      font-size: 15px;
+      font-weight: 700;
+      line-height: 20px;
+      letter-spacing: -0.45px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    /* =====================================================
+       결과 값 앞 파란색 흐름 아이콘
+       ===================================================== */
+
+    #metaCampaignMetricRow .mcmr-result-icon {
+      display: inline-flex;
+      flex: 0 0 auto;
+      width: 20px;
+      height: 16px;
+      margin-right: 4px;
+      color: #0878c9;
+    }
+
+    #metaCampaignMetricRow .mcmr-result-icon svg {
+      display: block;
+      width: 20px;
+      height: 16px;
+      overflow: visible;
+    }
+
+    #metaCampaignMetricRow .mcmr-result-icon path {
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.7;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* =====================================================
+       클릭해서 글자 및 숫자 수정
+       ===================================================== */
+
+    #metaCampaignMetricRow [contenteditable="true"] {
+      cursor: text;
+      outline: none;
+    }
+
+    #metaCampaignMetricRow [contenteditable="true"]:focus {
+      border-radius: 2px;
+      outline: 1px dashed rgba(8, 120, 201, 0.7);
+      outline-offset: 2px;
+    }
+
+    /* 구매 수 × 구매당 비용으로 자동 계산되는 지출 금액 */
+    #metaCampaignMetricRow .mcmr-auto-calculated {
+      cursor: default;
+      user-select: text;
+    }
+
+    /* =====================================================
+       작은 화면 대응
+       전체 테이블을 원본 비율로 자동 축소
+       ===================================================== */
+
+    @media (max-width: 600px) {
+      #metaCampaignMetricRow {
+        overflow: hidden;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <section
+    id="metaCampaignMetricRow"
+    aria-label="메타 광고 캠페인 성과"
+  >
+    <div class="mcmr-shell">
+
+      <div class="mcmr-stage">
+
+        <!-- ==========================================
+             헤더
+             ========================================== -->
+
+        <div class="mcmr-grid mcmr-header">
+
+          <!-- 캠페인 -->
+          <div class="mcmr-header-cell mcmr-first-column">
+            <div class="mcmr-header-content">
+
+              <span class="mcmr-header-title">
+                캠페인
+              </span>
+
+              <span class="mcmr-sort-icon" aria-hidden="true">
+                <svg viewBox="0 0 18 18">
+                  <path d="M4.5 14.8V3.2"></path>
+                  <path d="M1.8 5.8 4.5 3.1l2.7 2.7"></path>
+
+                  <path d="M13.5 3.2v11.6"></path>
+                  <path d="m10.8 12.2 2.7 2.7 2.7-2.7"></path>
+                </svg>
+              </span>
+
+            </div>
+
+            <span
+              class="mcmr-dropdown"
+              aria-hidden="true"
+            ></span>
+          </div>
+
+          <!-- 결과 -->
+          <div class="mcmr-header-cell">
+            <div class="mcmr-header-content">
+
+              <span class="mcmr-header-title">
+                결과
+              </span>
+
+              <span class="mcmr-sort-icon" aria-hidden="true">
+                <svg viewBox="0 0 18 18">
+                  <path d="M4.5 14.8V3.2"></path>
+                  <path d="M1.8 5.8 4.5 3.1l2.7 2.7"></path>
+
+                  <path d="M13.5 3.2v11.6"></path>
+                  <path d="m10.8 12.2 2.7 2.7 2.7-2.7"></path>
+                </svg>
+              </span>
+
+            </div>
+
+            <span
+              class="mcmr-dropdown"
+              aria-hidden="true"
+            ></span>
+          </div>
+
+          <!-- 결과당 비용 -->
+          <div class="mcmr-header-cell">
+            <div class="mcmr-header-content">
+
+              <span class="mcmr-header-title">
+                결과당 비용
+              </span>
+
+              <span class="mcmr-sort-icon" aria-hidden="true">
+                <svg viewBox="0 0 18 18">
+                  <path d="M4.5 14.8V3.2"></path>
+                  <path d="M1.8 5.8 4.5 3.1l2.7 2.7"></path>
+
+                  <path d="M13.5 3.2v11.6"></path>
+                  <path d="m10.8 12.2 2.7 2.7 2.7-2.7"></path>
+                </svg>
+              </span>
+
+            </div>
+
+            <span
+              class="mcmr-dropdown"
+              aria-hidden="true"
+            ></span>
+          </div>
+
+          <!-- 예산 -->
+          <div class="mcmr-header-cell">
+            <div class="mcmr-header-content">
+
+              <span class="mcmr-header-title">
+                예산
+              </span>
+
+              <span class="mcmr-sort-icon" aria-hidden="true">
+                <svg viewBox="0 0 18 18">
+                  <path d="M4.5 14.8V3.2"></path>
+                  <path d="M1.8 5.8 4.5 3.1l2.7 2.7"></path>
+
+                  <path d="M13.5 3.2v11.6"></path>
+                  <path d="m10.8 12.2 2.7 2.7 2.7-2.7"></path>
+                </svg>
+              </span>
+
+            </div>
+
+            <span
+              class="mcmr-dropdown"
+              aria-hidden="true"
+            ></span>
+          </div>
+
+          <!-- 지출 금액 -->
+          <div class="mcmr-header-cell">
+            <div class="mcmr-header-content">
+
+              <span class="mcmr-header-title">
+                지출 금액
+              </span>
+
+              <span class="mcmr-sort-icon" aria-hidden="true">
+                <svg viewBox="0 0 18 18">
+                  <path d="M4.5 14.8V3.2"></path>
+                  <path d="M1.8 5.8 4.5 3.1l2.7 2.7"></path>
+
+                  <path d="M13.5 3.2v11.6"></path>
+                  <path d="m10.8 12.2 2.7 2.7 2.7-2.7"></path>
+                </svg>
+              </span>
+
+            </div>
+
+            <span
+              class="mcmr-dropdown"
+              aria-hidden="true"
+            ></span>
+          </div>
+
+        </div>
+
+        <!-- ==========================================
+             데이터 행
+             ========================================== -->
+
+        <div class="mcmr-grid mcmr-body">
+
+          <!-- 캠페인명 -->
+          <div
+            class="mcmr-body-cell mcmr-campaign-cell mcmr-first-column"
+          >
+            <span
+              class="mcmr-campaign-name"
+              contenteditable="true"
+              spellcheck="false"
+              data-field="campaign"
+            >구매 - 가전 - [25-64] - 남여 - 전국</span>
+          </div>
+
+          <!-- 결과 -->
+          <div class="mcmr-body-cell mcmr-metric-cell">
+
+            <div class="mcmr-main-value mcmr-link-value">
+
+              <span
+                class="mcmr-result-icon"
+                aria-hidden="true"
+              >
+                <svg viewBox="0 0 20 16">
+                  <path d="M1.5 3.2 7 7.7l3.1-2.5 5.5 5.1"></path>
+                  <path d="M12.4 10.3h3.3V7"></path>
+                </svg>
+              </span>
+
+              <span
+                id="purchaseCount"
+                class="mcmr-underlined-value"
+                contenteditable="true"
+                inputmode="numeric"
+                spellcheck="false"
+                data-field="result"
+              >53</span>
+
+            </div>
+
+            <div
+              class="mcmr-sub-value"
+              contenteditable="true"
+              spellcheck="false"
+              data-field="result-description"
+            >웹사이트 구매</div>
+
+          </div>
+
+          <!-- 결과당 비용 -->
+          <div class="mcmr-body-cell mcmr-metric-cell">
+
+            <div class="mcmr-main-value">
+
+              <span
+                id="costPerPurchase"
+                class="mcmr-underlined-value"
+                contenteditable="true"
+                inputmode="numeric"
+                spellcheck="false"
+                data-field="cost-per-result"
+              >₩36,414</span>
+
+            </div>
+
+            <div
+              class="mcmr-sub-value"
+              contenteditable="true"
+              spellcheck="false"
+              data-field="cost-description"
+            >구매당</div>
+
+          </div>
+
+          <!-- 예산 -->
+          <div class="mcmr-body-cell mcmr-metric-cell">
+
+            <div
+              class="mcmr-main-value"
+              contenteditable="true"
+              spellcheck="false"
+              data-field="budget"
+            >₩131,000</div>
+
+            <div
+              class="mcmr-sub-value"
+              contenteditable="true"
+              spellcheck="false"
+              data-field="budget-description"
+            >일일</div>
+
+          </div>
+
+          <!-- 지출 금액 -->
+          <div class="mcmr-body-cell mcmr-metric-cell">
+
+            <div
+              id="totalSpent"
+              class="mcmr-main-value mcmr-auto-calculated"
+              data-field="spent"
+              aria-live="polite"
+            >₩1,929,942</div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <script>
+    (function () {
+      "use strict";
+
+      const section = document.getElementById(
+        "metaCampaignMetricRow"
+      );
+
+      if (!section) {
+        return;
+      }
+
+      const shell = section.querySelector(".mcmr-shell");
+      const stage = section.querySelector(".mcmr-stage");
+
+      const purchaseCountElement =
+        section.querySelector("#purchaseCount");
+
+      const costPerPurchaseElement =
+        section.querySelector("#costPerPurchase");
+
+      const totalSpentElement =
+        section.querySelector("#totalSpent");
+
+      const editableElements = section.querySelectorAll(
+        '[contenteditable="true"]'
+      );
+
+      const ORIGINAL_WIDTH = 1155;
+      const ORIGINAL_HEIGHT = 122;
+
+      /*
+       * 입력된 문자열에서 숫자만 추출합니다.
+       * 예: "₩36,414" → 36414
+       */
+      function extractNumber(value) {
+        const numericText = String(value || "").replace(/[^0-9]/g, "");
+
+        if (!numericText) {
+          return 0;
+        }
+
+        const parsedNumber = Number(numericText);
+
+        return Number.isFinite(parsedNumber)
+          ? parsedNumber
+          : 0;
+      }
+
+      /*
+       * 숫자를 원화 표시 형식으로 변환합니다.
+       * 예: 1929942 → ₩1,929,942
+       */
+      function formatWon(value) {
+        const safeValue = Number.isFinite(value)
+          ? Math.round(value)
+          : 0;
+
+        return "₩" + safeValue.toLocaleString("ko-KR");
+      }
+
+      /*
+       * 구매 수를 천 단위 쉼표 형식으로 정리합니다.
+       */
+      function formatCount(value) {
+        const safeValue = Number.isFinite(value)
+          ? Math.round(value)
+          : 0;
+
+        return safeValue.toLocaleString("ko-KR");
+      }
+
+      /*
+       * 지출 금액 = 구매 수 × 구매당 비용
+       */
+      function calculateTotalSpent() {
+        if (
+          !purchaseCountElement ||
+          !costPerPurchaseElement ||
+          !totalSpentElement
+        ) {
+          return;
+        }
+
+        const purchaseCount = extractNumber(
+          purchaseCountElement.textContent
+        );
+
+        const costPerPurchase = extractNumber(
+          costPerPurchaseElement.textContent
+        );
+
+        totalSpentElement.textContent = formatWon(
+          purchaseCount * costPerPurchase
+        );
+      }
+
+      /*
+       * 입력을 마쳤을 때 각 숫자의 표시 형식을 정돈합니다.
+       */
+      function formatPurchaseCount() {
+        const purchaseCount = extractNumber(
+          purchaseCountElement.textContent
+        );
+
+        purchaseCountElement.textContent =
+          formatCount(purchaseCount);
+
+        calculateTotalSpent();
+      }
+
+      function formatCostPerPurchase() {
+        const costPerPurchase = extractNumber(
+          costPerPurchaseElement.textContent
+        );
+
+        costPerPurchaseElement.textContent =
+          formatWon(costPerPurchase);
+
+        calculateTotalSpent();
+      }
+
+      /*
+       * 원본 이미지 비율을 유지하면서
+       * 부모 영역 너비에 맞춰 전체 디자인을 축소합니다.
+       */
+      function resizeMetaCampaignTable() {
+        const sectionWidth =
+          section.getBoundingClientRect().width ||
+          ORIGINAL_WIDTH;
+
+        const visibleWidth = Math.min(
+          sectionWidth,
+          ORIGINAL_WIDTH
+        );
+
+        const scale =
+          visibleWidth / ORIGINAL_WIDTH;
+
+        shell.style.width =
+          visibleWidth + "px";
+
+        shell.style.height =
+          ORIGINAL_HEIGHT * scale + "px";
+
+        stage.style.transform =
+          "scale(" + scale + ")";
+      }
+
+      /*
+       * contenteditable 요소에서
+       * Enter 입력 시 줄바꿈이 생기지 않도록 합니다.
+       */
+      editableElements.forEach(function (element) {
+        element.addEventListener(
+          "keydown",
+          function (event) {
+            if (event.key === "Enter") {
+              event.preventDefault();
+              element.blur();
+            }
+          }
+        );
+
+        /*
+         * 붙여넣기 시 외부 글자 스타일을 제거하고
+         * 일반 텍스트만 입력합니다.
+         */
+        element.addEventListener(
+          "paste",
+          function (event) {
+            event.preventDefault();
+
+            const clipboardData =
+              event.clipboardData ||
+              window.clipboardData;
+
+            if (!clipboardData) {
+              return;
+            }
+
+            const plainText = clipboardData
+              .getData("text/plain")
+              .replace(/\r?\n/g, " ");
+
+            const selection =
+              window.getSelection();
+
+            if (
+              !selection ||
+              selection.rangeCount === 0
+            ) {
+              return;
+            }
+
+            selection.deleteFromDocument();
+
+            const range =
+              selection.getRangeAt(0);
+
+            const textNode =
+              document.createTextNode(plainText);
+
+            range.insertNode(textNode);
+
+            range.setStartAfter(textNode);
+            range.setEndAfter(textNode);
+
+            selection.removeAllRanges();
+            selection.addRange(range);
+
+            element.dispatchEvent(
+              new Event("input", {
+                bubbles: true
+              })
+            );
+          }
+        );
+      });
+
+      /*
+       * 구매 수 또는 구매당 비용을 입력하는 즉시
+       * 지출 금액을 자동으로 다시 계산합니다.
+       */
+      purchaseCountElement.addEventListener(
+        "input",
+        calculateTotalSpent
+      );
+
+      costPerPurchaseElement.addEventListener(
+        "input",
+        calculateTotalSpent
+      );
+
+      /*
+       * 입력이 끝나면 쉼표와 원화 기호를 자동 적용합니다.
+       */
+      purchaseCountElement.addEventListener(
+        "blur",
+        formatPurchaseCount
+      );
+
+      costPerPurchaseElement.addEventListener(
+        "blur",
+        formatCostPerPurchase
+      );
+
+      calculateTotalSpent();
+      resizeMetaCampaignTable();
+
+      window.addEventListener(
+        "resize",
+        resizeMetaCampaignTable
+      );
+
+      if ("ResizeObserver" in window) {
+        const resizeObserver =
+          new ResizeObserver(
+            resizeMetaCampaignTable
+          );
+
+        resizeObserver.observe(section);
+      }
+    })();
+  </script>
+
+</body>
+</html>

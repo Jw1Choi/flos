@@ -1,0 +1,648 @@
+<section id="flosValue">
+  <style>
+    /* ========================================
+       FLOS VALUE STRUCTURE SECTION ONLY
+       ======================================== */
+    #flosValue {
+      position: relative;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background: #000000;
+      color: #ffffff;
+      font-family:
+        "Pretendard",
+        "Noto Sans KR",
+        "Apple SD Gothic Neo",
+        Arial,
+        sans-serif;
+    }
+
+    #flosValue,
+    #flosValue * {
+      box-sizing: border-box;
+    }
+
+    #flosValue button,
+    #flosValue img {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* 전체 내부 영역 */
+    #flosValue .jei-inner {
+      width: min(100%, 1780px);
+      margin: 0 auto;
+      padding: 42px 48px 72px;
+    }
+
+    /* 상단 라벨 */
+    #flosValue .jei-topline {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+
+    #flosValue .jei-topline .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #ffffff;
+      flex: 0 0 auto;
+    }
+
+    #flosValue .jei-topline .line {
+      width: 120px;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.25);
+      flex: 0 0 auto;
+    }
+
+    #flosValue .jei-topline .label {
+      color: rgba(255, 255, 255, 0.58);
+      font-size: 12px;
+      line-height: 1;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    /* 콘텐츠 폭 */
+    #flosValue .jei-content {
+      width: min(100%, 1060px);
+    }
+
+    /* 제목 */
+    #flosValue .jei-title {
+      margin: 0 0 58px;
+      color: #ffffff;
+      font-size: clamp(46px, 5.3vw, 76px);
+      line-height: 0.98;
+      font-weight: 800;
+      letter-spacing: -0.065em;
+      word-break: keep-all;
+    }
+
+    /* ========================================
+       이미지 영역
+       PC: 한 줄에 이미지 3개
+       ======================================== */
+    #flosValue .jei-gallery {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      align-items: stretch;
+      width: 100%;
+      margin: 0 0 48px;
+      gap:13px;
+    }
+
+    #flosValue .jei-image-button {
+      position: relative;
+      display: block;
+      width: 100%;
+      min-width: 0;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      border: 0;
+      border-radius: 0;
+      background: #ffffff;
+      cursor: zoom-in;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+    #flosValue .jei-image-button::after {
+      content: "확대보기";
+      position: absolute;
+      right: 16px;
+      bottom: 16px;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 70px;
+      height: 30px;
+      padding: 0 12px;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      border-radius: 30px;
+      background: rgba(0, 0, 0, 0.62);
+      color: #ffffff;
+      font-size: 11px;
+      line-height: 1;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      opacity: 0;
+      transform: translateY(6px);
+      transition:
+        opacity 0.3s ease,
+        transform 0.3s ease;
+      pointer-events: none;
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+
+    #flosValue .jei-image-button:hover::after,
+    #flosValue .jei-image-button:focus-visible::after {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    #flosValue .jei-image-button:focus-visible {
+      outline: 2px solid #ffffff;
+      outline-offset: 3px;
+      z-index: 2;
+    }
+
+    #flosValue .jei-image-button img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-height: 390px;
+      object-fit: contain;
+      background: #ffffff;
+      transition:
+        transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+        filter 0.4s ease;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
+    #flosValue .jei-image-button:hover img {
+      transform: scale(1.018);
+      filter: brightness(0.94);
+    }
+
+    /* 하단 설명 */
+    #flosValue .jei-text {
+      width: min(100%, 650px);
+    }
+
+    #flosValue .jei-kicker {
+      margin: 0 0 20px;
+      color: #ffffff;
+      font-size: 18px;
+      line-height: 1.8;
+      font-weight: 750;
+      letter-spacing: -0.035em;
+      word-break: keep-all;
+    }
+
+    #flosValue .jei-desc {
+      margin: 0;
+      color: rgba(255, 255, 255, 0.65);
+      font-size: 15px;
+      line-height: 2;
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      word-break: keep-all;
+    }
+
+    /* ========================================
+       이미지 확대 팝업
+       ======================================== */
+    #flosValue .jei-lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 999999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 54px;
+      background: rgba(0, 0, 0, 0.92);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition:
+        opacity 0.3s ease,
+        visibility 0.3s ease;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    #flosValue .jei-lightbox.is-open {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    #flosValue .jei-lightbox-content {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: min(100%, 1400px);
+      height: min(88vh, 1000px);
+      transform: scale(0.96);
+      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    #flosValue .jei-lightbox.is-open .jei-lightbox-content {
+      transform: scale(1);
+    }
+
+    #flosValue .jei-lightbox-image {
+      display: block;
+      width: auto;
+      max-width: 100%;
+      height: auto;
+      max-height: 88vh;
+      margin: auto;
+      object-fit: contain;
+      background: #ffffff;
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.5);
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
+    #flosValue .jei-lightbox-close {
+      position: fixed;
+      top: 22px;
+      right: 24px;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      margin: 0;
+      padding: 0;
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      border-radius: 50%;
+      background: rgba(20, 20, 20, 0.72);
+      color: #ffffff;
+      font-family: Arial, sans-serif;
+      font-size: 32px;
+      line-height: 1;
+      font-weight: 300;
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+      transition:
+        background 0.25s ease,
+        transform 0.25s ease;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    #flosValue .jei-lightbox-close:hover {
+      background: rgba(255, 255, 255, 0.18);
+      transform: rotate(90deg);
+    }
+
+    #flosValue .jei-lightbox-close:focus-visible {
+      outline: 2px solid #ffffff;
+      outline-offset: 3px;
+    }
+
+    /* 태블릿 */
+    @media (max-width: 1200px) {
+      #flosValue .jei-inner {
+        padding: 36px 28px 56px;
+      }
+
+      #flosValue .jei-content {
+        width: min(100%, 980px);
+      }
+
+      #flosValue .jei-title {
+        margin-bottom: 48px;
+      }
+
+      #flosValue .jei-image-button img {
+        min-height: 340px;
+      }
+    }
+
+    /* ========================================
+       모바일
+       이미지 width:90%
+       한 줄에 이미지 1개
+       ======================================== */
+    @media (max-width: 768px) {
+      #flosValue .jei-inner {
+        padding: 28px 20px 48px;
+      }
+
+      #flosValue .jei-topline {
+        gap: 10px;
+        margin-bottom: 24px;
+      }
+
+      #flosValue .jei-topline .dot {
+        width: 6px;
+        height: 6px;
+      }
+
+      #flosValue .jei-topline .line {
+        width: 64px;
+      }
+
+      #flosValue .jei-topline .label {
+        font-size: 10px;
+        letter-spacing: 0.16em;
+      }
+
+      #flosValue .jei-title {
+        margin-bottom: 40px;
+        font-size: clamp(38px, 12.8vw, 58px);
+        line-height: 1.02;
+        letter-spacing: -0.07em;
+      }
+
+      #flosValue .jei-gallery {
+        grid-template-columns: 1fr;
+        width: 90%;
+        margin: 0 auto 42px;
+        gap: 18px;
+      }
+
+      #flosValue .jei-image-button {
+        width: 100%;
+      }
+
+      #flosValue .jei-image-button img {
+        width: 100%;
+        height: auto;
+        min-height: 0;
+        object-fit: contain;
+      }
+
+      #flosValue .jei-image-button::after {
+        right: 10px;
+        bottom: 10px;
+        min-width: 62px;
+        height: 27px;
+        padding: 0 10px;
+        font-size: 10px;
+        opacity: 1;
+        transform: none;
+      }
+
+      #flosValue .jei-image-button:hover img {
+        transform: none;
+        filter: none;
+      }
+
+      #flosValue .jei-kicker {
+        margin-bottom: 16px;
+        font-size: 16px;
+        line-height: 1.75;
+      }
+
+      #flosValue .jei-desc {
+        font-size: 14px;
+        line-height: 1.9;
+      }
+
+      #flosValue .jei-lightbox {
+        padding: 58px 12px 24px;
+      }
+
+      #flosValue .jei-lightbox-content {
+        width: 100%;
+        height: auto;
+        max-height: calc(100vh - 82px);
+      }
+
+      #flosValue .jei-lightbox-image {
+        max-width: 100%;
+        max-height: calc(100vh - 90px);
+      }
+
+      #flosValue .jei-lightbox-close {
+        top: 12px;
+        right: 12px;
+        width: 42px;
+        height: 42px;
+        font-size: 28px;
+      }
+    }
+
+    @media (max-width: 420px) {
+      #flosValue .jei-inner {
+        padding-right: 16px;
+        padding-left: 16px;
+      }
+
+      #flosValue .jei-title {
+        font-size: clamp(35px, 12.2vw, 48px);
+      }
+
+      #flosValue .jei-gallery {
+        width: 90%;
+      }
+
+      #flosValue .jei-kicker {
+        font-size: 15px;
+      }
+
+      #flosValue .jei-desc {
+        font-size: 13px;
+      }
+    }
+  </style>
+
+  <div class="jei-inner">
+    <div class="jei-topline">
+      <span class="dot" aria-hidden="true"></span>
+      <span class="line" aria-hidden="true"></span>
+      <span class="label">Branding Homepage</span>
+    </div>
+
+    <div class="jei-content">
+      <h2 class="jei-title">
+        고객 확보에 있어서<br>
+        전문적일 수 밖에 없는<br>
+        FLOS만의 특장점
+      </h2><br><br>
+
+      <!-- 이미지 영역 -->
+      <div class="jei-gallery">
+        <button
+          type="button"
+          class="jei-image-button"
+          aria-label="광고 성과 이미지 크게 보기"
+        >
+          <img
+            src="./img/ad-after.jpg"
+            alt="광고 비용, 노출 수, 도달 수, 클릭 수 및 구매 수 성과"
+            loading="lazy"
+          >
+        </button>
+
+        <button
+          type="button"
+          class="jei-image-button"
+          aria-label="구글 및 메타 광고 성과 이미지 크게 보기"
+        >
+          <img
+            src="./img/ad-after3.jpg"
+            alt="구글 광고와 메타 광고 집행 성과"
+            loading="lazy"
+          >
+        </button>
+
+             <button
+          type="button"
+          class="jei-image-button"
+          aria-label="구글 및 메타 광고 성과 이미지 크게 보기"
+        >
+          <img
+            src="./img/a8.png"
+            alt="구글 광고와 메타 광고 집행 성과"
+            loading="lazy"
+          >
+        </button>
+      </div>
+
+      <!-- 설명 영역 -->
+      <div class="jei-text">
+        <p class="jei-kicker">
+          긴 설명 필요없이 지금 이 순간에도<br>
+          다양한 분야의 광고 및 모객을 진행
+        </p>
+
+        <p class="jei-desc">
+          실제 광고를 돌리고 모객을 하면서<br>
+          현재 트렌드와 고객 확보의 흐름을 반영<br>
+          랜딩페이지를 제작하고 있습니다.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 이미지 확대 팝업 -->
+  <div
+    class="jei-lightbox"
+    role="dialog"
+    aria-modal="true"
+    aria-label="확대 이미지"
+    aria-hidden="true"
+  >
+    <button
+      type="button"
+      class="jei-lightbox-close"
+      aria-label="확대 이미지 닫기"
+    >
+      &times;
+    </button>
+
+    <div class="jei-lightbox-content">
+      <img
+        class="jei-lightbox-image"
+        src=""
+        alt=""
+      >
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const section = document.getElementById("flosValue");
+
+      if (!section || section.dataset.lightboxInitialized === "true") {
+        return;
+      }
+
+      section.dataset.lightboxInitialized = "true";
+
+      const imageButtons = section.querySelectorAll(".jei-image-button");
+      const lightbox = section.querySelector(".jei-lightbox");
+      const lightboxImage = section.querySelector(".jei-lightbox-image");
+      const closeButton = section.querySelector(".jei-lightbox-close");
+
+      let lastFocusedElement = null;
+      let savedScrollY = 0;
+
+      function lockBodyScroll() {
+        savedScrollY = window.scrollY;
+
+        document.body.style.position = "fixed";
+        document.body.style.top = "-" + savedScrollY + "px";
+        document.body.style.left = "0";
+        document.body.style.right = "0";
+        document.body.style.width = "100%";
+      }
+
+      function unlockBodyScroll() {
+        document.body.style.position = "";
+        document.body.style.top = "";
+        document.body.style.left = "";
+        document.body.style.right = "";
+        document.body.style.width = "";
+
+        window.scrollTo(0, savedScrollY);
+      }
+
+      function openLightbox(image) {
+        if (!image || !image.getAttribute("src")) {
+          return;
+        }
+
+        lastFocusedElement = document.activeElement;
+
+        lightboxImage.src = image.currentSrc || image.src;
+        lightboxImage.alt = image.alt || "확대 이미지";
+
+        lightbox.classList.add("is-open");
+        lightbox.setAttribute("aria-hidden", "false");
+
+        lockBodyScroll();
+
+        window.requestAnimationFrame(function () {
+          closeButton.focus();
+        });
+      }
+
+      function closeLightbox() {
+        if (!lightbox.classList.contains("is-open")) {
+          return;
+        }
+
+        lightbox.classList.remove("is-open");
+        lightbox.setAttribute("aria-hidden", "true");
+
+        unlockBodyScroll();
+
+        window.setTimeout(function () {
+          lightboxImage.src = "";
+          lightboxImage.alt = "";
+
+          if (lastFocusedElement) {
+            lastFocusedElement.focus();
+          }
+        }, 300);
+      }
+
+      imageButtons.forEach(function (button) {
+        button.addEventListener("click", function () {
+          const image = button.querySelector("img");
+          openLightbox(image);
+        });
+      });
+
+      closeButton.addEventListener("click", closeLightbox);
+
+      lightbox.addEventListener("click", function (event) {
+        if (
+          event.target === lightbox ||
+          event.target.classList.contains("jei-lightbox-content")
+        ) {
+          closeLightbox();
+        }
+      });
+
+      document.addEventListener("keydown", function (event) {
+        if (
+          event.key === "Escape" &&
+          lightbox.classList.contains("is-open")
+        ) {
+          closeLightbox();
+        }
+      });
+    })();
+  </script>
+</section>
