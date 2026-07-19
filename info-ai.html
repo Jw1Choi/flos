@@ -5438,11 +5438,13 @@
   --jp-gray-dim: rgba(255,255,255,0.3);
   --jp-gray-faint: rgba(255,255,255,0.12);
   --jp-transition: 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
+  --jp-stable-vh: 100vh;
 
   font-family: 'Noto Sans KR', 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   background-color: var(--jp-bg);
   color: var(--jp-white);
   position: relative;
+  overflow-anchor: none;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -5453,11 +5455,12 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  overflow-anchor: none;
 }
 
 /* ===== INTRO ===== */
 #process1 .jp-intro {
-  min-height: 100vh;
+  min-height: var(--jp-stable-vh);
   display: flex;
   align-items: center;
   padding: 120px 8% 120px;
@@ -5620,7 +5623,7 @@
 }
 
 #process1 .jp-content-item {
-  min-height: 100vh;
+  min-height: var(--jp-stable-vh);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -5810,7 +5813,7 @@
   }
 
   #process1 .jp-intro {
-    min-height: auto;
+    min-height: var(--jp-stable-vh);
     padding: 84px 6% 64px;
   }
 
@@ -5938,7 +5941,7 @@
   }
 
   #process1 .jp-content-item {
-    min-height: auto;
+    min-height: var(--jp-stable-vh);
     padding: 72px 0;
   }
 
@@ -6213,6 +6216,75 @@
   var isMobile = false;
   var blockSyntheticClickOnce = false;
 
+  /* ===== 레이아웃 높이 완전 고정 =====
+     - 최초 렌더링 시점의 화면 높이를 기준값으로 저장
+     - 모바일 주소창/하단바 변화로 발생하는 height-only resize는 무시
+     - 인트로, 각 콘텐츠, 메인, 전체 section 높이를 px로 잠금
+     - 이후 스크롤 효과는 opacity/transform만 변경하므로 문서 높이는 변하지 않음 */
+  var stableViewportWidth = Math.max(
+    document.documentElement.clientWidth || 0,
+    window.innerWidth || 0
+  );
+  var stableViewportHeight = Math.max(
+    document.documentElement.clientHeight || 0,
+    window.innerHeight || 0
+  );
+  var layoutHeightLocked = false;
+
+  function getStableViewportHeight() {
+    return stableViewportHeight > 0 ? stableViewportHeight : 1;
+  }
+
+  function lockElementHeight(el, targetHeight) {
+    if (!el) return;
+    var px = Math.max(1, Math.ceil(targetHeight)) + 'px';
+    el.style.height = px;
+    el.style.minHeight = px;
+    el.style.maxHeight = px;
+  }
+
+  function lockSectionLayoutHeights() {
+    if (layoutHeightLocked) return;
+
+    var intro = root.querySelector('.jp-intro');
+    stableViewportHeight = Math.max(
+      document.documentElement.clientHeight || 0,
+      window.innerHeight || 0,
+      1
+    );
+
+    root.style.setProperty('--jp-stable-vh', stableViewportHeight + 'px');
+
+    /* 실제 콘텐츠가 화면보다 긴 경우 잘리지 않도록
+       자연 높이와 고정 화면 높이 중 더 큰 값을 사용 */
+    if (intro) {
+      var introHeight = Math.max(stableViewportHeight, intro.scrollHeight);
+      lockElementHeight(intro, introHeight);
+    }
+
+    for (var i = 0; i < contentItems.length; i++) {
+      var item = contentItems[i];
+      var itemHeight = Math.max(stableViewportHeight, item.scrollHeight);
+      lockElementHeight(item, itemHeight);
+    }
+
+    /* 자식 높이를 먼저 고정한 후 상위 컨테이너와 section 전체 높이도 잠금 */
+    void root.offsetHeight;
+
+    var contentHeight = Math.ceil(content.scrollHeight);
+    lockElementHeight(content, contentHeight);
+
+    var mainHeight = Math.ceil(jpMain.scrollHeight);
+    lockElementHeight(jpMain, mainHeight);
+
+    void root.offsetHeight;
+
+    var rootHeight = Math.ceil(root.scrollHeight);
+    lockElementHeight(root, rootHeight);
+
+    layoutHeightLocked = true;
+  }
+
   var dragState = {
     isDown: false,
     startX: 0,
@@ -6247,7 +6319,7 @@
   }
 
   function updateFloatingNavState() {
-    var viewportH = window.innerHeight;
+    var viewportH = getStableViewportHeight();
     var mainRect = jpMain.getBoundingClientRect();
 
     if (isMobile) {
@@ -6394,7 +6466,7 @@
   }
 
   function updateActiveState() {
-    var viewportH = window.innerHeight;
+    var viewportH = getStableViewportHeight();
     var triggerPoint = viewportH * 0.4;
     var newActive = 0;
 
@@ -6451,8 +6523,38 @@
     requestAnimationFrame(updateActiveState);
   }
 
+  function handleStableResize() {
+    var nextWidth = Math.max(
+      document.documentElement.clientWidth || 0,
+      window.innerWidth || 0
+    );
+    var widthChanged = Math.abs(nextWidth - stableViewportWidth) > 2;
+
+    /* 주소창/브라우저 UI로 높이만 바뀐 resize는 레이아웃을 건드리지 않음 */
+    if (!widthChanged) {
+      onScroll();
+      return;
+    }
+
+    /* 실제 가로 폭 변경 때에도 이미 잠근 section 높이는 유지하고
+       네비게이션 상태와 가로 위치만 다시 계산 */
+    stableViewportWidth = nextWidth;
+    fullRefresh();
+  }
+
   window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', fullRefresh, { passive: true });
+  window.addEventListener('resize', handleStableResize, { passive: true });
+  window.addEventListener('orientationchange', function() {
+    /* 회전 중간 resize 연속 호출로 높이가 출렁이지 않도록
+       section 높이는 그대로 두고 상태만 한 번 갱신 */
+    window.setTimeout(function() {
+      stableViewportWidth = Math.max(
+        document.documentElement.clientWidth || 0,
+        window.innerWidth || 0
+      );
+      fullRefresh();
+    }, 120);
+  }, { passive: true });
   window.addEventListener('load', fullRefresh);
 
   navTrack.addEventListener('pointerdown', function(e) {
@@ -6500,7 +6602,12 @@
     });
   });
 
-  requestAnimationFrame(fullRefresh);
+  requestAnimationFrame(function() {
+    requestAnimationFrame(function() {
+      lockSectionLayoutHeights();
+      fullRefresh();
+    });
+  });
 })();
 </script>
 </section>
