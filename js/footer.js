@@ -222,7 +222,7 @@
           data-ceo="최지웅"
           data-corpno=""
           data-bizno="">
-
+  
           <span class="corpName" id="corpName">FLOS</span>
           <span class="corpMeta">
             <span class="sep">·</span>
