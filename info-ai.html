@@ -2862,8 +2862,11 @@
       line-height: 1.7;
     }
 
-    /* ===== 영상 팝업(라이트박스) ===== */
-    #ProjectSection .sfs-video-modal {
+    /* ===== 영상 팝업(라이트박스) =====
+       팝업은 스크립트에서 body 최상위로 이동시키므로
+       #ProjectSection 하위 선택자가 아닌 전용 스코프 선택자를 사용한다. */
+    [data-sfs-video-modal="ProjectSection"] {
+      --sfs-ease: cubic-bezier(0.22, 1, 0.36, 1);
       position: fixed;
       inset: 0;
       z-index: 2147483000;
@@ -2871,13 +2874,14 @@
       align-items: center;
       justify-content: center;
       padding: clamp(16px, 4vw, 48px);
+      font-family: 'Bebas Neue', sans-serif;
     }
 
-    #ProjectSection .sfs-video-modal.sfs-open {
+    [data-sfs-video-modal="ProjectSection"].sfs-open {
       display: flex;
     }
 
-    #ProjectSection .sfs-video-backdrop {
+    [data-sfs-video-modal="ProjectSection"] .sfs-video-backdrop {
       position: absolute;
       inset: 0;
       background: rgba(0, 0, 0, 0.9);
@@ -2888,12 +2892,12 @@
       cursor: pointer;
     }
 
-    #ProjectSection .sfs-video-modal.sfs-open .sfs-video-backdrop {
+    [data-sfs-video-modal="ProjectSection"].sfs-open .sfs-video-backdrop {
       opacity: 1;
     }
 
     /* PC에서는 영상 크기를 적당히 제한하고, 닫기 버튼을 영상 프레임 안에 고정 */
-    #ProjectSection .sfs-video-shell {
+    [data-sfs-video-modal="ProjectSection"] .sfs-video-shell {
       position: relative;
       z-index: 2;
       width: min(82vw, 880px);
@@ -2901,7 +2905,7 @@
       aspect-ratio: 16 / 9;
     }
 
-    #ProjectSection .sfs-video-dialog {
+    [data-sfs-video-modal="ProjectSection"] .sfs-video-dialog {
       position: relative;
       z-index: 2;
       width: 100%;
@@ -2918,12 +2922,12 @@
         transform 0.45s var(--sfs-ease);
     }
 
-    #ProjectSection .sfs-video-modal.sfs-open .sfs-video-dialog {
+    [data-sfs-video-modal="ProjectSection"].sfs-open .sfs-video-dialog {
       opacity: 1;
       transform: translateY(0) scale(1);
     }
 
-    #ProjectSection .sfs-video-dialog iframe {
+    [data-sfs-video-modal="ProjectSection"] .sfs-video-dialog iframe {
       position: absolute;
       inset: 0;
       width: 100%;
@@ -2933,7 +2937,7 @@
       background: #000;
     }
 
-    #ProjectSection .sfs-video-close {
+    [data-sfs-video-modal="ProjectSection"] .sfs-video-close {
       position: absolute;
       z-index: 5;
       top: 12px;
@@ -2953,12 +2957,12 @@
       transition: transform 0.3s var(--sfs-ease), background-color 0.3s ease;
     }
 
-    #ProjectSection .sfs-video-close:hover {
+    [data-sfs-video-modal="ProjectSection"] .sfs-video-close:hover {
       transform: scale(1.1) rotate(90deg);
       background: rgba(224, 32, 32, 0.8);
     }
 
-    #ProjectSection .sfs-video-close svg {
+    [data-sfs-video-modal="ProjectSection"] .sfs-video-close svg {
       width: 22px;
       height: 22px;
       stroke: currentColor;
@@ -3058,17 +3062,19 @@
         border-width: 10px 0 10px 17px;
         margin-left: 4px;
       }
+    }
 
-      #ProjectSection .sfs-video-shell {
+    @media (max-width: 767px) {
+      [data-sfs-video-modal="ProjectSection"] .sfs-video-shell {
         width: 100%;
         max-width: none;
       }
 
-      #ProjectSection .sfs-video-dialog {
+      [data-sfs-video-modal="ProjectSection"] .sfs-video-dialog {
         width: 100%;
       }
 
-      #ProjectSection .sfs-video-close {
+      [data-sfs-video-modal="ProjectSection"] .sfs-video-close {
         width: 42px;
         height: 42px;
         top: 10px;
@@ -3077,14 +3083,17 @@
     }
 
 
-    /* 세로에서 영상을 연 뒤 가로로 회전해도 팝업이 화면 전체를 채우도록 고정 */
+    /* 세로에서 영상을 연 뒤 가로로 회전해도 팝업이 화면 전체를 채우도록 고정.
+       높이/너비는 스크립트가 넣어주는 --sfs-modal-vh / --sfs-modal-vw 를 사용한다.
+       (dvh 지원 브라우저는 100dvh/100dvw 가 들어가 회전 시 브라우저가 직접 갱신) */
     @media (orientation: landscape) {
-      #ProjectSection .sfs-video-modal.sfs-open {
+      [data-sfs-video-modal="ProjectSection"].sfs-open {
+        position: fixed !important;
         top: 0 !important;
-        right: 0 !important;
+        right: auto !important;
         bottom: auto !important;
         left: 0 !important;
-        width: 100vw !important;
+        width: var(--sfs-modal-vw, 100vw) !important;
         height: var(--sfs-modal-vh, 100vh) !important;
         min-height: var(--sfs-modal-vh, 100vh) !important;
         max-height: var(--sfs-modal-vh, 100vh) !important;
@@ -3094,21 +3103,21 @@
         overflow: hidden !important;
       }
 
-      #ProjectSection .sfs-video-shell {
-        width: 100vw !important;
+      [data-sfs-video-modal="ProjectSection"] .sfs-video-shell {
+        width: var(--sfs-modal-vw, 100vw) !important;
         height: var(--sfs-modal-vh, 100vh) !important;
-        min-width: 100vw !important;
+        min-width: var(--sfs-modal-vw, 100vw) !important;
         min-height: var(--sfs-modal-vh, 100vh) !important;
         max-width: none !important;
         max-height: none !important;
         aspect-ratio: auto !important;
       }
 
-      #ProjectSection .sfs-video-dialog {
-        width: 100vw !important;
-        height: var(--sfs-modal-vh, 100vh) !important;
-        min-width: 100vw !important;
-        min-height: var(--sfs-modal-vh, 100vh) !important;
+      [data-sfs-video-modal="ProjectSection"] .sfs-video-dialog {
+        width: 100% !important;
+        height: 100% !important;
+        min-width: 0 !important;
+        min-height: 0 !important;
         max-width: none !important;
         max-height: none !important;
         aspect-ratio: auto !important;
@@ -3117,12 +3126,12 @@
         transform: none !important;
       }
 
-      #ProjectSection .sfs-video-modal.sfs-open .sfs-video-dialog {
+      [data-sfs-video-modal="ProjectSection"].sfs-open .sfs-video-dialog {
         transform: none !important;
       }
 
-      #ProjectSection .sfs-video-close {
-        position: fixed !important;
+      [data-sfs-video-modal="ProjectSection"] .sfs-video-close {
+        position: absolute !important;
         top: max(10px, env(safe-area-inset-top, 0px)) !important;
         right: max(10px, env(safe-area-inset-right, 0px)) !important;
         z-index: 2147483647 !important;
@@ -3134,10 +3143,13 @@
       #ProjectSection .sfs-scroll-hint,
       #ProjectSection .sfs-radial-lines,
       #ProjectSection .sfs-card-photo,
-      #ProjectSection .sfs-video-backdrop,
-      #ProjectSection .sfs-video-dialog,
-      #ProjectSection .sfs-video-close,
       #ProjectSection .sfs-play-badge {
+        transition: none;
+      }
+
+      [data-sfs-video-modal="ProjectSection"] .sfs-video-backdrop,
+      [data-sfs-video-modal="ProjectSection"] .sfs-video-dialog,
+      [data-sfs-video-modal="ProjectSection"] .sfs-video-close {
         transition: none;
       }
 
@@ -3232,7 +3244,7 @@
   </div>
 
   <!-- 영상 팝업 모달 -->
-  <div class="sfs-video-modal" data-sfs-video-modal role="dialog" aria-modal="true" aria-label="영상 재생 팝업" aria-hidden="true">
+  <div class="sfs-video-modal" data-sfs-video-modal="ProjectSection" role="dialog" aria-modal="true" aria-label="영상 재생 팝업" aria-hidden="true">
     <div class="sfs-video-backdrop" data-sfs-video-backdrop></div>
     <div class="sfs-video-shell">
       <button class="sfs-video-close" type="button" data-sfs-video-close aria-label="영상 팝업 닫기">
@@ -3405,28 +3417,55 @@
       /* ===== 영상 팝업 ===== */
 
       const videoModal = section.querySelector('[data-sfs-video-modal]');
-      const videoDialog = section.querySelector('[data-sfs-video-dialog]');
-      const videoBackdrop = section.querySelector('[data-sfs-video-backdrop]');
-      const videoCloseBtn = section.querySelector('[data-sfs-video-close]');
+      const videoDialog = videoModal ? videoModal.querySelector('[data-sfs-video-dialog]') : null;
+      const videoBackdrop = videoModal ? videoModal.querySelector('[data-sfs-video-backdrop]') : null;
+      const videoCloseBtn = videoModal ? videoModal.querySelector('[data-sfs-video-close]') : null;
+
+      /* 팝업을 body 최상위로 이동.
+         #ProjectSection 이 overflow:clip / isolation:isolate 를 갖고 있어
+         가로 회전 시 fixed 팝업이 잘려서 안 보이는 문제를 원천 차단한다. */
+      if (videoModal && videoModal.parentNode !== document.body) {
+        document.body.appendChild(videoModal);
+      }
 
       let modalOpen = false;
       let lastFocusedEl = null;
       let bodyOverflowBackup = '';
 
+      /* dvh 를 지원하면 브라우저가 회전 시 높이를 스스로 갱신하도록 맡긴다. */
+      const supportsDvh = !!(window.CSS && window.CSS.supports && window.CSS.supports('height', '100dvh'));
 
-      /* 가로 회전 직후 실제 보이는 모바일 화면 높이를 팝업에 즉시 반영 */
+      /* 가로 회전 직후 실제 보이는 모바일 화면 크기를 팝업에 즉시 반영 */
       function syncVideoModalViewport() {
         if (!videoModal) return;
-        const viewportHeight = Math.max(
-          1,
-          Math.round(
-            (window.visualViewport && window.visualViewport.height) ||
-            window.innerHeight ||
-            document.documentElement.clientHeight ||
-            1
-          )
-        );
+
+        if (supportsDvh) {
+          videoModal.style.setProperty('--sfs-modal-vh', '100dvh');
+          videoModal.style.setProperty('--sfs-modal-vw', '100dvw');
+          return;
+        }
+
+        const vv = window.visualViewport;
+        const viewportHeight = Math.max(1, Math.round(
+          (vv && vv.height) || window.innerHeight || document.documentElement.clientHeight || 1
+        ));
+        const viewportWidth = Math.max(1, Math.round(
+          (vv && vv.width) || window.innerWidth || document.documentElement.clientWidth || 1
+        ));
+
         videoModal.style.setProperty('--sfs-modal-vh', viewportHeight + 'px');
+        videoModal.style.setProperty('--sfs-modal-vw', viewportWidth + 'px');
+      }
+
+      /* 회전 애니메이션 도중에는 브라우저가 잘못된 크기를 알려주는 경우가 많아
+         여러 시점에 반복 측정해 최종 크기를 확실히 맞춘다. */
+      function scheduleViewportResync() {
+        syncVideoModalViewport();
+        [0, 60, 150, 300, 500, 800].forEach(function (delay) {
+          window.setTimeout(function () {
+            if (modalOpen) syncVideoModalViewport();
+          }, delay);
+        });
       }
 
       // 유튜브 / 비메오 링크를 임베드용 주소로 변환 (아니면 null)
@@ -3489,9 +3528,7 @@
 
         if (videoCloseBtn) videoCloseBtn.focus();
 
-        /* 회전 애니메이션이 끝난 뒤 한 번 더 실제 높이를 맞춤 */
-        window.setTimeout(syncVideoModalViewport, 80);
-        window.setTimeout(syncVideoModalViewport, 320);
+        scheduleViewportResync();
       }
 
       function closeVideoModal() {
@@ -3520,6 +3557,19 @@
           closeVideoModal();
         }
       });
+
+      /* orientationchange 가 늦거나 누락되는 기기를 위한 보조 감지 */
+      if (window.matchMedia) {
+        const orientationQuery = window.matchMedia('(orientation: landscape)');
+        const onOrientationQuery = function () {
+          if (modalOpen) scheduleViewportResync();
+        };
+        if (orientationQuery.addEventListener) {
+          orientationQuery.addEventListener('change', onOrientationQuery);
+        } else if (orientationQuery.addListener) {
+          orientationQuery.addListener(onOrientationQuery);
+        }
+      }
 
       // 각 카드에 영상 여부 판정 + 클릭 핸들러 연결
       projectCards.forEach(function (card) {
@@ -3616,15 +3666,13 @@
       window.addEventListener('scroll', requestTick, { passive: true });
       window.addEventListener('resize', function () {
         drawRadialLines();
-        if (modalOpen) syncVideoModalViewport();
+        if (modalOpen) scheduleViewportResync();
         requestTick();
       });
 
       window.addEventListener('orientationchange', function () {
         if (!modalOpen) return;
-        syncVideoModalViewport();
-        window.setTimeout(syncVideoModalViewport, 120);
-        window.setTimeout(syncVideoModalViewport, 360);
+        scheduleViewportResync();
       }, { passive: true });
 
       if (window.visualViewport) {
