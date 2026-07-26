@@ -85,17 +85,22 @@
       background-color: #1a1a1a;
     }
 
+    /* ✅ JS가 --iaan-vh를 픽셀로 잠금 → 모바일 주소창 변동에도 높이/진행도 안정 */
     #HeroScroll .iaan-stage {
       position: sticky;
       top: 0;
-      height: 100vh;
+      height: 100vh; /* fallback */
+      height: var(--iaan-vh, 100vh);
       overflow: hidden;
       z-index: 1;
       background-color: #1a1a1a;
+      contain: layout paint;
     }
 
+    /* ✅ spacer도 픽셀 기반 — 모바일 리사이즈 jitter 차단 */
     #HeroScroll .iaan-scroll-spacer {
-      height: 620vh;
+      height: 620vh; /* fallback */
+      height: calc(var(--iaan-vh-raw, 1vh) * 620);
       pointer-events: none;
     }
 
@@ -109,6 +114,9 @@
       overflow: hidden;
       pointer-events: none;
       background: #111;
+      transform: translateZ(0);
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
     }
 
     /* ===== 미리보기 이미지 ===== */
@@ -138,7 +146,7 @@
       width: 100%;
       height: 100%;
       overflow: hidden;
-      transform: scale(1.04);
+      transform: scale(1.04) translateZ(0);
       transform-origin: center center;
       filter: brightness(0.72);
       z-index: 2;
@@ -153,17 +161,20 @@
       opacity: 1;
     }
 
-    /* 영상이 충분히 보이면 포스터는 천천히 사라짐 */
-    #HeroScroll .iaan-video-wrap.video-ready .iaan-poster {
+    /* 영상 재생이 확인되면 포스터는 천천히 사라짐 */
+    #HeroScroll .iaan-video-wrap.poster-hidden .iaan-poster {
       opacity: 0;
     }
 
+    /* ✅ iframe 크기도 픽셀 변수 기반 → 모바일 주소창 토글 시 리사이즈 반복 방지 */
     #HeroScroll .iaan-vimeo-box iframe {
       position: absolute;
       top: 50%;
       left: 50%;
-      width: 177.78vh;
-      height: 56.25vw;
+      width: 177.78vh; /* fallback */
+      width: calc(var(--iaan-vh-raw, 1vh) * 177.78);
+      height: 56.25vw; /* fallback */
+      height: calc(var(--iaan-vw-raw, 1vw) * 56.25);
       min-width: 100%;
       min-height: 100%;
       transform: translate(-50%, -50%);
@@ -398,6 +409,12 @@
     }
 
     @media (max-width: 768px) {
+      /* ✅ 모바일: 텍스트 세로 이동/트랜지션 제거 → 떨림 원천 차단 (제자리 페이드만) */
+      #HeroScroll .iaan-content-layer {
+        transform: none !important;
+        transition: opacity 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
       #HeroScroll .iaan-p3-inner {
         text-align: left;
       }
@@ -416,6 +433,10 @@
         height: 6px;
       }
 
+      #HeroScroll .iaan-p1-inner {
+        padding: 0 24px;
+      }
+
       #HeroScroll .iaan-p2-content,
       #HeroScroll .iaan-p3-content,
       #HeroScroll .iaan-p4-content {
@@ -424,7 +445,14 @@
 
       #HeroScroll .iaan-poster img,
       #HeroScroll .iaan-vimeo-box {
-        transform: scale(1.02);
+        transform: scale(1.02) translateZ(0);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #HeroScroll .iaan-content-layer {
+        transform: none !important;
+        transition: opacity 0.3s ease;
       }
     }
   </style>
@@ -529,8 +557,29 @@
       var ticking = false;
       var vimeoPlayer = null;
       var videoShown = false;
+      var posterHidden = false;
 
       var panelStops = [0, 0.24, 0.50, 0.72, 1];
+
+      /* ✅ 뷰포트 크기를 픽셀로 잠금 → 모바일 주소창 토글에도 진행도/영상 크기가 흔들리지 않음 */
+      var lockedVh = window.innerHeight;
+      var lastWidth = window.innerWidth;
+      var isMobile = window.innerWidth <= 768;
+
+      /* ✅ 매 프레임 동일한 값을 다시 쓰지 않도록 캐시 (불필요한 리페인트 차단) */
+      var prevState = [];
+      var prevActivePanel = -1;
+      var prevNavVisible = null;
+      var prevIndicatorHidden = null;
+
+      function lockViewportSize() {
+        lockedVh = window.innerHeight;
+        section.style.setProperty('--iaan-vh', lockedVh + 'px');
+        section.style.setProperty('--iaan-vh-raw', (lockedVh / 100) + 'px');
+        section.style.setProperty('--iaan-vw-raw', (window.innerWidth / 100) + 'px');
+      }
+
+      lockViewportSize();
 
       function clamp(val, min, max) {
         return Math.max(min, Math.min(max, val));
@@ -541,10 +590,11 @@
         return t * t * (3 - 2 * t);
       }
 
+      /* ✅ window.innerHeight 대신 잠긴 값 사용 → 진행도 jitter 차단 */
       function getScrollProgress() {
         var rect = section.getBoundingClientRect();
         var sectionTop = -rect.top;
-        var sectionHeight = section.offsetHeight - window.innerHeight;
+        var sectionHeight = section.offsetHeight - lockedVh;
         if (sectionHeight <= 0) return 0;
         return clamp(sectionTop / sectionHeight, 0, 1);
       }
@@ -562,13 +612,9 @@
         return totalPanels - 1;
       }
 
-      function getActivePanel(progress) {
-        for (var i = 0; i < totalPanels; i++) {
-          if (progress >= panelStops[i] && progress <= panelStops[i + 1]) {
-            return i + 1;
-          }
-        }
-        return totalPanels;
+      /* ✅ dot도 텍스트와 동일한 rawIndex 기준(반올림)으로 판정 → 표시 순서 완전 일치 */
+      function getActivePanel(rawIndex) {
+        return clamp(Math.round(rawIndex), 0, totalPanels - 1) + 1;
       }
 
       function getContentOpacity(distance) {
@@ -584,6 +630,15 @@
         }
       }
 
+      /* ✅ 재생이 실제로 확인된 경우에만 포스터 제거 (자동재생 실패 시 검은 화면 방지) */
+      function hidePoster() {
+        if (posterHidden) return;
+        posterHidden = true;
+        if (videoWrap) {
+          videoWrap.classList.add('poster-hidden');
+        }
+      }
+
       function tryPlayVideo() {
         if (!vimeoPlayer) return;
 
@@ -592,7 +647,8 @@
 
         vimeoPlayer.play()
           .then(function() {
-            setTimeout(markVideoReady, 250);
+            markVideoReady();
+            setTimeout(hidePoster, 250);
           })
           .catch(function(){});
       }
@@ -610,7 +666,13 @@
           tryPlayVideo();
 
           vimeoPlayer.on('play', function() {
-            setTimeout(markVideoReady, 180);
+            markVideoReady();
+            setTimeout(hidePoster, 180);
+          });
+
+          vimeoPlayer.on('playing', function() {
+            markVideoReady();
+            hidePoster();
           });
 
           vimeoPlayer.on('loaded', function() {
@@ -618,23 +680,23 @@
           });
 
           vimeoPlayer.on('bufferend', function() {
-            setTimeout(markVideoReady, 180);
+            markVideoReady();
+            setTimeout(hidePoster, 180);
           });
         }).catch(function(){});
 
-        setTimeout(function() {
-          tryPlayVideo();
-        }, 600);
+        setTimeout(tryPlayVideo, 600);
+        setTimeout(tryPlayVideo, 1400);
 
+        /* 재생 확인이 끝내 안 되면 영상 레이어만 노출하고 포스터는 유지 */
         setTimeout(function() {
-          tryPlayVideo();
-        }, 1400);
-
-        setTimeout(function() {
-          if (!videoShown) {
-            markVideoReady();
-          }
+          if (!videoShown) markVideoReady();
         }, 4000);
+
+        /* 탭 복귀 시 정지된 배경 영상 복구 */
+        document.addEventListener('visibilitychange', function() {
+          if (!document.hidden) tryPlayVideo();
+        });
       }
 
       function updatePanels() {
@@ -642,48 +704,76 @@
 
         var progress = getScrollProgress();
         var rawIndex = getSegmentedRawIndex(progress);
-        var activePanel = getActivePanel(progress);
+        var activePanel = getActivePanel(rawIndex);
 
-        if (progressNav) {
-          progressNav.classList.toggle('visible', progress > 0.02);
-          progressNav.style.opacity = (progress > 0.02 ? 1 : 0).toFixed(4);
+        var navVisible = progress > 0.02;
+        if (progressNav && navVisible !== prevNavVisible) {
+          progressNav.classList.toggle('visible', navVisible);
+          prevNavVisible = navVisible;
         }
 
-        if (scrollIndicator) {
-          scrollIndicator.classList.toggle('hidden', progress > 0.025);
-          scrollIndicator.style.opacity = (progress <= 0.025 ? 1 : 0).toFixed(4);
+        var indicatorHidden = progress > 0.025;
+        if (scrollIndicator && indicatorHidden !== prevIndicatorHidden) {
+          scrollIndicator.classList.toggle('hidden', indicatorHidden);
+          prevIndicatorHidden = indicatorHidden;
         }
 
-        contents.forEach(function(content) {
+        for (var i = 0; i < contents.length; i++) {
+          var content = contents[i];
           var p = parseInt(content.dataset.panel, 10);
           var panelIndex = p - 1;
           var signedDistance = rawIndex - panelIndex;
           var distance = Math.abs(signedDistance);
           var opacity;
-          var safeTranslate;
+          var safeTranslate = 0;
 
           if (p === totalPanels && progress >= panelStops[totalPanels - 1]) {
             opacity = 1;
             safeTranslate = 0;
           } else {
             opacity = getContentOpacity(distance);
-            var translateY = signedDistance * -78;
-            safeTranslate = clamp(translateY, -78, 78);
 
-            if (progress > 0.94 && p !== totalPanels) {
-              safeTranslate -= smoothstep(0.94, 1.00, progress) * 36;
+            if (!isMobile) {
+              var translateY = signedDistance * -78;
+              safeTranslate = clamp(translateY, -78, 78);
+
+              if (progress > 0.94 && p !== totalPanels) {
+                safeTranslate -= smoothstep(0.94, 1.00, progress) * 36;
+              }
             }
           }
 
-          content.style.opacity = opacity.toFixed(4);
-          content.style.transform = 'translate3d(0,' + safeTranslate.toFixed(2) + 'px,0)';
-          content.classList.toggle('active', opacity > 0.12);
-        });
+          if (!prevState[i]) prevState[i] = { o: -1, t: null, a: null };
+          var st = prevState[i];
 
-        dots.forEach(function(dot) {
-          var t = parseInt(dot.dataset.target, 10);
-          dot.classList.toggle('active', t === activePanel);
-        });
+          var o = Math.round(opacity * 1000) / 1000;
+          if (o !== st.o) {
+            content.style.opacity = o;
+            st.o = o;
+          }
+
+          /* ✅ 모바일: 세로 이동 없이 제자리 페이드만 (떨림 제거)
+             데스크톱: 기존 패럴럭스 세로 이동 유지 */
+          var tf = isMobile ? 'none' : 'translate3d(0,' + safeTranslate.toFixed(1) + 'px,0)';
+          if (tf !== st.t) {
+            content.style.transform = tf;
+            st.t = tf;
+          }
+
+          var isActive = o > 0.12;
+          if (isActive !== st.a) {
+            content.classList.toggle('active', isActive);
+            st.a = isActive;
+          }
+        }
+
+        if (activePanel !== prevActivePanel) {
+          for (var d = 0; d < dots.length; d++) {
+            var t = parseInt(dots[d].dataset.target, 10);
+            dots[d].classList.toggle('active', t === activePanel);
+          }
+          prevActivePanel = activePanel;
+        }
       }
 
       function onScroll() {
@@ -693,12 +783,12 @@
         }
       }
 
-      dots.forEach(function(dot) {
-        dot.addEventListener('click', function() {
+      for (var k = 0; k < dots.length; k++) {
+        dots[k].addEventListener('click', function() {
           var target = parseInt(this.dataset.target, 10);
           var sectionRect = section.getBoundingClientRect();
           var sectionTop = window.pageYOffset + sectionRect.top;
-          var sectionHeight = section.offsetHeight - window.innerHeight;
+          var sectionHeight = section.offsetHeight - lockedVh;
           var targetProgress = panelStops[target - 1];
           var targetScroll = sectionTop + targetProgress * sectionHeight;
 
@@ -707,13 +797,35 @@
             behavior: 'smooth'
           });
         });
-      });
+      }
 
       setupVimeo();
 
       window.addEventListener('scroll', onScroll, { passive: true });
+
+      /* ✅ 아이폰 모멘텀 스크롤 중에도 프레임 유지 */
+      window.addEventListener('touchmove', onScroll, { passive: true });
+
+      /* ✅ 회전 시에만 재계산 (주소창 변동에는 반응 X) */
+      window.addEventListener('orientationchange', function() {
+        setTimeout(function() {
+          lockViewportSize();
+          isMobile = window.innerWidth <= 768;
+          prevState = [];
+          requestAnimationFrame(updatePanels);
+        }, 200);
+      });
+
+      /* ✅ 가로폭이 실제로 바뀐 경우(데스크톱 리사이즈)에만 재계산 —
+         모바일 주소창 토글은 width가 그대로라 무시됨 */
       window.addEventListener('resize', function() {
-        requestAnimationFrame(updatePanels);
+        if (window.innerWidth !== lastWidth) {
+          lastWidth = window.innerWidth;
+          lockViewportSize();
+          isMobile = window.innerWidth <= 768;
+          prevState = [];
+          requestAnimationFrame(updatePanels);
+        }
       }, { passive: true });
 
       requestAnimationFrame(updatePanels);

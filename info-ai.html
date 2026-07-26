@@ -4956,13 +4956,25 @@
     /* 헤드 */
     #brandPricingAllBlack .head{
       text-align:center;
-      margin-bottom:90px;
+      margin-bottom:80px;
+    }
+
+    #brandPricingAllBlack .kicker{
+      display:inline-block;
+      font-size:12px;
+      letter-spacing:0.34em;
+      text-transform:uppercase;
+      opacity:0.6;
+      margin-bottom:20px;
+      padding-bottom:10px;
+      border-bottom:1px solid rgba(255,255,255,0.2);
     }
 
     #brandPricingAllBlack .title{
       font-size:52px;
       font-weight:700;
       letter-spacing:-0.03em;
+      line-height:1.25;
       margin-bottom:20px;
     }
 
@@ -4970,6 +4982,7 @@
       font-size:18px;
       line-height:1.9;
       opacity:0.7;
+      word-break:keep-all;
     }
 
     /* 카드 */
@@ -4977,14 +4990,16 @@
       display:grid;
       grid-template-columns:repeat(3,1fr);
       gap:30px;
+      align-items:stretch;
     }
 
     #brandPricingAllBlack .card{
+      position:relative;
       border:1px solid rgba(255,255,255,0.25);
       padding:44px;
       display:flex;
       flex-direction:column;
-      min-height:690px;
+      min-height:760px;
       background:#000;
       transition:.4s;
     }
@@ -5004,19 +5019,38 @@
       transform:scale(1.05) translateY(-10px);
     }
 
+    #brandPricingAllBlack .badge{
+      position:absolute;
+      top:-13px;
+      left:44px;
+      display:inline-block;
+      padding:5px 14px;
+      background:#fff;
+      color:#000;
+      font-size:11px;
+      font-weight:700;
+      letter-spacing:0.16em;
+    }
+
+    #brandPricingAllBlack .badge{
+      color:#000;
+    }
+
     /* 타이틀 */
     #brandPricingAllBlack .plan{
       font-size:42px;
       font-weight:700;
       margin-bottom:12px;
       font-family:"Times New Roman",serif;
+      line-height:1.1;
     }
 
     #brandPricingAllBlack .sub{
       font-size:16px;
       line-height:1.8;
-      margin-bottom:34px;
+      margin-bottom:32px;
       opacity:0.7;
+      word-break:keep-all;
     }
 
     /* 가격 */
@@ -5024,12 +5058,44 @@
       font-size:44px;
       font-weight:700;
       margin-bottom:6px;
+      letter-spacing:-0.02em;
+    }
+
+    #brandPricingAllBlack .price small{
+      font-size:16px;
+      font-weight:500;
+      opacity:0.55;
+      margin-left:4px;
     }
 
     #brandPricingAllBlack .price-desc{
       font-size:14px;
       opacity:0.5;
-      margin-bottom:30px;
+      margin-bottom:26px;
+    }
+
+    /* 스펙 */
+    #brandPricingAllBlack .spec{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:0 14px;
+      border-top:1px solid rgba(255,255,255,0.16);
+      border-bottom:1px solid rgba(255,255,255,0.16);
+      padding:16px 0;
+      margin-bottom:28px;
+    }
+
+    #brandPricingAllBlack .spec .k{
+      font-size:11px;
+      letter-spacing:0.14em;
+      opacity:0.45;
+      margin-bottom:7px;
+    }
+
+    #brandPricingAllBlack .spec .v{
+      font-size:15px;
+      font-weight:600;
+      letter-spacing:-0.01em;
     }
 
     /* 리스트 */
@@ -5046,11 +5112,13 @@
       display:flex;
       gap:10px;
       opacity:0.85;
+      word-break:keep-all;
     }
 
     #brandPricingAllBlack li::before{
       content:"—";
       font-weight:700;
+      flex:0 0 auto;
     }
 
     /* 버튼 */
@@ -5074,13 +5142,90 @@
       color:#000;
     }
 
-    /* 모바일 */
+    #brandPricingAllBlack .card.premium .btn{
+      background:#fff;
+      color:#000;
+    }
+
+    #brandPricingAllBlack .card.premium .btn:hover{
+      background:#000;
+      color:#fff;
+    }
+
+    /* 하단 안내 */
+    #brandPricingAllBlack .foot{
+      margin-top:44px;
+      padding-top:26px;
+      border-top:1px solid rgba(255,255,255,0.14);
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:12px 40px;
+    }
+
+    #brandPricingAllBlack .foot p{
+      margin:0;
+      font-size:14px;
+      line-height:1.8;
+      opacity:0.5;
+      display:flex;
+      gap:8px;
+      word-break:keep-all;
+    }
+
+    #brandPricingAllBlack .foot p::before{
+      content:"·";
+      font-weight:700;
+      flex:0 0 auto;
+    }
+
+    /* 태블릿 / 모바일 */
     @media(max-width:1000px){
       #brandPricingAllBlack .grid{
         grid-template-columns:1fr;
       }
+      #brandPricingAllBlack .card{
+        min-height:auto;
+      }
       #brandPricingAllBlack .card.premium{
         transform:none;
+      }
+      #brandPricingAllBlack .card.premium:hover{
+        transform:translateY(-10px);
+      }
+      #brandPricingAllBlack .foot{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media screen and (max-width:680px){
+      #brandPricingAllBlack{
+        padding:80px 18px;
+      }
+      #brandPricingAllBlack .head{
+        margin-bottom:52px;
+      }
+      #brandPricingAllBlack .title{
+        font-size:32px;
+      }
+      #brandPricingAllBlack .desc{
+        font-size:15px;
+        line-height:1.85;
+      }
+      #brandPricingAllBlack .card{
+        padding:34px 24px;
+      }
+      #brandPricingAllBlack .badge{
+        left:24px;
+      }
+      #brandPricingAllBlack .plan{
+        font-size:34px;
+      }
+      #brandPricingAllBlack .sub{
+        font-size:15px;
+        margin-bottom:26px;
+      }
+      #brandPricingAllBlack .price{
+        font-size:36px;
       }
     }
   </style>
@@ -5088,13 +5233,14 @@
   <div class="wrap">
 
     <div class="head">
+      <span class="kicker">AI Video Package</span>
       <h2 class="title">
-        브랜드의 첫인상을 결정하는<br>브랜딩 AI 영상을 제작합니다.
+        필요한 목적과 분량에 맞춰<br>AI 영상을 제작합니다.
       </h2>
       <p class="desc">
-        단순히 보기 좋은 영상이 아니라<br>
-        홈페이지, 광고, SNS, 제안서 등 다양한 접점에서<br>
-        브랜드의 가치와 분위기를 일관되게 전달할 수 있도록 설계합니다.
+        행사 안내, 회사 소개, 브랜드 홍보, 프로그램 교육까지<br>
+        영상의 사용 목적과 분량에 따라 제작 범위를 구성합니다.<br>
+        모든 패키지는 기획부터 후처리까지 전 과정을 포함합니다.
       </p>
     </div>
 
@@ -5104,73 +5250,117 @@
       <div class="card">
         <div class="plan">Essential</div>
         <div class="sub">
-          브랜드의 기본 인상을 정리하고<br>
-          깔끔한 첫인상을 전달하는 AI 영상 패키지
+          보유하신 사진과 자료를 활용해<br>
+          핵심 내용을 빠르게 전달하는 기본 패키지
         </div>
 
-        <div class="price">250만원</div>
-        <div class="price-desc">약 1~2주 제작</div>
+        <div class="price">350<small>만원</small></div>
+        <div class="price-desc">3분 기준 / 부가세 별도</div>
+
+        <div class="spec">
+          <div>
+            <div class="k">영상 분량</div>
+            <div class="v">3분 내외</div>
+          </div>
+          <div>
+            <div class="k">제작 기간</div>
+            <div class="v">약 14일</div>
+          </div>
+        </div>
 
         <ul>
-          <li>브랜드 핵심 방향 간단 정리</li>
-          <li>영상 컨셉 1안 기획</li>
-          <li>짧은 분량의 브랜딩 AI 영상 제작</li>
-          <li>홈페이지 / SNS 활용 중심 구성</li>
-          <li>기본 자막 및 장면 편집</li>
-          <li>1회 수정 반영</li>
+          <li>영상 목적 정리 및 시나리오 기획 1안</li>
+          <li>고객 제공 사진·자료 기반 AI 공간 설계</li>
+          <li>AI 캐릭터 1인 설정 및 장면 생성</li>
+          <li>기본 자막 구성 및 배경음악 적용</li>
+          <li>홈페이지 / SNS 업로드용 파일 제공 (16:9)</li>
+          <li>수정 2회 반영</li>
         </ul>
 
-        <a href="#" class="btn">상담 문의</a>
+        <a href="#flosLuxuryApplyForm" class="btn">상담 문의</a>
       </div>
 
       <!-- SIGNATURE -->
       <div class="card">
         <div class="plan">Signature</div>
         <div class="sub">
-          브랜드의 분위기와 메시지를<br>
-          보다 깊이 있게 전달하는 메인 브랜딩 영상
+          현장을 직접 점검하고 촬영하여<br>
+          실제 공간을 그대로 담아내는 표준 패키지
         </div>
 
-        <div class="price">500만원</div>
-        <div class="price-desc">약 2~3주 제작</div>
+        <div class="price">600<small>만원</small></div>
+        <div class="price-desc">5분 기준 / 부가세 별도</div>
+
+        <div class="spec">
+          <div>
+            <div class="k">영상 분량</div>
+            <div class="v">5분 내외</div>
+          </div>
+          <div>
+            <div class="k">제작 기간</div>
+            <div class="v">약 21일</div>
+          </div>
+        </div>
 
         <ul>
-          <li>브랜드 및 비즈니스 흐름 분석</li>
-          <li>영상 기획안 및 연출 방향 설계</li>
-          <li>메인 브랜딩 AI 영상 제작</li>
-          <li>광고 / 홈페이지 / SNS 확장 활용 고려</li>
-          <li>자막, 장면 전환, 사운드 후처리 포함</li>
-          <li>2회 수정 반영</li>
+          <li>현장 방문 점검 및 제작용 사진 촬영</li>
+          <li>현장 기반 AI 공간 재구성 및 사전 테스트</li>
+          <li>초기 기획안 + 최종 기획안 제공</li>
+          <li>AI 캐릭터 최대 3인 / 배경·조명 무드 설정</li>
+          <li>AI 나레이션, 효과음, 장면 전환 후처리</li>
+          <li>숏폼(9:16) 1편 추가 제공</li>
+          <li>수정 3회 반영</li>
         </ul>
 
-        <a href="#" class="btn">상담 문의</a>
+        <a href="#flosLuxuryApplyForm" class="btn">상담 문의</a>
       </div>
 
       <!-- PREMIUM -->
       <div class="card premium">
+        <span class="badge">MOST SELECTED</span>
         <div class="plan">Premium</div>
         <div class="sub">
-          브랜드의 인식과 고급감을<br>
-          구조적으로 설계하는 프리미엄 영상 프로젝트
+          행사·교육·안내 등 목적별로 확장하여<br>
+          장기간 활용하는 프리미엄 영상 프로젝트
         </div>
 
-        <div class="price">800만원~</div>
-        <div class="price-desc">약 3~5주 제작 / 기획 규모별 협의</div>
+        <div class="price">950<small>만원~</small></div>
+        <div class="price-desc">8분 기준 / 규모별 협의 / 부가세 별도</div>
+
+        <div class="spec">
+          <div>
+            <div class="k">영상 분량</div>
+            <div class="v">8분 내외</div>
+          </div>
+          <div>
+            <div class="k">제작 기간</div>
+            <div class="v">약 30일</div>
+          </div>
+        </div>
 
         <ul>
-          <li>비즈니스 구조 및 브랜드 포지셔닝 분석</li>
-          <li>프리미엄 영상 컨셉 기획 및 스토리 설계</li>
-          <li>메인 영상 + 활용용 숏폼 구성 가능</li>
-          <li>홈페이지 / 광고 / 제안용 다목적 활용 설계</li>
-          <li>고급 연출, 자막, 사운드, 후반 편집 강화</li>
-          <li>브랜드 톤에 맞춘 전체 영상 무드 디렉팅</li>
-          <li>3회 수정 반영</li>
+          <li>Signature 전 과정 포함</li>
+          <li>장면별 다중 구도 및 카메라 무빙 설계 강화</li>
+          <li>브랜드 전용 AI 캐릭터 설계 / 인원 제한 없음</li>
+          <li>다국어 자막 제공 (2개 국어)</li>
+          <li>목적별 버전 분리 제작 (행사 / 교육 / 안내)</li>
+          <li>숏폼(9:16) 3편 + 썸네일 제작</li>
+          <li>전담 PM 배정 및 전체 무드 디렉팅</li>
+          <li>수정 4회 반영</li>
         </ul>
 
-        <a href="#" class="btn">프리미엄 상담</a>
+        <a href="#flosLuxuryApplyForm" class="btn">프리미엄 상담</a>
       </div>
 
     </div>
+
+    <div class="foot">
+      <p>표기된 금액은 모두 부가세 별도 기준입니다.</p>
+      <p>기본 분량 초과 시 1분당 100만원이 추가됩니다.</p>
+      <p>현장 촬영은 수도권 기준이며, 그 외 지역은 별도 협의합니다.</p>
+      <p>제작 기간은 자료 전달 및 검수 일정에 따라 조정될 수 있습니다.</p>
+    </div>
+
   </div>
 </section>
 
@@ -5504,6 +5694,16 @@
       color:#fff;
     }
 
+    #flosLuxuryApplyForm .gc-button:disabled{
+      opacity:0.45;
+      cursor:not-allowed;
+    }
+
+    #flosLuxuryApplyForm .gc-button:disabled:hover{
+      background:#efefef;
+      color:#000;
+    }
+
     #flosLuxuryApplyForm .flos-note{
       margin-top:16px;
       text-align:center;
@@ -5705,15 +5905,15 @@
 
   <div class="flos-form-wrap">
     <div class="flos-form-head">
-      <div class="flos-form-kicker">FLOS AI 영상</div>
+      <div class="flos-form-kicker">FLOS LANDING PAGE</div>
       <h2 class="flos-form-title">무료 상담 신청</h2>
       <p class="flos-form-desc">
-       AI 영상 제작에 대한 <br> 맞춤형 솔루션을 제공해드립니다.
+        랜딩페이지 제작 가능 여부 및<br>비즈니스에 적용 가능할 수 있도록<br>제작을 도와드리겠습니다.
       </p>
     </div>
 
-     <form id="form_e11" name="frm_phonecall_web" action="" method="post" target="hidden_iframe11" onsubmit="dll(); submitted=true;"  class="gc-form" novalidate>
-      <input type="hidden" name="entry.981041205" value="본문 신청폼">
+    <form id="form_e11" name="frm_phonecall_web" class="gc-form" novalidate>
+      <input type="hidden" name="source" value="본문 신청폼">
 
       <div class="gc-row">
         <label for="name">
@@ -5721,7 +5921,7 @@
           <input
             type="text"
             id="name"
-            name="entry.1262294308"
+            name="name"
             placeholder="성함을 입력해주세요."
             maxlength="4"
             required
@@ -5734,7 +5934,7 @@
           <input
             type="tel"
             id="phone"
-            name="entry.197602348"
+            name="phone"
             placeholder="연락처를 입력해주세요."
             maxlength="11"
             required
@@ -5750,7 +5950,7 @@
           <input
             type="text"
             id="company"
-            name="entry.1663513519"
+            name="company"
             placeholder="회사명 또는 브랜드명을 입력해주세요."
             maxlength="30"
             autocomplete="organization"
@@ -5760,7 +5960,7 @@
         <label for="intro_select">
           <span>신청 프로그램 종류<span class="req">*</span></span>
           <div class="custom-select-wrap">
-            <select name="entry.273651770" id="intro_select" class="custom-select" required>
+            <select name="program_type" id="intro_select" class="custom-select" required>
               <option value="" selected disabled>신청 프로그램 종류</option>
               <option value="브랜딩 홈페이지">브랜딩 홈페이지</option>
               <option value="랜딩페이지">랜딩페이지</option>
@@ -5776,7 +5976,7 @@
         <label for="message">
           <span>문의 사항</span>
           <textarea
-            name="entry.1913381675"
+            name="message"
             id="message"
             placeholder="현재 고민하고 있는 내용이나 문의하실 내용을 자유롭게 작성해 주세요."
             maxlength="1000"
@@ -5799,7 +5999,7 @@
           </div>
         </label>
 
-        <input type="submit" id="send_message" class="gc-button" value="Submit" disabled>
+        <input type="submit" id="send_message" class="gc-button" value="Submit">
       </div>
 
       <p class="flos-note">
@@ -5870,20 +6070,132 @@
     </div>
   </div>
 
-  <script type="text/javascript">
-    var submitted = false;
-  </script>
-  <iframe name="hidden_iframe11" id="hidden_iframe11" style="display:none;" onload=""></iframe>
+  <script>
+    (function(){
+      /* ============================================================
+         Supabase 연결 설정 — 이 두 값만 프로젝트에 맞게 교체하세요
+         (Settings > API 에서 확인: Project URL / anon public key)
+      ============================================================ */
+      const SUPABASE_URL = 'https://tknyhvycsxvlxrdscmue.supabase.co';
+      const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRrbnlodnljc3h2bHhyZHNjbXVlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg2NDQ2NjQsImV4cCI6MjA5NDIyMDY2NH0.WaeR94STn1lpm-hJQeCiJITE3Pvmien84EU9tIyVLDg';
 
-  <script type="text/javascript">
-    var submitted2 = false;
-  </script>
-  <iframe name="hidden_iframe12" id="hidden_iframe12" style="display:none;" onload=""></iframe>
+      const form = document.getElementById('form_e11');
+      const submitBtn = document.getElementById('send_message');
+      const agreeChk = document.getElementById('agree11');
+      const nameInput = document.getElementById('name');
+      const phoneInput = document.getElementById('phone');
+      const companyInput = document.getElementById('company');
+      const programSelect = document.getElementById('intro_select');
+      const messageInput = document.getElementById('message');
 
-  <script type="text/javascript">
-    var submitted3 = false;
+      let isSending = false;
+
+      /* 전화번호: 숫자만 입력 허용 */
+      phoneInput.addEventListener('input', function(){
+        this.value = this.value.replace(/[^0-9]/g, '');
+      });
+
+      /* 동의 체크 여부에 따라 제출 버튼 활성화 */
+      function syncButtonState(){
+        submitBtn.disabled = isSending || !agreeChk.checked;
+      }
+      agreeChk.addEventListener('change', syncButtonState);
+      syncButtonState();
+
+      /* 유효성 검사 — DB CHECK 제약(^01[016789][0-9]{7,8}$)과 동일 규칙 */
+      function validate(){
+        const name = nameInput.value.trim();
+        const phone = phoneInput.value.trim();
+        const program = programSelect.value;
+
+        if(!name){
+          alert('성함을 입력해주세요.');
+          nameInput.focus();
+          return false;
+        }
+
+        if(!/^01[016789][0-9]{7,8}$/.test(phone)){
+          alert('올바른 휴대폰 번호를 입력해주세요.\n(예: 01012345678, 숫자만 입력)');
+          phoneInput.focus();
+          return false;
+        }
+
+        if(!program){
+          alert('신청 프로그램 종류를 선택해주세요.');
+          programSelect.focus();
+          return false;
+        }
+
+        if(!agreeChk.checked){
+          alert('개인정보 수집 및 이용에 동의해주세요.');
+          return false;
+        }
+
+        return true;
+      }
+
+      /* Supabase REST API로 전송 */
+      form.addEventListener('submit', async function(e){
+        e.preventDefault();
+
+        if(isSending) return;
+        if(!validate()) return;
+
+        const payload = {
+          name: nameInput.value.trim(),
+          phone: phoneInput.value.trim(),
+          company: companyInput.value.trim() || null,
+          program_type: programSelect.value,
+          message: messageInput.value.trim() || null,
+          source: form.querySelector('input[name="source"]').value
+        };
+
+        isSending = true;
+        const originalLabel = submitBtn.value;
+        submitBtn.value = '전송 중...';
+        syncButtonState();
+
+        try{
+          const res = await fetch(SUPABASE_URL + '/rest/v1/flos_consultations', {
+            method: 'POST',
+            headers: {
+              'apikey': SUPABASE_ANON_KEY,
+              'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+              'Content-Type': 'application/json',
+              'Prefer': 'return=minimal'
+            },
+            body: JSON.stringify(payload)
+          });
+
+          if(res.ok){
+            alert('상담 신청이 정상적으로 접수되었습니다.\n확인 후 순차적으로 연락드리겠습니다.');
+            form.reset();
+            agreeChk.checked = true; /* 초기 상태(체크됨) 유지 */
+          }else{
+            let errMsg = '';
+            try{
+              const errData = await res.json();
+              errMsg = (errData && (errData.message || errData.details)) || '';
+            }catch(_){ /* JSON 파싱 실패 시 무시 */ }
+
+            if(errMsg.indexOf('Too many requests') !== -1 || errMsg.indexOf('P0001') !== -1){
+              alert('잠시 후 다시 시도해주세요.\n동일한 번호로 짧은 시간 내 중복 신청은 제한됩니다.');
+            }else if(errMsg.indexOf('phone') !== -1 && errMsg.indexOf('check') !== -1){
+              alert('올바른 휴대폰 번호 형식이 아닙니다.\n숫자만 입력해주세요. (예: 01012345678)');
+            }else{
+              alert('접수 중 오류가 발생했습니다.\n잠시 후 다시 시도해주세요.');
+            }
+          }
+        }catch(err){
+          alert('네트워크 오류가 발생했습니다.\n연결 상태를 확인한 뒤 다시 시도해주세요.');
+        }finally{
+          isSending = false;
+          submitBtn.value = originalLabel;
+          syncButtonState();
+        }
+      });
+    })();
   </script>
-  <iframe name="hidden_iframe13" id="hidden_iframe13" style="display:none;" onload=""></iframe>
 
   <script>
     (function(){
@@ -5926,8 +6238,6 @@
           closeModal();
         }
       });
-
-   
 
     })();
   </script>
