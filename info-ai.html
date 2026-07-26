@@ -2591,17 +2591,7 @@
     }
 
     #ProjectSection .sfs-radial-lines {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: min(600px, 74vw);
-      height: min(600px, 74vw);
-      transform: translate(-50%, -50%);
-      z-index: 5;
-      pointer-events: none;
-      opacity: 0.6;
-      transition: opacity 0.5s ease;
-      will-change: opacity, transform;
+      display: none !important; /* 첫 화면 전 노란색/방사형 폭죽 효과 제거 */
     }
 
     #ProjectSection .sfs-radial-lines canvas {
@@ -2710,6 +2700,20 @@
     }
 
     #ProjectSection .sfs-project-card.sfs-visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+
+    /* 첫 번째 포트폴리오는 다른 카드보다 빠르고 짧게 등장 */
+    #ProjectSection .sfs-project-card:first-child {
+      transform: translateY(70px) scale(0.98);
+      transition:
+        opacity 0.55s var(--sfs-ease),
+        transform 0.55s var(--sfs-ease);
+    }
+
+    #ProjectSection .sfs-project-card:first-child.sfs-visible {
       opacity: 1;
       transform: translateY(0) scale(1);
     }
@@ -3059,61 +3063,45 @@
     }
 
 
-    /* ===== 모바일 가로 모드: 영상 팝업을 화면 전체에 맞춤 =====
-       다른 레이아웃과 기능은 변경하지 않고, 팝업이 열린 경우에만 적용됩니다. */
-    @media (orientation: landscape) and (max-height: 700px),
-           (orientation: landscape) and (hover: none) and (pointer: coarse) {
+    /* 세로에서 영상을 연 뒤 가로로 회전해도 팝업이 화면 전체를 채우도록 고정 */
+    @media (orientation: landscape) {
       #ProjectSection .sfs-video-modal.sfs-open {
-        inset: 0;
-        width: 100vw;
-        height: 100vh;
-        height: 100dvh;
-        min-width: 100vw;
-        min-height: 100vh;
-        min-height: 100dvh;
-        padding: 0;
-        align-items: stretch;
-        justify-content: stretch;
-        overflow: hidden;
-        background: #000;
-        box-sizing: border-box;
+        top: 0 !important;
+        right: 0 !important;
+        bottom: auto !important;
+        left: 0 !important;
+        width: 100vw !important;
+        height: var(--sfs-modal-vh, 100vh) !important;
+        min-height: var(--sfs-modal-vh, 100vh) !important;
+        max-height: var(--sfs-modal-vh, 100vh) !important;
+        padding: 0 !important;
+        align-items: stretch !important;
+        justify-content: stretch !important;
+        overflow: hidden !important;
       }
 
-      #ProjectSection .sfs-video-modal.sfs-open .sfs-video-backdrop {
-        inset: 0;
-        background: #000;
-        backdrop-filter: none;
-        -webkit-backdrop-filter: none;
+      #ProjectSection .sfs-video-dialog {
+        width: 100vw !important;
+        height: var(--sfs-modal-vh, 100vh) !important;
+        min-width: 100vw !important;
+        min-height: var(--sfs-modal-vh, 100vh) !important;
+        max-width: none !important;
+        max-height: none !important;
+        aspect-ratio: auto !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        transform: none !important;
       }
 
       #ProjectSection .sfs-video-modal.sfs-open .sfs-video-dialog {
-        position: relative;
-        width: 100vw;
-        height: 100vh;
-        height: 100dvh;
-        min-width: 100vw;
-        min-height: 100vh;
-        min-height: 100dvh;
-        max-width: none;
-        max-height: none;
-        aspect-ratio: auto;
-        margin: 0;
-        border-radius: 0;
-        box-shadow: none;
-        transform: none;
+        transform: none !important;
       }
 
-      #ProjectSection .sfs-video-modal.sfs-open .sfs-video-dialog iframe {
-        width: 100%;
-        height: 100%;
-        inset: 0;
-      }
-
-      #ProjectSection .sfs-video-modal.sfs-open .sfs-video-close {
-        position: fixed;
-        top: max(10px, env(safe-area-inset-top, 0px));
-        right: max(10px, env(safe-area-inset-right, 0px));
-        z-index: 2147483646;
+      #ProjectSection .sfs-video-close {
+        position: fixed !important;
+        top: max(10px, env(safe-area-inset-top, 0px)) !important;
+        right: max(10px, env(safe-area-inset-right, 0px)) !important;
+        z-index: 2147483647 !important;
       }
     }
 
@@ -3170,7 +3158,7 @@
                data-video="https://www.youtube.com/watch?v=9UNtQEk_4FU">
         <a class="sfs-card-link" href="javascript:void(0)" aria-label="GS 건설 XI 행사 안내 영상 재생">
           <div class="sfs-card-image">
-            <img class="sfs-card-photo" alt="XI 행사 안내 영상 썸네일" loading="lazy">
+            <img class="sfs-card-photo" alt="XI 행사 안내 영상 썸네일" loading="eager" fetchpriority="high">
             <canvas></canvas>
             <span class="sfs-play-badge" aria-hidden="true"></span>
           </div>
@@ -3399,6 +3387,22 @@
       let lastFocusedEl = null;
       let bodyOverflowBackup = '';
 
+
+      /* 가로 회전 직후 실제 보이는 모바일 화면 높이를 팝업에 즉시 반영 */
+      function syncVideoModalViewport() {
+        if (!videoModal) return;
+        const viewportHeight = Math.max(
+          1,
+          Math.round(
+            (window.visualViewport && window.visualViewport.height) ||
+            window.innerHeight ||
+            document.documentElement.clientHeight ||
+            1
+          )
+        );
+        videoModal.style.setProperty('--sfs-modal-vh', viewportHeight + 'px');
+      }
+
       // 유튜브 / 비메오 링크를 임베드용 주소로 변환 (아니면 null)
       function getVideoEmbedUrl(rawUrl) {
         if (!rawUrl) return null;
@@ -3452,11 +3456,16 @@
         bodyOverflowBackup = document.body.style.overflow;
         document.body.style.overflow = 'hidden';
 
+        syncVideoModalViewport();
         videoModal.classList.add('sfs-open');
         videoModal.setAttribute('aria-hidden', 'false');
         modalOpen = true;
 
         if (videoCloseBtn) videoCloseBtn.focus();
+
+        /* 회전 애니메이션이 끝난 뒤 한 번 더 실제 높이를 맞춤 */
+        window.setTimeout(syncVideoModalViewport, 80);
+        window.setTimeout(syncVideoModalViewport, 320);
       }
 
       function closeVideoModal() {
@@ -3530,6 +3539,13 @@
 
       projectCards.forEach((card) => cardObserver.observe(card));
 
+      /* 첫 포트폴리오는 이미지 로드와 동시에 미리 표시해 빈 화면 시간을 줄임 */
+      if (projectCards[0]) {
+        window.requestAnimationFrame(function () {
+          projectCards[0].classList.add('sfs-visible');
+        });
+      }
+
       let hintHidden = false;
       let ticking = false;
 
@@ -3574,8 +3590,22 @@
       window.addEventListener('scroll', requestTick, { passive: true });
       window.addEventListener('resize', function () {
         drawRadialLines();
+        if (modalOpen) syncVideoModalViewport();
         requestTick();
       });
+
+      window.addEventListener('orientationchange', function () {
+        if (!modalOpen) return;
+        syncVideoModalViewport();
+        window.setTimeout(syncVideoModalViewport, 120);
+        window.setTimeout(syncVideoModalViewport, 360);
+      }, { passive: true });
+
+      if (window.visualViewport) {
+        window.visualViewport.addEventListener('resize', function () {
+          if (modalOpen) syncVideoModalViewport();
+        }, { passive: true });
+      }
 
       updateOnScroll();
     })();
