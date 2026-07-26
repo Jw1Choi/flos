@@ -203,14 +203,14 @@
         <h4>AI 영상</h4>
         <ul>
           <!-- <li><a href="#">브랜드 AI 영상제작</a></li> -->
-          <li><a href="info-ai.html">추억사진 AI 영상제작</a></li>
+          <li><a href="./info-ai.html">안내 AI 영상제작</a></li>
         </ul>
       </div>
 
       <div class="col">
         <h4>콘텐츠</h4>
         <ul>
-          <li><a href="#">전문 칼럼</a></li>
+          <li><a href="./column.html">전문 칼럼</a></li>
         </ul>
       </div>
     </div>
@@ -219,7 +219,7 @@
       <div class="addr">
         <div class="corpLine"
           data-corp="FLOS"
-          data-ceo="대표자명"
+          data-ceo="최지웅"
           data-corpno=""
           data-bizno="">
 
