@@ -4309,6 +4309,10 @@
     #chanelReviewLightbox{
       position:fixed;
       inset:0;
+      width:100%;
+      height:100vh;
+      height:100dvh;
+      max-height:100dvh;
       z-index:9999;
       display:flex;
       align-items:center;
@@ -4321,6 +4325,24 @@
       visibility:hidden;
       transition:opacity .35s ease, visibility .35s ease;
       cursor:zoom-out;
+      overflow:hidden;
+      overscroll-behavior:none;
+      touch-action:none;
+      -webkit-overflow-scrolling:auto;
+    }
+
+    /* 모바일 라이트박스 사용 중 페이지 당겨서 새로고침 및 위치 튐 방지 */
+    html.chanel-lightbox-open,
+    body.chanel-lightbox-open{
+      overflow:hidden !important;
+      overscroll-behavior:none !important;
+    }
+
+    body.chanel-lightbox-open{
+      position:fixed !important;
+      left:0;
+      right:0;
+      width:100%;
     }
 
     #chanelReviewLightbox.is-open{
@@ -4340,6 +4362,10 @@
       transform:scale(.94);
       transition:transform .35s cubic-bezier(.22,1,.36,1);
       cursor:default;
+      user-select:none;
+      -webkit-user-select:none;
+      -webkit-user-drag:none;
+      touch-action:none;
     }
 
     #chanelReviewLightbox.is-open img{
@@ -4877,6 +4903,86 @@
          ============================================ */
       let lightbox = null;
       let lightboxImg = null;
+      let lockedScrollY = 0;
+      let previousSectionMinHeight = '';
+      let previousBodyStyle = null;
+      let previousHtmlStyle = null;
+
+      function lockPageScroll(){
+        const body = document.body;
+        const html = document.documentElement;
+
+        if(body.classList.contains('chanel-lightbox-open')) return;
+
+        lockedScrollY = window.pageYOffset || html.scrollTop || 0;
+        previousSectionMinHeight = section.style.minHeight;
+
+        /* 팝업을 닫을 때 역스크롤로 섹션 위치가 움직이지 않도록 현재 높이 고정 */
+        section.style.minHeight = section.getBoundingClientRect().height + 'px';
+
+        previousBodyStyle = {
+          position:body.style.position,
+          top:body.style.top,
+          left:body.style.left,
+          right:body.style.right,
+          width:body.style.width,
+          overflow:body.style.overflow,
+          paddingRight:body.style.paddingRight
+        };
+
+        previousHtmlStyle = {
+          overflow:html.style.overflow,
+          overscrollBehavior:html.style.overscrollBehavior
+        };
+
+        const scrollbarWidth = Math.max(0, window.innerWidth - html.clientWidth);
+        const currentPaddingRight = parseFloat(window.getComputedStyle(body).paddingRight) || 0;
+
+        html.classList.add('chanel-lightbox-open');
+        body.classList.add('chanel-lightbox-open');
+
+        html.style.overflow = 'hidden';
+        html.style.overscrollBehavior = 'none';
+
+        body.style.position = 'fixed';
+        body.style.top = '-' + lockedScrollY + 'px';
+        body.style.left = '0';
+        body.style.right = '0';
+        body.style.width = '100%';
+        body.style.overflow = 'hidden';
+
+        if(scrollbarWidth > 0){
+          body.style.paddingRight = (currentPaddingRight + scrollbarWidth) + 'px';
+        }
+      }
+
+      function unlockPageScroll(){
+        const body = document.body;
+        const html = document.documentElement;
+
+        html.classList.remove('chanel-lightbox-open');
+        body.classList.remove('chanel-lightbox-open');
+
+        if(previousHtmlStyle){
+          html.style.overflow = previousHtmlStyle.overflow;
+          html.style.overscrollBehavior = previousHtmlStyle.overscrollBehavior;
+        }
+
+        if(previousBodyStyle){
+          body.style.position = previousBodyStyle.position;
+          body.style.top = previousBodyStyle.top;
+          body.style.left = previousBodyStyle.left;
+          body.style.right = previousBodyStyle.right;
+          body.style.width = previousBodyStyle.width;
+          body.style.overflow = previousBodyStyle.overflow;
+          body.style.paddingRight = previousBodyStyle.paddingRight;
+        }
+
+        section.style.minHeight = previousSectionMinHeight;
+
+        /* 스타일 복원 직후 기존 스크롤 좌표를 정확히 되돌림 */
+        window.scrollTo(0, lockedScrollY);
+      }
 
       function buildLightbox(){
         lightbox = document.createElement('div');
@@ -4900,6 +5006,17 @@
         /* 이미지 자체 클릭은 닫히지 않도록 */
         lightboxImg.addEventListener('click', (e)=> e.stopPropagation());
 
+        /* 모바일 오버스크롤/핀치가 페이지 새로고침 제스처로 전달되지 않도록 차단 */
+        const preventPageGesture = (e)=>{
+          if(lightbox.classList.contains('is-open')){
+            e.preventDefault();
+          }
+        };
+
+        lightbox.addEventListener('touchmove', preventPageGesture, {passive:false});
+        lightbox.addEventListener('gesturestart', preventPageGesture, {passive:false});
+        lightbox.addEventListener('gesturechange', preventPageGesture, {passive:false});
+
         /* 배경 클릭 → 닫기 */
         lightbox.addEventListener('click', closeLightbox);
 
@@ -4921,14 +5038,14 @@
         if(!lightbox) buildLightbox();
         lightboxImg.src = src;
         if(alt) lightboxImg.alt = alt;
+        lockPageScroll();
         lightbox.classList.add('is-open');
-        document.body.style.overflow = 'hidden';
       }
 
       function closeLightbox(){
-        if(!lightbox) return;
+        if(!lightbox || !lightbox.classList.contains('is-open')) return;
         lightbox.classList.remove('is-open');
-        document.body.style.overflow = '';
+        unlockPageScroll();
       }
 
       photos.forEach(box=>{
