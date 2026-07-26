@@ -631,6 +631,13 @@
       --padX: clamp(16px, 3.2vw, 46px);
       --radius: 24px;
       --shadow: 0 30px 80px rgba(0, 0, 0, .35);
+
+      /* 모바일 주소창 변화와 무관하게 최초 화면 높이를 고정 */
+      --bgf-vh: 100vh;
+      --bgf-video-min-w: 177.77vh;
+      --bgf-mobile-visual-h: 48vh;
+      --bgf-pad-y: 8vh;
+
       font-family: "Pretendard", "Noto Sans KR", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
       color: var(--ink);
       width: 100%;
@@ -656,10 +663,12 @@
     }
 
     #bgScrollWrap .sec_visual {
-      min-height: 100vh;
+      height: var(--bgf-vh, 100vh);
+      min-height: var(--bgf-vh, 100vh);
       position: relative;
       overflow: hidden;
       background: #000;
+      box-sizing: border-box;
     }
 
     #bgScrollWrap .video_wrap {
@@ -675,8 +684,8 @@
     #bgScrollWrap .video_wrap video,
     #bgScrollWrap .video_wrap iframe {
       width: 100vw;
-      min-width: 177.77vh;
-      height: 100vh;
+      min-width: var(--bgf-video-min-w, 177.77vh);
+      height: var(--bgf-vh, 100vh);
       min-height: 56.25vw;
       position: absolute;
       top: 50%;
@@ -728,7 +737,7 @@
       right: 0;
       bottom: 0;
       top: auto;
-      height: min(48vh, 520px);
+      height: min(var(--bgf-mobile-visual-h, 48vh), 520px);
       z-index: 3;
       pointer-events: none;
       opacity: 0;
@@ -766,11 +775,13 @@
       position: relative;
       z-index: 4;
       width: 100%;
-      min-height: 100vh;
+      height: var(--bgf-vh, 100vh);
+      min-height: var(--bgf-vh, 100vh);
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: clamp(44px, 8vh, 96px) var(--padX);
+      padding: clamp(44px, var(--bgf-pad-y, 8vh), 96px) var(--padX);
+      box-sizing: border-box;
     }
 
     #bgScrollWrap .title_inner {
@@ -1265,17 +1276,79 @@
       const videoWrap = root.querySelector('[data-bgf-video]');
       const titleWrapEl = root.querySelector('.title_wrap');
 
-      function setupPin() {
-        const vh = window.innerHeight;
-        pinSpacer.style.cssText = 'position:relative;height:' + (vh * 4) + 'px;';
-        secVisual.style.cssText =
-          'position:sticky;top:0;width:100%;height:100vh;' +
-          'max-height:none;max-width:none;box-sizing:border-box;overflow:hidden;';
+      /* =========================================================
+         모바일 안정화
+         - 최초 진입 시 화면 높이를 픽셀로 한 번 고정
+         - 주소창 표시/숨김으로 발생하는 세로 resize에서는 재측정하지 않음
+         - 실제 가로폭 변경 또는 화면 회전 때만 다시 측정
+         ========================================================= */
+      let lockedViewportHeight = 0;
+      let lastViewportWidth = Math.round(window.innerWidth);
+      let lastOrientationKey = getOrientationKey();
+
+      function getOrientationKey() {
+        if (window.screen && window.screen.orientation &&
+            typeof window.screen.orientation.angle === 'number') {
+          return String(window.screen.orientation.angle);
+        }
+
+        if (typeof window.orientation === 'number') {
+          return String(window.orientation);
+        }
+
+        return window.innerWidth > window.innerHeight ? 'landscape' : 'portrait';
+      }
+
+      function lockViewportHeight(force) {
+        if (lockedViewportHeight > 0 && !force) return;
+
+        lockedViewportHeight = Math.max(
+          1,
+          Math.round(
+            document.documentElement.clientHeight ||
+            window.innerHeight ||
+            1
+          )
+        );
+
+        root.style.setProperty('--bgf-vh', lockedViewportHeight + 'px');
+        root.style.setProperty(
+          '--bgf-video-min-w',
+          Math.round(lockedViewportHeight * 1.7777) + 'px'
+        );
+        root.style.setProperty(
+          '--bgf-mobile-visual-h',
+          Math.round(lockedViewportHeight * 0.48) + 'px'
+        );
+        root.style.setProperty(
+          '--bgf-pad-y',
+          Math.round(lockedViewportHeight * 0.08) + 'px'
+        );
+      }
+
+      function setupPin(forceHeightRefresh) {
+        lockViewportHeight(Boolean(forceHeightRefresh));
+
+        pinSpacer.style.position = 'relative';
+        pinSpacer.style.height = (lockedViewportHeight * 4) + 'px';
+
+        secVisual.style.position = 'sticky';
+        secVisual.style.top = '0';
+        secVisual.style.width = '100%';
+        secVisual.style.height = lockedViewportHeight + 'px';
+        secVisual.style.minHeight = lockedViewportHeight + 'px';
+        secVisual.style.maxHeight = 'none';
+        secVisual.style.maxWidth = 'none';
+        secVisual.style.boxSizing = 'border-box';
+        secVisual.style.overflow = 'hidden';
       }
 
       function getProgress() {
         const scrolled = -pinSpacer.getBoundingClientRect().top;
-        return Math.max(0, Math.min(1, scrolled / (window.innerHeight * 3)));
+        const scrollRange = lockedViewportHeight * 3;
+
+        if (scrollRange <= 0) return 0;
+        return Math.max(0, Math.min(1, scrolled / scrollRange));
       }
 
       function remap(v, i0, i1, o0, o1) {
@@ -1602,14 +1675,34 @@
 
       window.addEventListener('scroll', scheduleUpdate, { passive: true });
 
-      let resizeRaf = 0;
+      let resizeTimer = 0;
+
       window.addEventListener('resize', function () {
-        cancelAnimationFrame(resizeRaf);
-        resizeRaf = requestAnimationFrame(function () {
-          setupPin();
+        clearTimeout(resizeTimer);
+
+        resizeTimer = window.setTimeout(function () {
+          const currentWidth = Math.round(window.innerWidth);
+          const currentOrientationKey = getOrientationKey();
+
+          const widthChanged =
+            Math.abs(currentWidth - lastViewportWidth) > 2;
+
+          const orientationChanged =
+            currentOrientationKey !== lastOrientationKey;
+
+          /*
+           * 모바일 주소창이 나타나거나 사라질 때는 가로폭과 방향이
+           * 그대로이므로 높이를 다시 계산하지 않습니다.
+           */
+          if (widthChanged || orientationChanged) {
+            lastViewportWidth = currentWidth;
+            lastOrientationKey = currentOrientationKey;
+            setupPin(true);
+          }
+
           update();
-        });
-      });
+        }, 180);
+      }, { passive: true });
 
     })();
   </script>
@@ -1808,6 +1901,24 @@
 
 <section id="mainSliderPack" aria-label="Main Slider Pack">
   <style>
+    /*
+      모바일 주소창이 열리고 닫혀도 높이가 변하지 않도록
+      JS에서 최초 측정한 화면 높이를 아래 변수들에 픽셀값으로 고정합니다.
+      JS 실행 전에는 기존 vh 값이 fallback으로 사용됩니다.
+    */
+    #mainSliderPack {
+      --msp-h10: 10vh;
+      --msp-hNeg10: -10vh;
+      --msp-h18: 18vh;
+      --msp-h70: 70vh;
+      --msp-h88: 88vh;
+      --msp-h90: 90vh;
+      --msp-h92: 92vh;
+      --msp-h100: 100vh;
+      --msp-h120: 120vh;
+      --msp-h500: 500vh;
+    }
+
     /* =========================
     Main Slider (Scope Pack)
     - 외부 CSS와 충돌 최소화
@@ -1817,14 +1928,14 @@
     #main-slider-root {
       position: relative;
       width: 100%;
-      min-height: 70vh;
+      min-height: var(--msp-h70, 70vh);
       font-family: 'Pretendard', 'Noto Sans KR', sans-serif;
       overflow-x: hidden;
       background: #fff;
     }
 
     #main-slider-root .main-slider-section1 {
-      height: 70vh;
+      height: var(--msp-h70, 70vh);
       min-height: 600px;
       display: flex;
       align-items: center;
@@ -1879,7 +1990,7 @@
 
     #main-slider-root .main-slider-section2 {
       position: relative;
-      height: 500vh;
+      height: var(--msp-h500, 500vh);
       z-index: 1;
     }
 
@@ -1888,7 +1999,7 @@
       left: 0;
       top: 0;
       width: 100vw;
-      height: 100vh;
+      height: var(--msp-h100, 100vh);
       z-index: 0;
       pointer-events: none;
       transition: opacity .5s;
@@ -1916,7 +2027,7 @@
     #main-slider-root .main-slider-bg img {
       position: absolute;
       width: 100vw;
-      height: 100vh;
+      height: var(--msp-h100, 100vh);
       object-fit: cover;
       left: 0;
       top: 0;
@@ -1949,7 +2060,7 @@
       margin-left: auto;
       margin-right: 8vw;
       right: 0;
-      top: 18vh;
+      top: var(--msp-h18, 18vh);
       z-index: 3;
       display: flex;
       flex-direction: column;
@@ -1957,7 +2068,7 @@
     }
 
     #main-slider-root .main-slider-list li {
-      min-height: 90vh;
+      min-height: var(--msp-h90, 90vh);
       display: flex;
       align-items: center;
       justify-content: flex-end;
@@ -2080,8 +2191,8 @@
 
     #main-slider-root.clip .main-slider-bg {
       position: absolute;
-      height: 120vh;
-      top: -10vh;
+      height: var(--msp-h120, 120vh);
+      top: var(--msp-hNeg10, -10vh);
     }
 
     #main-slider-root .fade-target {
@@ -2102,7 +2213,7 @@
       left: 0;
       top: 0;
       width: 100vw;
-      height: 100vh;
+      height: var(--msp-h100, 100vh);
       z-index: -1;
       pointer-events: none;
       opacity: 0;
@@ -2122,7 +2233,7 @@
     #permanent-bg-layer img {
       position: absolute;
       width: 100vw;
-      height: 100vh;
+      height: var(--msp-h100, 100vh);
       object-fit: cover;
       left: 0;
       top: 0;
@@ -2166,8 +2277,8 @@
     #mainSliderPack .family-site-dialog {
       position: relative;
       width: min(1120px, 100%);
-      height: min(88vh, 980px);
-      max-height: min(88vh, 980px);
+      height: min(var(--msp-h88, 88vh), 980px);
+      max-height: min(var(--msp-h88, 88vh), 980px);
       overflow: hidden;
       border-radius: 28px;
       background: #f4f6f4;
@@ -2567,8 +2678,8 @@
 
       #mainSliderPack .family-site-dialog {
         width: 100%;
-        height: 92vh;
-        max-height: 92vh;
+        height: var(--msp-h92, 92vh);
+        max-height: var(--msp-h92, 92vh);
         border-radius: 24px 24px 0 0;
       }
 
@@ -2771,9 +2882,55 @@
 
   <script>
     ; (function () {
+      const pack = document.getElementById('mainSliderPack');
       const root = document.getElementById('main-slider-root');
       const permanentBgLayer = document.getElementById('permanent-bg-layer');
-      if (!root) return;
+      if (!pack || !root) return;
+
+      /*
+       * 모바일 안정화 핵심
+       * - 최초 화면 높이를 픽셀값으로 잠금
+       * - 주소창 표시/숨김으로 발생하는 세로 resize에서는 재측정하지 않음
+       * - 실제 화면 회전 또는 가로폭 변경 때만 다시 측정
+       */
+      let lockedViewH = Math.max(
+        1,
+        Math.round(window.innerHeight || document.documentElement.clientHeight || 1)
+      );
+      let lockedViewW = Math.max(
+        1,
+        Math.round(window.innerWidth || document.documentElement.clientWidth || 1)
+      );
+
+      function applyLockedViewportHeight() {
+        lockedViewH = Math.max(
+          1,
+          Math.round(window.innerHeight || document.documentElement.clientHeight || 1)
+        );
+        lockedViewW = Math.max(
+          1,
+          Math.round(window.innerWidth || document.documentElement.clientWidth || 1)
+        );
+
+        const heights = {
+          '--msp-h10': lockedViewH * 0.10,
+          '--msp-hNeg10': lockedViewH * -0.10,
+          '--msp-h18': lockedViewH * 0.18,
+          '--msp-h70': lockedViewH * 0.70,
+          '--msp-h88': lockedViewH * 0.88,
+          '--msp-h90': lockedViewH * 0.90,
+          '--msp-h92': lockedViewH * 0.92,
+          '--msp-h100': lockedViewH,
+          '--msp-h120': lockedViewH * 1.20,
+          '--msp-h500': lockedViewH * 5
+        };
+
+        Object.keys(heights).forEach(function (name) {
+          pack.style.setProperty(name, Math.round(heights[name]) + 'px');
+        });
+      }
+
+      applyLockedViewportHeight();
 
       const s1 = root.querySelector('.main-slider-section1');
       const s2 = root.querySelector('.main-slider-section2');
@@ -2808,7 +2965,8 @@
       permanentBgLayer.classList.remove('permanent');
 
       const lerp = (a, b, t) => a + (b - a) * t;
-      const vh = () => innerHeight;
+      /* 스크롤 중에는 항상 잠긴 높이만 사용 */
+      const vh = () => lockedViewH;
 
       function animate() {
         curScale = lerp(curScale, trgScale, .18);
@@ -2937,12 +3095,10 @@
 
         if (on) {
           addEventListener('scroll', updateStates, { passive: true });
-          addEventListener('resize', updateStates);
           updateStates();
           rafId = requestAnimationFrame(animate);
         } else {
           removeEventListener('scroll', updateStates);
-          removeEventListener('resize', updateStates);
           if (rafId) {
             cancelAnimationFrame(rafId);
             rafId = null;
@@ -2976,14 +3132,66 @@
       }
 
       addEventListener('scroll', checkPos, { passive: true });
-      addEventListener('resize', checkPos);
+
+      let viewportResizeRaf = 0;
+      let orientationTimer = 0;
+
+      function refreshAfterRealViewportChange() {
+        applyLockedViewportHeight();
+        updateStates();
+        checkPos();
+      }
+
+      function handleStableResize() {
+        cancelAnimationFrame(viewportResizeRaf);
+
+        viewportResizeRaf = requestAnimationFrame(function () {
+          const currentW = Math.max(
+            1,
+            Math.round(window.innerWidth || document.documentElement.clientWidth || 1)
+          );
+          const widthChanged = Math.abs(currentW - lockedViewW) > 2;
+          const mobileNow = currentW <= 1024 || lockedViewW <= 1024;
+
+          /*
+           * 모바일에서 가로폭이 그대로인 resize는 대부분 주소창 표시/숨김입니다.
+           * 이때 높이를 다시 계산하면 전체 섹션 높이와 현재 스크롤 위치가 튑니다.
+           */
+          if (mobileNow && !widthChanged) {
+            checkPos();
+            return;
+          }
+
+          refreshAfterRealViewportChange();
+        });
+      }
+
+      addEventListener('resize', handleStableResize, { passive: true });
+
+      addEventListener('orientationchange', function () {
+        clearTimeout(orientationTimer);
+        orientationTimer = setTimeout(function () {
+          refreshAfterRealViewportChange();
+        }, 250);
+      }, { passive: true });
 
       document.addEventListener('DOMContentLoaded', function () {
         initializeImages();
         checkPos();
       });
 
-      window.addEventListener('load', checkPos);
+      window.addEventListener('load', function () {
+        const currentW = Math.max(
+          1,
+          Math.round(window.innerWidth || document.documentElement.clientWidth || 1)
+        );
+
+        if (Math.abs(currentW - lockedViewW) > 2) {
+          refreshAfterRealViewportChange();
+        } else {
+          checkPos();
+        }
+      });
 
       const modal = document.getElementById('familySiteModal');
       const openButtons = document.querySelectorAll('.family-site-open');
