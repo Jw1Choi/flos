@@ -634,7 +634,7 @@
         <a href="./landing-page.html" class="tp-dropdown__link">랜딩페이지 제작</a>
       </div>
       <div class="tp-dropdown__col" data-col="3">
-        <a href="./brand-ai.html" class="tp-dropdown__link">브랜드 AI 영상제작</a>
+        <!-- <a href="./brand-ai.html" class="tp-dropdown__link">브랜드 AI 영상제작</a> -->
       <a href="./info-ai.html" class="tp-dropdown__link">안내 AI 영상제작</a>
       </div>
      <!-- <div class="tp-dropdown__col" data-col="4">
@@ -711,7 +711,7 @@
         </svg>
       </button>
       <div class="tp-mobile-sub" data-mobile-sub="3">
-        <a href="./brand-ai.html" class="tp-mobile-sub__link">브랜드 AI 영상제작</a>
+        <!-- <a href="./brand-ai.html" class="tp-mobile-sub__link">브랜드 AI 영상제작</a> -->
         <a href="./info-ai.html" class="tp-mobile-sub__link">안내 AI 영상제작</a>
       </div>
     </div>
