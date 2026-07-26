@@ -3058,6 +3058,65 @@
       }
     }
 
+
+    /* ===== 모바일 가로 모드: 영상 팝업을 화면 전체에 맞춤 =====
+       다른 레이아웃과 기능은 변경하지 않고, 팝업이 열린 경우에만 적용됩니다. */
+    @media (orientation: landscape) and (max-height: 700px),
+           (orientation: landscape) and (hover: none) and (pointer: coarse) {
+      #ProjectSection .sfs-video-modal.sfs-open {
+        inset: 0;
+        width: 100vw;
+        height: 100vh;
+        height: 100dvh;
+        min-width: 100vw;
+        min-height: 100vh;
+        min-height: 100dvh;
+        padding: 0;
+        align-items: stretch;
+        justify-content: stretch;
+        overflow: hidden;
+        background: #000;
+        box-sizing: border-box;
+      }
+
+      #ProjectSection .sfs-video-modal.sfs-open .sfs-video-backdrop {
+        inset: 0;
+        background: #000;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+      }
+
+      #ProjectSection .sfs-video-modal.sfs-open .sfs-video-dialog {
+        position: relative;
+        width: 100vw;
+        height: 100vh;
+        height: 100dvh;
+        min-width: 100vw;
+        min-height: 100vh;
+        min-height: 100dvh;
+        max-width: none;
+        max-height: none;
+        aspect-ratio: auto;
+        margin: 0;
+        border-radius: 0;
+        box-shadow: none;
+        transform: none;
+      }
+
+      #ProjectSection .sfs-video-modal.sfs-open .sfs-video-dialog iframe {
+        width: 100%;
+        height: 100%;
+        inset: 0;
+      }
+
+      #ProjectSection .sfs-video-modal.sfs-open .sfs-video-close {
+        position: fixed;
+        top: max(10px, env(safe-area-inset-top, 0px));
+        right: max(10px, env(safe-area-inset-right, 0px));
+        z-index: 2147483646;
+      }
+    }
+
     @media (prefers-reduced-motion: reduce) {
       #ProjectSection .sfs-project-card,
       #ProjectSection .sfs-scroll-hint,
