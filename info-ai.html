@@ -2892,12 +2892,21 @@
       opacity: 1;
     }
 
+    /* PC에서는 영상 크기를 적당히 제한하고, 닫기 버튼을 영상 프레임 안에 고정 */
+    #ProjectSection .sfs-video-shell {
+      position: relative;
+      z-index: 2;
+      width: min(82vw, 880px);
+      max-width: calc(177.78vh - 248.89px);
+      aspect-ratio: 16 / 9;
+    }
+
     #ProjectSection .sfs-video-dialog {
       position: relative;
       z-index: 2;
-      width: min(92vw, 1080px);
+      width: 100%;
+      height: 100%;
       aspect-ratio: 16 / 9;
-      max-height: calc(100vh - 120px);
       background: #000;
       border-radius: 10px;
       overflow: hidden;
@@ -2926,9 +2935,9 @@
 
     #ProjectSection .sfs-video-close {
       position: absolute;
-      z-index: 3;
-      top: max(16px, env(safe-area-inset-top, 0px));
-      right: max(16px, env(safe-area-inset-right, 0px));
+      z-index: 5;
+      top: 12px;
+      right: 12px;
       width: 48px;
       height: 48px;
       border: 0;
@@ -3050,6 +3059,11 @@
         margin-left: 4px;
       }
 
+      #ProjectSection .sfs-video-shell {
+        width: 100%;
+        max-width: none;
+      }
+
       #ProjectSection .sfs-video-dialog {
         width: 100%;
       }
@@ -3057,8 +3071,8 @@
       #ProjectSection .sfs-video-close {
         width: 42px;
         height: 42px;
-        top: max(12px, env(safe-area-inset-top, 0px));
-        right: 12px;
+        top: 10px;
+        right: 10px;
       }
     }
 
@@ -3078,6 +3092,16 @@
         align-items: stretch !important;
         justify-content: stretch !important;
         overflow: hidden !important;
+      }
+
+      #ProjectSection .sfs-video-shell {
+        width: 100vw !important;
+        height: var(--sfs-modal-vh, 100vh) !important;
+        min-width: 100vw !important;
+        min-height: var(--sfs-modal-vh, 100vh) !important;
+        max-width: none !important;
+        max-height: none !important;
+        aspect-ratio: auto !important;
       }
 
       #ProjectSection .sfs-video-dialog {
@@ -3210,10 +3234,12 @@
   <!-- 영상 팝업 모달 -->
   <div class="sfs-video-modal" data-sfs-video-modal role="dialog" aria-modal="true" aria-label="영상 재생 팝업" aria-hidden="true">
     <div class="sfs-video-backdrop" data-sfs-video-backdrop></div>
-    <button class="sfs-video-close" type="button" data-sfs-video-close aria-label="영상 팝업 닫기">
-      <svg viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19"/></svg>
-    </button>
-    <div class="sfs-video-dialog" data-sfs-video-dialog></div>
+    <div class="sfs-video-shell">
+      <button class="sfs-video-close" type="button" data-sfs-video-close aria-label="영상 팝업 닫기">
+        <svg viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19"/></svg>
+      </button>
+      <div class="sfs-video-dialog" data-sfs-video-dialog></div>
+    </div>
   </div>
 
   <script>
