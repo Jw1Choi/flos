@@ -770,7 +770,7 @@
         <span class="cf-quick-text">회사소개서</span>
       </a>
 
-      <a href="/doctor-intro.html" class="cf-quick-link">
+      <a href="tel:010-9734-6250" class="cf-quick-link">
         <span class="cf-quick-icon">
           <svg viewBox="0 0 24 24" fill="none">
             <path d="M6.7 5.75a2.2 2.2 0 0 1 3.1 0l1.36 1.36a2.2 2.2 0 0 1 0 3.11l-.72.72a13.3 13.3 0 0 0 2.62 2.62l.72-.72a2.2 2.2 0 0 1 3.11 0l1.36 1.36a2.2 2.2 0 0 1 0 3.1l-.68.68c-.77.77-1.92 1.08-2.98.8-2.36-.62-4.85-2.24-6.97-4.36-2.12-2.12-3.74-4.61-4.36-6.97-.28-1.06.03-2.21.8-2.98l.68-.68Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
@@ -779,7 +779,7 @@
         <span class="cf-quick-text">전화문의</span>
       </a>
 
-      <a href="/schedule.html" class="cf-quick-link">
+      <a href="http://pf.kakao.com/_PHfxnX/chat" class="cf-quick-link">
         <span class="cf-quick-icon">
           <svg viewBox="0 0 24 24" fill="none">
             <path d="M12 5.25c-4.28 0-7.75 2.7-7.75 6.03 0 2.04 1.31 3.84 3.31 4.93l-.68 2.54a.45.45 0 0 0 .64.52l3.13-1.62c.44.06.89.09 1.35.09 4.28 0 7.75-2.7 7.75-6.03s-3.47-6.46-7.75-6.46Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
