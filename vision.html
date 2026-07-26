@@ -89,18 +89,22 @@
       isolation: isolate;
     }
 
+    /* ✅ JS가 --pcs-vh를 픽셀로 잠금 → 모바일 주소창 변동에도 길이/진행도 고정 */
     #premiumStoryScrollSection .pcs-stage {
       position: relative;
-      min-height: 320vh;
+      min-height: 320vh; /* fallback */
+      min-height: calc(var(--pcs-vh-raw, 1vh) * 320);
       background: var(--pcs-bg);
     }
 
     #premiumStoryScrollSection .pcs-sticky {
       position: sticky;
       top: 0;
-      height: 100vh;
+      height: 100vh; /* fallback */
+      height: var(--pcs-vh, 100vh);
       overflow: hidden;
       background: var(--pcs-bg);
+      contain: layout paint;
     }
 
     #premiumStoryScrollSection .pcs-scene {
@@ -109,6 +113,7 @@
       height: 100%;
     }
 
+    /* ✅ 스크롤로 직접 제어하는 값이므로 transition 제거 (지연·잔상 방지) */
     #premiumStoryScrollSection .pcs-intro {
       position: absolute;
       z-index: 4;
@@ -118,7 +123,6 @@
       justify-content: center;
       padding: clamp(28px, 4vw, 56px);
       pointer-events: none;
-      transition: opacity 0.28s linear;
     }
 
     #premiumStoryScrollSection .pcs-intro-shell {
@@ -129,6 +133,8 @@
       text-align: center;
       transform: translate3d(0, 0, 0);
       will-change: transform, opacity;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
     }
 
     #premiumStoryScrollSection .pcs-kicker {
@@ -177,6 +183,8 @@
       word-break: keep-all;
     }
 
+    /* ✅ filter: brightness() 제거 → 스케일 중 필터 재합성 부담 삭제
+       동일한 어두움은 카드 내부 정적 틴트 레이어(::after)로 대체 */
     #premiumStoryScrollSection .pcs-card-wrap {
       position: absolute;
       left: 50%;
@@ -186,8 +194,6 @@
       transform: translate3d(-50%, -50%, 0);
       z-index: 2;
       pointer-events: none;
-      will-change: transform;
-      filter: brightness(0.7);
     }
 
     #premiumStoryScrollSection .pcs-card {
@@ -201,9 +207,21 @@
         0 6px 22px rgba(17, 17, 17, 0.08);
       transform-origin: center center;
       transform: scale(1) translate3d(0, 0, 0);
-      will-change: transform, border-radius;
+      will-change: transform;
       background: #dcdcdc;
       contain: layout paint style;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+
+    /* ✅ 기존 brightness(0.7)를 대체하는 정적 어두움 레이어 */
+    #premiumStoryScrollSection .pcs-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background: rgba(0, 0, 0, 0.30);
+      pointer-events: none;
     }
 
     #premiumStoryScrollSection .pcs-media {
@@ -214,8 +232,7 @@
       object-fit: cover;
       object-position: center center;
       display: block;
-      transform: scale(1.02);
-      will-change: transform;
+      transform: scale(1.02) translateZ(0);
       user-select: none;
       -webkit-user-drag: none;
       pointer-events: none;
@@ -224,6 +241,7 @@
     #premiumStoryScrollSection .pcs-overlay {
       position: absolute;
       inset: 0;
+      z-index: 2;
       background:
         linear-gradient(180deg, rgba(0, 0, 0, 0.10) 0%, rgba(0, 0, 0, 0.08) 28%, rgba(0, 0, 0, 0.18) 100%),
         rgba(0, 0, 0, 0);
@@ -245,6 +263,8 @@
       pointer-events: none;
       text-shadow: 0 1px 2px rgba(0, 0, 0, 0.16);
       text-align: center;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
     }
 
     #premiumStoryScrollSection .pcs-overlay-copy-kicker {
@@ -369,6 +389,7 @@
     #premiumStoryScrollSection .pcs-reveal.is-visible {
       opacity: 1;
       transform: translate3d(0, 0, 0);
+      will-change: auto;
     }
 
     #premiumStoryScrollSection .pcs-reveal-delay-1 {
@@ -390,6 +411,7 @@
     @media (max-width: 1024px) {
       #premiumStoryScrollSection .pcs-stage {
         min-height: 300vh;
+        min-height: calc(var(--pcs-vh-raw, 1vh) * 300);
       }
 
       #premiumStoryScrollSection .pcs-card-wrap {
@@ -413,6 +435,7 @@
 
       #premiumStoryScrollSection .pcs-stage {
         min-height: 260vh;
+        min-height: calc(var(--pcs-vh-raw, 1vh) * 260);
       }
 
       #premiumStoryScrollSection .pcs-intro {
@@ -446,10 +469,9 @@
         aspect-ratio: 1.1 / 1.28;
       }
 
+      /* ✅ 모바일: 확대 중 그림자 재합성 비용 축소 */
       #premiumStoryScrollSection .pcs-card {
-        box-shadow:
-          0 18px 42px rgba(17, 17, 17, 0.13),
-          0 4px 14px rgba(17, 17, 17, 0.08);
+        box-shadow: 0 12px 30px rgba(17, 17, 17, 0.12);
       }
 
       #premiumStoryScrollSection .pcs-overlay-copy {
@@ -603,6 +625,8 @@
 
   <script>
     (function () {
+      'use strict';
+
       var section = document.getElementById('premiumStoryScrollSection');
       if (!section) return;
 
@@ -618,11 +642,28 @@
       if (!stage || !intro || !introShell || !card || !overlay || !copy) return;
 
       var ticking = false;
+
+      /* ✅ 뷰포트 높이를 픽셀로 잠금 → 모바일 주소창 토글에도 진행도가 흔들리지 않음 */
+      var lockedVh = window.innerHeight || document.documentElement.clientHeight || 1;
+      var lastWidth = window.innerWidth;
+
       var metrics = {
         start: 0,
         end: 0,
         range: 1,
-        isMobile: false
+        isMobile: false,
+        isTablet: false
+      };
+
+      /* ✅ 직전 프레임 값 캐시 — 같은 값 재기록 방지 (불필요한 리페인트 차단) */
+      var lastWrite = {
+        transform: '',
+        radius: -1,
+        overlay: -1,
+        introOpacity: -1,
+        introY: null,
+        copyOpacity: -1,
+        copyY: null
       };
 
       var config = {
@@ -653,6 +694,12 @@
         textStartYMobile: 26
       };
 
+      function lockViewportHeight() {
+        lockedVh = window.innerHeight || document.documentElement.clientHeight || 1;
+        section.style.setProperty('--pcs-vh', lockedVh + 'px');
+        section.style.setProperty('--pcs-vh-raw', (lockedVh / 100) + 'px');
+      }
+
       function clamp(value, min, max) {
         return Math.min(Math.max(value, min), max);
       }
@@ -676,17 +723,28 @@
         return clamp((value - inMin) / (inMax - inMin), 0, 1);
       }
 
+      /* ✅ 레이아웃 측정은 리사이즈/회전 시에만 수행 — 스크롤 프레임에서는 읽지 않음 */
       function recalc() {
+        lockViewportHeight();
+
         var rect = stage.getBoundingClientRect();
         var scrollY = window.pageYOffset || window.scrollY || 0;
         var top = rect.top + scrollY;
         var height = stage.offsetHeight;
-        var viewportH = window.innerHeight || document.documentElement.clientHeight || 1;
 
         metrics.start = top;
-        metrics.end = top + height - viewportH;
+        metrics.end = top + height - lockedVh;
         metrics.range = Math.max(metrics.end - metrics.start, 1);
-        metrics.isMobile = window.matchMedia('(max-width: 767px)').matches;
+        metrics.isMobile = window.innerWidth <= 767;
+        metrics.isTablet = window.innerWidth <= 1024;
+
+        lastWrite.transform = '';
+        lastWrite.radius = -1;
+        lastWrite.overlay = -1;
+        lastWrite.introOpacity = -1;
+        lastWrite.introY = null;
+        lastWrite.copyOpacity = -1;
+        lastWrite.copyY = null;
 
         update();
       }
@@ -716,88 +774,150 @@
 
         var targetScale = metrics.isMobile
           ? config.mobileScale
-          : (window.matchMedia('(max-width: 1024px)').matches ? config.tabletScale : config.desktopScale);
+          : (metrics.isTablet ? config.tabletScale : config.desktopScale);
 
         var currentLift = metrics.isMobile
           ? config.mobileLift
-          : (window.matchMedia('(max-width: 1024px)').matches ? config.tabletLift : config.desktopLift);
+          : (metrics.isTablet ? config.tabletLift : config.desktopLift);
 
         var radiusStart = metrics.isMobile ? config.radiusStartMobile : config.radiusStart;
         var radiusEnd = metrics.isMobile ? config.radiusEndMobile : config.radiusEnd;
 
         var scale = mix(1, targetScale, motion);
         var lift = mix(0, currentLift, motion);
-        var radius = mix(radiusStart, radiusEnd, motion);
+
+        /* ✅ border-radius는 정수 px로 양자화 — 라운드 클리핑 재계산 횟수 대폭 감소 */
+        var radius = Math.round(mix(radiusStart, radiusEnd, motion));
 
         var overlayT = easeOutCubic(mapRange(progress, 0.08, 0.90));
-        var overlayOpacity = mix(0, config.maxOverlay, overlayT);
+        var overlayOpacity = Math.round(mix(0, config.maxOverlay, overlayT) * 100) / 100;
 
         var introT = easeOutCubic(mapRange(progress, config.introFadeStart, config.introFadeEnd));
-        var introOpacity = 1 - introT;
-        var introY = mix(0, config.introMoveY, introT);
+        var introOpacity = Math.round((1 - introT) * 100) / 100;
+        var introY = Math.round(mix(0, config.introMoveY, introT));
 
         var textT = easeOutCubic(mapRange(progress, config.textRevealStart, config.textRevealEnd));
         var textStartY = metrics.isMobile ? config.textStartYMobile : config.textStartY;
-        var textOpacity = textT;
-        var textY = mix(textStartY, 0, textT);
+        var textOpacity = Math.round(textT * 100) / 100;
+        var textY = Math.round(mix(textStartY, 0, textT));
 
-        card.style.transform = 'scale(' + scale.toFixed(4) + ') translate3d(0, ' + lift.toFixed(2) + 'px, 0)';
-        card.style.borderRadius = radius.toFixed(2) + 'px';
-        overlay.style.opacity = overlayOpacity.toFixed(4);
+        var cardTransform = 'scale(' + scale.toFixed(3) + ') translate3d(0, ' + lift.toFixed(1) + 'px, 0)';
 
-        intro.style.opacity = introOpacity.toFixed(4);
-        introShell.style.transform = 'translate3d(0, ' + introY.toFixed(2) + 'px, 0)';
+        if (cardTransform !== lastWrite.transform) {
+          card.style.transform = cardTransform;
+          lastWrite.transform = cardTransform;
+        }
 
-        copy.style.opacity = textOpacity.toFixed(4);
+        if (radius !== lastWrite.radius) {
+          card.style.borderRadius = radius + 'px';
+          lastWrite.radius = radius;
+        }
 
-        if (metrics.isMobile) {
-          copy.style.transform = 'translate3d(0, calc(-50% + ' + textY.toFixed(2) + 'px), 0)';
-        } else {
-          copy.style.transform = 'translate3d(-50%, calc(-50% + ' + textY.toFixed(2) + 'px), 0)';
+        if (overlayOpacity !== lastWrite.overlay) {
+          overlay.style.opacity = overlayOpacity;
+          lastWrite.overlay = overlayOpacity;
+        }
+
+        if (introOpacity !== lastWrite.introOpacity) {
+          intro.style.opacity = introOpacity;
+          lastWrite.introOpacity = introOpacity;
+        }
+
+        if (introY !== lastWrite.introY) {
+          introShell.style.transform = 'translate3d(0, ' + introY + 'px, 0)';
+          lastWrite.introY = introY;
+        }
+
+        if (textOpacity !== lastWrite.copyOpacity) {
+          copy.style.opacity = textOpacity;
+          lastWrite.copyOpacity = textOpacity;
+        }
+
+        if (textY !== lastWrite.copyY) {
+          if (metrics.isMobile) {
+            copy.style.transform = 'translate3d(0, calc(-50% + ' + textY + 'px), 0)';
+          } else {
+            copy.style.transform = 'translate3d(-50%, calc(-50% + ' + textY + 'px), 0)';
+          }
+          lastWrite.copyY = textY;
         }
       }
 
-      function runReveal() {
+      /* ✅ 등장 효과는 IntersectionObserver로 처리 —
+         스크롤마다 getBoundingClientRect()를 호출하던 강제 레이아웃 제거 */
+      function setupReveal() {
         if (!revealItems.length) return;
 
-        var triggerY = (window.innerHeight || document.documentElement.clientHeight || 0) * 0.88;
-
-        revealItems.forEach(function (item) {
-          var rect = item.getBoundingClientRect();
-          if (rect.top < triggerY) {
-            item.classList.add('is-visible');
+        if (!('IntersectionObserver' in window)) {
+          for (var i = 0; i < revealItems.length; i++) {
+            revealItems[i].classList.add('is-visible');
           }
+          return;
+        }
+
+        var io = new IntersectionObserver(function (entries) {
+          for (var i = 0; i < entries.length; i++) {
+            if (entries[i].isIntersecting) {
+              entries[i].target.classList.add('is-visible');
+              io.unobserve(entries[i].target);
+            }
+          }
+        }, {
+          root: null,
+          rootMargin: '0px 0px -12% 0px',
+          threshold: 0.01
         });
+
+        for (var j = 0; j < revealItems.length; j++) {
+          io.observe(revealItems[j]);
+        }
       }
 
       function requestTick() {
         if (!ticking) {
-          window.requestAnimationFrame(function () {
-            update();
-            runReveal();
-            ticking = false;
-          });
           ticking = true;
+          window.requestAnimationFrame(function () {
+            ticking = false;
+            update();
+          });
         }
       }
 
-      function onResizeLike() {
-        recalc();
-        runReveal();
-      }
-
       window.addEventListener('scroll', requestTick, { passive: true });
-      window.addEventListener('resize', onResizeLike);
-      window.addEventListener('orientationchange', onResizeLike);
+
+      /* ✅ 아이폰 모멘텀 스크롤 중에도 프레임 유지 */
+      window.addEventListener('touchmove', requestTick, { passive: true });
+
+      /* ✅ 가로폭이 실제로 바뀐 경우에만 재계산 —
+         모바일 주소창 토글은 width가 그대로라 무시됨 (떨림의 핵심 원인 제거) */
+      window.addEventListener('resize', function () {
+        if (window.innerWidth !== lastWidth) {
+          lastWidth = window.innerWidth;
+          recalc();
+        }
+      }, { passive: true });
+
+      window.addEventListener('orientationchange', function () {
+        setTimeout(function () {
+          lastWidth = window.innerWidth;
+          recalc();
+        }, 200);
+      });
+
+      /* 폰트·이미지 로드 후 위치 보정 (1회) */
+      window.addEventListener('load', function () {
+        lastWidth = window.innerWidth;
+        recalc();
+      });
 
       if (typeof reduceMotion.addEventListener === 'function') {
-        reduceMotion.addEventListener('change', onResizeLike);
+        reduceMotion.addEventListener('change', recalc);
       } else if (typeof reduceMotion.addListener === 'function') {
-        reduceMotion.addListener(onResizeLike);
+        reduceMotion.addListener(recalc);
       }
 
       recalc();
-      runReveal();
+      setupReveal();
     })();
   </script>
 </section>
