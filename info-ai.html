@@ -1411,11 +1411,8 @@
       overflow-anchor: none;
       --msStableVh: 100vh;
       --msIntroHeight: 70vh;
-      --msClipOffset: 80vh;
-      --msClipBgHeight: 120vh;
-      --msClipBgTop: -10vh;
-      --msModalHeight: 92vh;
       --msVideoMinWidth: 177.78vh;
+      --msExitY: 0px;
     }
 
     #main-slider-root .main-slider-section1 {
@@ -1489,6 +1486,10 @@
       pointer-events: none;
       transition: opacity .5s;
       filter: none;
+      transform: translate3d(0, var(--msExitY, 0px), 0);
+      will-change: transform, opacity;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
     }
 
     #main-slider-root .main-slider-bg::after {
@@ -1505,7 +1506,7 @@
       transition: opacity 0.6s ease;
     }
 
-    #main-slider-root.clip .main-slider-bg::after {
+    #main-slider-root.is-exiting .main-slider-bg::after {
       opacity: 1;
     }
 
@@ -1529,21 +1530,15 @@
       filter: brightness(0.5);
     }
 
-    #main-slider-root .main-slider-bg img.permanent-active {
-      opacity: 1 !important;
-      z-index: 10 !important;
-      filter: brightness(0.5) !important;
-    }
-
     /* =========================
        Vimeo 배경 영상 레이어
-       - 3번째 배경 이미지 위에서 페이드인 (블랙아웃 방지:
-         영상 재생 확인 전까지 이미지가 아래에 그대로 유지됨)
+       - 3번째 배경 이미지 위에서 페이드인
+       - 영상 재생 후에는 마지막 슬라이드 종료까지 재생 상태 유지
     ========================== */
     #main-slider-root .main-slider-video {
       position: absolute;
       inset: 0;
-      z-index: 15;                     /* permanent-active(10) 이미지보다 위 */
+      z-index: 15;                     /* 마지막 이미지보다 위 */
       opacity: 0;
       pointer-events: none;
       overflow: hidden;
@@ -1584,6 +1579,10 @@
       list-style: none;
       z-index: 3;
       pointer-events: none;
+      transform: translate3d(0, var(--msExitY, 0px), 0);
+      will-change: transform, opacity;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
     }
 
     #main-slider-root .main-slider-list li {
@@ -1695,31 +1694,24 @@
     }
 
     /* 모바일 주소창 표시/숨김에 따른 화면 높이 변화 차단
-       JS가 최초의 안정된 100svh 값을 px로 측정하여 모든 레이어에 동일 적용 */
+       JS가 최초의 안정된 화면 높이를 px로 측정하여 모든 레이어와 섹션 높이에 동일 적용 */
     @media (max-width: 800px), (pointer: coarse) {
       #mainSliderPack,
-      #main-slider-root {
+      #main-slider-root,
+      #main-slider-root .main-slider-section1,
+      #main-slider-root .main-slider-section2 {
         overflow-anchor: none;
-      }
-
-      #main-slider-root {
-        min-height: var(--msIntroHeight, 70vh);
       }
 
       #main-slider-root .main-slider-section1 {
         height: var(--msIntroHeight, 70vh);
+        min-height: var(--msIntroHeight, 70vh);
+        max-height: var(--msIntroHeight, 70vh);
       }
 
       #main-slider-root .main-slider-bg,
       #main-slider-root .main-slider-bg img,
       #main-slider-root .main-slider-list,
-      #permanent-bg-layer,
-      #permanent-bg-layer img {
-        height: var(--msStableVh, 100vh);
-        min-height: var(--msStableVh, 100vh);
-        max-height: var(--msStableVh, 100vh);
-      }
-
       #main-slider-root .main-slider-video,
       #main-slider-root .main-slider-video iframe {
         height: var(--msStableVh, 100vh);
@@ -1729,30 +1721,6 @@
 
       #main-slider-root .main-slider-video iframe {
         min-width: var(--msVideoMinWidth, 177.78vh);
-      }
-
-      #main-slider-root.clip .main-slider-bg {
-        height: var(--msClipBgHeight, 120vh);
-        min-height: var(--msClipBgHeight, 120vh);
-        max-height: var(--msClipBgHeight, 120vh);
-        top: var(--msClipBgTop, -10vh);
-      }
-
-      #mainSliderPack .family-site-modal {
-        top: 0;
-        right: 0;
-        bottom: auto;
-        left: 0;
-        height: var(--msStableVh, 100vh);
-        min-height: var(--msStableVh, 100vh);
-        max-height: var(--msStableVh, 100vh);
-        overflow: hidden;
-        overscroll-behavior: none;
-      }
-
-      #mainSliderPack .family-site-dialog {
-        height: var(--msModalHeight, 92vh);
-        max-height: var(--msModalHeight, 92vh);
       }
     }
 
@@ -1779,607 +1747,23 @@
       opacity: 1;
     }
 
-    #main-slider-root.clip {
-      overflow: hidden;
-      position: relative;
+    /* 섹션 종료 전환
+       fixed/absolute를 중간에 교체하지 않습니다.
+       섹션 하단이 화면 하단에 닿은 뒤 --msExitY 값만 연속적으로 감소시켜
+       영상과 문구가 다음 섹션의 등장 속도와 정확히 맞춰 위로 이동합니다. */
+    #main-slider-root.is-exiting {
+      overflow: visible;
     }
 
-    #main-slider-root.clip .main-slider-bg {
-      position: absolute;
-      height: 120vh;
-      top: -10vh;
-    }
-
-    /* clip 전환 시 텍스트가 튀지 않도록 위치 연속성 유지
-       (JS의 clipThreshold = 기준높이*0.8 과 동일한 값을 --msClipOffset 으로 주입) */
-    #main-slider-root.clip .main-slider-list {
-      position: absolute;
-      top: calc(100% - var(--msClipOffset, 80vh));
-      bottom: auto;
+    #main-slider-root.video-live .main-slider-list {
+      opacity: 1 !important;
     }
 
     #main-slider-root .fade-target {
       transition: opacity .6s ease-out;
     }
 
-    .next-section {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      position: relative;
-      z-index: 10;
-    }
 
-    #permanent-bg-layer {
-      position: fixed;
-      left: 0;
-      top: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: -1;
-      pointer-events: none;
-      opacity: 0;
-      transition: opacity 0.8s ease;
-    }
-
-    #permanent-bg-layer.active {
-      opacity: 1;
-      z-index: 0;
-    }
-
-    #permanent-bg-layer.permanent {
-      opacity: 1 !important;
-      z-index: 0 !important;
-    }
-
-    #permanent-bg-layer img {
-      position: absolute;
-      width: 100vw;
-      height: 100vh;
-      object-fit: cover;
-      left: 0;
-      top: 0;
-    }
-
-    /* =========================
-       Family Site Premium Popup
-    ========================== */
-
-    #mainSliderPack .family-site-modal {
-      position: fixed;
-      inset: 0;
-      z-index: 9999;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 28px;
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-      transition: opacity .35s ease, visibility .35s ease;
-      touch-action: pan-y;
-    }
-
-    #mainSliderPack .family-site-modal.is-open {
-      opacity: 1;
-      visibility: visible;
-      pointer-events: auto;
-    }
-
-    #mainSliderPack .family-site-backdrop {
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(circle at top, rgba(11, 102, 96, .22), transparent 34%),
-        linear-gradient(180deg, rgba(7, 20, 15, .55) 0%, rgba(5, 15, 11, .78) 100%);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-    }
-
-    #mainSliderPack .family-site-dialog {
-      position: relative;
-      width: min(1120px, 100%);
-      height: min(88vh, 980px);
-      max-height: min(88vh, 980px);
-      overflow: hidden;
-      border-radius: 28px;
-      background: #f4f6f4;
-      border: 1px solid rgba(255, 255, 255, .55);
-      box-shadow:
-        0 30px 80px rgba(0, 0, 0, .24),
-        0 8px 30px rgba(6, 45, 27, .10),
-        inset 0 1px 0 rgba(255, 255, 255, .72);
-      transform: translateY(26px) scale(.98);
-      transition: transform .38s cubic-bezier(.22, .61, .36, 1);
-      touch-action: pan-y;
-      isolation: isolate;
-    }
-
-    #mainSliderPack .family-site-modal.is-open .family-site-dialog {
-      transform: translateY(0) scale(1);
-    }
-
-    #mainSliderPack .family-site-shell {
-      position: relative;
-      display: grid;
-      grid-template-columns: 340px minmax(0, 1fr);
-      height: 100%;
-      min-height: 0;
-      background: #f4f6f4;
-    }
-
-    #mainSliderPack .family-site-side {
-      position: relative;
-      padding: 42px 30px 34px;
-      color: #fff;
-      background:
-        linear-gradient(160deg, rgba(3, 59, 30, .98) 0%, rgba(7, 94, 76, .96) 100%);
-      overflow: hidden;
-    }
-
-    #mainSliderPack .family-site-side::before {
-      content: "";
-      position: absolute;
-      inset: auto -40px -70px auto;
-      width: 220px;
-      height: 220px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(255, 255, 255, .20), transparent 70%);
-      pointer-events: none;
-    }
-
-    #mainSliderPack .family-site-side::after {
-      content: "";
-      position: absolute;
-      top: -40px;
-      right: -40px;
-      width: 180px;
-      height: 180px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(255, 255, 255, .13), transparent 70%);
-      pointer-events: none;
-    }
-
-    #mainSliderPack .family-site-eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 14px;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, .14);
-      border: 1px solid rgba(255, 255, 255, .18);
-      font-size: .78rem;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      margin-bottom: 18px;
-    }
-
-    #mainSliderPack .family-site-title {
-      font-size: clamp(1.9rem, 2.6vw, 2.7rem);
-      line-height: 1.15;
-      font-weight: 800;
-      margin: 0 0 14px;
-      letter-spacing: -.03em;
-    }
-
-    #mainSliderPack .family-site-desc {
-      margin: 0 0 30px;
-      color: rgba(255, 255, 255, .82);
-      font-size: 1rem;
-      line-height: 1.75;
-      word-break: keep-all;
-    }
-
-    #mainSliderPack .family-site-meta {
-      display: grid;
-      gap: 12px;
-      margin-top: 28px;
-    }
-
-    #mainSliderPack .family-site-meta-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 14px 16px;
-      border-radius: 16px;
-      background: rgba(255, 255, 255, .10);
-      border: 1px solid rgba(255, 255, 255, .12);
-      color: rgba(255, 255, 255, .88);
-      font-size: .96rem;
-    }
-
-    #mainSliderPack .family-site-main {
-      position: relative;
-      padding: 34px 34px 44px;
-      overflow-y: auto;
-      overflow-x: hidden;
-      -webkit-overflow-scrolling: touch;
-      overscroll-behavior: contain;
-      touch-action: pan-y;
-      min-height: 0;
-      height: 100%;
-      box-sizing: border-box;
-      background: #f4f6f4;
-      isolation: isolate;
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-    }
-
-    #mainSliderPack .family-site-main::-webkit-scrollbar {
-      width: 0;
-      height: 0;
-      display: none;
-    }
-
-    /* PC 스크롤 시 상단 비침 방지 */
-    #mainSliderPack .family-site-main::before {
-      content: "";
-      position: sticky;
-      top: 0;
-      display: block;
-      height: 28px;
-      margin: -34px -34px 0;
-      background: #f4f6f4;
-      z-index: 18;
-      pointer-events: none;
-      flex: 0 0 auto;
-    }
-
-    #mainSliderPack .family-site-main::after {
-      content: "";
-      display: block;
-      height: 24px;
-      flex: 0 0 auto;
-    }
-
-    #mainSliderPack .family-site-toolbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      margin-bottom: 20px;
-      position: sticky;
-      top: 0;
-      z-index: 30;
-      padding: 8px 0 14px;
-      background: #f4f6f4;
-      backdrop-filter: none;
-      -webkit-backdrop-filter: none;
-    }
-
-    #mainSliderPack .family-site-toolbar::before {
-      content: "";
-      position: absolute;
-      left: -34px;
-      right: -34px;
-      top: -34px;
-      bottom: -8px;
-      background: #f4f6f4;
-      z-index: -1;
-      pointer-events: none;
-      box-shadow: 0 1px 0 rgba(10, 43, 28, .06);
-    }
-
-    #mainSliderPack .family-site-toolbar-left {
-      position: relative;
-      z-index: 2;
-    }
-
-    #mainSliderPack .family-site-toolbar-left h3 {
-      margin: 0 0 5px;
-      color: #0a2b1c;
-      font-size: 1.35rem;
-      font-weight: 800;
-      letter-spacing: -.02em;
-    }
-
-    #mainSliderPack .family-site-toolbar-left p {
-      margin: 0;
-      color: #5f6f67;
-      font-size: .96rem;
-    }
-
-    #mainSliderPack .family-site-close {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      border: 1px solid rgba(3, 59, 30, .10);
-      background: #eef1ee;
-      color: #0a2b1c;
-      font-size: 1.35rem;
-      font-weight: 500;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: transform .2s ease, background .2s ease, box-shadow .2s ease;
-      box-shadow: 0 10px 20px rgba(0, 0, 0, .06);
-      flex-shrink: 0;
-      position: relative;
-      z-index: 2;
-    }
-
-    #mainSliderPack .family-site-close:hover {
-      transform: rotate(90deg);
-      background: #fff;
-      box-shadow: 0 16px 28px rgba(0, 0, 0, .10);
-    }
-
-    #mainSliderPack .family-site-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 18px;
-      padding-bottom: 8px;
-      position: relative;
-      z-index: 1;
-    }
-
-    #mainSliderPack .family-site-card {
-      position: relative;
-      display: block;
-      padding: 22px 22px 20px;
-      border-radius: 22px;
-      text-decoration: none;
-      color: #18221d;
-      background: #fbfcfb;
-      border: 1px solid rgba(10, 43, 28, .08);
-      box-shadow:
-        0 14px 28px rgba(6, 36, 24, .06),
-        inset 0 1px 0 rgba(255, 255, 255, .74);
-      transition: transform .24s ease, box-shadow .24s ease, border-color .24s ease;
-      overflow: hidden;
-      min-height: 162px;
-      z-index: 1;
-    }
-
-    #mainSliderPack .family-site-card::before {
-      content: "";
-      position: absolute;
-      inset: 0 0 auto 0;
-      height: 6px;
-      background: linear-gradient(90deg, #0a4f30 0%, #0b6660 100%);
-      opacity: .98;
-    }
-
-    #mainSliderPack .family-site-card:hover {
-      transform: translateY(-6px);
-      border-color: rgba(11, 102, 96, .24);
-      box-shadow:
-        0 20px 40px rgba(6, 36, 24, .10),
-        inset 0 1px 0 rgba(255, 255, 255, .82);
-    }
-
-    #mainSliderPack .family-site-card-top {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 16px;
-      margin-bottom: 14px;
-    }
-
-    #mainSliderPack .family-site-badge {
-      display: inline-flex;
-      align-items: center;
-      min-height: 32px;
-      padding: 7px 12px;
-      border-radius: 999px;
-      background: rgba(3, 59, 30, .06);
-      color: #0b5a3b;
-      font-size: .78rem;
-      font-weight: 700;
-      letter-spacing: .06em;
-      text-transform: uppercase;
-    }
-
-    #mainSliderPack .family-site-arrow {
-      flex: 0 0 auto;
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(3, 59, 30, .06);
-      color: #0a2b1c;
-      font-size: 1rem;
-      transition: transform .22s ease, background .22s ease;
-    }
-
-    #mainSliderPack .family-site-card:hover .family-site-arrow {
-      transform: translateX(4px);
-      background: rgba(11, 102, 96, .12);
-    }
-
-    #mainSliderPack .family-site-card h4 {
-      margin: 0 0 10px;
-      font-size: 1.18rem;
-      font-weight: 800;
-      line-height: 1.35;
-      letter-spacing: -.02em;
-      color: #0c2318;
-      word-break: keep-all;
-    }
-
-    #mainSliderPack .family-site-card p {
-      margin: 0 0 16px;
-      color: #66776f;
-      font-size: .96rem;
-      line-height: 1.7;
-      word-break: keep-all;
-    }
-
-    #mainSliderPack .family-site-url {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      color: #0b5a3b;
-      font-size: .9rem;
-      font-weight: 700;
-      opacity: .9;
-      word-break: break-all;
-    }
-
-    #mainSliderPack .family-site-note {
-      margin-top: 22px;
-      padding: 16px 18px;
-      border-radius: 18px;
-      background: #edf1ed;
-      border: 1px solid rgba(3, 59, 30, .06);
-      color: #5a6a63;
-      font-size: .94rem;
-      line-height: 1.7;
-      margin-bottom: 6px;
-      position: relative;
-      z-index: 1;
-    }
-
-    body.family-site-modal-open {
-      overflow: hidden;
-    }
-
-    @media (max-width: 980px) {
-      #mainSliderPack .family-site-shell {
-        grid-template-columns: 1fr;
-        height: 100%;
-        min-height: 0;
-      }
-
-      #mainSliderPack .family-site-side {
-        display: none;
-        padding: 28px 24px 24px;
-      }
-
-      #mainSliderPack .family-site-main {
-        padding: 24px 18px 34px;
-        min-height: 0;
-        height: 100%;
-      }
-
-      #mainSliderPack .family-site-main::before {
-        height: 24px;
-        margin: -24px -18px 0;
-      }
-
-      #mainSliderPack .family-site-toolbar::before {
-        left: -18px;
-        right: -18px;
-        top: -24px;
-        bottom: -8px;
-      }
-
-      #mainSliderPack .family-site-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-
-    @media (max-width: 720px) {
-      #mainSliderPack .family-site-modal {
-        padding: 10px;
-        align-items: flex-end;
-      }
-
-      #mainSliderPack .family-site-dialog {
-        width: 100%;
-        height: var(--msModalHeight, 92vh);
-        max-height: var(--msModalHeight, 92vh);
-        border-radius: 24px 24px 0 0;
-      }
-
-      #mainSliderPack .family-site-shell {
-        display: block;
-        height: 100%;
-      }
-
-      #mainSliderPack .family-site-side {
-        display: none;
-      }
-
-      #mainSliderPack .family-site-main {
-        padding: 18px 14px 34px;
-        overflow-y: auto;
-        overflow-x: hidden;
-        -webkit-overflow-scrolling: touch;
-        overscroll-behavior: contain;
-        touch-action: pan-y;
-        max-height: none;
-        height: 100%;
-        min-height: 0;
-        box-sizing: border-box;
-        -ms-overflow-style: none;
-        scrollbar-width: none;
-      }
-
-      #mainSliderPack .family-site-main::-webkit-scrollbar {
-        width: 0;
-        height: 0;
-        display: none;
-      }
-
-      #mainSliderPack .family-site-main::before {
-        height: 20px;
-        margin: -18px -14px 0;
-      }
-
-      #mainSliderPack .family-site-toolbar {
-        margin-bottom: 14px;
-        padding: 6px 0 12px;
-      }
-
-      #mainSliderPack .family-site-toolbar::before {
-        left: -14px;
-        right: -14px;
-        top: -20px;
-        bottom: -6px;
-        background: #f4f6f4;
-      }
-
-      #mainSliderPack .family-site-toolbar-left {
-        min-width: 0;
-      }
-
-      #mainSliderPack .family-site-toolbar-left h3 {
-        font-size: 1.12rem;
-      }
-
-      #mainSliderPack .family-site-toolbar-left p {
-        font-size: .88rem;
-        line-height: 1.5;
-      }
-
-      #mainSliderPack .family-site-close {
-        width: 44px;
-        height: 44px;
-        font-size: 1.1rem;
-      }
-
-      #mainSliderPack .family-site-grid {
-        grid-template-columns: 1fr;
-        gap: 14px;
-        padding-bottom: 10px;
-      }
-
-      #mainSliderPack .family-site-card {
-        min-height: auto;
-        padding: 18px 16px 16px;
-        border-radius: 18px;
-      }
-
-      #mainSliderPack .family-site-card h4 {
-        font-size: 1.03rem;
-      }
-
-      #mainSliderPack .family-site-card p {
-        font-size: .9rem;
-      }
-
-      #mainSliderPack .family-site-note {
-        margin-top: 16px;
-        margin-bottom: 10px;
-        padding: 14px 14px;
-        font-size: .88rem;
-      }
-    }
   </style>
 
 <section id="main-slider-root">
@@ -2468,45 +1852,9 @@
   </div>
 </section>
 
-  <div id="permanent-bg-layer" style="filter:brightness(0.5);">
-    <img src="./img/bf3.jpg" alt="영구 배경">
-  </div>
-
-  <div class="family-site-modal" id="familySiteModal" aria-hidden="true">
-    <div class="family-site-backdrop" data-close-family-site></div>
-
-    <div class="family-site-dialog" role="dialog" aria-modal="true" aria-labelledby="familySiteModalTitle">
-      <div class="family-site-shell">
-        <aside class="family-site-side">
-          <span class="family-site-eyebrow" id="familySiteEyebrow">플로스마케팅 Network</span>
-          <h2 class="family-site-title" id="familySiteModalTitle">패밀리 사이트</h2>
-          <p class="family-site-desc" id="familySiteDesc">
-            HTU가 함께 만들어가는 건강, 아름다움, 혁신의 연결된 플랫폼을 한곳에서 만나보세요.
-          </p>
-          <div class="family-site-meta" id="familySiteMeta"></div>
-        </aside>
-
-        <div class="family-site-main">
-          <div class="family-site-toolbar">
-            <div class="family-site-toolbar-left">
-              <h3 id="familySiteToolbarTitle">관련 사이트 리스트</h3>
-              <p id="familySiteToolbarDesc">원하시는 플랫폼을 선택하면 새 창에서 이동합니다.</p>
-            </div>
-            <button type="button" class="family-site-close" aria-label="패밀리 사이트 팝업 닫기" data-close-family-site>&times;</button>
-          </div>
-
-          <div class="family-site-grid" id="familySiteGrid"></div>
-
-        
-        </div>
-      </div>
-    </div>
-  </div>
-
   <script>
     ; (function () {
       const root = document.getElementById('main-slider-root');
-      const permanentBgLayer = document.getElementById('permanent-bg-layer');
       if (!root) return;
 
       const s1 = root.querySelector('.main-slider-section1');
@@ -2544,11 +1892,8 @@
       const bgBefore = [...slides].map((li, i) => resolveBg(li.dataset.bg, i));
       const bgMid = [...slides].map((li, i) =>
         resolveBg(li.dataset.bgMid, Math.min(i + 1, bgList().length - 1)));
-      const FINAL_BG = bgMid[total - 1]; // 마지막에 유지되는 이미지 (영구 배경 대상)
       const bgImgs = bgList();           // 자동 생성분까지 포함한 전체 배경 이미지
 
-      let lastSlideReached = false;
-      let permanentBackgroundActive = false;
       let prevScrollY = 0;
 
       /* ── 슬라이드 구간/타이밍 설정 ─────────────────────────
@@ -2613,15 +1958,42 @@
       const vh = () => stableVh;
 
       function applyViewportSizes() {
-        /* 슬라이드, 고정 배경, 텍스트 오버레이, 팝업이 모두 같은 px 높이를 사용 */
-        s2.style.height = Math.round(total * SEG_VH * stableVh) + 'px';
-        viewportScope.style.setProperty('--msStableVh', stableVh + 'px');
-        viewportScope.style.setProperty('--msIntroHeight', Math.round(stableVh * 0.7) + 'px');
-        viewportScope.style.setProperty('--msClipOffset', Math.round(stableVh * 0.8) + 'px');
-        viewportScope.style.setProperty('--msClipBgHeight', Math.round(stableVh * 1.2) + 'px');
-        viewportScope.style.setProperty('--msClipBgTop', Math.round(-stableVh * 0.1) + 'px');
-        viewportScope.style.setProperty('--msModalHeight', Math.round(stableVh * 0.92) + 'px');
-        viewportScope.style.setProperty('--msVideoMinWidth', Math.round(stableVh * 1.7778) + 'px');
+        /* 전체 섹션, 인트로, 슬라이드 구간, 영상과 텍스트가 모두 같은 고정 px 기준을 사용합니다. */
+        const introHeight = isMobileViewport
+          ? Math.round(stableVh * 0.7)
+          : Math.max(600, Math.round(stableVh * 0.7));
+        const sliderHeight = Math.round(total * SEG_VH * stableVh);
+        const rootHeight = introHeight + sliderHeight;
+
+        root.style.setProperty('--msStableVh', stableVh + 'px');
+        root.style.setProperty('--msIntroHeight', introHeight + 'px');
+        root.style.setProperty('--msVideoMinWidth', Math.round(stableVh * 1.7778) + 'px');
+        root.style.setProperty('--msExitY', '0px');
+
+        if (viewportScope !== root) {
+          viewportScope.style.setProperty('--msStableVh', stableVh + 'px');
+          viewportScope.style.setProperty('--msIntroHeight', introHeight + 'px');
+          viewportScope.style.setProperty('--msVideoMinWidth', Math.round(stableVh * 1.7778) + 'px');
+          viewportScope.style.setProperty('--msExitY', '0px');
+        }
+
+        s1.style.height = introHeight + 'px';
+        s1.style.minHeight = introHeight + 'px';
+        s1.style.maxHeight = introHeight + 'px';
+
+        s2.style.height = sliderHeight + 'px';
+        s2.style.minHeight = sliderHeight + 'px';
+        s2.style.maxHeight = sliderHeight + 'px';
+
+        root.style.height = rootHeight + 'px';
+        root.style.minHeight = rootHeight + 'px';
+        root.style.maxHeight = rootHeight + 'px';
+
+        if (viewportScope !== root) {
+          viewportScope.style.height = rootHeight + 'px';
+          viewportScope.style.minHeight = rootHeight + 'px';
+          viewportScope.style.maxHeight = rootHeight + 'px';
+        }
       }
 
       function refreshViewport(force) {
@@ -2693,7 +2065,6 @@
       function initializeImages() {
         bgImgs.forEach((img) => {
           img.classList.remove('active');
-          img.classList.remove('permanent-active');
           if (img === bgBefore[0]) {
             img.classList.add('active');
             img.style.transform = `scale(${curScale})`;
@@ -2709,8 +2080,6 @@
 
       initializeImages();
       slides[0].classList.add('active');
-      permanentBgLayer.classList.remove('active');
-      permanentBgLayer.classList.remove('permanent');
 
       const lerp = (a, b, t) => a + (b - a) * t;
 
@@ -2718,7 +2087,7 @@
         curScale = lerp(curScale, trgScale, .18);
 
         bgImgs.forEach(img => {
-          if (img.classList.contains('active') || img.classList.contains('permanent-active')) {
+          if (img.classList.contains('active')) {
             img.style.transform = `scale(${curScale})`;
           }
         });
@@ -2871,24 +2240,10 @@
 
           slides.forEach((li, i) => li.classList.toggle('active', i === idx));
 
-          // 마지막 슬라이드 도달 → 영구 배경 활성화
-          if (idx === total - 1) {
-            if (!lastSlideReached) {
-              lastSlideReached = true;
-              permanentBackgroundActive = true;
-              permanentBgLayer.classList.add('active');
-              permanentBgLayer.classList.add('permanent');
-            }
-          } else if (scrollDirection === 'up' && lastSlideReached) {
-            lastSlideReached = false;
-            permanentBackgroundActive = false;
-            permanentBgLayer.classList.remove('active');
-            permanentBgLayer.classList.remove('permanent');
-          }
-
+          /* 현재 슬라이드에 해당하는 이미지만 유지합니다.
+             마지막 슬라이드에서는 Vimeo가 재생되면 이미지 위에 영상이 계속 표시됩니다. */
           bgImgs.forEach((img) => {
             img.classList.toggle('active', img === curBg);
-            img.classList.toggle('permanent-active', permanentBackgroundActive && img === FINAL_BG);
           });
 
           // ── Vimeo 흐름 제어 ──
@@ -2904,21 +2259,6 @@
           }
         }
 
-        const totalHeight = root.offsetHeight;
-        const scrollProgress = (y + viewH) - root.offsetTop;
-        const endThreshold = totalHeight - viewH * 0.3;
-
-        if (scrollProgress >= endThreshold && scrollDirection === 'down') {
-          if (!permanentBackgroundActive) {
-            permanentBackgroundActive = true;
-            permanentBgLayer.classList.add('permanent');
-            bgImgs.forEach((img) => {
-              if (img === FINAL_BG) {
-                img.classList.add('permanent-active');
-              }
-            });
-          }
-        }
 
         // ── 텍스트 상태: 하단에서 상승 → 가운데 정지 → (배경 교체) → 화면 상단까지 상승 퇴장 ──
         const enterDist = viewH * ENTER_FROM; // 화면 하단 아래에서 가운데까지의 거리
@@ -2965,13 +2305,20 @@
       }
 
       function applyFade(rect, viewH) {
+        /* 마지막 영상이 준비되거나 재생 중이면 3번째 문구의 불필요한 페이드는 막습니다.
+           종료 구간에서는 영상과 문구 레이어가 같은 --msExitY 값으로 함께 이동합니다. */
+        if (videoArmed || videoLive) {
+          const list = root.querySelector('.main-slider-list');
+          if (list) list.style.opacity = '1';
+          return;
+        }
+
         const START_LINE = viewH;
         const SPAN = viewH * 0.7;
         const dist = START_LINE - rect.bottom;
         const ratio = dist <= 0 ? 0 : Math.min(0.7, dist / SPAN);
 
         fades.forEach(el => {
-          if (permanentBackgroundActive && el.closest('#permanent-bg-layer')) return;
           el.style.opacity = Math.max(0, 1 - ratio);
         });
       }
@@ -2983,20 +2330,21 @@
         const shouldInView = (r.top <= 0) && (r.bottom > 0);
         setActive(shouldInView);
 
-        const clipThreshold = v * 0.8;
-        root.classList.toggle('clip', r.bottom <= clipThreshold);
+        /* 표준 sticky 종료 좌표와 같은 계산입니다.
+           - 섹션 하단이 화면 하단보다 아래에 있으면 0px: 화면 고정
+           - 두 하단이 만나는 순간부터 음수값: 영상과 문구가 스크롤만큼 함께 상승
+           - 섹션이 완전히 사라지면 -화면높이: 다음 섹션이 화면을 완전히 채움
+           position 속성은 전환 도중 한 번도 바꾸지 않으므로 점프가 발생하지 않습니다. */
+        const exitY = Math.max(-v, Math.min(0, Math.round(r.bottom - v)));
+        root.style.setProperty('--msExitY', exitY + 'px');
+        if (viewportScope !== root) {
+          viewportScope.style.setProperty('--msExitY', exitY + 'px');
+        }
+        root.classList.toggle('is-exiting', exitY < 0);
 
-        // ── 섹션이 화면에서 완전히 벗어나면 ──
-        // 1) 영구 배경이 다른 섹션 뒤에 비치지 않도록 숨김
-        // 2) 영상도 일시정지 (다시 돌아오면 자동 재개)
-        if (r.bottom <= 0) {
-          permanentBgLayer.classList.remove('active');
-          permanentBgLayer.classList.remove('permanent');
-          if (videoArmed || videoLive) stopSliderVideo();
-        } else if (permanentBackgroundActive) {
-          // 섹션 하단 전환 구간으로 다시 들어오면 영구 배경 복원 (부드러운 연결용)
-          permanentBgLayer.classList.add('active');
-          permanentBgLayer.classList.add('permanent');
+        /* 영상은 종료 이동 중에도 계속 재생하고 섹션이 화면 위로 완전히 사라진 뒤에만 정지합니다. */
+        if (r.bottom <= 0 && (videoArmed || videoLive)) {
+          stopSliderVideo();
         }
 
         applyFade(r, v);
@@ -3011,275 +2359,6 @@
 
       window.addEventListener('load', checkPos);
 
-      const modal = document.getElementById('familySiteModal');
-      const openButtons = document.querySelectorAll('.family-site-open');
-      const closeButtons = modal ? modal.querySelectorAll('[data-close-family-site]') : [];
-      const eyebrowEl = document.getElementById('familySiteEyebrow');
-      const titleEl = document.getElementById('familySiteModalTitle');
-      const descEl = document.getElementById('familySiteDesc');
-      const metaEl = document.getElementById('familySiteMeta');
-      const toolbarTitleEl = document.getElementById('familySiteToolbarTitle');
-      const toolbarDescEl = document.getElementById('familySiteToolbarDesc');
-      const gridEl = document.getElementById('familySiteGrid');
-      const noteEl = document.getElementById('familySiteNote');
-
-      let lastFocusedElement = null;
-      let scrollLockY = 0;
-      let savedBodyInlineStyle = null;
-
-      const familySiteData = {
-        health: {
-          eyebrow: 'Health Consumer Network',
-          title: '건강·소비자 관련 패밀리 사이트',
-          desc: '올바른 정보와 건강한 소비의 기준을 만들어 갑니다.',
-          toolbarTitle: '건강 정보·소비자 관련 사이트',
-          toolbarDesc: '',
-          note: '',
-          meta: [
-            '올바른 건강 기준 중심',
-            '소비자 친화적인 정보 구조',
-            '높은 신뢰도와 전문성'
-          ],
-          sites: [
-            {
-              badge: '패밀리 사이트',
-              title: '헬스컨슈머',
-              desc: '건강한 삶은 건강한 소비가 중요한 만큼 대한민국의 양식 있는 전문인과, 의식 있는 소비자, 생각하는 언론인들이 모여 만든 언론',
-              urlText: 'healthconsumer.com',
-              href: 'https://www.healthumer.com/',
-              external: true
-            },
-            {
-              badge: '패밀리 사이트',
-              title: 'MD 저널',
-              desc: '26년간 200여 명의 의사들이 직접 참여하여 최신 의학 기사, 논문, 병원 정보, 전문가 칼럼 등을 통해 올바른 의료 정보를 제공하는 잡지',
-              urlText: 'mdjournal.kr',
-              href: 'https://mdjournal.kr',
-              external: true
-            },
-            {
-              badge: '패밀리 사이트',
-              title: 'ENDO 저널',
-              desc: '당뇨, 대사질환을 진료하는 개원의들이 참여하여 만든 내분비전문의학저널. 대사질환을 진료하는 개원의를 위한 진료정보 및 진료 현장에 도움주는 임상저널',
-              urlText: 'endojournal.kr',
-              href: 'https://endo365.kr/',
-              external: true
-            },
-            {
-              badge: '패밀리 사이트',
-              title: 'MAXQ',
-              desc: '피트니스 스타, 머슬마니아 대회 정보, 운동법, 영양 식단, 라이프스타일 등 건강한 아름다움의 올바른 콘텐츠를 제공',
-              urlText: 'maxq.kr',
-              href: 'https://maxq.kr',
-              external: true
-            },
-            {
-              badge: '패밀리 사이트',
-              title: '헬시에이징뉴스',
-              desc: '건강한 노화와 웰에이징 정보를 전달하는 전문 뉴스 플랫폼입니다.',
-              urlText: 'healthyagingnews.com',
-              href: 'https://www.healthyagingnews.kr/',
-              external: true
-            }
-          ]
-        },
-        innovation: {
-          eyebrow: 'Business Innovation Lab',
-          title: '혁신·성장 관련 사이트',
-          desc: '기업 혁신과 기업 성장을 돕습니다.',
-          toolbarTitle: '혁신·기업 성장 관련 사이트',
-          toolbarDesc: '기업 혁신과 실행 전략을 연결하는 사이트를 살펴보세요.',
-          note: '혁신 연구소 중심의 패밀리 사이트는 컨설팅, 교육, 실행 프로젝트 등으로 쉽게 확장 가능합니다.',
-          meta: [
-            '실행형 혁신 중심 플랫폼',
-            '지속 성장과 고용 창출 방향',
-            '기업 연결형 협업 구조'
-          ],
-          sites: [
-            {
-              badge: '패밀리 사이트',
-              title: '맥스큐 밸런스랩',
-              desc: '건강한 몸의 균형과 라이프스타일을 연구하는 MAXQ 기반의 건강 연구 플랫폼입니다.',
-              urlText: 'maxqbalancelab.com',
-              href: 'https://maxqbalancelab.com',
-              external: false
-            },
-            {
-              badge: '패밀리 사이트',
-              title: '뷰티필라',
-              desc: '뷰티와 필라테스를 결합한 새로운 웰니스 프로그램과 교육 콘텐츠를 준비 중인 플랫폼입니다.',
-              urlText: 'coming soon',
-              href: '#',
-              external: false
-            },
-            {
-              badge: '패밀리 사이트',
-              title: '비만대사증후군연구소',
-              desc: '비만과 대사질환 예방을 위한 연구와 건강 정보를 제공하는 연구 플랫폼입니다.',
-              urlText: 'coming soon',
-              href: '#',
-              external: false
-            }
-          ]
-        },
-        htu: {
-          eyebrow: '플로스마케팅 Holdings',
-          title: 'HTU 연계 사이트',
-          desc: 'HTU 브랜드와 직접 연결되는 핵심 사이트를 확인해보세요.',
-          toolbarTitle: 'HTU 연계 사이트',
-          toolbarDesc: 'HTU 브랜드와 직접 연결되는 핵심 사이트를 확인해보세요.',
-          note: '',
-          meta: [
-            '건강과 아름다움의 통합 가치',
-            '브랜드·연구·네트워크 연결',
-            '글로벌 확장형 구조'
-          ],
-          sites: [
-            {
-              badge: '패밀리 사이트',
-              title: '사피엔스 아일랜드',
-              desc: '지식 전문가의 인사이트와 초개인화 IT 기술을 결합해, 타인과 자신을 이해하고 삶의 복잡한 문제를 해소하는 솔루션을 제공',
-              urlText: 'sapiensland.io',
-              href: 'https://www.sapiensland.io/',
-              external: true
-            },
-            {
-              badge: '패밀리 사이트',
-              title: '더유리아트앤컬쳐(TUANC)',
-              desc: '예술의 가치로 삶을 더 행복하게, 문화와 예술을 통해 사람과 사회의 건강한 변화를 만들어가는 기업',
-              urlText: '홍보 영상',
-              href: 'https://youtube.com/watch?v=-RH72Q9fbBs&si=bUZsQxWFUVuugi-P',
-              external: true
-            },
-            {
-              badge: '패밀리 사이트',
-              title: '한국헬시에이징학회',
-              desc: '초고령 사회에서 학회는 시대적 사명감과 책임감을 가지고 우리나라 의료 실정에 맞는 "건강문화" 창달과 "헬시 에이징" 방법을 추구하며 초고령 건강사회의 길잡이가 되고자 합니다.',
-              urlText: 'khealthyaging.com',
-              href: 'https://khealthyaging.com/',
-              external: true
-            },
-            {
-              badge: '패밀리 사이트',
-              title: '국제소셜인플루언서협회',
-              desc: '소셜 미디어 시대의 영향력 있는 창작자와 전문가를 연결하는 글로벌 인플루언서 네트워크입니다.',
-              urlText: 'isia.or.kr',
-              href: 'https://isia.or.kr/',
-              external: true
-            },
-            {
-              badge: '패밀리 사이트',
-              title: '한국강사신문',
-              desc: '월 100만명 이상 방문하는 강사 전문 언론사입니다. 초개인화 시대에 맞춰 강사들의 권익을 보호하고 가치를 표현하는데 앞장서고 있습니다.',
-              urlText: 'lecturernews.com',
-              href: 'https://www.lecturernews.com/',
-              external: true
-            }
-          ]
-        }
-      };
-
-      function createMetaHTML(items) {
-        return items.map(function (item) {
-          return '<div class="family-site-meta-item"><span>●</span><span>' + item + '</span></div>';
-        }).join('');
-      }
-
-      function createCardHTML(site) {
-        const arrow = site.external ? '↗' : '→';
-        const target = site.external ? ' target="_blank" rel="noopener noreferrer"' : '';
-        return `
-          <a href="${site.href}" class="family-site-card"${target}>
-            <div class="family-site-card-top">
-              <span class="family-site-badge">${site.badge}</span>
-              <span class="family-site-arrow">${arrow}</span>
-            </div>
-            <h4>${site.title}</h4>
-            <p>${site.desc}</p>
-            <span class="family-site-url">${site.urlText}</span>
-          </a>
-        `;
-      }
-
-      function renderFamilySiteContent(key) {
-        const data = familySiteData[key] || familySiteData.htu;
-
-        if (eyebrowEl) eyebrowEl.textContent = data.eyebrow;
-        if (titleEl) titleEl.textContent = data.title;
-        if (descEl) descEl.textContent = data.desc;
-        if (toolbarTitleEl) toolbarTitleEl.textContent = data.toolbarTitle;
-        if (toolbarDescEl) toolbarDescEl.textContent = data.toolbarDesc;
-        if (noteEl) noteEl.textContent = data.note;
-        if (metaEl) metaEl.innerHTML = createMetaHTML(data.meta);
-        if (gridEl) gridEl.innerHTML = data.sites.map(createCardHTML).join('');
-      }
-
-      function openFamilySiteModal(key) {
-        if (!modal) return;
-        renderFamilySiteContent(key);
-        lastFocusedElement = document.activeElement;
-
-        scrollLockY = window.scrollY || window.pageYOffset || 0;
-        savedBodyInlineStyle = document.body.getAttribute('style');
-
-        document.body.style.position = 'fixed';
-        document.body.style.top = `-${scrollLockY}px`;
-        document.body.style.left = '0';
-        document.body.style.right = '0';
-        document.body.style.width = '100%';
-
-        modal.classList.add('is-open');
-        modal.setAttribute('aria-hidden', 'false');
-        document.body.classList.add('family-site-modal-open');
-
-        requestAnimationFrame(function () {
-          const scrollArea = modal.querySelector('.family-site-main');
-          if (scrollArea) scrollArea.scrollTop = 0;
-        });
-      }
-
-      function closeFamilySiteModal() {
-        if (!modal) return;
-
-        modal.classList.remove('is-open');
-        modal.setAttribute('aria-hidden', 'true');
-        document.body.classList.remove('family-site-modal-open');
-
-        if (savedBodyInlineStyle === null) {
-          document.body.removeAttribute('style');
-        } else {
-          document.body.setAttribute('style', savedBodyInlineStyle);
-        }
-        savedBodyInlineStyle = null;
-
-        requestAnimationFrame(function () {
-          window.scrollTo(0, scrollLockY);
-          updateStates();
-          checkPos();
-        });
-
-        if (lastFocusedElement) lastFocusedElement.focus();
-      }
-
-      openButtons.forEach(function (button) {
-        button.addEventListener('click', function (e) {
-          e.preventDefault();
-          const key = button.getAttribute('data-family-key') || 'htu';
-          openFamilySiteModal(key);
-        });
-      });
-
-      closeButtons.forEach(function (button) {
-        button.addEventListener('click', function () {
-          closeFamilySiteModal();
-        });
-      });
-
-      document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape' && modal && modal.classList.contains('is-open')) {
-          closeFamilySiteModal();
-        }
-      });
     })();
   </script>
 </section>
@@ -3446,7 +2525,7 @@
 <section id="ProjectSection" aria-label="Project Scroll Section">
   <style>
     #ProjectSection {
-      --sfs-bg: #ffffff;
+    --sfs-bg: #ffffff;
       --sfs-text: #000000;
       --sfs-muted: #777777;
       --sfs-muted-2: #555555;
@@ -3454,17 +2533,10 @@
       --sfs-dot: #e02020;
       --sfs-card-radius: 4px;
       --sfs-ease: cubic-bezier(0.22, 1, 0.36, 1);
-      /* 모바일 주소창 변화와 무관하게 최초 화면 높이를 px로 고정 */
-      --sfs-vh: 1vh;
       position: relative;
       background: var(--sfs-bg);
       color: var(--sfs-text);
-      /* 세로축을 clip 처리하면 iOS Safari의 sticky 합성 레이어가
-         스크롤 방향 전환 시 재배치되는 경우가 있어 가로축만 제한합니다. */
-      overflow-x: clip;
-      overflow-y: visible;
-      overflow-anchor: none;
-      touch-action: pan-y;
+      overflow: clip;
       font-family: 'Bebas Neue', sans-serif;
       isolation: isolate;
     }
@@ -3478,7 +2550,7 @@
 
     #ProjectSection .sfs-stage {
       position: relative;
-      min-height: calc(var(--sfs-vh) * 100);
+      min-height: 100vh;
       background: var(--sfs-bg);
       isolation: isolate;
     }
@@ -3487,7 +2559,7 @@
       position: sticky;
       top: 0;
       width: 100%;
-      height: calc(var(--sfs-vh) * 100);
+      height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -3496,19 +2568,14 @@
       pointer-events: none;
       mix-blend-mode: difference;
       /* padding-inline: 20px; */
-      /* sticky + mix-blend-mode 조합의 모바일 합성 레이어 떨림 방지 */
-      will-change: transform;
-      transform: translate3d(0, 0, 0);
-      -webkit-transform: translate3d(0, 0, 0);
-      backface-visibility: hidden;
-      -webkit-backface-visibility: hidden;
+      will-change: auto;
     }
 
     #ProjectSection .sfs-fixed-label {
       font-size: 14px;
       letter-spacing: 8px;
       text-transform: uppercase;
-            color: var(--sfs-text);
+      color: #fff;
       margin-bottom: 10px;
       line-height: 1;
     }
@@ -3521,6 +2588,27 @@
       text-align: center;
       font-weight: 400;
       white-space: nowrap;
+    }
+
+    #ProjectSection .sfs-radial-lines {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: min(600px, 74vw);
+      height: min(600px, 74vw);
+      transform: translate(-50%, -50%);
+      z-index: 5;
+      pointer-events: none;
+      opacity: 0.6;
+      transition: opacity 0.5s ease;
+      will-change: opacity, transform;
+    }
+
+    #ProjectSection .sfs-radial-lines canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      transform-origin: 50% 50%;
     }
 
     #ProjectSection .sfs-scroll-hint {
@@ -3584,7 +2672,7 @@
       z-index: 6;
       text-align: center;
       padding: 0 20px 0;
-      height: calc(var(--sfs-vh) * 50);
+      height: 50vh;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -3605,7 +2693,7 @@
     #ProjectSection .sfs-scroll-content {
       position: relative;
       z-index: 6;
-      padding: calc(var(--sfs-vh) * 10) 0 calc(var(--sfs-vh) * 15);
+      padding: 10vh 0 15vh;
     }
 
     #ProjectSection .sfs-project-card {
@@ -3619,8 +2707,6 @@
         opacity 1s var(--sfs-ease),
         transform 1s var(--sfs-ease);
       will-change: transform, opacity;
-      backface-visibility: hidden;
-      -webkit-backface-visibility: hidden;
     }
 
     #ProjectSection .sfs-project-card.sfs-visible {
@@ -3747,8 +2833,7 @@
     #ProjectSection .sfs-card-label-text {
       font-size: 15px;
       letter-spacing: 3px;
-      color: #000000;
-      font-weight:700;
+      color: #bbbbbb;
       line-height: 1.4;
       word-break: break-word;
     }
@@ -3808,7 +2893,7 @@
       z-index: 2;
       width: min(92vw, 1080px);
       aspect-ratio: 16 / 9;
-      max-height: calc((var(--sfs-vh) * 100) - 120px);
+      max-height: calc(100vh - 120px);
       background: #000;
       border-radius: 10px;
       overflow: hidden;
@@ -3905,8 +2990,13 @@
         letter-spacing: 3px;
       }
 
+      #ProjectSection .sfs-radial-lines {
+        width: min(360px, 80vw);
+        height: min(360px, 80vw);
+      }
+
       #ProjectSection .sfs-tagline {
-        height: calc(var(--sfs-vh) * 42);
+        height: 42vh;
         font-size: 14px;
         letter-spacing: 1.2px;
         line-height: 1.9;
@@ -3918,7 +3008,7 @@
       }
 
       #ProjectSection .sfs-scroll-content {
-        padding: calc(var(--sfs-vh) * 5) 0 calc(var(--sfs-vh) * 12);
+        padding: 5vh 0 12vh;
       }
 
       #ProjectSection .sfs-project-card,
@@ -3968,34 +3058,10 @@
       }
     }
 
-    /* ===== 모바일 역방향 스크롤 경계 안정화 =====
-       iOS/Android에서 sticky + mix-blend-mode + transform이 함께 적용되면
-       섹션 하단에서 sticky가 풀렸다가 다시 고정될 때 합성 레이어가 재배치될 수 있습니다. */
-    @media (max-width: 767px), (hover: none) and (pointer: coarse) {
-      #ProjectSection .sfs-fixed-text-container {
-        mix-blend-mode: normal;
-        will-change: auto;
-        transform: none !important;
-        -webkit-transform: none !important;
-        backface-visibility: visible;
-        -webkit-backface-visibility: visible;
-        contain: none;
-      }
-
-      #ProjectSection .sfs-fixed-title {
-        color: #111111;
-        text-shadow: 0 1px 18px rgba(255,255,255,0.92), 0 1px 3px rgba(255,255,255,0.85);
-      }
-
-      #ProjectSection .sfs-fixed-label {
-        color: #111111;
-        text-shadow: 0 1px 10px rgba(255,255,255,0.9);
-      }
-    }
-
     @media (prefers-reduced-motion: reduce) {
       #ProjectSection .sfs-project-card,
       #ProjectSection .sfs-scroll-hint,
+      #ProjectSection .sfs-radial-lines,
       #ProjectSection .sfs-card-photo,
       #ProjectSection .sfs-video-backdrop,
       #ProjectSection .sfs-video-dialog,
@@ -4022,6 +3088,10 @@
       <div class="sfs-fixed-title">Portfolio</div>
     </div>
 
+    <div class="sfs-radial-lines" data-sfs-radial-lines>
+      <canvas data-sfs-radial-canvas width="600" height="600"></canvas>
+    </div>
+
     <div class="sfs-scroll-hint" data-sfs-scroll-hint>
       <span>SCROLL</span>
       <div class="sfs-scroll-line"></div>
@@ -4035,43 +3105,20 @@
     </div>
 
     <div class="sfs-scroll-content">
-      <!--
-        [카드 사용법]
-        - data-image : 카드 썸네일 이미지 주소
-        - 일반 웹사이트 링크 : href 에 주소를 넣으면 새 탭으로 이동
-        - 영상 팝업 : 아래 두 가지 중 하나면 자동으로 팝업 재생
-          1) data-video="유튜브 또는 비메오 링크" 를 카드(article)에 추가
-          2) href 자체가 youtube.com / youtu.be / vimeo.com 링크인 경우
-        - 지원 형식 : youtube.com/watch?v=, youtu.be/, youtube.com/shorts/, vimeo.com/숫자ID 등
-      -->
-    <article class="sfs-project-card" data-sfs-color="cyan-glass" data-image="./img/ai1.jpg"
-               data-video="https://www.youtube.com/watch?v=9UNtQEk_4FU">
-        <a class="sfs-card-link" href="javascript:void(0)" aria-label="포스코 건설 행사 안내 영상 재생">
-          <div class="sfs-card-image">
-            <img class="sfs-card-photo" alt="포스코 건설 행사 안내 영상 썸네일" loading="lazy">
-            <canvas></canvas>
-            <span class="sfs-play-badge" aria-hidden="true"></span>
-          </div>
-        </a>
-        <div class="sfs-card-label">
-          <div class="sfs-card-label-dot"></div>
-          <span class="sfs-card-label-text">XI 커뮤니티 시설 안내 영상</span>
-        </div>
-      </article>
 
-      <!-- 영상 카드 : data-video 에 유튜브/비메오 링크를 넣으면 클릭 시 팝업 재생 -->
-      <article class="sfs-project-card" data-sfs-color="cyan-glass" data-image="./img/xi.jpg"
-               data-video="https://www.youtube.com/watch?v=NT1OfZLTrI8">
+       <!-- 영상 카드 : data-video 에 유튜브/비메오 링크를 넣으면 클릭 시 팝업 재생 -->
+      <article class="sfs-project-card" data-sfs-color="cyan-glass" data-image="./img/ai1.jpg"
+               data-video="https://www.youtube.com/watch?v=9UNtQEk_4FU">
         <a class="sfs-card-link" href="javascript:void(0)" aria-label="GS 건설 XI 행사 안내 영상 재생">
           <div class="sfs-card-image">
-            <img class="sfs-card-photo" alt="GS 건설 XI 행사 안내 영상 썸네일" loading="lazy">
+            <img class="sfs-card-photo" alt="XI 행사 안내 영상 썸네일" loading="lazy">
             <canvas></canvas>
             <span class="sfs-play-badge" aria-hidden="true"></span>
           </div>
         </a>
         <div class="sfs-card-label">
           <div class="sfs-card-label-dot"></div>
-          <span class="sfs-card-label-text">GS 건설 XI 행사 안내 영상</span>
+          <span class="sfs-card-label-text">GS 건설 XI 커뮤니티 안내 영상</span>
         </div>
       </article>
 
@@ -4090,6 +3137,26 @@
           <span class="sfs-card-label-text">포스코 건설 행사 안내 영상</span>
         </div>
       </article>
+
+
+         <article class="sfs-project-card" data-sfs-color="cyan-glass" data-image="./img/xi.jpg"
+               data-video="https://www.youtube.com/watch?v=NT1OfZLTrI8">
+        <a class="sfs-card-link" href="javascript:void(0)" aria-label="GS 건설 XI 행사 안내 영상 재생">
+          <div class="sfs-card-image">
+            <img class="sfs-card-photo" alt="GS 건설 XI 행사 안내 영상 썸네일" loading="lazy">
+            <canvas></canvas>
+            <span class="sfs-play-badge" aria-hidden="true"></span>
+          </div>
+        </a>
+        <div class="sfs-card-label">
+          <div class="sfs-card-label-dot"></div>
+          <span class="sfs-card-label-text">GS 건설 XI 행사 안내 영상</span>
+        </div>
+      </article>
+     
+     
+
+     
     </div>
   </div>
 
@@ -4108,69 +3175,11 @@
       if (!section || section.dataset.sfsInitialized === 'true') return;
       section.dataset.sfsInitialized = 'true';
 
-      const stage = section.querySelector('.sfs-stage');
+      const radialWrap = section.querySelector('[data-sfs-radial-lines]');
+      const radialCanvas = section.querySelector('[data-sfs-radial-canvas]');
       const scrollHint = section.querySelector('[data-sfs-scroll-hint]');
       const fixedText = section.querySelector('[data-sfs-fixed-text]');
       const projectCards = Array.from(section.querySelectorAll('.sfs-project-card'));
-
-      /* ===== 모바일 고정 뷰포트 높이 =====
-         주소창/하단바가 접히고 펼쳐질 때 발생하는 height-only resize는 무시합니다.
-         실제 화면 회전 또는 가로 폭 변경 때만 새 기준 높이를 적용합니다. */
-      /* visualViewport는 주소창, 키보드, 확대/축소에도 수치가 계속 달라집니다.
-         레이아웃 기준에는 변동이 적은 layout viewport만 사용합니다. */
-      const getViewportWidth = () =>
-        Math.round(document.documentElement.clientWidth
-          || window.innerWidth
-          || 1);
-
-      const getViewportHeight = () =>
-        Math.round(window.innerHeight
-          || document.documentElement.clientHeight
-          || 1);
-
-      const stableViewportWidth = getViewportWidth();
-      const stableViewportHeight = Math.max(320, getViewportHeight());
-      let sectionHeightLocked = false;
-      let lockedSectionHeight = 0;
-
-      function applyStableViewportHeight() {
-        section.style.setProperty('--sfs-vh', (stableViewportHeight / 100) + 'px');
-      }
-
-      /* section과 stage가 차지하는 문서 높이를 최초 레이아웃 값으로 잠급니다.
-         이후 스크롤 방향, 주소창, 영상/폰트/이미지 상태, resize와 관계없이
-         이 섹션 아래 콘텐츠의 문서 좌표가 바뀌지 않습니다. */
-      function lockSectionLayoutHeight() {
-        if (sectionHeightLocked || !stage) return;
-
-        const measuredHeight = Math.ceil(stage.getBoundingClientRect().height);
-        if (!Number.isFinite(measuredHeight) || measuredHeight <= 0) return;
-
-        /* 소수점 경계에서 sticky 고정/해제가 한 프레임씩 왕복하지 않도록
-           2px의 고정 완충값을 포함합니다. */
-        lockedSectionHeight = measuredHeight + 2;
-        const lockedPx = lockedSectionHeight + 'px';
-
-        stage.style.height = lockedPx;
-        stage.style.minHeight = lockedPx;
-        stage.style.maxHeight = lockedPx;
-
-        section.style.height = lockedPx;
-        section.style.minHeight = lockedPx;
-        section.style.maxHeight = lockedPx;
-
-        sectionHeightLocked = true;
-        section.setAttribute('data-sfs-height-locked', 'true');
-        section.style.setProperty('--sfs-locked-height', lockedPx);
-      }
-
-      applyStableViewportHeight();
-      lockSectionLayoutHeight();
-
-      /* 스크롤 중에는 높이를 측정하거나 다시 쓰지 않습니다. */
-      function lockSectionViewportHeight() {
-        if (!sectionHeightLocked) lockSectionLayoutHeight();
-      }
 
       const palettes = {
         'purple-blue': ['#6B3FA0', '#3A1F6F', '#8B5FCF', '#2A1050', '#C4A0FF', '#1A0A3A', '#9070D0', '#4020A0'],
@@ -4181,6 +3190,31 @@
         'blue-cool': ['#2050A0', '#0A2060', '#4080E0', '#051540', '#80B0FF', '#0A1830', '#3060C0', '#1A3080'],
         'cyan-glass': ['#20A0B0', '#0A6070', '#40D0E0', '#053040', '#80F0FF', '#082028', '#30B0C0', '#0C7080']
       };
+
+      function drawRadialLines() {
+        if (!radialCanvas) return;
+        const ctx = radialCanvas.getContext('2d');
+        if (!ctx) return;
+
+        const size = 600;
+        radialCanvas.width = size;
+        radialCanvas.height = size;
+        ctx.clearRect(0, 0, size, size);
+
+        const cx = size / 2;
+        const cy = size / 2;
+        for (let i = 0; i < 72; i += 1) {
+          const angle = (i / 72) * Math.PI * 2 - Math.PI / 2;
+          const r1 = 160;
+          const r2 = 260;
+          ctx.beginPath();
+          ctx.moveTo(cx + Math.cos(angle) * r1, cy + Math.sin(angle) * r1);
+          ctx.lineTo(cx + Math.cos(angle) * r2, cy + Math.sin(angle) * r2);
+          ctx.strokeStyle = 'rgba(180, 30, 30, ' + (0.3 + Math.random() * 0.4).toFixed(3) + ')';
+          ctx.lineWidth = 1.5;
+          ctx.stroke();
+        }
+      }
 
       function drawCanvas(canvas, colorKey) {
         const ctx = canvas.getContext('2d');
@@ -4304,66 +3338,7 @@
 
       let modalOpen = false;
       let lastFocusedEl = null;
-      let lockedScrollY = 0;
-      let bodyLockBackup = null;
-
-      function focusWithoutScroll(el) {
-        if (!el || typeof el.focus !== 'function') return;
-        try {
-          el.focus({ preventScroll: true });
-        } catch (err) {
-          el.focus();
-        }
-      }
-
-      function lockPageScroll() {
-        lockedScrollY = window.scrollY || window.pageYOffset || 0;
-        const body = document.body;
-        const html = document.documentElement;
-        const scrollbarGap = Math.max(0, window.innerWidth - html.clientWidth);
-
-        bodyLockBackup = {
-          position: body.style.position,
-          top: body.style.top,
-          left: body.style.left,
-          right: body.style.right,
-          width: body.style.width,
-          overflow: body.style.overflow,
-          paddingRight: body.style.paddingRight,
-          htmlScrollBehavior: html.style.scrollBehavior
-        };
-
-        body.style.position = 'fixed';
-        body.style.top = (-lockedScrollY) + 'px';
-        body.style.left = '0';
-        body.style.right = '0';
-        body.style.width = '100%';
-        body.style.overflow = 'hidden';
-        if (scrollbarGap > 0) body.style.paddingRight = scrollbarGap + 'px';
-      }
-
-      function unlockPageScroll() {
-        if (!bodyLockBackup) return;
-
-        const body = document.body;
-        const html = document.documentElement;
-        const restoreY = lockedScrollY;
-
-        body.style.position = bodyLockBackup.position;
-        body.style.top = bodyLockBackup.top;
-        body.style.left = bodyLockBackup.left;
-        body.style.right = bodyLockBackup.right;
-        body.style.width = bodyLockBackup.width;
-        body.style.overflow = bodyLockBackup.overflow;
-        body.style.paddingRight = bodyLockBackup.paddingRight;
-
-        /* 사이트 전역에 smooth scroll이 있어도 복원 순간에는 즉시 같은 위치로 돌아갑니다. */
-        html.style.scrollBehavior = 'auto';
-        window.scrollTo(0, restoreY);
-        html.style.scrollBehavior = bodyLockBackup.htmlScrollBehavior;
-
-        bodyLockBackup = null;
-      }
+      let bodyOverflowBackup = '';
 
       // 유튜브 / 비메오 링크를 임베드용 주소로 변환 (아니면 null)
       function getVideoEmbedUrl(rawUrl) {
@@ -4415,13 +3390,14 @@
         videoDialog.appendChild(iframe);
 
         lastFocusedEl = document.activeElement;
-        lockPageScroll();
+        bodyOverflowBackup = document.body.style.overflow;
+        document.body.style.overflow = 'hidden';
 
         videoModal.classList.add('sfs-open');
         videoModal.setAttribute('aria-hidden', 'false');
         modalOpen = true;
 
-        focusWithoutScroll(videoCloseBtn);
+        if (videoCloseBtn) videoCloseBtn.focus();
       }
 
       function closeVideoModal() {
@@ -4434,12 +3410,12 @@
         // iframe 제거로 재생 완전 중지
         if (videoDialog) videoDialog.innerHTML = '';
 
-        unlockPageScroll();
+        document.body.style.overflow = bodyOverflowBackup;
 
-        /* 일반 focus()는 iOS/Android에서 해당 카드로 자동 스크롤할 수 있습니다. */
-        focusWithoutScroll(lastFocusedEl);
+        if (lastFocusedEl && typeof lastFocusedEl.focus === 'function') {
+          lastFocusedEl.focus();
+        }
         lastFocusedEl = null;
-        requestTick();
       }
 
       if (videoBackdrop) videoBackdrop.addEventListener('click', closeVideoModal);
@@ -4474,17 +3450,17 @@
         }
       });
 
+      drawRadialLines();
       projectCards.forEach(applyCardImage);
 
       const cardObserver = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
-            if (!entry.isIntersecting) return;
-
-            /* 한 번 등장한 카드는 다시 숨기지 않습니다.
-               경계에서 위아래로 왕복할 때 transform 전환이 반복되는 시각적 튕김을 제거합니다. */
-            entry.target.classList.add('sfs-visible');
-            cardObserver.unobserve(entry.target);
+            if (entry.isIntersecting) {
+              entry.target.classList.add('sfs-visible');
+            } else {
+              entry.target.classList.remove('sfs-visible');
+            }
           });
         },
         {
@@ -4500,11 +3476,11 @@
 
       function updateOnScroll() {
         ticking = false;
-        lockSectionViewportHeight();
-
         const sy = window.scrollY || window.pageYOffset || 0;
+        const vh = window.innerHeight || 1;
         const sectionRect = section.getBoundingClientRect();
         const sectionTop = sy + sectionRect.top;
+        const localY = Math.max(0, sy - sectionTop);
 
         if (!hintHidden && sy > sectionTop + 80) {
           scrollHint && scrollHint.classList.add('sfs-hidden');
@@ -4514,8 +3490,19 @@
           hintHidden = false;
         }
 
-        /* fixedText의 동일한 transform/opacity 값을 매 프레임 다시 쓰지 않습니다.
-           sticky 합성 레이어의 불필요한 재생성과 Safari의 미세 위치 보정을 방지합니다. */
+        if (radialWrap) {
+          const radialFade = Math.max(0, 1 - localY / (vh * 0.6));
+          radialWrap.style.opacity = String(radialFade * 0.6);
+        }
+
+        if (radialCanvas) {
+          radialCanvas.style.transform = 'rotate(' + (localY * 0.02).toFixed(3) + 'deg)';
+        }
+
+        if (fixedText) {
+          fixedText.style.opacity = '1';
+          fixedText.style.transform = 'translate3d(0,0,0)';
+        }
       }
 
       function requestTick() {
@@ -4526,31 +3513,16 @@
       }
 
       window.addEventListener('scroll', requestTick, { passive: true });
-
-      let viewportResizeTimer = null;
-
-      function handleStableViewportResize() {
-        /* 화면 폭·높이·주소창·키보드 변화가 발생해도 section/stage 높이와
-           --sfs-vh는 절대 다시 쓰지 않습니다. 스크롤 표시 상태만 갱신합니다. */
+      window.addEventListener('resize', function () {
+        drawRadialLines();
         requestTick();
-      }
-
-      function queueStableViewportResize() {
-        if (viewportResizeTimer) clearTimeout(viewportResizeTimer);
-        viewportResizeTimer = setTimeout(function () {
-          viewportResizeTimer = null;
-          handleStableViewportResize();
-        }, 180);
-      }
-
-      window.addEventListener('resize', queueStableViewportResize, { passive: true });
-      window.addEventListener('orientationchange', queueStableViewportResize, { passive: true });
-      window.addEventListener('pageshow', requestTick, { passive: true });
+      });
 
       updateOnScroll();
     })();
   </script>
 </section>
+
 
 
 
