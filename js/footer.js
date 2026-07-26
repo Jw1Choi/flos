@@ -195,15 +195,15 @@
         <h4>홈페이지</h4>
         <ul>
           <li><a href="./brand-hompage.html">브랜드 홈페이지 제작</a></li>
-          <li><a href="#">랜딩페이지 제작</a></li>
+          <li><a href="./landing-page.html">랜딩페이지 제작</a></li>
         </ul>
       </div>
 
       <div class="col">
         <h4>AI 영상</h4>
         <ul>
-          <li><a href="#">브랜드 AI 영상제작</a></li>
-          <li><a href="#">추억사진 AI 영상제작</a></li>
+          <!-- <li><a href="#">브랜드 AI 영상제작</a></li> -->
+          <li><a href="info-ai.html">추억사진 AI 영상제작</a></li>
         </ul>
       </div>
 
